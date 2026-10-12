@@ -2,7 +2,7 @@
 
 系列讲座主页与第一讲公开材料。
 
-- 线上主页：[ai-agent-777.netlify.app](https://ai-agent-777.netlify.app)
+- 线上主页：[suibe-ai-agent.netlify.app](https://suibe-ai-agent.netlify.app)
 - 主页源码：`index.html`
 - 第一讲现场演示：`demo.html`
 - 第一讲学习讲义：`handout.html`
@@ -14,4 +14,4 @@
 ## 发布
 
 - GitHub：[xqwang-sh/ai-agent](https://github.com/xqwang-sh/ai-agent)
-- Netlify：[ai-agent-777.netlify.app](https://ai-agent-777.netlify.app)
+- Netlify：[suibe-ai-agent.netlify.app](https://suibe-ai-agent.netlify.app)

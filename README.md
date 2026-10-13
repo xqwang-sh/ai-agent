@@ -2,6 +2,8 @@
 
 系列讲座主页与第一讲公开材料。
 
+主讲：汪小圈｜上海对外经贸大学 金融管理学院
+
 - 线上主页：[suibe-ai-agent.netlify.app](https://suibe-ai-agent.netlify.app)
 - 主页源码：`index.html`
 - 第一讲现场演示：`demo.html`

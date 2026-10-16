@@ -12,10 +12,10 @@
     "app.js": "80bc082e3805922aa286edf80fa6d64e9ddde0b959f123145ae44f885efd620d"
   },
   "files": {
-    "EarningsReview-第二讲讲义包.zip": "dcdce6983e223c6c064dc1b0618dc2188f9c88ae6bb8f36835cd45ded0f9b5af",
+    "EarningsReview-第二讲讲义包.zip": "7df5601b221e71ec33039c3fb479900381e6022d7b471eb0a9296ea62cdde37e",
     "PROMPTS.md": "dc24a728158cb82fbf4857de8b7ad2e7f5e9679b9dab1719422751aeeef7dd68",
     "assets/earnings-review-example.jpg": "1effd55aee70658939f7f6c303bb281bfca13eac5b56bd1449720cf3dc56e861",
-    "assets/handout.css": "5b69dec73d97ed9b371750bd69ad4384b2bac220ef013a31965c0a14d340879d",
+    "assets/handout.css": "2adf51c2b36f6a04c2b6a8cfa1f74e232dc0a50dc17b086a6463214a04d7d4e3",
     "assets/handout.js": "255560e53e1572ec4563521138343e7b7ac82055f8ab68e0270a2a074d28c0a9",
     "earnings-review/app.js": "0ef4d1b1f2ec49844cd2ec83d31b38533395148e4fb656ca332007aedc3f2f31",
     "earnings-review/data/external.json": "8e779e9cf96e284d7d99f1a15bf28d541ed8f75ee4c62416a6638e7366f514ca",
@@ -28,8 +28,8 @@
     "earnings-review/data/trace.json": "f0310ac31da279c9e025b113cdc9710750a70b5625c08985a0b6aa0d31d081ee",
     "earnings-review/index.html": "9f04263da4dc85b3f7aaecbd30bfe7b5acfe19b6de97697be65006a7249567db",
     "earnings-review/style.css": "14b59e16e93a368747260b25316e5bce88c24d433c823574f55fcf2f733afeae",
-    "earnings-review-materials.zip": "7f1af94f1a57cd290927c62bb63bb70c543d96c722447c9e4c98f864588c5f94",
-    "index.html": "c1c661356e57473f6a2326af5ad5303c242e3be5a1780f46fa05c11937da1d0f",
-    "讲义.md": "c00fbd1d0f14d2696dc3e3bc17cb46a1ee2df8ac7d3b217dc796b45606fe5720"
+    "earnings-review-materials.zip": "4c0db48dd9d203bbfa689dee1d4d32a29afbd6111ad66e6f4d529548627f7dae",
+    "index.html": "b8d5fc3dc1a057a5e9ca2204346054b7ed67c4668910f3d23568f35da7cd8bd1",
+    "讲义.md": "453c753369c994853c9264bb2aaf293197208deb9c539eaed2fc2070c9e1c38d"
   }
 }

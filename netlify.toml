@@ -5,6 +5,23 @@
 [build.processing]
   skip_processing = false
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[functions."run-background"]
+  included_files = ["netlify/data/report-pages-60-75.txt"]
+
+[[redirects]]
+  from = "/api/run"
+  to = "/.netlify/functions/run-background"
+  status = 200
+
+[[redirects]]
+  from = "/api/run-status"
+  to = "/.netlify/functions/run-status"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]

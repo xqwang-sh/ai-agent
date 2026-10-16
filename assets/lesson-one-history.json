@@ -1,0 +1,746 @@
+{
+  "schema": 1,
+  "window_sha256": "dd8de048c3b7dbf444b29c7a7784148159f403b5d87f6c1789a306d7612f5a71",
+  "records": {
+    "locator-baseline-api": {
+      "approach": "locator-baseline-api",
+      "model": "Qwen/Qwen3.5-4B",
+      "recorded_at": "2026-10-13T15:34:30.274924+00:00",
+      "receipt_filename": "siliconflow-qwen35-4b-locator-baseline.json",
+      "receipt_sha256": "d2922dcdd8364958ded38bfc12e1b038a2e964f864fd81f4b94e3053342cf1af",
+      "parsed": {
+        "section_name": "第八节 财务报告",
+        "table_name": "2、合并利润表",
+        "table_pages": [
+          67
+        ]
+      },
+      "recorded_grade": {
+        "section": "fail",
+        "table": "fail",
+        "table_pages": "fail",
+        "returned_pages": [
+          67
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 13690,
+        "completion_tokens": 24,
+        "total_tokens": 13714,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 13690
+      },
+      "usage_scope": "single_response",
+      "elapsed_seconds": 55.93,
+      "workflow_state": {},
+      "prompt": "下面是一份上市公司半年度报告全文的连续页面摘录（第 60–75 页，每页以“=== 第 N 页 ===”开头）。\n\n任务：在摘录中找到“合并利润表”。只返回 JSON：\n{\"section_name\":\"...\",\"table_name\":\"...\",\"table_pages\":[...]}\n不要抽取数字或解释。",
+      "prompt_note": "按对应运行配置与已保存的输入复原；原回执未保存完整请求体。",
+      "tool_calls": [],
+      "raw_output": "{\"section_name\":\"第八节 财务报告\",\"table_name\":\"2、合并利润表\",\"table_pages\":[67]}",
+      "http_status": 200,
+      "thinking_requested": false
+    },
+    "locator-thinking-api": {
+      "approach": "locator-thinking-api",
+      "model": "Qwen/Qwen3.5-4B",
+      "recorded_at": "2026-10-13T13:08:30.959233+00:00",
+      "receipt_filename": "siliconflow-qwen35-4b-locator-thinking.json",
+      "receipt_sha256": "ec534d349e94a3479e1f066d5213f8aa2bbfa78df8d276de3c411169e2755127",
+      "parsed": {
+        "section_name": "第八节 财务报告",
+        "section_start_page": 65,
+        "table_name": "2、合并利润表",
+        "table_pages": [
+          67,
+          68
+        ],
+        "current_period_header": "截至 2026 年 6 月 30 日止 6 个月期间",
+        "prior_period_header": "截至 2025 年 6 月 30 日止 6 个月期间",
+        "unit": "千元",
+        "values": {
+          "revenue": {
+            "current": 344815421,
+            "prior": 371280948
+          },
+          "operating_cost": {
+            "current": 279826859,
+            "prior": 304415089
+          },
+          "operating_profit": {
+            "current": 14743578,
+            "prior": 18719509
+          },
+          "parent_net_profit": {
+            "current": 12325408,
+            "prior": 15510533
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        }
+      },
+      "recorded_grade": {
+        "section": "pass",
+        "table": "pass",
+        "table_pages": "pass",
+        "current": "5/5",
+        "prior": "5/5",
+        "unit": "pass",
+        "per_metric": {
+          "revenue": {
+            "current": "pass",
+            "prior": "pass",
+            "got": {
+              "current": 344815421,
+              "prior": 371280948
+            }
+          },
+          "operating_cost": {
+            "current": "pass",
+            "prior": "pass",
+            "got": {
+              "current": 279826859,
+              "prior": 304415089
+            }
+          },
+          "operating_profit": {
+            "current": "pass",
+            "prior": "pass",
+            "got": {
+              "current": 14743578,
+              "prior": 18719509
+            }
+          },
+          "parent_net_profit": {
+            "current": "pass",
+            "prior": "pass",
+            "got": {
+              "current": 12325408,
+              "prior": 15510533
+            }
+          },
+          "basic_eps": {
+            "current": "pass",
+            "prior": "pass",
+            "got": {
+              "current": 1.35,
+              "prior": 1.71
+            }
+          }
+        }
+      },
+      "usage": {
+        "prompt_tokens": 13822,
+        "completion_tokens": 4423,
+        "total_tokens": 18245,
+        "completion_tokens_details": {
+          "reasoning_tokens": 4097
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 13822
+      },
+      "usage_scope": "single_response",
+      "elapsed_seconds": 181.26,
+      "workflow_state": {
+        "source_step": "locator-thinking",
+        "raw_values": {
+          "revenue": {
+            "current": 344815421,
+            "prior": 371280948
+          },
+          "operating_cost": {
+            "current": 279826859,
+            "prior": 304415089
+          },
+          "operating_profit": {
+            "current": 14743578,
+            "prior": 18719509
+          },
+          "parent_net_profit": {
+            "current": 12325408,
+            "prior": 15510533
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        }
+      },
+      "prompt": "下面是一份上市公司半年度报告全文的连续页面摘录（第 60–75 页，每页以“=== 第 N 页 ===”开头）。\n\n任务：在完整摘录中找到“合并利润表”，并在同一个 JSON 中返回定位和五项数字。不要等待程序切片，也不要猜测页码。\n其中 section_name 必须填写章节标题“第八节 财务报告”，section_start_page 必须填写 65；“2、合并利润表”只能填写 table_name，不能填写 section_name。\n必须返回：section_name、section_start_page、table_name、table_pages（完整连续页码）、current_period_header、prior_period_header、unit，以及 values。\nvalues 的键必须是 revenue、operating_cost、operating_profit、parent_net_profit、basic_eps；每项包含 current 与 prior。\n注意：区分合并利润表和母公司利润表；附注编号不是金额；金额单位是千元，基本每股收益是元/股；只返回 JSON。",
+      "prompt_note": "按对应运行配置与已保存的输入复原；原回执未保存完整请求体。",
+      "tool_calls": [],
+      "raw_output": "{\n  \"section_name\": \"第八节 财务报告\",\n  \"section_start_page\": 65,\n  \"table_name\": \"2、合并利润表\",\n  \"table_pages\": [67, 68],\n  \"current_period_header\": \"截至 2026 年 6 月 30 日止 6 个月期间\",\n  \"prior_period_header\": \"截至 2025 年 6 月 30 日止 6 个月期间\",\n  \"unit\": \"千元\",\n  \"values\": {\n    \"revenue\": {\n      \"current\": 344815421,\n      \"prior\": 371280948\n    },\n    \"operating_cost\": {\n      \"current\": 279826859,\n      \"prior\": 304415089\n    },\n    \"operating_profit\": {\n      \"current\": 14743578,\n      \"prior\": 18719509\n    },\n    \"parent_net_profit\": {\n      \"current\": 12325408,\n      \"prior\": 15510533\n    },\n    \"basic_eps\": {\n      \"current\": 1.35,\n      \"prior\": 1.71\n    }\n  }\n}",
+      "http_status": 200,
+      "thinking_requested": true,
+      "thinking_budget": 4096
+    },
+    "unit-baseline-api": {
+      "approach": "unit-baseline-api",
+      "model": "Qwen/Qwen3.5-4B",
+      "recorded_at": "2026-10-13T13:09:00.969521+00:00",
+      "receipt_filename": "siliconflow-qwen35-4b-unit-baseline.json",
+      "receipt_sha256": "5a8ce1ced163cab4bf0657693e873f7694491539a300bf668abaf54402f049ae",
+      "parsed": {
+        "revenue": {
+          "current": 34.48,
+          "prior": 37.13
+        },
+        "operating_cost": {
+          "current": 27.98,
+          "prior": 30.44
+        },
+        "operating_profit": {
+          "current": 0.15,
+          "prior": 0.19
+        },
+        "parent_net_profit": {
+          "current": 0.12,
+          "prior": 0.16
+        },
+        "basic_eps": {
+          "current": 1.35,
+          "prior": 1.71
+        }
+      },
+      "recorded_grade": {
+        "score": "1/5",
+        "per_metric": {
+          "revenue": {
+            "expected_yi": 3448.15,
+            "got": 34.48,
+            "state": "fail"
+          },
+          "operating_cost": {
+            "expected_yi": 2798.27,
+            "got": 27.98,
+            "state": "fail"
+          },
+          "operating_profit": {
+            "expected_yi": 147.44,
+            "got": 0.15,
+            "state": "fail"
+          },
+          "parent_net_profit": {
+            "expected_yi": 123.25,
+            "got": 0.12,
+            "state": "fail"
+          },
+          "basic_eps": {
+            "expected": 1.35,
+            "got": 1.35,
+            "state": "pass"
+          }
+        }
+      },
+      "usage": {
+        "prompt_tokens": 205,
+        "completion_tokens": 117,
+        "total_tokens": 322,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 205
+      },
+      "usage_scope": "single_response",
+      "elapsed_seconds": 5.81,
+      "workflow_state": {
+        "source_step": "unit-baseline",
+        "raw_values": {
+          "revenue": {
+            "current": 344815421,
+            "prior": 371280948
+          },
+          "operating_cost": {
+            "current": 279826859,
+            "prior": 304415089
+          },
+          "operating_profit": {
+            "current": 14743578,
+            "prior": 18719509
+          },
+          "parent_net_profit": {
+            "current": 12325408,
+            "prior": 15510533
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        },
+        "unit_values": {
+          "revenue": {
+            "current": 34.48,
+            "prior": 37.13
+          },
+          "operating_cost": {
+            "current": 27.98,
+            "prior": 30.44
+          },
+          "operating_profit": {
+            "current": 0.15,
+            "prior": 0.19
+          },
+          "parent_net_profit": {
+            "current": 0.12,
+            "prior": 0.16
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        }
+      },
+      "prompt": "你是财报数据处理器。请直接把输入中的金额换算成亿元，基本每股收益保持原值。\n不要调用工具，也不要解释；只返回 JSON，键名和结构必须与输入一致。\n\n输入：{\"revenue\": {\"current\": 344815421, \"prior\": 371280948}, \"operating_cost\": {\"current\": 279826859, \"prior\": 304415089}, \"operating_profit\": {\"current\": 14743578, \"prior\": 18719509}, \"parent_net_profit\": {\"current\": 12325408, \"prior\": 15510533}, \"basic_eps\": {\"current\": 1.35, \"prior\": 1.71}}",
+      "prompt_note": "按对应运行配置与已保存的输入复原；原回执未保存完整请求体。",
+      "tool_calls": [],
+      "raw_output": "{\"revenue\": {\"current\": 34.48, \"prior\": 37.13}, \"operating_cost\": {\"current\": 27.98, \"prior\": 30.44}, \"operating_profit\": {\"current\": 0.15, \"prior\": 0.19}, \"parent_net_profit\": {\"current\": 0.12, \"prior\": 0.16}, \"basic_eps\": {\"current\": 1.35, \"prior\": 1.71}}",
+      "http_status": 200,
+      "thinking_requested": false,
+      "tool_called": false
+    },
+    "unit-api": {
+      "approach": "unit-api",
+      "model": "Qwen/Qwen3.5-4B",
+      "recorded_at": "2026-10-13T15:16:49.966784+00:00",
+      "receipt_filename": "siliconflow-qwen35-4b-unit-tool-api.json",
+      "receipt_sha256": "f43dc17f68b89b18071115a2a6d2fcf9755ca41ec720f51d23c3f16435a916d3",
+      "parsed": {
+        "revenue": {
+          "current": 3448.15,
+          "prior": 3712.81
+        },
+        "operating_cost": {
+          "current": 2798.27,
+          "prior": 3044.15
+        },
+        "operating_profit": {
+          "current": 147.44,
+          "prior": 187.2
+        },
+        "parent_net_profit": {
+          "current": 123.25,
+          "prior": 155.11
+        },
+        "basic_eps": {
+          "current": 1.35,
+          "prior": 1.71
+        }
+      },
+      "recorded_grade": {
+        "score": "5/5",
+        "per_metric": {
+          "revenue": {
+            "expected_yi": 3448.15,
+            "got": 3448.15,
+            "state": "pass"
+          },
+          "operating_cost": {
+            "expected_yi": 2798.27,
+            "got": 2798.27,
+            "state": "pass"
+          },
+          "operating_profit": {
+            "expected_yi": 147.44,
+            "got": 147.44,
+            "state": "pass"
+          },
+          "parent_net_profit": {
+            "expected_yi": 123.25,
+            "got": 123.25,
+            "state": "pass"
+          },
+          "basic_eps": {
+            "expected": 1.35,
+            "got": 1.35,
+            "state": "pass"
+          }
+        }
+      },
+      "usage": {
+        "prompt_tokens": 1144,
+        "completion_tokens": 185,
+        "total_tokens": 1329,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1144
+      },
+      "usage_scope": "last_response",
+      "elapsed_seconds": 307.72,
+      "workflow_state": {
+        "source_step": "unit-tool",
+        "raw_values": {
+          "revenue": {
+            "current": 344815421,
+            "prior": 371280948
+          },
+          "operating_cost": {
+            "current": 279826859,
+            "prior": 304415089
+          },
+          "operating_profit": {
+            "current": 14743578,
+            "prior": 18719509
+          },
+          "parent_net_profit": {
+            "current": 12325408,
+            "prior": 15510533
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        },
+        "unit_values": {
+          "revenue": {
+            "current": 3448.15,
+            "prior": 3712.81
+          },
+          "operating_cost": {
+            "current": 2798.27,
+            "prior": 3044.15
+          },
+          "operating_profit": {
+            "current": 147.44,
+            "prior": 187.2
+          },
+          "parent_net_profit": {
+            "current": 123.25,
+            "prior": 155.11
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        }
+      },
+      "prompt": "下面是已通过定位与数字门禁的五项财报值，金额为千元，basic_eps 为元/股：\n{\"revenue\": {\"current\": 344815421, \"prior\": 371280948}, \"operating_cost\": {\"current\": 279826859, \"prior\": 304415089}, \"operating_profit\": {\"current\": 14743578, \"prior\": 18719509}, \"parent_net_profit\": {\"current\": 12325408, \"prior\": 15510533}, \"basic_eps\": {\"current\": 1.35, \"prior\": 1.71}}\n\n任务：五项分别调用 convert_units 工具，不要自己换算。工具返回后只返回 JSON，保留同样的键名和 current/prior 结构。",
+      "prompt_note": "按对应运行配置与已保存的输入复原；原回执未保存完整请求体。",
+      "tool_calls": [
+        {
+          "metric": "revenue",
+          "current": 344815421.0,
+          "prior": 371280948.0,
+          "result": "{\"current\": 3448.15, \"prior\": 3712.81}"
+        },
+        {
+          "metric": "operating_cost",
+          "current": 279826859.0,
+          "prior": 304415089.0,
+          "result": "{\"current\": 2798.27, \"prior\": 3044.15}"
+        },
+        {
+          "metric": "operating_profit",
+          "current": 14743578.0,
+          "prior": 18719509.0,
+          "result": "{\"current\": 147.44, \"prior\": 187.2}"
+        },
+        {
+          "metric": "parent_net_profit",
+          "current": 12325408.0,
+          "prior": 15510533.0,
+          "result": "{\"current\": 123.25, \"prior\": 155.11}"
+        },
+        {
+          "metric": "basic_eps",
+          "current": 1.35,
+          "prior": 1.71,
+          "result": "{\"current\": 1.35, \"prior\": 1.71}"
+        }
+      ],
+      "raw_output": "```json\n{\n  \"revenue\": {\n    \"current\": 3448.15,\n    \"prior\": 3712.81\n  },\n  \"operating_cost\": {\n    \"current\": 2798.27,\n    \"prior\": 3044.15\n  },\n  \"operating_profit\": {\n    \"current\": 147.44,\n    \"prior\": 187.2\n  },\n  \"parent_net_profit\": {\n    \"current\": 123.25,\n    \"prior\": 155.11\n  },\n  \"basic_eps\": {\n    \"current\": 1.35,\n    \"prior\": 1.71\n  }\n}\n```",
+      "http_status": 200,
+      "thinking_requested": false,
+      "tool_called": true
+    },
+    "yoy-baseline-api": {
+      "approach": "yoy-baseline-api",
+      "model": "Qwen/Qwen3.5-4B",
+      "recorded_at": "2026-10-12T17:19:10.164285+00:00",
+      "receipt_filename": "siliconflow-qwen35-4b-yoy-baseline.json",
+      "receipt_sha256": "c271f6e942884be9ef2f617df4346818088d3ff92cfcfa0d6693e4537e53ecc1",
+      "parsed": {
+        "revenue": "-7.12%",
+        "operating_cost": "-8.08%",
+        "operating_profit": "-21.02%",
+        "parent_net_profit": "-20.57%",
+        "basic_eps": "-21.05%"
+      },
+      "recorded_grade": {
+        "score": "2/5",
+        "per_metric": {
+          "revenue": {
+            "expected": "-7.13%",
+            "got": "-7.12%",
+            "state": "fail"
+          },
+          "operating_cost": {
+            "expected": "-8.08%",
+            "got": "-8.08%",
+            "state": "pass"
+          },
+          "operating_profit": {
+            "expected": "-21.24%",
+            "got": "-21.02%",
+            "state": "fail"
+          },
+          "parent_net_profit": {
+            "expected": "-20.54%",
+            "got": "-20.57%",
+            "state": "fail"
+          },
+          "basic_eps": {
+            "expected": "-21.05%",
+            "got": "-21.05%",
+            "state": "pass"
+          }
+        }
+      },
+      "usage": {
+        "prompt_tokens": 247,
+        "completion_tokens": 69,
+        "total_tokens": 316,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 247
+      },
+      "usage_scope": "single_response",
+      "elapsed_seconds": 1.71,
+      "workflow_state": {
+        "source_step": "yoy-baseline",
+        "raw_values": {
+          "revenue": {
+            "current": 344815421,
+            "prior": 371280948
+          },
+          "operating_cost": {
+            "current": 279826859,
+            "prior": 304415089
+          },
+          "operating_profit": {
+            "current": 14743578,
+            "prior": 18719509
+          },
+          "parent_net_profit": {
+            "current": 12325408,
+            "prior": 15510533
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        },
+        "unit_values": {
+          "revenue": {
+            "current": 3448.15,
+            "prior": 3712.81
+          },
+          "operating_cost": {
+            "current": 2798.27,
+            "prior": 3044.15
+          },
+          "operating_profit": {
+            "current": 147.44,
+            "prior": 187.2
+          },
+          "parent_net_profit": {
+            "current": 123.25,
+            "prior": 155.11
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        },
+        "yoy_values": {
+          "revenue": "-7.12%",
+          "operating_cost": "-8.08%",
+          "operating_profit": "-21.02%",
+          "parent_net_profit": "-20.57%",
+          "basic_eps": "-21.05%"
+        }
+      },
+      "prompt": "你是财报同比字段整理器。下面的输入来自 04 单位换算步骤，金额已经统一为亿元，basic_eps 保持元/股。\n请直接按 (current-prior)/prior*100 计算每个指标的同比，四舍五入到两位小数并带 %。\n不要调用 calculate_yoy 或任何工具；只返回 JSON，键名必须是 revenue、operating_cost、operating_profit、parent_net_profit、basic_eps；值为字符串。\n\n输入：{\"revenue\": {\"current\": 3448.15, \"prior\": 3712.81}, \"operating_cost\": {\"current\": 2798.27, \"prior\": 3044.15}, \"operating_profit\": {\"current\": 147.44, \"prior\": 187.2}, \"parent_net_profit\": {\"current\": 123.25, \"prior\": 155.11}, \"basic_eps\": {\"current\": 1.35, \"prior\": 1.71}}",
+      "prompt_note": "按对应运行配置与已保存的输入复原；原回执未保存完整请求体。",
+      "tool_calls": [],
+      "raw_output": "{\n  \"revenue\": \"-7.12%\",\n  \"operating_cost\": \"-8.08%\",\n  \"operating_profit\": \"-21.02%\",\n  \"parent_net_profit\": \"-20.57%\",\n  \"basic_eps\": \"-21.05%\"\n}",
+      "http_status": 200,
+      "thinking_requested": false,
+      "tool_called": false
+    },
+    "yoy-api": {
+      "approach": "yoy-api",
+      "model": "Qwen/Qwen3.5-4B",
+      "recorded_at": "2026-10-13T04:08:59.093925+00:00",
+      "receipt_filename": "siliconflow-qwen35-4b-yoy-tool-api.json",
+      "receipt_sha256": "0debf125473d731cb65b6f70f00cdeec652d8fb4859f273ac881d164548e1b3b",
+      "parsed": {
+        "revenue": "-7.13%",
+        "operating_cost": "-8.08%",
+        "operating_profit": "-21.24%",
+        "parent_net_profit": "-20.54%",
+        "basic_eps": "-21.05%"
+      },
+      "recorded_grade": {
+        "score": "5/5",
+        "per_metric": {
+          "revenue": {
+            "expected": "-7.13%",
+            "got": "-7.13%",
+            "state": "pass"
+          },
+          "operating_cost": {
+            "expected": "-8.08%",
+            "got": "-8.08%",
+            "state": "pass"
+          },
+          "operating_profit": {
+            "expected": "-21.24%",
+            "got": "-21.24%",
+            "state": "pass"
+          },
+          "parent_net_profit": {
+            "expected": "-20.54%",
+            "got": "-20.54%",
+            "state": "pass"
+          },
+          "basic_eps": {
+            "expected": "-21.05%",
+            "got": "-21.05%",
+            "state": "pass"
+          }
+        }
+      },
+      "usage": {
+        "prompt_tokens": 937,
+        "completion_tokens": 69,
+        "total_tokens": 1006,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 937
+      },
+      "usage_scope": "last_response",
+      "elapsed_seconds": 14.26,
+      "workflow_state": {
+        "source_step": "yoy-tool",
+        "raw_values": {
+          "revenue": {
+            "current": 344815421,
+            "prior": 371280948
+          },
+          "operating_cost": {
+            "current": 279826859,
+            "prior": 304415089
+          },
+          "operating_profit": {
+            "current": 14743578,
+            "prior": 18719509
+          },
+          "parent_net_profit": {
+            "current": 12325408,
+            "prior": 15510533
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        },
+        "unit_values": {
+          "revenue": {
+            "current": 3448.15,
+            "prior": 3712.81
+          },
+          "operating_cost": {
+            "current": 2798.27,
+            "prior": 3044.15
+          },
+          "operating_profit": {
+            "current": 147.44,
+            "prior": 187.2
+          },
+          "parent_net_profit": {
+            "current": 123.25,
+            "prior": 155.11
+          },
+          "basic_eps": {
+            "current": 1.35,
+            "prior": 1.71
+          }
+        },
+        "yoy_values": {
+          "revenue": "-7.13%",
+          "operating_cost": "-8.08%",
+          "operating_profit": "-21.24%",
+          "parent_net_profit": "-20.54%",
+          "basic_eps": "-21.05%"
+        }
+      },
+      "prompt": "下面是 04 单位换算步骤返回的五项结果，金额已经统一为亿元，basic_eps 保持元/股：\n{\"revenue\": {\"current\": 3448.15, \"prior\": 3712.81}, \"operating_cost\": {\"current\": 2798.27, \"prior\": 3044.15}, \"operating_profit\": {\"current\": 147.44, \"prior\": 187.2}, \"parent_net_profit\": {\"current\": 123.25, \"prior\": 155.11}, \"basic_eps\": {\"current\": 1.35, \"prior\": 1.71}}\n\n任务：五项分别调用 calculate_yoy 工具，不要自己心算。工具返回后只返回 JSON，键名必须是五个指标，值为工具返回的字符串。",
+      "prompt_note": "按对应运行配置与已保存的输入复原；原回执未保存完整请求体。",
+      "tool_calls": [
+        {
+          "metric": "revenue",
+          "current": 3448.15,
+          "prior": 3712.81,
+          "result": "-7.13%"
+        },
+        {
+          "metric": "operating_cost",
+          "current": 2798.27,
+          "prior": 3044.15,
+          "result": "-8.08%"
+        },
+        {
+          "metric": "operating_profit",
+          "current": 147.44,
+          "prior": 187.2,
+          "result": "-21.24%"
+        },
+        {
+          "metric": "parent_net_profit",
+          "current": 123.25,
+          "prior": 155.11,
+          "result": "-20.54%"
+        },
+        {
+          "metric": "basic_eps",
+          "current": 1.35,
+          "prior": 1.71,
+          "result": "-21.05%"
+        }
+      ],
+      "raw_output": "{\n  \"revenue\": \"-7.13%\",\n  \"operating_cost\": \"-8.08%\",\n  \"operating_profit\": \"-21.24%\",\n  \"parent_net_profit\": \"-20.54%\",\n  \"basic_eps\": \"-21.05%\"\n}",
+      "http_status": 200,
+      "thinking_requested": false,
+      "tool_called": true
+    }
+  }
+}

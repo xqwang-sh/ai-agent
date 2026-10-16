@@ -1,0 +1,11 @@
+# 第一讲讲义
+
+- Canonical learner content is `lesson.json`. `build.py` generates root `handout.html`, root `PROMPTS.md`, `讲义.md`, and root `lesson-one-materials.zip`. Run from the repository root with `python3 handout/build.py`; generation uses Python standard library and the project's Node.js runtime.
+- `SETUP.md` explains preparation; root `PUBLIC_DATA_GUIDE.md` explains the bounded input and checks. Keep these aligned when the tutorial changes. Preserve the established visual style and useful OpenCode image.
+- The product in `../demo.html`, `../assets/lesson-one-workflow.mjs`, and `../netlify/` owns runtime behavior. Export model, metrics, tool schemas and runtime prompt templates from the shared module during generation rather than hand-copying a second version.
+- This is a tutorial for finance teachers using their coding Agent. Each step must tell them what to do, supply a complete copyable Prompt, name an observable result and checks, and give a focused repair Prompt. Do not include undefined code helpers or absent input files.
+- It is a three-stage workflow with six comparison rows. Mainline is 02 → 04 → 06. Live 03/04 use the current session's passing 02; live 05/06 use its passing 04. Historical replay is separate, using historical 02/04. No history fallback for live runs, no six-agent/four-agent claim.
+- Materials contain the exact report window, read-only historical receipts, task contracts, runtime templates and offline checks, not a finished app. Disclose that the fixed-case checker reference contains answers. Never send it or historical answers to the runtime model.
+- Stage inputs, rounding, missing-value/zero-prior stops, invalidation, tokens and receipt limits must match the product. Explain what the five fixed-case checks establish without implying second-lecture independent verification.
+- Keep the bounded first-lecture path separate from full-PDF evidence acquisition, vision, Hithink, PPT and scheduled automation. No paid model calls or feedback submissions in publication QA.
+- Verify generated files, archive manifest, source equality, relative navigation and copy controls with `python3 handout/check.py`, `npm test`, and the browser at 1280, 375 and 320 px.

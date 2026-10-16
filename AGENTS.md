@@ -9,7 +9,7 @@
 
 # Lecture one product
 
-- The published product is owned here: `demo.html`, `assets/lesson-one-demo.js`, shared rules in `assets/lesson-one-workflow.mjs`, and `netlify/functions/`. Do not overwrite it with an older workshop export. Handouts have separate source ownership.
+- The published product is owned here: `demo.html`, `assets/lesson-one-demo.js`, shared rules in `assets/lesson-one-workflow.mjs`, and `netlify/functions/`. Do not overwrite it with an older workshop export. First-lecture handout source is now owned in `handout/`; follow its `AGENTS.md`, rather than exporting the older workshop handout.
 - Preserve the six archived raw outputs and recorded grades in `assets/lesson-one-history.json`. Display corrected-rule recomputation separately. Historical tool receipts contain only last-response tokens, not total tokens.
 - Live runs require the teacher's own SiliconFlow key. Keep it only in page/request memory, never browser storage, job records, logs or a site-wide fallback credential. Browser code submits to this site's background function.
 - The six approaches compare workflow stages. Live 03/04 use this session's latest passing 02 job; live 05/06 use its latest passing 04 job. Re-running 02/04 invalidates affected downstream results. Historical inputs are for viewing only. Never accept client-supplied financial state or infer earlier passes.

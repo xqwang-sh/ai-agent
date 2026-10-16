@@ -1,90 +1,62 @@
-# 开始前
+# 第一讲准备工作
 
-第一步是取得课堂提供的 `byd_earnings.zip` 并解压，再用 **OpenCode** 打开解压后的 `byd_earnings` 文件夹。压缩包只含 `output/byd_earnings_template.pptx` 这一份可编辑模板；除个人 API Key 的安全凭据文件保存在项目外，后续目录、文件和程序都在这个文件夹中建立。学习者主线默认使用 OpenCode + 一个能力足够的通用大模型；其他 Agent 工具可以复用同一批文件，但不是本讲义的必需前提。
+先打开 [教师实操讲义](../handout.html)。本页只负责把工具与文件准备好，搭建时逐步使用讲义第 0–7 步。
 
-## 1. 用 OpenCode 打开工作文件夹
+## 1. 准备编程 Agent
 
-开始前做一个一分钟测试：解压 `byd_earnings.zip`，从 [OpenCode 官方下载页](https://opencode.ai/download) 安装并打开 OpenCode，在“打开文件夹”中选中解压后的 `byd_earnings`，确认 `output/byd_earnings_template.pptx` 存在，然后在 OpenCode 对话界面输入：
+本讲用 OpenCode 写程序。已有可用的 OpenCode 就继续使用，不必更换版本。
 
-> 我已解压 `byd_earnings.zip` 并打开名为 `byd_earnings` 的文件夹。请确认当前文件夹名称，并确认 `output/byd_earnings_template.pptx` 已存在且可编辑；这是压缩包提供的唯一模板，请保留它。建立 `data/case/raw/hithink/`、`data/case/raw/cninfo/`、`data/case/prepared/evidence/pages/`、`data/case/prepared/`、`output/`、`skills/a-share-earnings-reviewer/`、`workflow/agents/`、`automation/` 和 `setup/`，并建立一个 README.md 说明练习用途。完成后建立并删除一个测试文件，确认你能在这里保存内容。这一步只检查模板、建目录和检查写入，完成后停止。
+1. 尚未安装时，打开 [OpenCode 官方文档](https://opencode.ai/docs/)，按自己的系统安装。
+2. 打开 OpenCode，在连接入口配置自己使用的编码模型。终端版常用 `/connect` 和 `/models`，不同版本按实际界面操作。连接方法见 [官方模型提供方说明](https://opencode.ai/docs/providers/)。
+3. 确认它能回复一句话。然后打开下面准备的项目文件夹，确认能读文件。
 
-如果 OpenCode 还没有连接大模型：
+OpenCode 中的模型帮助你写代码。应用运行时使用的 Qwen/Qwen3.5-4B 是另一项配置，不能因为 OpenCode 能聊天，就认为应用已经有财报模型授权。
 
-1. 在 [DeepSeek 开放平台](https://platform.deepseek.com/) 注册、创建自己的 API Key，并在[充值页](https://platform.deepseek.com/top_up)充值；课堂建议 5 元作为小额试用预算，实际规则以页面当时说明为准。
-2. 在 OpenCode 输入 `/connect`，选择 DeepSeek，在不回显的输入框中填写 Key；再输入 `/models`，选择一个能力足够完成文件读写和长文本整理的模型。
-3. 先让模型完成讲义第 01 步的 Product 定义，再继续后面的基线、Approaches 和 Evals。不要把 DeepSeek Key 写进练习文件夹或聊天正文。
+## 2. 准备工作文件夹
 
-[Kimi 官方会员说明](https://www.kimi.com/help/membership/membership-overview)列出的专业数据库包含同花顺；[Kimi Code Datasource 说明](https://www.kimi.com/code/docs/kimi-code-cli/customization/plugins)指出查询会消耗 Kimi Code 套餐额度。这项查询能力在 Kimi 产品内使用。本练习的独立程序需要自己的同花顺金融数据 API Key。
-
-## 2. 注册同花顺金融数据 API
-
-打开 <https://fuyao.aicubes.cn/> 注册，在个人管理页取得自己的 API Key。不要与同学共享，也不要发到聊天、邮件、截图或群文件。
-
-如果尚未安装命令行工具，可让 AI 完成下面这件事：
-
-> 请先检查这台电脑能否运行 hithink-finance。如果不能，请只从官方 npm 包 `@hithink-tech/hithink-finance-cli` 安装，并确认版本可以显示。不要索取或显示我的 API Key。
-
-该工具需要 Node.js 22.12 或更高版本。安装命令是：
-
-```bash
-npm install -g @hithink-tech/hithink-finance-cli
-hithink-finance --version
-```
-
-## 3. 让 AI 建立安全保存工具，再由本人存入 Key
-
-Key 不得放在 `byd_earnings` 或任何将被打包、同步、截图的项目目录中。先让 AI 判断当前系统，并在解压后的项目 `setup/` 中建立隐藏输入的安全保存工具。Key 由本人运行该工具时输入，标准保存位置是：
-
-| 系统 | 个人凭据文件 |
-|---|---|
-| Windows | `%APPDATA%\hithink-finance\credentials.env` |
-| macOS | `~/Library/Application Support/hithink-finance/credentials.env` |
-| Linux | `~/.config/hithink-finance/credentials.env` |
-
-文件只包含一行 `HITHINK_FINANCE_API_KEY=自己的Key`，等号右侧不加引号。
-
-- macOS：运行 AI 刚在 `setup/` 中建立的 `save_hithink_key.command`；工具必须隐藏输入。
-- Windows：运行 AI 刚在 `setup/` 中建立的 `save_hithink_key.ps1`；脚本必须隐藏输入，并只允许当前用户读取凭据文件。
-- Linux：在终端运行 `hithink-finance auth login`，按提示隐藏输入；不要把 Key 写进命令参数。
-
-脚本只报告成功或失败，Key 始终隐藏。完成后可运行：
-
-```bash
-hithink-finance auth status --format json
-```
-
-## 4. 检查 AI 现场建立的目录
-
-下面是 AI 应在解压后的 `byd_earnings` 中建立的目录。所有路径都相对于这个文件夹；`output/byd_earnings_template.pptx` 已随起始包提供：
+1. 下载 [第一讲实操材料](../lesson-one-materials.zip)。
+2. 解压，把包内 `earnings-workflow` 文件夹放在桌面等自己方便找到的位置。不要直接在压缩包内操作。
+3. 在 OpenCode 中选择“打开文件夹”，选中这个 `earnings-workflow`。若文件列表只有另一个同名文件夹，向内再打开一层。
+4. 确认以下文件直接出现在项目中。不要先建 PPT、四 Agent 或定时任务目录。
 
 ```text
-data/case/raw/hithink/       自己取得的同花顺 JSON
-data/case/raw/cninfo/        由 Agent 从巨潮官方披露取得的 PDF
-data/case/prepared/          自己填写的原文核对表与程序生成的汇总
-output/                      5 页候选 PPT、人工确认后的 PPT 和待复核简报
-skills/                      供各 Agent 共同遵守的金融口径和证据规则
-workflow/                    四个 Agent 的编排、角色任务、固定检查程序与每次运行的证据副本
-automation/                  每日完整自动程序、事件状态与本地结果页
+earnings-workflow/
+  TASKBOOK.md
+  AGENTS.md
+  data/report-pages-60-75.txt
+  contracts/workflow.json
+  prompts/runtime/
+  history/lesson-one-history.json
+  checks/
 ```
 
-目录检查通过后，继续把讲义中的普通中文请求逐条交给 AI。AI 会使用本人的同花顺权限取数，并根据公司、报告期和本地目标位置，从巨潮资讯官方公开披露中下载两份 PDF。
+材料包有真实报告文字窗口、只读历史收据、任务模板和固定案例检查参考，没有成品应用。`checks/case-reference.json` 含评分答案，只供程序检查器使用，不能发给运行中的财报模型。历史收据不能补成本次 Run 的前序输入。
 
-## 5. 开始前的安全约定
+## 3. 检查本机环境
 
-- 任何 AI 都不得要求你把完整 Key 发到聊天。
-- Key 不进项目、不进提示词、不进代码、不进日志、不进压缩包。
-- 同花顺数值用于整理，巨潮资讯公司公告用于原文复核；两边不一致时先停，不猜原因。
-- 本练习分析收入与利润，不判断“超预期”，不估值，不荐股。
-- 最终简报是“课堂草稿——需要人工复核”，不得自动发布。
+把讲义第 0 步完整 Prompt 发给 OpenCode。它会检查系统、Node.js 22 或更高版本、材料指纹和写入权限。
 
-## 6. 本次讲座的最终结果
+缺少 Node.js 时，按 Agent 给出的当前系统步骤完成；官方入口是 [Node.js 下载页](https://nodejs.org/en/download)。已经满足条件的环境不用重装。第 0 步检查通过，再发第 1 步。
 
-在完成收入与利润复核后，运行由四个 Agent、课程 Skill 和固定检查程序组成的 workflow。角色与顺序保存在 `workflow/agents/` 和 `workflow/workflow.json`。Codex 路线使用：
+以后由 Agent 建立并启动本地服务。打开它返回的完整本机网址，不用双击 HTML 文件。关闭与重新启动方法要写在它生成的 `RUN.md` 中。
 
-```bash
-python3 workflow/run_agents.py --project . --provider codex
-```
+## 4. 准备个人运行 Key
 
-兼容的第三方模型使用 `--provider openai_compatible`。每次 workflow 保存两份 JSON、两份 PDF、摘要第 1、2 页与全文第 65、67 页的整页截图、五项核对表和阶段状态。
+看现有产品的历史结果，以及搭建和运行离线检查，都不需要财报模型 Key。真实 Run 才使用自己的硅基流动授权。
 
-最后生成独立自动化程序，使其每天北京时间 02:00 检查观察名单中的新业绩数据。课堂试跑时，把前面刚刚取得的半年报作为一次新发现处理，将 `automation/config.json` 中 `monitor.first_run` 临时设为 `emit_existing`；试跑结束（成功或停留）后恢复 `baseline`。发现新数据后，程序自动完成巨潮取证、计算、PDF 提取、整页截图、五项核对、候选 PPT 更新、简报和结果页。每一步都有状态；出错时停在当前步骤，保留已取得材料，修复后从该事件继续。`automation/runtime/result.html` 显示逐步进度、准确停留位置、人工复核材料、候选/已批准 PPT 状态和上一次成功结果。文字模型可以更换，取数、计算、复核、PPT 数据绑定和停止规则保持一致；已批准 PPT 只由本人确认后更新。
+1. 打开 [硅基流动控制台](https://cloud.siliconflow.cn/)，在本人账户中管理 API Key。账户权限与费用以服务当时显示为准。
+2. 第 3 步接通调用后，由本人在做出的网页隐藏输入框填 Key。若先试现场产品，也在 [Evals](../demo.html#evals) 的个人 Key 输入框填写。
+3. 在同一页面会话依次运行 02、04、06。每次检查通过后再继续。后续只能读取本轮通过的精确前序。
+4. 完成后清空 Key。刷新会清空页面中的 Key 和本轮可用前序，需从 02 重新开始。
+
+Key 只在页面与本次请求内存中使用，不发给 OpenCode，不写入项目、浏览器存储、运行收据、日志或截图。程序由本地后台调用模型服务；已上线产品则由同站后台调用。
+
+## 5. 每一步怎样跟做
+
+复制本步主 Prompt → 发给 OpenCode → 等它写文件并运行检查 → 自己按“你应看到”核对 → 确认后发下一步。
+
+若只返回方案，先切到允许编辑的 Build 模式，再发送“按刚才方案完成本步并运行检查”。卡住时发送该步修复 Prompt，不必自己先解释错误。
+
+没有个人 Key 时可以继续搭建离线模块，验收如实写“真实运行待完成”。历史结果和测试响应都不能算作本人真实 Run。
+
+操作入口核对日期：2026-10-17。返回 [教师实操讲义](../handout.html)。

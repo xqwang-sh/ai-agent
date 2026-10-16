@@ -112,13 +112,14 @@ async function waitForJob(jobId) {
 
 async function runApproach(id) {
   if (running || !archive) return;
+  selected = id; mode = 'current'; renderRows();
   const apiKey = keyInput.value.trim();
-  if (!apiKey) { note.textContent = '请先填写自己的硅基流动 API Key。'; keyInput.focus(); return; }
+  if (!apiKey) { score.textContent = '未运行'; paintCases(null); note.textContent = '请先填写自己的硅基流动 API Key。'; keyInput.focus(); return; }
   let previous = null;
   if (!id.startsWith('locator')) {
     previous = parents[id.startsWith('unit') ? 'locate':'unit'];
     try { requirePrevious(id, previous); }
-    catch (error) { note.textContent = error.message; return; }
+    catch (error) { score.textContent = '未运行'; paintCases(null); note.textContent = error.message; return; }
   }
   invalidate(id);
   renderProduct();

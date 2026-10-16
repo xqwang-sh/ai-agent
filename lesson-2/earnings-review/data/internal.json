@@ -1,0 +1,99 @@
+{
+  "status": "matched",
+  "matched": 10,
+  "total": 10,
+  "issues": [],
+  "comparisons": [
+    {
+      "metric": "revenue",
+      "period": "current",
+      "text_original": "155,506,421",
+      "vision_original": "155,506,421",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "revenue",
+      "period": "prior",
+      "text_original": "146,858,174",
+      "vision_original": "146,858,174",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "operating_cost",
+      "period": "current",
+      "text_original": "(134,593,933)",
+      "vision_original": "(134,593,933)",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "operating_cost",
+      "period": "prior",
+      "text_original": "(127,447,974)",
+      "vision_original": "(127,447,974)",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "operating_profit",
+      "period": "current",
+      "text_original": "7,707,792",
+      "vision_original": "7,707,792",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "operating_profit",
+      "period": "prior",
+      "text_original": "7,582,360",
+      "vision_original": "7,582,360",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "parent_net_profit",
+      "period": "current",
+      "text_original": "5,501,905",
+      "vision_original": "5,501,905",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "parent_net_profit",
+      "period": "prior",
+      "text_original": "5,737,699",
+      "vision_original": "5,737,699",
+      "text_unit": "千元",
+      "vision_unit": "千元",
+      "match": true
+    },
+    {
+      "metric": "basic_eps",
+      "period": "current",
+      "text_original": "1.10",
+      "vision_original": "1.10",
+      "text_unit": "元/股",
+      "vision_unit": "元/股",
+      "match": true
+    },
+    {
+      "metric": "basic_eps",
+      "period": "prior",
+      "text_original": "1.16",
+      "vision_original": "1.16",
+      "text_unit": "元/股",
+      "vision_unit": "元/股",
+      "match": true
+    }
+  ],
+  "scope": "Blind image vs text agreement plus source quotes; not independent financial truth"
+}

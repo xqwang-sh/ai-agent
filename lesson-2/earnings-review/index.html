@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#eff0e4">
+  <title>Earnings Review · 半年报复盘</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">跳到复盘工作区</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="报告资料库">
+      <a class="brand" href="../../" aria-label="讲座主页"><span class="brand-mark">er<span>↗</span></span><span>Earnings<br><strong>Review</strong></span></a>
+      <div class="library-heading"><div><span class="eyebrow">REPORT LIBRARY</span><h2>半年报资料库</h2></div><span id="report-count" class="count-badge">—</span></div>
+      <button id="folder-open" class="folder-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h6l2 2h10v10H3z"/></svg><span><span class="folder-caption">课堂文件集合</span><span id="folder-label">正在读取…</span></span><span aria-hidden="true">↗</span></button>
+      <nav id="company-list" class="company-list" aria-label="选择公司"><p class="sidebar-note">正在读取本地 PDF…</p></nav>
+      <details id="excluded-wrap" class="excluded-wrap" hidden><summary id="excluded-summary">未识别的文件</summary><ul id="excluded-list"></ul></details>
+      <div class="sidebar-foot"><span class="local-dot"></span><span>第二讲 · 成品示例<span class="foot-sub">浏览示例不调用模型</span></span></div>
+    </aside>
+
+    <main id="workspace" class="workspace">
+      <header class="page-header"><div><span class="eyebrow">FINANCIAL EVIDENCE, IN VIEW</span><h1>Earnings Review</h1></div><a class="text-link" href="../">实操讲义 ↗</a></header>
+      <div class="publication-note"><strong>课前已核验示例 · 2026 年 10 月 16 日</strong><p>这里公开顺丰的真实运行结果、每步用量和证据。完整产品在本地扫描 PDF、调用模型与同花顺；按第二讲讲义搭建后，在自己的电脑上运行。</p><div><a href="../../">← 讲座主页</a><a href="../">跟着 Prompt 一步步搭建 ↗</a><a href="../earnings-review-materials.zip" download>下载六份报告与实操材料 ↓</a></div></div><div id="global-notice" class="notice" role="status" hidden></div>
+      <div id="active-notice" class="notice" role="status" hidden></div>
+      <section class="source-panel" aria-labelledby="company-name">
+        <div class="source-main"><div id="company-meta" class="meta-line">选择本地报告</div><h2 id="company-name">选择一份半年报</h2><p id="source-description" class="muted">从原始 PDF 出发，保留证据与每一步核验。</p></div>
+        <div class="source-actions"><label for="preset-select">本地运行预设</label><select id="preset-select" disabled aria-describedby="preset-description"><option>正在读取…</option></select><p id="preset-description" class="preset-description"></p><button id="run-button" class="button button-primary" type="button" disabled><span aria-hidden="true">↗</span><span id="run-label">运行复盘</span></button><p id="run-caption" class="run-caption">将真实调用模型并记录本次消耗</p></div>
+      </section>
+      <details id="budget-details" class="budget-details" hidden><summary>本地运行的预算与停止条件</summary><p id="budget-summary"></p><p class="budget-caveat">Token 与时间限制均在发起下一次请求前检查。最后一次已发出的请求可能超出阈值，实际消耗仍会累计记录。</p></details>
+
+      <div id="empty-state" class="empty-state" hidden><span class="empty-symbol" aria-hidden="true">↗</span><h3>这份报告尚无公开运行示例</h3><p>材料包包含这份原始 PDF。请按讲义搭建后在本地运行；此处不会套用其他公司的结果。</p><a class="text-link" href="../#step-0">开始搭建 ↗</a></div>
+      <section id="run-section" hidden aria-labelledby="run-heading">
+        <div class="section-heading"><div><span class="eyebrow">RUN OBSERVATION</span><h2 id="run-heading">运行记录</h2></div><div id="job-badges" class="badge-row"></div></div>
+        <div id="job-identity" class="job-identity"></div>
+        <div id="job-notice" class="notice" role="status" hidden></div>
+        <div class="observation-grid">
+          <section class="progress-card" aria-label="实际运行步骤"><div class="card-heading"><h3>从证据到结果</h3><span id="current-operation" class="current-operation">—</span></div><ol id="stage-list" class="stage-list"></ol><div id="run-totals" class="run-totals"></div></section>
+          <div class="verification-column"><section class="verification-card" aria-labelledby="internal-title"><span class="eyebrow">01 · INTERNAL</span><div class="verification-title"><h3 id="internal-title">原文 × 原始页图</h3><span id="internal-status"></span></div><div id="internal-count" class="verification-count">—</div><p id="internal-description">模型独立读取原始页图，再与文本抄录比对。</p><a id="internal-link" class="text-link" hidden target="_blank" rel="noopener">查看内部核验 ↗</a></section><section class="verification-card" aria-labelledby="external-title"><span class="eyebrow">02 · EXTERNAL</span><div class="verification-title"><h3 id="external-title">同花顺数据比对</h3><span id="external-status"></span></div><div id="external-count" class="verification-count">—</div><p id="external-description">将报告原始数值与独立财务数据逐项比较。</p><a id="external-link" class="text-link" hidden target="_blank" rel="noopener">查看外部核验 ↗</a></section></div>
+        </div>
+        <details class="trace-panel"><summary><span>查看调用与反馈轨迹</span><span id="trace-summary" class="muted"></span></summary><div class="trace-content"><div class="trace-top"><p>包含续跑与重试；已知用量和未返回用量分别保留。</p><a id="trace-download" class="text-link" href="#" download>下载调用与反馈汇总 ↓</a></div><div class="table-scroll" tabindex="0" aria-label="模型调用明细，可横向滚动"><table class="calls-table"><thead><tr><th>调用</th><th>环节</th><th>实际模型</th><th>Tokens</th><th>耗时</th><th>状态</th></tr></thead><tbody id="call-rows"></tbody></table></div><h4>实际事件</h4><ol id="event-list" class="event-list"></ol></div></details>
+      </section>
+      <section id="review-section" class="review-section" hidden aria-label="已核验的公司复盘"></section>
+      <section id="history-section" class="history-section" hidden aria-label="历史运行"><div class="section-heading"><div><span class="eyebrow">PREVIOUS VERIFIED REVIEW</span><h2>此前已核验的复盘</h2></div><span class="badge badge-neutral">历史结果</span></div><p id="history-context" class="muted"></p><div id="history-review"></div></section>
+      <section id="history-list-section" class="history-list-section" hidden><h3>同一份 PDF 的运行记录</h3><div id="history-list" class="history-list"></div></section>
+      <footer class="page-footer"><span>证据可追溯 · 核验后生成</span><span>结果仍需人工复核，不包含投资建议</span></footer>
+    </main>
+  </div>
+
+  <dialog id="evidence-dialog" class="dialog evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-heading"><div><span class="eyebrow">ORIGINAL PDF EVIDENCE</span><h2 id="evidence-title">原始证据页</h2></div><button class="icon-button" type="button" data-close="evidence-dialog" aria-label="关闭">×</button></div><p id="evidence-context" class="muted"></p><div class="evidence-toolbar"><a id="evidence-pdf" class="text-link" target="_blank" rel="noopener">在 PDF 中打开 ↗</a><span id="evidence-image-state" class="muted">正在读取页图…</span></div><div class="evidence-image-wrap"><img id="evidence-image" alt="原始报告证据页"></div></dialog>
+</body>
+</html>

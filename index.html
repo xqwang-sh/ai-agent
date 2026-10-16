@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#59595f">
-  <meta name="description" content="产教融合背景下AI金融智能体赋能教师教学能力提升计划。系列讲座主页与第一讲公开材料。">
+  <meta name="description" content="产教融合背景下AI金融智能体赋能教师教学能力提升计划。第一讲入门材料，第二讲 Earnings Review 成品、分步 Prompt 讲义与实操材料。">
   <title>AI 金融智能体教师教学能力提升计划</title>
   <style>
     :root {
@@ -163,8 +163,9 @@
       <a class="brand" href="#top"><span class="brand-mark">AI</span><span>AI 金融智能体讲座</span></a>
       <div class="nav-links">
         <a href="#lecture">第一讲</a>
+        <a href="#lecture-2">第二讲</a>
         <a href="#path">系列路径</a>
-        <a class="nav-cta" href="demo.html">打开现场 demo</a>
+        <a class="nav-cta" href="lesson-2/earnings-review/">第二讲成品</a>
       </div>
     </nav>
   </header>
@@ -178,14 +179,14 @@
           <p class="hero-lead">从一项金融分析任务开始，练习怎样把任务说清楚，让 AI 留下证据，用评测和复核把结果交给学生、同事和下一次课堂。</p>
           <p class="hero-byline">汪小圈 · 上海对外经贸大学 金融管理学院</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#lecture">查看第一讲 <span aria-hidden="true">↓</span></a>
-            <a class="button button-secondary" href="handout.html">直接打开学习讲义 <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="#lecture-2">查看第二讲 <span aria-hidden="true">↓</span></a>
+            <a class="button button-secondary" href="lesson-2/">第二讲实操讲义 <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <aside class="hero-note" aria-label="系列讲座当前进度">
           <small>目前进度</small>
-          <strong>第一讲已经上线</strong>
-          <p>现场演示页和学习讲义都可直接打开。后续讲次会继续补充，材料会沿用同一条可复查的课程主线。</p>
+          <strong>第二讲材料已上线</strong>
+          <p>Earnings Review 成品示例、分步 Prompt 讲义和六份真实半年报材料都可打开。第一讲材料保留在下方。</p>
         </aside>
       </div>
     </section>
@@ -228,6 +229,46 @@
       </div>
     </section>
 
+    <section class="section section-tight" id="lecture-2">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">第二讲 · 实操搭建</p>
+          <h2>让自己的 Agent 搭建 Earnings Review</h2>
+          <p>在 OpenCode 中跟着 Prompt 逐步操作，做出一个读取本地半年报、展示运行进度并保留核验记录的网页产品。</p>
+        </div>
+        <article class="lecture-panel">
+          <div class="lecture-main">
+            <div class="status-row"><span class="status">已上线</span><span class="date">成品示例 + 分步讲义 + 实操材料</span></div>
+            <h3>Earnings Review</h3>
+            <p class="lecture-subtitle">选公司，点运行，看到证据、用量与两层核验。</p>
+            <p class="lecture-copy">从文件夹中的真实 PDF 生成公司列表。程序管理固定流程，模型借助检索和读页工具寻找证据；失败时把原因与已有进度交回模型，在预算内继续补证。两层核验通过后生成这家公司的半年报复盘。</p>
+            <div class="lecture-links">
+              <a class="resource-card" href="lesson-2/earnings-review/">
+                <span><strong>查看 Earnings Review 成品</strong><span>顺丰真实示例 · 每步模型、tokens、耗时与证据页</span></span>
+                <span class="arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="resource-card" href="lesson-2/">
+                <span><strong>跟着讲义一步步搭建</strong><span>9 个主步骤 · 可复制 Prompt · 验收与修复 Prompt</span></span>
+                <span class="arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+          <aside class="lecture-side">
+            <h4>这一讲会留下什么</h4>
+            <ul>
+              <li><span class="step-no">01</span><span>一个由自己的编码 Agent 搭建的本地网页应用，公司列表来自 PDF 文件夹。</span></li>
+              <li><span class="step-no">02</span><span>一条可观察的固定流程，每步显示状态、实际模型、tokens 和耗时。</span></li>
+              <li><span class="step-no">03</span><span>两层核验，独立读取原始页图，再与同花顺数据逐项比对。</span></li>
+              <li><span class="step-no">04</span><span>一份带证据引用的复盘，以及包含补证、续跑和停止原因的运行记录。</span></li>
+            </ul>
+            <a class="resource-mini" href="lesson-2/earnings-review-materials.zip" download>下载实操材料包（6 份报告与任务文件） ↓</a>
+            <a class="resource-mini" href="lesson-2/EarningsReview-第二讲讲义包.zip" download>下载完整讲义包（可离线阅读） ↓</a>
+            <p class="lecture-copy" style="font-size:13px">公开成品页展示课前已核验结果。完整运行在自己的电脑上完成，使用自己的模型与同花顺授权；环境准备见讲义第 0 步。</p>
+          </aside>
+        </article>
+      </div>
+    </section>
+
     <section class="section" id="path">
       <div class="wrap">
         <div class="section-heading">
@@ -254,9 +295,9 @@
           <article class="detail-card">
             <h3>怎样使用</h3>
             <ul>
-              <li>现场投屏时，先打开“现场演示页”。</li>
-              <li>课后跟做时，打开“学习讲义”，按文件任务逐步完成。</li>
-              <li>需要准备材料时，下载课堂起始包，并先阅读数据与安全指南。</li>
+              <li>第一讲从现场演示和入门讲义开始。</li>
+              <li>第二讲先看 Earnings Review 成品，再打开实操讲义，逐步复制 Prompt 到自己的 OpenCode。</li>
+              <li>第二讲材料包包含六份原始报告与任务文件，按讲义完成每步检查后再继续。</li>
             </ul>
           </article>
         </div>
@@ -266,11 +307,11 @@
     <section class="closing">
       <div class="wrap closing-grid">
         <div>
-          <p class="eyebrow">第一讲现在可以开始</p>
-          <h2>先打开一页 Product，看看一堂课怎样留下证据。</h2>
-          <p>演示适合现场讲解，讲义适合课后复现。两份材料从同一个案例出发，入口不同，检查标准相同。</p>
+          <p class="eyebrow">第二讲现在可以开始</p>
+          <h2>打开 Earnings Review，再一步步把它做出来。</h2>
+          <p>先看真实示例中的流程与核验，再用讲义中的 Prompt，让自己的 Agent 完成本地应用。</p>
         </div>
-        <a class="button button-secondary" href="demo.html">进入第一讲现场 demo <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href="lesson-2/">进入第二讲实操讲义 <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 

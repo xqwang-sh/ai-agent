@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "lesson": 2,
+  "date": "2026-10-16",
+  "mode": "static_verified_example_and_prompt_handout",
+  "source_job": "run-2e624a4e1cb24ba6b9a74ff8f214caf6",
+  "pdf_sha256": "8f7b0cd6d0dc2d8f2d10d14e7eedd0fdf64e697fbdd675c588c087782be014f0",
+  "seal_sha256": "ad1151fefba142d840a0e3b03d0f3192165f859c46622bb3dc84558a96359c9b",
+  "source_frontend_sha256": {
+    "index.html": "ec5ddd561669c2bc8284e782f71fefaa71720f8caefd3d0e3de34b567576ab7c",
+    "style.css": "25713aaa7678fdad1d08c58ca46be5a230adcfa5eb1f19ce16df532a3648a6e0",
+    "app.js": "80bc082e3805922aa286edf80fa6d64e9ddde0b959f123145ae44f885efd620d"
+  },
+  "files": {
+    "EarningsReview-第二讲讲义包.zip": "dcdce6983e223c6c064dc1b0618dc2188f9c88ae6bb8f36835cd45ded0f9b5af",
+    "PROMPTS.md": "dc24a728158cb82fbf4857de8b7ad2e7f5e9679b9dab1719422751aeeef7dd68",
+    "assets/earnings-review-example.jpg": "1effd55aee70658939f7f6c303bb281bfca13eac5b56bd1449720cf3dc56e861",
+    "assets/handout.css": "5b69dec73d97ed9b371750bd69ad4384b2bac220ef013a31965c0a14d340879d",
+    "assets/handout.js": "255560e53e1572ec4563521138343e7b7ac82055f8ab68e0270a2a074d28c0a9",
+    "earnings-review/app.js": "0ef4d1b1f2ec49844cd2ec83d31b38533395148e4fb656ca332007aedc3f2f31",
+    "earnings-review/data/external.json": "8e779e9cf96e284d7d99f1a15bf28d541ed8f75ee4c62416a6638e7366f514ca",
+    "earnings-review/data/image-155.png": "520d1c6ac08623b89a3a52514216145fe1807073dc241bb4d7f83517e9f9c544",
+    "earnings-review/data/image-90.png": "93961b4eda0c814302d05fa90232cffc475ac437e43cc4e6df7e572fb203004f",
+    "earnings-review/data/internal.json": "158fae6a37ac04a96e99dd1a4ca02903045c8e6ba006b0b7c61a70ce8e7b64f2",
+    "earnings-review/data/report.pdf": "8f7b0cd6d0dc2d8f2d10d14e7eedd0fdf64e697fbdd675c588c087782be014f0",
+    "earnings-review/data/run.json": "28ec1a6b0c5a8a60bd4f066d624f2dcadee21054e704f1750be0c7adf4ece221",
+    "earnings-review/data/state.json": "ac361a80a1e0e20d75868c62d2a16fd528af2799a1547e7331ef34161ab3b5d1",
+    "earnings-review/data/trace.json": "f0310ac31da279c9e025b113cdc9710750a70b5625c08985a0b6aa0d31d081ee",
+    "earnings-review/index.html": "9f04263da4dc85b3f7aaecbd30bfe7b5acfe19b6de97697be65006a7249567db",
+    "earnings-review/style.css": "14b59e16e93a368747260b25316e5bce88c24d433c823574f55fcf2f733afeae",
+    "earnings-review-materials.zip": "7f1af94f1a57cd290927c62bb63bb70c543d96c722447c9e4c98f864588c5f94",
+    "index.html": "c1c661356e57473f6a2326af5ad5303c242e3be5a1780f46fa05c11937da1d0f",
+    "讲义.md": "c00fbd1d0f14d2696dc3e3bc17cb46a1ee2df8ac7d3b217dc796b45606fe5720"
+  }
+}

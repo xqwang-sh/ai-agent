@@ -1,0 +1,681 @@
+{
+  "catalog": {
+    "id": "cbea7e9d96e4533c36da36dd3342e68d4aafc838addd3268c8cfe3e57982bff1",
+    "folder_path": "课堂报告集合 · 6 份原始 PDF",
+    "entries": [
+      {
+        "id": "1422f8d59766a2f8bb1237e8299e8e487fb3ecd2a3e745aa1a8d231bf788573e",
+        "company": "内蒙古伊利实业集团股份有限公司",
+        "short_name": "伊利股份",
+        "thscode": "600887.SH",
+        "period": "2026H1",
+        "filename": "伊利股份_2026半年报.pdf",
+        "pages": 219,
+        "pdf_sha256": "423af4d63f2b620a03ed9d0080adbb063f3ef14d874abeca8097d0e0d1441ac2"
+      },
+      {
+        "id": "eee47e1e78e2260f4d122737389faaef6966d35abb2dafa77e8c6f3e3b507351",
+        "company": "宁德时代新能源科技股份有限公司",
+        "short_name": "宁德时代",
+        "thscode": "300750.SZ",
+        "period": "2026H1",
+        "filename": "宁德时代_2026半年报.pdf",
+        "pages": 182,
+        "pdf_sha256": "d96b5d49ae75bec5913d032de781873565f5405bf99fd8b011eab152549862b9"
+      },
+      {
+        "id": "9fdb34ac950008faa8d698f8093db12fd2bb91a6a1f5e81b7a55f5ef5a7ac149",
+        "company": "比亚迪股份有限公司",
+        "short_name": "比亚迪",
+        "thscode": "002594.SZ",
+        "period": "2026H1",
+        "filename": "比亚迪_2026半年报.pdf",
+        "pages": 207,
+        "pdf_sha256": "2648a8c4ebf637da4eeb79e58791c1faf457daa687914e325ff37d1b9676a48c"
+      },
+      {
+        "id": "43c8d8e36be791e0ff92e63f89700d36c516233e4ba1dce603418fdd3b6951be",
+        "company": "美的集团股份有限公司",
+        "short_name": "美的集团",
+        "thscode": "000333.SZ",
+        "period": "2026H1",
+        "filename": "美的集团_2026半年报.pdf",
+        "pages": 205,
+        "pdf_sha256": "576dd80e353e53296a800b03e9889a9cbb2e8b91fa2ab3c1dace7c10159179b8"
+      },
+      {
+        "id": "35da5747baf73df162a5199e5e6276318145235d72b8a6ff1719c9477e4a2ba3",
+        "company": "贵州茅台酒股份有限公司",
+        "short_name": "贵州茅台",
+        "thscode": "600519.SH",
+        "period": "2026H1",
+        "filename": "贵州茅台_2026半年报.pdf",
+        "pages": 110,
+        "pdf_sha256": "0e10aa26be46b1cf3cd03f06e834c7fb98d5dd0d661b96f8fddd4af7e846a4f6"
+      },
+      {
+        "id": "43f54645245c05021fc9715de401169bb0ed68be53c1cf5dad08c10880a13329",
+        "company": "顺丰控股股份有限公司",
+        "short_name": "顺丰控股",
+        "thscode": "002352.SZ",
+        "period": "2026H1",
+        "filename": "顺丰控股_2026半年报.pdf",
+        "pages": 213,
+        "pdf_sha256": "8f7b0cd6d0dc2d8f2d10d14e7eedd0fdf64e697fbdd675c588c087782be014f0"
+      }
+    ],
+    "excluded": []
+  },
+  "default_report_id": "43f54645245c05021fc9715de401169bb0ed68be53c1cf5dad08c10880a13329",
+  "presets": [
+    {
+      "id": "qwen27",
+      "label": "Qwen 27B",
+      "text_model": "Qwen/Qwen3.8-27B",
+      "vision_model": "Qwen/Qwen3.8-27B",
+      "description": "文本提取与独立视觉复读均使用27B"
+    },
+    {
+      "id": "qwen9",
+      "label": "Qwen 9B + 27B视觉",
+      "text_model": "Qwen/Qwen3.5-9B",
+      "vision_model": "Qwen/Qwen3.8-27B",
+      "description": "9B负责文本，27B负责独立视觉复读"
+    }
+  ],
+  "jobs": [
+    {
+      "schema": 1,
+      "id": "run-2e624a4e1cb24ba6b9a74ff8f214caf6",
+      "report_id": "43f54645245c05021fc9715de401169bb0ed68be53c1cf5dad08c10880a13329",
+      "pdf_sha256": "8f7b0cd6d0dc2d8f2d10d14e7eedd0fdf64e697fbdd675c588c087782be014f0",
+      "company": "顺丰控股股份有限公司",
+      "short_name": "顺丰控股",
+      "status": "candidate_ready",
+      "historical": true,
+      "preset": {
+        "id": "qwen27",
+        "label": "Qwen 27B",
+        "text_model": "Qwen/Qwen3.8-27B",
+        "vision_model": "Qwen/Qwen3.8-27B",
+        "description": "文本提取与独立视觉复读均使用27B"
+      },
+      "created_unix": 1792154071.738015,
+      "started_unix": 1792154071.855815,
+      "ended_unix": 1792154443.534519,
+      "elapsed_seconds": 371.679,
+      "current_step": "complete",
+      "stages": [
+        {
+          "id": "prepare",
+          "label": "读取PDF",
+          "kind": "program",
+          "status": "completed",
+          "model_ids": [],
+          "tokens": 0,
+          "usage_state": "complete",
+          "pending_calls": [],
+          "unknown_calls": [],
+          "calls": 0,
+          "elapsed_seconds": 2.911,
+          "api_seconds": 0
+        },
+        {
+          "id": "locate",
+          "label": "定位证据",
+          "kind": "model",
+          "status": "completed",
+          "model_ids": [
+            "Qwen/Qwen3.8-27B"
+          ],
+          "tokens": 18536,
+          "usage_state": "complete",
+          "pending_calls": [],
+          "unknown_calls": [],
+          "calls": 1,
+          "elapsed_seconds": 17.275,
+          "api_seconds": 17.275
+        },
+        {
+          "id": "extract",
+          "label": "提取与补证",
+          "kind": "model",
+          "status": "completed",
+          "model_ids": [
+            "Qwen/Qwen3.8-27B"
+          ],
+          "tokens": 44221,
+          "usage_state": "complete",
+          "pending_calls": [],
+          "unknown_calls": [],
+          "calls": 2,
+          "elapsed_seconds": 190.365,
+          "api_seconds": 190.365
+        },
+        {
+          "id": "vision",
+          "label": "内部视觉核验",
+          "kind": "model",
+          "status": "completed",
+          "model_ids": [
+            "Qwen/Qwen3.8-27B"
+          ],
+          "tokens": 34683,
+          "usage_state": "complete",
+          "pending_calls": [],
+          "unknown_calls": [],
+          "calls": 3,
+          "elapsed_seconds": 160.505,
+          "api_seconds": 159.767
+        },
+        {
+          "id": "external",
+          "label": "同花顺外部核验",
+          "kind": "service",
+          "status": "completed",
+          "model_ids": [],
+          "tokens": 0,
+          "usage_state": "complete",
+          "pending_calls": [],
+          "unknown_calls": [],
+          "calls": 0,
+          "elapsed_seconds": 0.345,
+          "api_seconds": 0
+        },
+        {
+          "id": "delivery",
+          "label": "生成Earnings Review",
+          "kind": "program",
+          "status": "completed",
+          "model_ids": [],
+          "tokens": 0,
+          "usage_state": "complete",
+          "pending_calls": [],
+          "unknown_calls": [],
+          "calls": 0,
+          "elapsed_seconds": 0.038,
+          "api_seconds": 0
+        }
+      ],
+      "usage": {
+        "requests": 6,
+        "prompt_tokens": 93604,
+        "completion_tokens": 3836,
+        "total_tokens": 97440,
+        "cached_tokens": 0,
+        "pending_calls": [],
+        "unknown_calls": []
+      },
+      "internal": {
+        "status": "matched",
+        "matched": 10,
+        "total": 10
+      },
+      "external": {
+        "status": "matched",
+        "matched": 10,
+        "total": 10
+      },
+      "feedback_count": 3,
+      "attempt_count": 2,
+      "calls": [
+        {
+          "id": "001",
+          "stage": "locate",
+          "model": "Qwen/Qwen3.8-27B",
+          "status": "completed",
+          "usage": {
+            "prompt_tokens": 18190,
+            "completion_tokens": 346,
+            "total_tokens": 18536,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 18190
+          },
+          "usage_state": "complete",
+          "elapsed_seconds": 17.275
+        },
+        {
+          "id": "002",
+          "stage": "extract",
+          "model": "Qwen/Qwen3.8-27B",
+          "status": "completed",
+          "usage": {
+            "prompt_tokens": 20843,
+            "completion_tokens": 668,
+            "total_tokens": 21511,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 20843
+          },
+          "usage_state": "complete",
+          "elapsed_seconds": 100.445
+        },
+        {
+          "id": "003",
+          "stage": "continue_text",
+          "model": "Qwen/Qwen3.8-27B",
+          "status": "completed",
+          "usage": {
+            "prompt_tokens": 22021,
+            "completion_tokens": 689,
+            "total_tokens": 22710,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 22021
+          },
+          "usage_state": "complete",
+          "elapsed_seconds": 89.92
+        },
+        {
+          "id": "004",
+          "stage": "vision",
+          "model": "Qwen/Qwen3.8-27B",
+          "status": "completed",
+          "usage": {
+            "prompt_tokens": 9941,
+            "completion_tokens": 711,
+            "total_tokens": 10652,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 9941
+          },
+          "usage_state": "complete",
+          "elapsed_seconds": 71.238
+        },
+        {
+          "id": "005",
+          "stage": "continue_vision",
+          "model": "Qwen/Qwen3.8-27B",
+          "status": "completed",
+          "usage": {
+            "prompt_tokens": 10852,
+            "completion_tokens": 709,
+            "total_tokens": 11561,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 10852
+          },
+          "usage_state": "complete",
+          "elapsed_seconds": 29.186
+        },
+        {
+          "id": "006",
+          "stage": "continue_vision",
+          "model": "Qwen/Qwen3.8-27B",
+          "status": "completed",
+          "usage": {
+            "prompt_tokens": 11757,
+            "completion_tokens": 713,
+            "total_tokens": 12470,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 11757
+          },
+          "usage_state": "complete",
+          "elapsed_seconds": 59.343
+        }
+      ],
+      "events": [
+        {
+          "id": "op-0001",
+          "unix": 1792154071.8568032,
+          "kind": "completed",
+          "stage": "prepare",
+          "message": "读取整份PDF并建立逐页导航"
+        },
+        {
+          "id": "call-001",
+          "unix": 1792154074.774668,
+          "kind": "model",
+          "stage": "locate",
+          "message": "调用 001 · Qwen/Qwen3.8-27B · locate"
+        },
+        {
+          "id": "call-002",
+          "unix": 1792154092.0650098,
+          "kind": "model",
+          "stage": "extract",
+          "message": "调用 002 · Qwen/Qwen3.8-27B · extract"
+        },
+        {
+          "id": "feedback-0",
+          "unix": 1792154192.522538,
+          "kind": "feedback",
+          "stage": "source",
+          "message": "basic_eps: unit disagrees with its own original quote"
+        },
+        {
+          "id": "call-003",
+          "unix": 1792154192.541194,
+          "kind": "model",
+          "stage": "extract",
+          "message": "调用 003 · Qwen/Qwen3.8-27B · continue_text"
+        },
+        {
+          "id": "feedback-1",
+          "unix": 1792154282.4732769,
+          "kind": "progress",
+          "stage": "source",
+          "message": "本轮检查通过"
+        },
+        {
+          "id": "op-0002",
+          "unix": 1792154282.4743419,
+          "kind": "completed",
+          "stage": "vision",
+          "message": "渲染原始PDF证据页"
+        },
+        {
+          "id": "call-004",
+          "unix": 1792154283.233025,
+          "kind": "model",
+          "stage": "vision",
+          "message": "调用 004 · Qwen/Qwen3.8-27B · vision"
+        },
+        {
+          "id": "feedback-2",
+          "unix": 1792154354.482006,
+          "kind": "feedback",
+          "stage": "vision_source",
+          "message": "basic_eps: unit disagrees with its own original quote；vision: basic_eps: unit disagrees with its own original quote"
+        },
+        {
+          "id": "call-005",
+          "unix": 1792154354.5110872,
+          "kind": "model",
+          "stage": "vision",
+          "message": "调用 005 · Qwen/Qwen3.8-27B · continue_vision"
+        },
+        {
+          "id": "feedback-3",
+          "unix": 1792154383.702421,
+          "kind": "feedback",
+          "stage": "vision_source",
+          "message": "basic_eps: invalid amount/EPS unit；vision: basic_eps: invalid amount/EPS unit"
+        },
+        {
+          "id": "call-006",
+          "unix": 1792154383.726412,
+          "kind": "model",
+          "stage": "vision",
+          "message": "调用 006 · Qwen/Qwen3.8-27B · continue_vision"
+        },
+        {
+          "id": "op-0003",
+          "unix": 1792154443.092756,
+          "kind": "completed",
+          "stage": "vision",
+          "message": "比较独立图像与文字抄录"
+        },
+        {
+          "id": "op-0004",
+          "unix": 1792154443.096365,
+          "kind": "completed",
+          "stage": "external",
+          "message": "同花顺独立取数与逐项比对"
+        },
+        {
+          "id": "feedback-4",
+          "unix": 1792154443.442741,
+          "kind": "progress",
+          "stage": "external",
+          "message": "本轮检查通过"
+        },
+        {
+          "id": "op-0005",
+          "unix": 1792154443.443883,
+          "kind": "completed",
+          "stage": "delivery",
+          "message": "绑定已核验证据并生成简报"
+        }
+      ],
+      "issues": [],
+      "review": {
+        "company": "顺丰控股股份有限公司",
+        "short_name": "顺丰控股",
+        "thscode": "002352.SZ",
+        "current_period": "2026H1",
+        "prior_period": "2025H1",
+        "scope": "consolidated",
+        "status": "human_review_pending",
+        "pdf_url": "/lesson-2/earnings-review/data/report.pdf",
+        "rows": [
+          {
+            "label": "营业收入",
+            "metric": "revenue",
+            "current_canonical": "155506421000",
+            "prior_canonical": "146858174000",
+            "canonical_unit": "元",
+            "display_current": "1555.06",
+            "display_prior": "1468.58",
+            "display_unit": "亿元",
+            "yoy_percent": "5.89",
+            "cost_parentheses_normalized_to_positive_magnitude": false,
+            "value_page": 90,
+            "unit_page": 90,
+            "original_current": "155,506,421",
+            "original_prior": "146,858,174",
+            "original_unit": "千元"
+          },
+          {
+            "label": "营业成本",
+            "metric": "operating_cost",
+            "current_canonical": "134593933000",
+            "prior_canonical": "127447974000",
+            "canonical_unit": "元",
+            "display_current": "1345.94",
+            "display_prior": "1274.48",
+            "display_unit": "亿元",
+            "yoy_percent": "5.61",
+            "cost_parentheses_normalized_to_positive_magnitude": true,
+            "value_page": 90,
+            "unit_page": 90,
+            "original_current": "(134,593,933)",
+            "original_prior": "(127,447,974)",
+            "original_unit": "千元"
+          },
+          {
+            "label": "营业利润",
+            "metric": "operating_profit",
+            "current_canonical": "7707792000",
+            "prior_canonical": "7582360000",
+            "canonical_unit": "元",
+            "display_current": "77.08",
+            "display_prior": "75.82",
+            "display_unit": "亿元",
+            "yoy_percent": "1.65",
+            "cost_parentheses_normalized_to_positive_magnitude": false,
+            "value_page": 90,
+            "unit_page": 90,
+            "original_current": "7,707,792",
+            "original_prior": "7,582,360",
+            "original_unit": "千元"
+          },
+          {
+            "label": "归母净利润",
+            "metric": "parent_net_profit",
+            "current_canonical": "5501905000",
+            "prior_canonical": "5737699000",
+            "canonical_unit": "元",
+            "display_current": "55.02",
+            "display_prior": "57.38",
+            "display_unit": "亿元",
+            "yoy_percent": "-4.11",
+            "cost_parentheses_normalized_to_positive_magnitude": false,
+            "value_page": 90,
+            "unit_page": 90,
+            "original_current": "5,501,905",
+            "original_prior": "5,737,699",
+            "original_unit": "千元"
+          },
+          {
+            "label": "基本每股收益",
+            "metric": "basic_eps",
+            "current_canonical": "1.10",
+            "prior_canonical": "1.16",
+            "canonical_unit": "元/股",
+            "display_current": "1.10",
+            "display_prior": "1.16",
+            "display_unit": "元/股",
+            "yoy_percent": "-5.17",
+            "cost_parentheses_normalized_to_positive_magnitude": false,
+            "value_page": 155,
+            "unit_page": 155,
+            "original_current": "1.10",
+            "original_prior": "1.16",
+            "original_unit": "元/股"
+          }
+        ],
+        "evidence_pages": [
+          90,
+          155
+        ],
+        "reference_source": "Hithink Finance / financials.income / remote / 2026Q2 + 2025Q2",
+        "limitations": "程序核对原文和十个独立数值；尚未人工确认表头、口径、重述及单位关联。未作原因、预期或投资判断。",
+        "highlights": [
+          {
+            "label": "营业收入",
+            "value": "1555.06",
+            "unit": "亿元",
+            "change": "5.89",
+            "change_unit": "%"
+          },
+          {
+            "label": "归母净利润",
+            "value": "55.02",
+            "unit": "亿元",
+            "change": "-4.11",
+            "change_unit": "%"
+          },
+          {
+            "label": "毛利率",
+            "value": "13.45",
+            "unit": "%",
+            "change": "0.23",
+            "change_unit": "个百分点"
+          },
+          {
+            "label": "归母净利率",
+            "value": "3.54",
+            "unit": "%",
+            "change": "-0.37",
+            "change_unit": "个百分点"
+          }
+        ],
+        "derived": [
+          {
+            "label": "毛利润",
+            "current": "209.12",
+            "prior": "194.10",
+            "unit": "亿元",
+            "change": null,
+            "change_unit": null
+          },
+          {
+            "label": "毛利率",
+            "current": "13.45",
+            "prior": "13.22",
+            "unit": "%",
+            "change": "0.23",
+            "change_unit": "个百分点"
+          },
+          {
+            "label": "归母净利率",
+            "current": "3.54",
+            "prior": "3.91",
+            "unit": "%",
+            "change": "-0.37",
+            "change_unit": "个百分点"
+          }
+        ],
+        "narrative": [
+          "2026年上半年，营业收入1555.06亿元，同比增加5.89%。",
+          "归母净利润55.02亿元，同比减少4.11%；基本每股收益1.10元/股。",
+          "按合并营业收入与营业成本计算，毛利率为13.45%，同比增加0.23个百分点；归母净利率为3.54%。"
+        ],
+        "comparison": [
+          {
+            "label": "营业收入",
+            "current": 1555.06,
+            "prior": 1468.58,
+            "unit": "亿元"
+          },
+          {
+            "label": "营业成本",
+            "current": 1345.94,
+            "prior": 1274.48,
+            "unit": "亿元"
+          },
+          {
+            "label": "营业利润",
+            "current": 77.08,
+            "prior": 75.82,
+            "unit": "亿元"
+          },
+          {
+            "label": "归母净利润",
+            "current": 55.02,
+            "prior": 57.38,
+            "unit": "亿元"
+          }
+        ],
+        "evidence": [
+          {
+            "page": 90,
+            "pdf_url": "/lesson-2/earnings-review/data/report.pdf#page=90",
+            "image_url": "/lesson-2/earnings-review/data/image-90.png"
+          },
+          {
+            "page": 155,
+            "pdf_url": "/lesson-2/earnings-review/data/report.pdf#page=155",
+            "image_url": "/lesson-2/earnings-review/data/image-155.png"
+          }
+        ],
+        "internal_url": "/lesson-2/earnings-review/data/internal.json",
+        "external_url": "/lesson-2/earnings-review/data/external.json",
+        "trace_url": "/lesson-2/earnings-review/data/trace.json",
+        "seal_sha256": "ad1151fefba142d840a0e3b03d0f3192165f859c46622bb3dc84558a96359c9b",
+        "requires_human_review": true
+      }
+    }
+  ],
+  "budget": {
+    "max_requests": 12,
+    "token_admission": 250000,
+    "seconds_admission": 900,
+    "max_feedback": 6,
+    "no_progress": 2
+  },
+  "active_job_id": null
+}

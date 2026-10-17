@@ -1,6 +1,6 @@
 import { MODEL, APPROACHES, METRICS, stateValues, parseJson, gradeOutput, resultForTrial, requirePrevious, toolDefinition, executeTool, promptFor } from '../../assets/lesson-one-workflow.mjs';
 
-export async function runTrial({approach, apiKey, previous, windowText, windowSha256, fetchImpl = fetch, now = Date.now}) {
+export async function runTrial({approach, apiKey, previous, reportText, reportSha256, fetchImpl = fetch, now = Date.now}) {
   if (!APPROACHES.includes(approach)) throw new Error('未知运行方法。');
   if (typeof apiKey !== 'string' || !apiKey.trim() || apiKey.length > 512) throw new Error('请填写自己的硅基流动 API Key。');
   const state = requirePrevious(approach, previous);
@@ -10,7 +10,7 @@ export async function runTrial({approach, apiKey, previous, windowText, windowSh
   const tools = approach === 'unit-api' ? toolDefinition('convert_units') : approach === 'yoy-api' ? toolDefinition('calculate_yoy') : null;
   const toolName = tools?.[0].function.name;
   const values = state ? stateValues(state, approach.startsWith('unit') ? 'raw_values':'unit_values') : null;
-  const messages = [{role:'user', content:approach.startsWith('locator') ? `${prompt}\n\n${windowText}` : prompt}];
+  const messages = [{role:'user', content:approach.startsWith('locator') ? `${prompt}\n\n${reportText}` : prompt}];
   const toolCalls = [];
   let finalText = '', finalSeen = false;
   try {
@@ -53,7 +53,7 @@ export async function runTrial({approach, apiKey, previous, windowText, windowSh
     if (approach.startsWith('unit')) workflowState.unit_values = parsed;
     if (approach.startsWith('yoy')) workflowState.yoy_values = parsed;
     workflowState.source_step = approach;
-    return {...result, kind:'current', approach, model:MODEL, parsed, grade, workflowState, prompt, window_sha256:windowSha256,
+    return {...result, kind:'current', approach, model:MODEL, parsed, grade, workflowState, prompt, report_sha256:reportSha256,
       usage:ledger, tokens:ledger.complete ? `${ledger.total_tokens.toLocaleString()} tok` : `${ledger.total_tokens.toLocaleString()} tok · 用量不完整`,
       elapsed_seconds:(now() - started) / 1000, latency:`${((now() - started) / 1000).toFixed(2)}s`, tool_calls:toolCalls,
       note:'检查反映本次运行与本轮第02、04步的真实前序记录，结果仍需人工复核。'};

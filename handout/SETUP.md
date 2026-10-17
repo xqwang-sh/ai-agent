@@ -14,7 +14,7 @@ Prompt 是发给 OpenCode 的任务说明。Product 看简报，Approaches 看�
 
 ## 2. 准备能回复的 OpenCode
 
-本轮实际跟做使用 macOS 上的 OpenCode Desktop 1.18.26。已有能工作的桌面版就继续用，不必更换版本。
+以下点击位置以 macOS 上的 OpenCode Desktop 1.18.26 为例。已有能工作的桌面版就继续用，不必更换版本。
 
 1. 尚未安装时，打开 [官方下载安装页](https://opencode.ai/download)，找 **OpenCode Desktop**，按自己的系统下载安装。不要把 Terminal 的安装命令当作本讲必做步骤。
 2. 打开软件，确认输入框附近能看到一个编码模型名称。若已能回复，直接进入下面的材料准备。
@@ -49,9 +49,9 @@ API Key 是服务控制台创建的调用凭据，不是账号登录密码。Ope
 earnings-workflow/
   TASKBOOK.md
   AGENTS.md
-  data/report-pages-60-75.txt
+  data/report-full-text.txt        一份完整207页财报文本
   contracts/workflow.json
-  prompts/runtime/
+  prompts/runtime/                 五个提示词文件
   history/lesson-one-history.json
   checks/
 ```
@@ -59,7 +59,7 @@ earnings-workflow/
 4. 在本次实测的 OpenCode 桌面界面，点击输入框下方的当前项目名 → **添加项目** → 选择这个 `earnings-workflow` → **打开**。
 5. 等项目名变成 `earnings-workflow`，进入本项目的一个会话。后面的第 0–7 步都在这个会话继续。其他版本若提供“打开项目”或“打开文件夹”，选择同一个目录。
 
-OpenCode 只显示聊天而没有文件列表也正常。第 0 步会让它列出真实目录与文件，替你确认位置。材料包没有网页程序；现在不能直接打开一个成品，是正常状态。
+OpenCode 只显示聊天而没有文件列表也正常。第 0 步会让它列出真实目录与文件，替你确认位置。材料包只有一份完整207页财报文本，prompts/runtime 中是五个提示词文件，不是五份财报。历史定位当时只使用第60–75页窗口，不能当成本次全文运行结果。材料包没有网页程序；现在不能直接打开一个成品，是正常状态。
 
 若出现 `PermissionDenied`、`EACCES` 或“无法保存”，用第 0 步修复 Prompt，让 Agent 说明如何换到本机可写的新目录，再重新打开项目。不要自己猜系统权限命令。
 

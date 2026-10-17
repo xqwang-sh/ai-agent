@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { unitScore, resultForTrial, num } from '../assets/lesson-one-workflow.mjs';
 import { historicalResult, requirePrevious, executeTool, promptFor, gradeOutput } from '../assets/lesson-one-workflow.mjs';
 import { runTrial } from '../netlify/lib/workflow.mjs';
-import { history, locator, units, currentLocator, currentUnits, modelFixture, windowText } from './fixtures.mjs';
+import { history, locator, units, currentLocator, currentUnits, modelFixture, reportText } from './fixtures.mjs';
 
 test('conversion rejects incorrect prior-period values', () => {
   const converted = {
@@ -76,7 +76,7 @@ test('tool arguments must match the selected input and original unit', () => {
 
 test('two-call tool run totals usage and time, and keeps the key out of records', async () => {
   let clock = 0;
-  const result = await runTrial({approach:'unit-api', apiKey:'private-test-key', previous:currentLocator, windowText, fetchImpl:modelFixture('unit-api'), now:() => { clock += 1000; return clock; }});
+  const result = await runTrial({approach:'unit-api', apiKey:'private-test-key', previous:currentLocator, reportText, fetchImpl:modelFixture('unit-api'), now:() => { clock += 1000; return clock; }});
   assert.equal(result.grade.score, '5/5');
   assert.equal(result.usage.total_tokens, 300);
   assert.equal(result.usage.calls.length, 2);
@@ -98,7 +98,7 @@ test('missing API usage is reported as incomplete', async () => {
 });
 
 test('invalid key reports HTTP 401 without leaking provider body or key', async () => {
-  await assert.rejects(runTrial({approach:'locator-thinking-api', apiKey:'invalid-test-key', windowText, fetchImpl:modelFixture('locator-thinking-api')}), (error) => {
+  await assert.rejects(runTrial({approach:'locator-thinking-api', apiKey:'invalid-test-key', reportText, fetchImpl:modelFixture('locator-thinking-api')}), (error) => {
     assert.match(error.message, /HTTP 401/);
     assert.doesNotMatch(error.message, /invalid-test-key/);
     return true;
@@ -106,7 +106,7 @@ test('invalid key reports HTTP 401 without leaking provider body or key', async 
 });
 
 test('the live workflow passes only with its own completed parent results', async () => {
-  const locate = await runTrial({approach:'locator-thinking-api', apiKey:'test-key', windowText, fetchImpl:modelFixture('locator-thinking-api')});
+  const locate = await runTrial({approach:'locator-thinking-api', apiKey:'test-key', reportText, fetchImpl:modelFixture('locator-thinking-api')});
   const convert = await runTrial({approach:'unit-api', apiKey:'test-key', previous:locate, fetchImpl:modelFixture('unit-api')});
   const yoy = await runTrial({approach:'yoy-api', apiKey:'test-key', previous:convert, fetchImpl:modelFixture('yoy-api')});
   assert.deepEqual(yoy.caseStates, ['pass','pass','pass','pass','pass']);

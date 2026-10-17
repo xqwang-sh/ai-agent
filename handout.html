@@ -15,14 +15,14 @@
 <p class="doc-meta">第一讲教师实操讲义 · 更新 2026-10-17</p>
 <div class="hero-actions"><a href="#tour">先看成品怎么用</a><a href="lesson-one-materials.zip" download>下载实操材料</a><button type="button" id="print">打印讲义</button></div></header>
 <section class="intro" id="purpose"><h2>跟着做出一个能运行的产品</h2><p>用自己的 OpenCode，搭出与现场产品相同的财报处理 workflow。先看已有结果，再逐步接上本人的模型调用。</p>
-<div class="goal-box"><b>完成后你会得到</b><p>一个能回放历史结果、接收个人硅基流动 API Key，并按 02 → 04 → 06 运行的本地网页。它提取五项指标的两期原值，换算单位，计算同比，检查通过后展示候选简报。</p></div><p>本讲固定使用比亚迪 002594.SZ 的 2026H1 与 2025H1 案例。输入是已准备好的报告第 60–75 物理页文字窗口，保留逐页边界；H1 指截至 6 月 30 日的六个月累计数。本讲不重新下载 PDF，也不连接同花顺。</p></section>
+<div class="goal-box"><b>完成后你会得到</b><p>一个能回放历史结果、接收个人硅基流动 API Key，并按 02 → 04 → 06 运行的本地网页。它提取五项指标的两期原值，换算单位，计算同比，检查通过后展示候选简报。</p></div><p>本讲固定使用比亚迪 002594.SZ 的 2026H1 与 2025H1 案例。输入是一份完整的 207 页半年报 TXT，保留第 1–207 物理页边界，不提前截取目标页；H1 指截至 6 月 30 日的六个月累计数。本讲不重新下载 PDF，也不连接同花顺。旧历史定位使用的是第 60–75 页窗口，保留当时记录，不能当作全文运行结果。</p></section>
 <section class="intro" id="workflow"><h2>这是一个 workflow</h2><p>这是一个 workflow，也就是由程序规定顺序、传递数据并检查结果的工作流。它包含模型任务和固定计算工具。程序决定哪一步能继续；模型不能自行宣布通过。页面的六行是三个阶段的做法对照，不是六个依次工作的 Agent。</p>
-<div class="workflow-map" aria-label="三个阶段，主线 02 到 04 到 06"><div class="workflow-stage"><span class="stage-index">1</span><h3>定位与提取</h3><p class="stage-rows">01 无 thinking / 02 有 thinking</p><p><b>输入</b>报告 60–75 页文字窗口</p><p>模型找合并利润表与续页，返回章节、物理页、两期列头、原单位与十个原值；程序检查。</p><p class="stage-output">02 通过后得到 raw_values；金额保留千元，EPS 保留元/股。</p></div><div class="workflow-stage"><span class="stage-index">2</span><h3>统一单位</h3><p class="stage-rows">03 无工具 / 04 convert_units</p><p><b>输入</b>本轮已通过的 02.raw_values</p><p>模型提出工具调用，程序执行 convert_units。金额除以 100000 转为亿元、保留两位小数；EPS 不换算。</p><p class="stage-output">04 通过后得到 unit_values，包含五项指标的本期与同期。</p></div><div class="workflow-stage"><span class="stage-index">3</span><h3>计算同比</h3><p class="stage-rows">05 无工具 / 06 calculate_yoy</p><p><b>输入</b>本轮已通过的 04.unit_values</p><p>模型提出工具调用，程序执行 calculate_yoy。使用 (本期 − 同期) ÷ 同期 × 100，保留两位小数与 %。同期为 0 时停止。</p><p class="stage-output">06 通过后得到 yoy_values，完成主线五项检查并形成待人工复核的候选简报。</p></div></div>
+<div class="workflow-map" aria-label="三个阶段，主线 02 到 04 到 06"><div class="workflow-stage"><span class="stage-index">1</span><h3>定位与提取</h3><p class="stage-rows">01 无 thinking / 02 有 thinking</p><p><b>输入</b>完整 207 页报告文本 · report-full-text.txt</p><p>模型找合并利润表与续页，返回章节、物理页、两期列头、原单位与十个原值；程序检查。</p><p class="stage-output">02 通过后得到 raw_values；金额保留千元，EPS 保留元/股。</p></div><div class="workflow-stage"><span class="stage-index">2</span><h3>统一单位</h3><p class="stage-rows">03 无工具 / 04 convert_units</p><p><b>输入</b>本轮已通过的 02.raw_values</p><p>模型提出工具调用，程序执行 convert_units。金额除以 100000 转为亿元、保留两位小数；EPS 不换算。</p><p class="stage-output">04 通过后得到 unit_values，包含五项指标的本期与同期。</p></div><div class="workflow-stage"><span class="stage-index">3</span><h3>计算同比</h3><p class="stage-rows">05 无工具 / 06 calculate_yoy</p><p><b>输入</b>本轮已通过的 04.unit_values</p><p>模型提出工具调用，程序执行 calculate_yoy。使用 (本期 − 同期) ÷ 同期 × 100，保留两位小数与 %。同期为 0 时停止。</p><p class="stage-output">06 通过后得到 yoy_values，完成主线五项检查并形成待人工复核的候选简报。</p></div></div>
 <p class="mainline">主线 <b>02 → 04 → 06</b><span>原值 → 换算结果 → 同比与候选简报</span></p>
 <h3>分清编程 Agent、workflow 和运行模型</h3><div class="actors"><div class="card"><h3>你使用的编程 Agent</h3><p>本讲以 OpenCode 为例。把下面的主 Prompt 发给它，让它写文件、启动程序、运行检查和修复。它使用的编码模型由你在 OpenCode 中配置。</p></div><div class="card"><h3>你搭出的 workflow</h3><p>本机运行的网页和后台程序。负责保存本轮结果、检查前序步骤、执行工具和更新页面。做成后，点网页 Run 不需要 OpenCode 代替你逐次传话。</p></div><div class="card"><h3>处理财报的运行模型</h3><p>与现有产品一致，使用硅基流动的 Qwen/Qwen3.5-4B。网页填写的个人 Key 用于这个模型，与 OpenCode 的编码模型授权分开。</p></div></div></section>
 <section class="intro" id="dependencies"><h2>下一步究竟读取哪一份结果？</h2><p>历史查看与本次运行各有一条链。历史收据可以用来学习和对照，不能补进本轮 Run。在线 Run 和你搭建的本地版本都要遵守下面的依赖。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="历史与本次输入依赖，窄屏可横向滚动"><table class="dependency-table">
-<caption>六行做法与输入来源</caption><thead><tr><th scope="col">产品行号</th><th scope="col">历史查看</th><th scope="col">本次 Run</th></tr></thead><tbody><tr><td>01、02</td><td>同一报告文字窗口；历史提示词按原记录展示</td><td>同一报告文字窗口、同一任务与输出字段，分别关闭或开启 thinking</td></tr><tr><td>03、04</td><td>历史 02 的原值与前序检查</td><td>当前页面会话中刚运行并通过检查的 02，不能用 01 代替</td></tr><tr><td>05、06</td><td>历史 04 的换算结果与前序检查</td><td>当前页面会话中刚运行并通过检查的 04，不能用 03 代替</td></tr></tbody></table></div>
+<caption>六行做法与输入来源</caption><thead><tr><th scope="col">产品行号</th><th scope="col">历史查看</th><th scope="col">本次 Run</th></tr></thead><tbody><tr><td>01、02</td><td>当时的第 60–75 页报告窗口；历史提示词按原记录展示</td><td>完整第 1–207 页报告文本、同一任务与输出字段，分别关闭或开启 thinking</td></tr><tr><td>03、04</td><td>历史 02 的原值与前序检查</td><td>当前页面会话中刚运行并通过检查的 02，不能用 01 代替</td></tr><tr><td>05、06</td><td>历史 04 的换算结果与前序检查</td><td>当前页面会话中刚运行并通过检查的 04，不能用 03 代替</td></tr></tbody></table></div>
 <p class="callout">重新运行 02 会清空本次 03、04、05、06 的结果；重新运行 04 会清空本次 05、06。重新跑对照行 03 不会替换已有的 04。前序未通过时停止，后续显示未运行或待检查。刷新页面后，需要重新运行本轮前序步骤。</p><h3>五项 Evals 检查什么</h3><ol class="eval-list"><li><b>1．章节定位</b><span>检查财务报告章节名和起始物理页。</span></li><li><b>2．表格定位</b><span>检查合并利润表、完整表页及续页、两期列头和原单位。</span></li><li><b>3．原值提取</b><span>五项指标 × 本期与同期，共十个原值；缺失不能当成 0。</span></li><li><b>4．单位换算</b><span>两期都检查；金额转亿元，EPS 保持元/股。</span></li><li><b>5．同比计算</b><span>逐项检查五个同比、两位小数与百分号。</span></li></ol><p>02 完成前三项，04 增加第四项，06 增加第五项。尚未执行的项显示待检查。五项检查是固定案例的程序评测，不等于完成第二讲的独立视觉与外部数据核验；候选简报仍需人工复核。</p></section>
 <section class="intro" id="tour"><h2>先看线上参考成品</h2><p>先打开<a href="demo.html#evals">现场产品的 Evals</a>。这段在已经发布的成品网站操作；从第 0 步开始，才在你自己的电脑搭建新项目。只完成前两条历史查看，就可以进入准备部分。有 Key 时可选做下面的线上 Run；它的结果不会成为新建本地项目的本轮输入。</p>
 <ol><li>打开现场产品，先在 Product 看标为“历史计算样例”的表格。此时没有发生模型调用，也不需要 Key。</li><li>进入 Evals，选择“历史结果”，依次点击 02、04、06 的行，查看每行收据与五项检查。再看 01、03、05 的对照结果。03/04 沿用历史 02，05/06 沿用历史 04。</li><li>如要实际运行，在 Evals 的个人 API Key 输入框填写自己的硅基流动 Key。点击 02 的 Run，等待结束；确认章节、表格和十个原值都通过。未通过时先看该行收据，不继续。</li><li>点击 04 的 Run。确认两期换算通过，再点击 06 的 Run。不要跳过前序。每行 Run 都使用本轮真实前序，不从历史收据借输入。</li><li>06 通过后回到 Product，确认标识变成“本次五项检查通过 · 待人工复核”。按需下载当前收据，完成后清空 Key。切回历史查看，不会把历史记录变成本次结果。</li></ol><p class="callout">历史 01 与 02 的任务和提示词不完全相同，02 曾加入章节、页码和单位线索，不能把历史差异都归因于 thinking。现在的在线 01/02 使用相同任务与字段，只改变 thinking。历史 05 的 2/5 指五个同比中只有两个通过数值检查。整条链的前四项检查来自前序，所以 Evals 也可能同时显示“四项通过、同比未通过”，两种计数含义不同。这是那次运行的记录，不预设老师本次一定会得到同样结果。</p>
@@ -30,13 +30,13 @@
 <section class="intro" id="prepare"><h2>准备自己的项目</h2>
 <p><a class="download-link" href="lesson-one-materials.zip" download>下载第一讲实操材料 · lesson-one-materials.zip</a></p>
 <p class="callout">先把程序搭完整，再集中做真实运行。第 0–2 步准备环境、页面和历史回放；第 3–6 步由 OpenCode 写功能并运行离线检查，不需要财报 Key。02、04、06 的具体运行方法分别在第 3、4、5 步讲清；第 7 步只在代码定稿后，把它们在同一页面连起来验收。中途改后台或刷新会清空前序，不能把旧结果直接接过去。</p><p>本页的 Prompt 就是发给 OpenCode 的操作请求。网页中的 Product 看候选简报，Approaches 看三个阶段，Evals 看每行运行和检查，Run 是运行。Node.js 是运行你做出的程序所需的环境，第 0 步让 Agent 检查。你不必先学会这些软件术语。</p>
-<ol><li>下载 lesson-one-materials.zip，在电脑上找到这个压缩包后解压。macOS 可双击，Windows 可右键选择“全部解压缩”。先在本机“下载”文件夹中练习；如果目录显示只读或写入失败，换到本机可写的新文件夹，不在压缩包或附件预览中直接运行。</li><li>用 Finder 或资源管理器打开解压后的 earnings-workflow。看到 TASKBOOK.md、data、contracts、prompts、history、checks 后再继续。如果眼前只有另一个 earnings-workflow 文件夹，就再打开一层。此时还没有网页程序，这是正常的。</li><li>打开 OpenCode。在本次实测的桌面界面，点击输入框下方的当前项目名，再点“添加项目”；在文件选择框选中刚才的 earnings-workflow，点“打开”。等输入框下方项目名变成 earnings-workflow。若你的界面直接提供“打开项目”或“打开文件夹”，选择同一个目录。</li><li>确认输入框附近已显示一个编码模型名称，并能正常回复。这个模型负责帮你写程序。尚未连接时先按准备页完成连接；财报运行 Key 到第 7 步真实 Run 时才用，两者分开。</li><li>进入本项目的一个会话，后面的第 0–7 步都在这个会话继续，不要每一步新建聊天。OpenCode 只显示对话而没有文件列表也正常；第 0 步会让它读出真实路径和文件名，替你确认位置。</li></ol><p>材料包包含真实报告文字窗口、任务与字段约定、运行提示词、原始历史收据，以及检查用参考表和合成案例。它没有成品应用。历史结果供只读回放，检查参考表只供程序评分，二者都不能进入当前运行模型的上下文。</p>
+<ol><li>下载 lesson-one-materials.zip，在电脑上找到这个压缩包后解压。macOS 可双击，Windows 可右键选择“全部解压缩”。先在本机“下载”文件夹中练习；如果目录显示只读或写入失败，换到本机可写的新文件夹，不在压缩包或附件预览中直接运行。</li><li>用 Finder 或资源管理器打开解压后的 earnings-workflow。看到 TASKBOOK.md、data、contracts、prompts、history、checks 后再继续。如果眼前只有另一个 earnings-workflow 文件夹，就再打开一层。此时还没有网页程序，这是正常的。</li><li>打开 OpenCode。在本次实测的桌面界面，点击输入框下方的当前项目名，再点“添加项目”；在文件选择框选中刚才的 earnings-workflow，点“打开”。等输入框下方项目名变成 earnings-workflow。若你的界面直接提供“打开项目”或“打开文件夹”，选择同一个目录。</li><li>确认输入框附近已显示一个编码模型名称，并能正常回复。这个模型负责帮你写程序。尚未连接时先按准备页完成连接；财报运行 Key 到第 7 步真实 Run 时才用，两者分开。</li><li>进入本项目的一个会话，后面的第 0–7 步都在这个会话继续，不要每一步新建聊天。OpenCode 只显示对话而没有文件列表也正常；第 0 步会让它读出真实路径和文件名，替你确认位置。</li></ol><p>材料包只有一份财报全文 TXT，另含五个提示词文件、任务与字段约定、原始历史收据、检查用参考表和合成案例。它没有成品应用。历史定位输入当时为第 60–75 页窗口；历史结果供只读回放，检查参考表只供程序评分，二者都不能进入当前运行模型的上下文。</p>
 <pre class="file-tree">earnings-workflow/
   TASKBOOK.md
   AGENTS.md
-  data/report-pages-60-75.txt
+  data/report-full-text.txt        一份完整207页财报文本
   contracts/workflow.json
-  prompts/runtime/                 五份财报模型任务
+  prompts/runtime/                 五个提示词文件
   history/lesson-one-history.json  只读历史收据
   checks/                         检查参考表、合成案例、文件指纹</pre>
 <p>正文中的主 Prompt 都发给 OpenCode。材料包中 prompts/runtime 的文本由做出来的程序发给财报模型，两类提示词用途不同。这里的“第 0–7 步”是搭建步骤，产品中的“01–06”是运行行号。</p>
@@ -54,7 +54,7 @@
 1. 报告当前工作目录的绝对路径。读取 TASKBOOK.md、contracts/workflow.json 和 checks/manifest.json，列出 data、prompts/runtime、history、checks 中实际存在的文件。
 2. 检查我的操作系统与 Node.js，主线使用 Node.js 22 或更高版本及自带的 HTTP、fetch、文件读写能力。缺少时给出适合当前系统的官方安装入口与操作步骤，不重复改装已能工作的环境。
 3. 在当前文件夹建立并删除一个临时文件，确认有写入权限。不要改动 data、history 和 checks 中的材料。后续临时检查文件也只放在当前项目内，不使用项目外的 /tmp 目录。
-4. 检查报告文字窗口与历史文件的 SHA-256 是否与 manifest 一致。检查失败就停止，不编造输入或改写哈希让它通过。
+4. 检查 report-full-text.txt 与历史文件的 SHA-256 是否与 manifest 一致，并确认全文页标连续覆盖 1–207，不缺页、不截断。检查失败就停止，不编造输入或改写哈希让它通过。
 5. 保存 environment-check.json，记录真实路径、系统、Node.js 版本、材料与写入检查。缺少的项如实写 missing，并告诉我唯一的下一步。
 
 不要读取 OpenCode 私有登录文件，不索取 Key，不调用财报模型。完成后停止。</pre></div>
@@ -73,7 +73,7 @@
 
 读取 TASKBOOK.md 和 contracts/workflow.json，现在只建立任务说明和可打开的本地网页，不调用财报模型。
 
-1. 新建 PRODUCT.md，用普通中文写清：使用者是金融教师；案例为比亚迪 2026H1 对 2025H1；输入只有提供的报告文字窗口；输出是五项指标的两期数值、单位、同比和待人工复核的简报。说明固定顺序的 workflow、失败停止和检查范围。
+1. 新建 PRODUCT.md，用普通中文写清：使用者是金融教师；案例为比亚迪 2026H1 对 2025H1；输入为提供的一份完整 207 页报告文本；输出是五项指标的两期数值、单位、同比和待人工复核的简报。说明固定顺序的 workflow、失败停止和检查范围。
 2. 用 Node.js 自带能力建立本地服务 server.mjs 和 web 目录。界面使用 Product、Approaches、Evals 三个页签；Approaches 展示三个阶段，Evals 放置与 contracts 相同的 01–06 六行。使用者看到中文名称，不只看到程序 id。
 3. 先把所有本次结果设为“未运行”，五项检查设为“待检查”。空白状态不显示通过分数或编造财务数据。历史结果将在下一步接入。
 4. 建立只允许本机访问的服务，端口冲突时选择可用端口。把真实启动、关闭、重新打开的方法写入 RUN.md。适配我的系统，不写别人的绝对路径。
@@ -84,7 +84,7 @@
 <div class="learner-card expected"><h3>你应看到</h3><ul><li>出现 PRODUCT.md、server.mjs、web 和 RUN.md。老师只需核对 Agent 已实际保存，不必打开代码。</li><li>Agent 给出了一个可点击的 http://127.0.0.1 地址。打开后三个页签能切换，六行全部未运行，五项检查没有绿勾。</li><li>RUN.md 已给出可复制的中文启动、停止、重启请求；停止后刷新网页无法连接，再启动后恢复，只保留一个本项目服务。</li></ul></div>
 <p class="files"><b>文件与数据：</b>PRODUCT.md、server.mjs、web/、RUN.md。</p>
 
-<div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="page-0"><span>PRODUCT.md 写明文字窗口和累计 H1 口径。</span></label><label><input type="checkbox" data-check="page-1"><span>停止后刷新网页无法连接；再按启动请求操作，能重新打开本地页面。</span></label></div>
+<div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="page-0"><span>PRODUCT.md 写明完整 207 页报告文本和累计 H1 口径。</span></label><label><input type="checkbox" data-check="page-1"><span>停止后刷新网页无法连接；再按启动请求操作，能重新打开本地页面。</span></label></div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>
 <div class="prompt-block"><div class="prompt-heading"><h3>只修复当前步骤</h3><button type="button" data-copy="repair-page">复制 Prompt</button></div><pre id="repair-page">我没有终端基础，刚才本地网页没有按预期打开或更新。请你检查当前 earnings-workflow 的启动记录和第一个报错，替我停止本项目的旧服务并重新启动，只保留这一份练习服务。不要关闭其他项目。检查新的 HTTP 地址可访问后，直接回复可点击的完整网址、我应点的页签和应看到的文字。不要只给命令，不用截图或 file:// 页面替代正在运行的网页。</pre></div></details>
 <details class="repair"><summary>以后怎样启动、停止、重新打开？</summary><p>下面的话也发给 OpenCode，不需要你自己使用终端。</p><div class="prompt-block"><div class="prompt-heading"><h3>以后关闭软件后，重新打开练习</h3><button type="button" data-copy="operation-start">复制 Prompt</button></div><pre id="operation-start">请读取当前 earnings-workflow 的 RUN.md，替我启动这个项目。若它已经在运行就复用，不重复启动。确认网页地址可访问后，直接给我可点击的完整网址。请用普通中文说明我现在点哪里，不让我自己使用终端。</pre></div><div class="prompt-block"><div class="prompt-heading"><h3>Agent 改过程序，但网页没有变化</h3><button type="button" data-copy="operation-restart">复制 Prompt</button></div><pre id="operation-restart">我已经看到你改了文件，但网页还是旧样子。请确认当前项目路径，停止本项目旧服务后重新启动，只保留一个实例。不要关闭其他项目。检查更新后的页面可访问，给我当前完整网址，并告诉我是否需要刷新。提醒我刷新会清空本轮前序，真实运行要从 02 重新开始。</pre></div><div class="prompt-block"><div class="prompt-heading"><h3>本次练习结束，关闭本地服务</h3><button type="button" data-copy="operation-stop">复制 Prompt</button></div><pre id="operation-stop">本次练习结束。请按当前 earnings-workflow 的启动记录，停止这个练习的本地服务，确认原地址已经停止响应。不要关闭其他项目或修改任何材料。完成后用普通中文告诉我“本练习服务已停止”。</pre></div></details>
@@ -96,7 +96,7 @@
 
 在现有页面接入只读历史回放与固定案例评分，不调用财报模型。
 
-1. 读取 history/lesson-one-history.json。保留每一条 raw_output、recorded_grade、原收据指纹和用量范围；原评分与按当前规则复算的结果分别展示。历史提示词标为配置复原，不称为完整请求原件。
+1. 读取 history/lesson-one-history.json。注明历史定位当时使用第 60–75 物理页窗口，03/04 沿用该历史 02，05/06 沿用该历史 04；不能把旧输出标成完整 207 页的新运行。保留每一条 raw_output、recorded_grade、原收据指纹和用量范围；原评分与按当前规则复算的结果分别展示。历史提示词标为配置复原，不称为完整请求原件。
 2. 根据 contracts 的历史依赖重建链条：03/04 的原值与前三项检查来自历史 02，05/06 的换算与前四项检查来自历史 04。不把所有历史行都当独立成功，也不先填通过状态。
 3. 使用 checks/case-reference.json 建立固定案例检查器。02 检查章节、合并利润表完整页与列头单位、十个原值；04 同时检查两期换算；06 检查五个同比。缺失、null、空字符串不能当成 0。检查参考表只给评分程序，不放进运行模型提示词。
 4. Product 展示历史计算样例并明确标注来源；Evals 显示五项检查，未完成的检查显示待检查。保留历史 01 的原任务未要求提取数字这一说明，不把它的缺项归咎于模型抄错。
@@ -104,7 +104,7 @@
 6. 加入“历史结果”和“本次运行”切换，以及下载当前所选历史收据的功能；下载按钮写“下载当前所选收据”，历史模式下明确下载的是历史记录。每行提供“查看记录”按钮，选中后用普通中文写明“历史/本次”“输入来自哪一步”“通过几项、还有哪项待检查”；不要让老师先从 JSON 或哈希里找依赖。本次视图的说明不能仍写历史输入。本次状态独立，初始仍未运行。由你运行离线检查验证依赖与评分；改完后台后，停止本项目旧服务并重新启动，确认 HTTP 页面可访问，再给我完整网址。网页交互由我检查，不为本步安装额外浏览器测试工具。然后停止。
 
 所有历史材料只读。本步不接 API，不填个人 Key。</pre></div>
-<div class="learner-card expected"><h3>你应看到</h3><ul><li>Product 显示历史样例，Evals 可以逐行查看原输出、复算评分和输入来源。</li><li>历史 05 的五个同比只有 2/5 正确；整条链可同时显示前四项通过、第五项同比未通过。历史 04、06 的工具 tokens 标为“末次”，不是总用量。</li><li>切到本次运行时没有借用历史检查的绿勾。</li><li>“下载当前所选收据”下载当前选中的历史行；历史身份、原评分和当前规则复算都能区分。</li></ul></div>
+<div class="learner-card expected"><h3>你应看到</h3><ul><li>Product 显示历史样例，Evals 可以逐行查看原输出、复算评分和输入来源。</li><li>历史 05 的五个同比只有 2/5 正确；整条链可同时显示前四项通过、第五项同比未通过。历史 04、06 的工具 tokens 标为“末次”，不是总用量。</li><li>切到本次运行时没有借用历史检查的绿勾。</li><li>“下载当前所选收据”下载当前选中的历史行；历史身份、原评分和当前规则复算都能区分。</li><li>历史定位明确标注“当时第 60–75 页窗口”，本次 Run 明确标注完整 207 页；两种输入范围不混用。</li></ul></div>
 <p class="files"><b>文件与数据：</b>读取 history/lesson-one-history.json、checks/case-reference.json；新增固定检查器与历史回放逻辑。</p>
 
 <div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="history-0"><span>03/04 的父步骤为历史 02，05/06 的父步骤为历史 04。</span></label><label><input type="checkbox" data-check="history-1"><span>原输出和原评分仍然可见，历史与本次状态分开。</span></label></div>
@@ -121,8 +121,8 @@
 
 1. 在 Evals 的“本次运行”视图提供个人硅基流动 API Key 的隐藏输入框、“清空 Key”和“运行 02 定位与提取”按钮。不要把运行入口只放到 Product。Key 仅留在当前页面和请求内存，以便后面在同页连续运行 02、04、06；手动点“清空 Key”或刷新时清除，不在每行运行后自动清空。不写浏览器存储、项目、结果、日志或命令参数。不要读取 OpenCode 登录凭据，不设置共享备用 Key。
 2. 浏览器向本地后台提交 02 的运行请求，后台再调用硅基流动 https://api.siliconflow.cn/v1/chat/completions，模型为 Qwen/Qwen3.5-4B，enable_thinking=true。网页从本地后台取得状态。不要让浏览器直接调用模型服务。
-3. 完整发送 prompts/runtime/locate.txt 与 data/report-pages-60-75.txt。只把这些作为财报任务输入，不附带 checks 参考表、历史答案、正确页码或原值。按 contracts 的定位输出结构解析 JSON，保留完整原响应。
-4. 为本轮生成 job_id，保存输入文件 SHA-256、实际模型、输出、检查、实际 usage 与全步耗时。五项指标两期原值写入 workflowState.raw_values，金额原单位写 raw_unit。usage 缺失就标明未记录，不能写 0。在本步就做出本次记录查看与下载：已完成的 02 行“查看记录”窗口提供“下载本次收据”，只下载该行 job_id 的结果，含输入指纹、原响应、检查、实际模型、用量与耗时，不含 Key。未运行时写“本次没有收据”，不提供假下载。后续 04、06 复用这一套记录结构，补入父记录与工具轨迹。
+3. 完整发送 prompts/runtime/locate.txt 与 data/report-full-text.txt 的全部 207 页文本，保留所有物理页标，不裁剪、不预选目标页、不先摘要。只把这些作为财报任务输入，不附带 checks 参考表、历史答案、正确页码或原值。按 contracts 的定位输出结构解析 JSON，保留完整原响应。
+4. 为本轮生成 job_id，用 report_sha256 保存本次全文的 SHA-256，不沿用历史 window_sha256；另保存、实际模型、输出、检查、实际 usage 与全步耗时。五项指标两期原值写入 workflowState.raw_values，金额原单位写 raw_unit。usage 缺失就标明未记录，不能写 0。在本步就做出本次记录查看与下载：已完成的 02 行“查看记录”窗口提供“下载本次收据”，只下载该行 job_id 的结果，含输入指纹、原响应、检查、实际模型、用量与耗时，不含 Key。未运行时写“本次没有收据”，不提供假下载。后续 04、06 复用这一套记录结构，补入父记录与工具轨迹。
 5. 只有章节、表格和十个原值都通过，02 才能成为后续前序。失败就保留失败原因和原输出，不能换入历史数据；后续保持未运行。未填 Key 时不发送请求、不显示旧绿勾。页面和 RUN.md 从本步就区分错误与下一步：授权失败由本人核对 Key 和账户；模型请求网络失败保留页面和有效前序，网络恢复后重试失败行；JSON、字段或数值失败保留原响应并报告第一处失败。本机网页打不开时才检查服务并按需启动，不把模型网络失败一律处理成重启，也不索取 Key。
 6. 先用明确标为“测试响应”的离线数据检查成功、缺字段、错误 JSON、服务失败和缺 Key，不消耗模型额度。真实调用由我在网页点击。修改后台后，由你重新启动本项目服务并确认 HTTP 地址可访问。给我可点击的网址，以及不填 Key 时应点击哪个按钮、看到什么提示。真实模型运行留到第 7 步，不要求我现在做。然后停止。
 
@@ -130,9 +130,9 @@
 <div class="learner-card expected"><h3>你应看到</h3><ul><li>OpenCode 明确报告接口、缺 Key、JSON 解析、缺字段和服务失败的离线检查结果，并给出可点击的本地网址。</li><li>本地 Evals → 本次运行中有个人 Key 输入框和“运行 02 定位与提取”。Key 留空时提示填写 Key、未发送请求；02 行仍未运行，五项检查不出现历史绿勾。 已完成记录的下载功能由本步建立，不等到最后再补。</li><li>现在没有真实的十个原值是正常状态。第 7 步本人 Run 02 后，才检查章节、表页、列头、原单位和两期原值；此时单位、同比仍待检查。</li></ul></div>
 <p class="files"><b>文件与数据：</b>prompts/runtime/locate.txt 是财报模型任务；本轮 runs/&lt;job_id&gt;.json 保存不含 Key 的结果。</p>
 <div class="learner-card"><h3>02 的真实运行方法</h3><p>程序定稿后再执行这些操作，搭建期间先完成离线检查。</p><ol><li>要做真实 Run 而尚无 Key 时，由本人登录<a href="https://cloud.siliconflow.cn/">硅基流动控制台</a>，进入“API 密钥 / API Keys”，点“新建 API 密钥 / Create API Key”。已有可用 Key 直接复用。可对照<a href="https://docs.siliconflow.cn/docs/userguide/quickstart">官方快速上手</a>；Key 不发给 OpenCode。</li><li>在自己做出的本机网页点 Evals → 本次运行，把 Key 填入隐藏输入框，点“运行 02 定位与提取”。同页后续 04、06 共用这个 Key；清空或刷新后需重填。</li><li>等待结束。只有章节、表格和十个原值三项都通过，才能接 04；单位和同比此时仍待检查。点该行“查看记录”，应明确是本次 02；完成记录可点“下载本次收据”保存。</li><li>失败时先读本行中文原因。授权失败核对自己的 Key 与账户；模型网络失败保留本页，网络恢复后重试本行。JSON、字段或数值失败再发本步修复 Prompt。只有本机网址打不开时，才使用第 1 步的启动请求。</li></ol></div>
-<div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="extract-0"><span>Agent 已实际运行本步离线检查并报告通过，没有把历史输出或测试响应登记成真实运行。</span></label><label><input type="checkbox" data-check="extract-1"><span>网页的缺 Key 提示可见，输入框隐藏输入；不需要读 JSON，也不把个人 Key 发给 Agent。</span></label></div>
+<div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="extract-0"><span>Agent 已实际运行本步离线检查并报告通过，没有把历史输出或测试响应登记成真实运行。</span></label><label><input type="checkbox" data-check="extract-1"><span>网页的缺 Key 提示可见，输入框隐藏输入；不需要读 JSON，也不把个人 Key 发给 Agent。</span></label><label><input type="checkbox" data-check="extract-2"><span>Agent 已检查实际模型请求包含连续的第 1–207 页，未预先截取目标页；历史窗口未替换本次全文。</span></label></div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>
-<div class="prompt-block"><div class="prompt-heading"><h3>只修复当前步骤</h3><button type="button" data-copy="repair-extract">复制 Prompt</button></div><pre id="repair-extract">我在 Evals 的“本次运行”找不到讲义写的个人 Key 或“运行 02 定位与提取”按钮，或按了以后状态不对。请先检查入口是否放错页签，并在 Evals 提供明确按钮和中文状态。Key 只留在本页与请求内存，供 02/04/06 连续使用，手动清空或刷新时清除，不自动逐行清空。如果已经发出真实请求，先区分授权、模型网络、解析或案例检查失败。授权错误交由本人核对 Key；模型网络错误先保留页面与有效前序，不一律重启。再只修真正需要修改的第一处程序问题，保留原响应。确认请求使用指定模型、完整文字窗口和 locate 提示词，不加入答案、正确页码或历史原值。本次记录与下载也应由本步实现，核对下载的是该行 job_id，未运行时没有本次收据。修复后运行离线检查；改过后台才重启本项目服务，给我完整网址和唯一下一步，不索取 Key。</pre></div></details>
+<div class="prompt-block"><div class="prompt-heading"><h3>只修复当前步骤</h3><button type="button" data-copy="repair-extract">复制 Prompt</button></div><pre id="repair-extract">我在 Evals 的“本次运行”找不到讲义写的个人 Key 或“运行 02 定位与提取”按钮，或按了以后状态不对。请先检查入口是否放错页签，并在 Evals 提供明确按钮和中文状态。Key 只留在本页与请求内存，供 02/04/06 连续使用，手动清空或刷新时清除，不自动逐行清空。如果已经发出真实请求，先区分授权、模型网络、解析或案例检查失败。授权错误交由本人核对 Key；模型网络错误先保留页面与有效前序，不一律重启。再只修真正需要修改的第一处程序问题，保留原响应。确认请求使用指定模型、完整报告文本和 locate 提示词，不加入答案、正确页码或历史原值。本次记录与下载也应由本步实现，核对下载的是该行 job_id，未运行时没有本次收据。修复后运行离线检查；改过后台才重启本项目服务，给我完整网址和唯一下一步，不索取 Key。</pre></div></details>
 
 </section><section class="chapter" id="units">
 <div class="chapter-head"><span class="chapter-num">4</span><h2>第 4 步：实现 04，检查它只读取本轮 02</h2></div>
@@ -142,7 +142,7 @@
 
 在现有应用实现 04 的 convert_units 工具阶段，严格使用本轮 02 的真实结果。在 Evals 的“本次运行”中提供“运行 04 单位换算”按钮，与 02 共用当前页面内存中的个人 Key；保留各行“查看记录”，查看不触发模型调用。复用第 3 步已实现的本次收据查看与下载，04 的收据补入父 job_id、两期原值、换算结果和工具记录，不等到验收时再加。
 
-1. 04 只接受本轮已通过前三项检查的 02。由后台按 parent_job_id 读取完成的父结果，并校验输入文字窗口的指纹。不要接受网页提交的任意财务值，不回退到历史；01 即使通过也不能代替 02。
+1. 04 只接受本轮已通过前三项检查的 02。由后台按 parent_job_id 读取完成的父结果，并校验输入报告全文的指纹，拒绝旧窗口任务作为本次前序。不要接受网页提交的任意财务值，不回退到历史；01 即使通过也不能代替 02。
 2. 从 02 的 workflowState.raw_values 取得五项两期原值，生成 units-tool.txt 中的实际输入。给财报模型提供 convert_units 的 function tool 定义，参数包括 metric、current、prior、source_unit。
 3. 模型返回 tool_calls 后，由程序检查参数确实等于父步骤原值和原单位，再执行固定函数。千元金额除以 100000，四舍五入到两位；basic_eps 以元/股保留原值。两期都计算。把工具返回交回同一模型会话，由模型输出完整 JSON。
 4. 五项都必须发生真实有效的工具调用，不能凭最终数字正确就伪称调用了工具。检查两期结果后保存 workflowState.unit_values，保留 raw_values 与 raw_unit，并记录父 job_id、调用轨迹、累计全部调用的 usage 和全步耗时。
@@ -165,7 +165,7 @@
 
 在现有应用实现 06 的 calculate_yoy 工具阶段与本次候选简报。在 Evals 的“本次运行”中提供“运行 06 同比计算”按钮，与 02/04 共用当前页面内存中的个人 Key；保留各行“查看记录”，查看不触发模型调用。复用第 3 步的本次收据下载；06 收据补齐父 04、五项同比和工具轨迹。
 
-1. 06 只接受本轮已通过前四项检查的 04，由后台按 parent_job_id 读取并核对同一文字窗口指纹。03 即使数值通过也不能代替 04。前序缺失或失败就停止，不借历史结果。
+1. 06 只接受本轮已通过前四项检查的 04，由后台按 parent_job_id 读取并核对同一报告全文指纹，拒绝旧窗口任务作为本次前序。03 即使数值通过也不能代替 04。前序缺失或失败就停止，不借历史结果。
 2. 使用 04 的 workflowState.unit_values 生成 yoy-tool.txt 中的实际输入，与现有产品相同，使用这份已保留两位小数的换算结果。提供 calculate_yoy function tool，参数为 metric、current、prior。程序逐项校验参数确实来自父结果。
 3. 固定公式为 (current-prior)/prior*100，返回两位小数和 % 的字符串。prior 为 0、任一期缺失或不是有效数字时停止，不自动补 0。EPS 同样按两期数值计算同比。
 4. 模型请求工具、程序执行、工具结果交回模型，最后解析五项 JSON。五项都有真实有效的工具调用且数值检查通过，才能保存 yoy_values；保留 raw_values、unit_values、父 job_id、调用记录、全步耗时与累计用量。
@@ -197,7 +197,7 @@
 
 不要把六行改成六个串行 Agent，不增加历史输入兜底，也不要为得到教学对比而强制制造错误。</pre></div>
 <div class="learner-card expected"><h3>你应看到</h3><ul><li>六行都能查看历史和本次结果；本次对照共用对应前序，分别评分。</li><li>Agent 的离线检查报告：运行对照 03 后，已有 04 和 06 保持原状。你无需自己修改数据或查看 job_id 来造测试。</li><li>01/02 本轮提示词一致，历史提示词差异保留说明。</li></ul></div>
-<p class="files"><b>文件与数据：</b>复用 prompts/runtime 的五份任务文件；六行各有独立本次结果。</p>
+<p class="files"><b>文件与数据：</b>复用 prompts/runtime 的五个提示词文件；六行各有独立本次结果。</p>
 <div class="learner-card"><h3>需要比较做法时怎样运行</h3><p>程序定稿后再执行这些操作，搭建期间先完成离线检查。</p><ol><li>这是可选对照。完整主线通过后，保留同一页面，再加跑 03、05：03 与 04 共用本轮 02，05 与 06 共用本轮 04。分别看真实结果，不预设无工具就一定算错。03 不会替换 04 或清空 06。</li><li>要重新比较 01 与 02，就按 01 → 02 → 03 → 04 → 05 → 06 做一轮。重跑 02 会清空后续；重跑 04 会清空 05、06。六行是三个阶段的做法对照，不是六个依次工作的 Agent。</li></ol></div>
 <div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="comparisons-0"><span>01、03 的成功不会代替主线父结果。</span></label><label><input type="checkbox" data-check="comparisons-1"><span>对照结论来自实际收据；没有把单次结果写成保证或因果证明。</span></label></div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>
@@ -225,7 +225,7 @@
 </section>
 <section class="finish" id="finish"><h2>完成标准</h2><ul><li>能用自己的话说明：这是程序编排的 workflow，六行是三个阶段的做法对照。</li><li>本地网页能展示历史结果，并明确区分历史查看、本次运行和未运行状态。</li><li>个人 Key 填写后，真实完成一次本轮 02 → 04 → 06；本轮前序、原值、换算与同比可以在收据中追溯。没有完成真实调用时，如实保留“离线检查完成，真实运行待完成”。</li><li>缺少前序会停止，重跑前序会清空对应后续结果；01 和 03 的对照结果不能代替 02 和 04。</li><li>检查通过后展示本次候选简报，保留模型原输出、实际用量、耗时与失败记录，并注明待人工复核。</li></ul>
 <h3>还有问题时，先找第一处失败</h3><div class="prompt-block"><div class="prompt-heading"><h3>通用排查 Prompt</h3><button type="button" data-copy="prompt-rescue">复制 Prompt</button></div><pre id="prompt-rescue">请先不要重写整个项目，也不要换成历史结果。读取本轮运行记录，报告第一个失败步骤、完整错误、实际输入来自哪个 job_id，以及已经通过的检查。区分环境、网络或授权失败、输出字段错误、数值错误与前序依赖错误。只修复第一个失败点，运行对应的离线检查；需要真实模型调用时先告诉我应在网页点哪一行。不要索取或显示我的 API Key。完成后写出我可以照做的唯一下一步。</pre></div>
-<p>本讲先完成固定报告文字窗口的处理。需要扩展到完整 PDF、独立视觉和同花顺比对时，继续<a href="lesson-2/">第二讲</a>。数据与核验范围见<a href="PUBLIC_DATA_GUIDE.md">第一讲数据说明</a>。</p></section>
+<p>本讲从完整 207 页报告文本中定位与提取。需要扩展到 PDF 获取与逐页处理、独立视觉和同花顺比对时，继续<a href="lesson-2/">第二讲</a>。数据与核验范围见<a href="PUBLIC_DATA_GUIDE.md">第一讲数据说明</a>。</p></section>
 <details class="sources"><summary>材料与参考</summary><ul>
 <li><a href="demo.html">已上线第一讲产品</a></li><li><a href="handout/讲义.md">Markdown 讲义</a>、<a href="PROMPTS.md">提示词附录</a>、<a href="lesson-one-materials.zip">实操材料包</a></li>
 <li><a href="https://opencode.ai/docs/">OpenCode 官方文档</a>与<a href="https://opencode.ai/docs/providers/">模型连接说明</a>。不同版本界面可能有差异，按已安装版本操作。</li>

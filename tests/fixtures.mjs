@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises';
+import { loadReport } from '../netlify/functions/run-background.mjs';
 import { historicalResult, METRICS } from '../assets/lesson-one-workflow.mjs';
 
 export const history = JSON.parse(await readFile(new URL('../assets/lesson-one-history.json', import.meta.url), 'utf8'));
-export const windowText = await readFile(new URL('../netlify/data/report-pages-60-75.txt', import.meta.url), 'utf8');
+export const reportText = await loadReport();
 export const locator = historicalResult(history, 'locator-thinking-api');
 export const units = historicalResult(history, 'unit-api');
 export const currentLocator = {...locator, kind:'current'};

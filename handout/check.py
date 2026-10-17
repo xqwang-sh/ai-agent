@@ -42,7 +42,8 @@ def check():
     page.feed((ROOT / 'handout.html').read_text())
     assert page.h1 == 1
     assert len(page.ids) == len(set(page.ids)), 'Duplicate anchors'
-    assert len(page.copies) == 17 and all(x in page.ids for x in page.copies)
+    expected_copies = len(build.LESSON['steps']) * 2 + 1 + sum(len(s.get('operations', [])) for s in build.LESSON['steps'])
+    assert len(page.copies) == expected_copies and all(x in page.ids for x in page.copies)
     for link in page.links:
         url = urlsplit(link)
         if url.scheme or url.netloc:
@@ -58,6 +59,8 @@ def check():
             assert step[field], f'Missing {field}: {step["id"]}'
         assert step['prompt'] in (ROOT / 'PROMPTS.md').read_text()
         assert step['repair'] in (ROOT / 'PROMPTS.md').read_text()
+        for operation in step.get('operations', []):
+            assert operation['prompt'] in (ROOT / 'PROMPTS.md').read_text()
 
     p = build.product_contract()
     with zipfile.ZipFile(ROOT / 'lesson-one-materials.zip') as z:
@@ -124,7 +127,7 @@ console.log('Product contract, parent checks, reference values and synthetic cal
             url = urlsplit(target)
             if not url.scheme and not url.netloc:
                 assert (ROOT / filename).parent.joinpath(unquote(url.path)).exists(), (filename,label,target)
-    print('Generated content, 17 copy targets, links and 14-file archive passed')
+    print(f'Generated content, {expected_copies} copy targets, links and 14-file archive passed')
 
 
 if __name__ == '__main__':

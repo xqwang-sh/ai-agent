@@ -38,6 +38,11 @@ def chapter(step, index):
     checkboxes = "".join(
         f'<label><input type="checkbox" data-check="{step["id"]}-{i}"><span>{inline(x)}</span></label>'
         for i, x in enumerate(step["checks"]))
+    operations = ""
+    if step.get('operations'):
+        operations = '<details class="repair"><summary>以后怎样启动、停止、重新打开？</summary><p>下面的话也发给 OpenCode，不需要你自己使用终端。</p>'
+        operations += ''.join(prompt_block(x['prompt'], 'operation-'+x['id'], x['title']) for x in step['operations'])
+        operations += '</details>'
     return f'''<section class="chapter" id="{step['id']}">
 <div class="chapter-head"><span class="chapter-num">{index}</span><h2>{e(step['title'])}</h2></div>
 <p class="chapter-question">{e(step['aim'])}</p>
@@ -48,6 +53,7 @@ def chapter(step, index):
 <div class="self-check"><h3>确认后再继续</h3>{checkboxes}</div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>
 {prompt_block(step['repair'], 'repair-'+step['id'], '只修复当前步骤')}</details>
+{operations}
 </section>'''
 
 
@@ -87,11 +93,12 @@ def render_html():
 <div class="table-wrap" tabindex="0" role="region" aria-label="历史与本次输入依赖，窄屏可横向滚动"><table class="dependency-table">
 <caption>六行做法与输入来源</caption><thead><tr><th scope="col">产品行号</th><th scope="col">历史查看</th><th scope="col">本次 Run</th></tr></thead><tbody>{deps}</tbody></table></div>
 <p class="callout">{e(l['rerun'])}</p><h3>五项 Evals 检查什么</h3><ol class="eval-list">{evals}</ol><p>{e(l['eval_note'])}</p></section>
-<section class="intro" id="tour"><h2>先在成品中走一遍</h2><p>先打开<a href="demo.html#evals">现场产品的 Evals</a>。看历史不需要 Key，真实 Run 使用本人的 Key。没有 Key 时，先完成历史查看和后面的离线搭建。</p>
+<section class="intro" id="tour"><h2>先看线上参考成品</h2><p>先打开<a href="demo.html#evals">现场产品的 Evals</a>。这段在已经发布的成品网站操作；从第 0 步开始，才在你自己的电脑搭建新项目。只完成前两条历史查看，就可以进入准备部分。有 Key 时可选做下面的线上 Run；它的结果不会成为新建本地项目的本轮输入。</p>
 {listing(l['tour'], True)}<p class="callout">{e(l['history_note'])}</p>
 <p>个人运行 Key 在<a href="https://cloud.siliconflow.cn/" target="_blank" rel="noopener noreferrer">硅基流动控制台</a>管理。只填在网页的隐藏输入框，不发给编程 Agent。网页刷新会清空 Key 和本轮可用前序。</p></section>
 <section class="intro" id="prepare"><h2>准备自己的项目</h2>
 <p><a class="download-link" href="lesson-one-materials.zip" download>下载第一讲实操材料 · lesson-one-materials.zip</a></p>
+<p class="callout">{e(l['build_run_note'])}</p><p>{e(l['word_help'])}</p>
 {listing(l['prepare'], True)}<p>{e(l['kit_note'])}</p>
 <pre class="file-tree">earnings-workflow/
   TASKBOOK.md
@@ -102,6 +109,8 @@ def render_html():
   history/lesson-one-history.json  只读历史收据
   checks/                         检查参考表、合成案例、文件指纹</pre>
 <p>正文中的主 Prompt 都发给 OpenCode。材料包中 prompts/runtime 的文本由做出来的程序发给财报模型，两类提示词用途不同。这里的“第 0–7 步”是搭建步骤，产品中的“01–06”是运行行号。</p>
+<h3>每一步都按这个顺序操作</h3>{listing(l['send_flow'], True)}
+<p><a href="#environment">准备好后，从第 0 步开始</a>。没有看到文件列表时，让 Agent 列出文件即可；这份讲义不要求你先学会读代码。</p>
 <p>准备细节见<a href="handout/SETUP.md">准备工作</a>；所有主 Prompt 和修复 Prompt 也可从<a href="PROMPTS.md">提示词附录</a>复制。</p></section>
 {chapters}
 <section class="finish" id="finish"><h2>完成标准</h2>{listing(l['finish'])}
@@ -136,8 +145,12 @@ def render_markdown(prompts_only=False):
         lines += ['', l['eval_note'], '', '## 先在成品中走一遍', '', '打开 https://suibe-ai-agent.netlify.app/demo#evals。', '']
         lines += [f'{i+1}. {x}' for i, x in enumerate(l['tour'])]
         lines += ['', l['history_note'], '', '## 准备自己的项目', '', '下载 https://suibe-ai-agent.netlify.app/lesson-one-materials.zip。', '']
+        lines += [l['build_run_note'], '', l['word_help'], '']
         lines += [f'{i+1}. {x}' for i, x in enumerate(l['prepare'])]
         lines += ['', l['kit_note'], '', '主 Prompt 发给 OpenCode，prompts/runtime 发给财报运行模型。第 0–7 步是搭建步骤，01–06 是产品运行行号。', '']
+        lines += ['### 每一步都按这个顺序操作', '']
+        lines += [f'{i+1}. {x}' for i,x in enumerate(l['send_flow'])]
+        lines += ['']
     for s in l['steps']:
         lines += ['## ' + s['title'], '', s['aim'], '', '### 现在怎么做', '']
         lines += [f'{i+1}. {x}' for i, x in enumerate(s['actions'])]
@@ -146,6 +159,8 @@ def render_markdown(prompts_only=False):
         lines += ['', '### 确认后再继续', '']
         lines += ['- [ ] ' + x for x in s['checks']]
         lines += ['', '文件与数据：' + s['files'], '', '### 卡住时发送', '', '```text', s['repair'], '```', '']
+        for operation in s.get('operations', []):
+            lines += ['### ' + operation['title'], '', '发给 OpenCode，不需要自己使用终端。', '', '```text', operation['prompt'], '```', '']
     lines += ['## 通用排查 Prompt', '', '```text', l['rescue'], '```', '']
     if not prompts_only:
         lines += ['## 完成标准', ''] + ['- ' + x for x in l['finish']]
@@ -211,7 +226,7 @@ def materials():
         'reference':'checks/case-reference.json 只供程序评分，不进入运行模型上下文。',
         'receipts':['kind','job_id','approach','parent_job_id','window_sha256','model','raw_output','parsed','grade','caseStates','workflowState','tool_calls','usage','usage_complete','elapsed_seconds'],
         'receipt_notes':'程序可用字段适配，但必须保留上述含义；不得有 apiKey。历史保存 recorded_grade 与原收据指纹，历史工具 usage_scope=last_response。',
-        'credentials':'网页隐藏输入，仅页面与本次请求内存；不进存储、文件、日志或截图，不使用OpenCode登录文件或共享Key。',
+        'credentials':'Evals本次运行视图的网页隐藏输入，仅当前页面与请求内存；同页供各行连续使用，手动清空或刷新时清除。不进存储、文件、日志或截图，不使用OpenCode登录文件或共享Key。',
     }
     synthetic = {
         'purpose':'仅测试响应与固定函数，不代表真实模型运行。不调用远程服务。',
@@ -261,7 +276,9 @@ def materials():
 
 主线不下载 PDF、不接同花顺、不生成 PPT、不建立四 Agent 或定时任务。运行模型为 Qwen/Qwen3.5-4B，个人硅基流动 Key 只在网页隐藏输入。OpenCode 的编码模型与本程序授权分开。
 
-先建立空网页，再接历史，再实现 02、04、06，最后加入 01、03、05 对照并验收。程序负责工具、检查、数据依赖和停止；模型执行指定的定位、抄录与工具调用。五项检查通过仍是待人工复核的候选简报。
+先建立空网页，再接历史，再实现 02、04、06，最后加入 01、03、05 对照并验收。第3–6步由编程Agent运行离线检查，不要求本人现在填写财报Key。等程序定稿、服务重新启动后，第7步再由本人在同一页面连续真实运行02→04→06。程序负责工具、检查、数据依赖和停止；模型执行指定的定位、抄录与工具调用。五项检查通过仍是待人工复核的候选简报。
+
+每步完成后，用普通中文报告实际保存的文件、实际检查结果、老师现在该点哪里，以及唯一下一步。启动、停止、重启由编程Agent执行，给出确认可访问的本机网址；不要把终端命令或进程编号当作老师必须自行执行的操作。后台改动后停止本项目旧服务再启动，不同时保留多个旧版本服务。
 
 讲义：https://suibe-ai-agent.netlify.app/handout.html
 现有产品：https://suibe-ai-agent.netlify.app/demo#evals
@@ -273,7 +290,9 @@ def materials():
 - 历史只用于回放，检查参考只用于固定案例评分。财报运行模型只能收到该阶段任务、实际报告窗口或本轮前序，以及当前工具返回。
 - 在线 03/04 只读本轮通过的 02；05/06 只读本轮通过的 04。重跑正式前序清空对应下游，01/03不注册为父结果。
 - 编程 Agent 不能索取 Key 或读取其私有登录凭据。个人 Key 由本人在网页隐藏输入，只在请求内存中使用。
-- 离线测试必须标明测试响应，不得冒充真实模型运行。未经本人网页运行，不登记真实验收通过。
+- 第3–6步先实现模块并运行离线检查，第7步程序定稿后才由本人填写Key，连续真实运行02/04/06。未配置财报Key不阻止继续搭建。离线测试必须标明测试响应，不得冒充真实模型运行。未经本人网页运行，不登记真实验收通过。
+- 临时检查输出保存在本项目内，不为测试请求访问项目外临时目录。
+- 每步结束用普通中文报告文件、实际检查、可点击的本机网址和下一步。启动、停止、重启由编程Agent操作，不让老师自行猜终端命令；改后台后停止本项目旧服务再启动，避免看旧端口。
 ''').encode()
     manifest = {'schema':1, 'case':'BYD 2026H1 vs 2025H1, prepared text window', 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(files.items())}}
     files['checks/manifest.json'] = js(manifest)

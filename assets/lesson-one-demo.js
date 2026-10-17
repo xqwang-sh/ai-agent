@@ -54,7 +54,7 @@ function paintSelected() {
   score.textContent = result?.error ? '运行失败' : result?.score || '未运行';
   note.textContent = result ? `${mode === 'history' ? '历史结果':'本次运行'} · ${result.note || result.error || ''}` : '填写个人 Key，先运行02，再用03/04比较换算，最后用05/06比较同比。后续只读取本轮已通过的对应前序结果。';
   receiptText.textContent = result ? safeJson(result) : '本行尚未运行。';
-  document.querySelector('[data-mode-caption]').textContent = mode === 'history' ? '历史链条：02 → 03/04，04 → 05/06。后续行沿用对应前序的实际检查结果。工具行仅记录了末次响应 tokens。' : '本轮链条：02 → 03/04，04 → 05/06。前序未通过时停止；重跑02或04会清空对应后续结果。';
+  document.querySelector('[data-mode-caption]').textContent = mode === 'history' ? '历史定位输入：第60–75物理页窗口，并非全文运行。历史链条：02 → 03/04，04 → 05/06。后续行沿用对应前序。工具行仅记录了末次响应 tokens。' : '本次定位输入：report-full-text.txt，完整207页，不预先截取目标页。主线02 → 04 → 06；03/04读取本轮02，05/06读取本轮04。重跑02或04会清空对应后续结果。';
 }
 
 function renderRows() {
@@ -178,19 +178,19 @@ fetch('assets/lesson-one-history.json').then((response) => {
   document.querySelectorAll('[data-round-detail]').forEach((panel) => {
     const id = panel.dataset.roundDetail, result = historicalResult(archive, id);
     panel.querySelector('.round-metrics strong').textContent = result.score;
-    panel.querySelector('.prompt-window .window-columns > div:last-child pre').textContent = `${result.prompt}\n\n${id.startsWith('locator') ? '[完整原文窗口由程序追加]':''}`;
+    panel.querySelector('.prompt-window .window-columns > div:last-child pre').textContent = `${result.prompt}\n\n${id.startsWith('locator') ? '[历史输入：当时第60–75页窗口由程序追加，并非完整207页]':''}`;
     panel.querySelector('.prompt-window header > span:nth-child(2)').textContent = '历史运行配置复原 · 原输出见 Eval 行记录';
     panel.querySelector('.prompt-window .column-label.new').textContent = '历史提示词配置复原';
     panel.querySelector('.round-result p').textContent = `历史复算：${result.score}`;
     panel.querySelector('.harness-window header > span:nth-child(2)').textContent = '线上运行与检查规则';
     panel.querySelector('.harness-window pre').textContent = id.startsWith('locator')
-      ? `同一原文窗口、同一提示词、同一输出字段\nthinking = ${id === 'locator-thinking-api'}\n检查章节、表名、完整表页、两期列头与原单位\n逐项核对五项本期与同期原值\n每次调用记录实际 usage`
+      ? `本次输入：report-full-text.txt，完整207页\n两组使用同一全文、同一提示词、同一输出字段\nthinking = ${id === 'locator-thinking-api'}\n检查章节、表名、完整表页、两期列头与原单位\n逐项核对五项本期与同期原值\n每次调用记录实际 usage`
       : `${id.startsWith('unit') ? '输入：已通过的定位与十个原值\n检查：金额千元转亿元 ÷100000，EPS不变\n每项同时检查本期与同期' : '输入：已通过的单位换算结果\n公式：(current-prior)/prior*100\n逐项检查五个同比与百分比精度'}\n${id.includes('baseline') ? '本轮不提供工具' : '逐项调用工具，程序检查参数与最终输出'}\n只沿用所选前序记录的真实检查状态\n用量累计所有调用，不只记录末次响应`;
     const live = document.createElement('details');
     const summary = document.createElement('summary'); summary.textContent = '本次线上 Run 使用的提示词';
     const pre = document.createElement('pre');
     const state = id.startsWith('unit') ? historicalResult(archive, 'locator-thinking-api').workflowState : id.startsWith('yoy') ? historicalResult(archive, 'unit-api').workflowState : null;
-    pre.textContent = `${promptFor(id, state)}${state ? '\n计算时替换为所选前序记录的实际输入。':''}`;
+    pre.textContent = `${promptFor(id, state)}${state ? '\n以上数值仅示范模板；实际Run只用本轮对应前序。':'\n[程序随后完整追加 report-full-text.txt 的第1–207页，不裁剪、不先摘要。]'}`;
     live.append(summary, pre); panel.append(live);
   });
   renderProduct(); renderRows();

@@ -109,9 +109,9 @@ def render_html():
 <pre class="file-tree">earnings-workflow/
   TASKBOOK.md
   AGENTS.md
-  data/report-pages-60-75.txt
+  data/report-full-text.txt        一份完整207页财报文本
   contracts/workflow.json
-  prompts/runtime/                 五份财报模型任务
+  prompts/runtime/                 五个提示词文件
   history/lesson-one-history.json  只读历史收据
   checks/                         检查参考表、合成案例、文件指纹</pre>
 <p>正文中的主 Prompt 都发给 OpenCode。材料包中 prompts/runtime 的文本由做出来的程序发给财报模型，两类提示词用途不同。这里的“第 0–7 步”是搭建步骤，产品中的“01–06”是运行行号。</p>
@@ -121,7 +121,7 @@ def render_html():
 {chapters}
 <section class="finish" id="finish"><h2>完成标准</h2>{listing(l['finish'])}
 <h3>还有问题时，先找第一处失败</h3>{prompt_block(l['rescue'], 'prompt-rescue', '通用排查 Prompt')}
-<p>本讲先完成固定报告文字窗口的处理。需要扩展到完整 PDF、独立视觉和同花顺比对时，继续<a href="lesson-2/">第二讲</a>。数据与核验范围见<a href="PUBLIC_DATA_GUIDE.md">第一讲数据说明</a>。</p></section>
+<p>本讲从完整 207 页报告文本中定位与提取。需要扩展到 PDF 获取与逐页处理、独立视觉和同花顺比对时，继续<a href="lesson-2/">第二讲</a>。数据与核验范围见<a href="PUBLIC_DATA_GUIDE.md">第一讲数据说明</a>。</p></section>
 <details class="sources"><summary>材料与参考</summary><ul>
 <li><a href="demo.html">已上线第一讲产品</a></li><li><a href="handout/讲义.md">Markdown 讲义</a>、<a href="PROMPTS.md">提示词附录</a>、<a href="lesson-one-materials.zip">实操材料包</a></li>
 <li><a href="https://opencode.ai/docs/">OpenCode 官方文档</a>与<a href="https://opencode.ai/docs/providers/">模型连接说明</a>。不同版本界面可能有差异，按已安装版本操作。</li>
@@ -180,7 +180,7 @@ def render_markdown(prompts_only=False):
 def product_contract():
     script = r'''
 import { readFileSync } from 'node:fs';
-import { MODEL, APPROACHES, METRICS, LOCATOR_PROMPT, promptFor, toolDefinition, historicalResult } from './assets/lesson-one-workflow.mjs';
+import { MODEL, REPORT_INPUT, APPROACHES, METRICS, LOCATOR_PROMPT, promptFor, toolDefinition, historicalResult } from './assets/lesson-one-workflow.mjs';
 const history = JSON.parse(readFileSync('assets/lesson-one-history.json', 'utf8'));
 const values = Object.fromEntries(METRICS.map(x => [x, {current:2, prior:1}]));
 const state = {raw_values:values, unit_values:values};
@@ -192,29 +192,33 @@ const recomputed = Object.fromEntries(APPROACHES.map(id => {
   const r = historicalResult(history, id);
   return [id, {grade:r.grade, caseStates:r.caseStates, input_from:r.input_from}];
 }));
-console.log(JSON.stringify({MODEL, APPROACHES, METRICS, prompts, tools:[...toolDefinition('convert_units'), ...toolDefinition('calculate_yoy')], recomputed}));
+console.log(JSON.stringify({MODEL, REPORT_INPUT, APPROACHES, METRICS, prompts, tools:[...toolDefinition('convert_units'), ...toolDefinition('calculate_yoy')], recomputed}));
 '''
     return json.loads(subprocess.check_output(['node', '--input-type=module', '-e', script], cwd=ROOT, text=True))
 
 
 def materials():
     p = product_contract()
-    source = ROOT / 'netlify/data/report-pages-60-75.txt'
+    source = ROOT / 'netlify/data' / p['REPORT_INPUT']['file']
     history_file = ROOT / 'assets/lesson-one-history.json'
     history = json.loads(history_file.read_text())
     source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
-    assert source_hash == history['window_sha256'], 'Report window and archive differ'
+    assert source_hash == p['REPORT_INPUT']['sha256'], 'Full report fingerprint differs'
+    assert list(map(int, re.findall(r'^=== 第 (\d+) 页 ===$', source.read_text(), re.M))) == list(range(1, p['REPORT_INPUT']['pages'] + 1)), 'Full report page sequence differs'
+    historical_window = ROOT / 'netlify/data/report-pages-60-75.txt'
+    assert hashlib.sha256(historical_window.read_bytes()).hexdigest() == history['window_sha256'], 'Historical window fingerprint differs'
     assert all(x == 'pass' for x in p['recomputed']['yoy-api']['caseStates']), 'Main historical chain did not pass'
     locator = history['records']['locator-thinking-api']['parsed']
     reference = {
         'purpose':'只供固定案例检查器评分，不得作为当前财报模型任务输入。五项通过不等于独立外部核验。',
-        'window_sha256':source_hash, 'location':{k:v for k,v in locator.items() if k != 'values'},
+        'report_sha256':source_hash, 'location':{k:v for k,v in locator.items() if k != 'values'},
         'raw_values':locator['values'], 'unit_values':history['records']['unit-api']['parsed'],
         'yoy_values':history['records']['yoy-api']['parsed'],
     }
     labels = ['定位与提取 · 无 thinking', '定位与提取 · 有 thinking', '单位换算 · 无工具', '单位换算 · convert_units', '同比计算 · 无工具', '同比计算 · calculate_yoy']
     contract = {
-        'schema':1, 'case':{'company':'比亚迪','security':'002594.SZ','current_period':'2026H1','prior_period':'2025H1', 'scope':'截至6月30日的六个月累计，合并口径', 'input':'data/report-pages-60-75.txt', 'physical_pages':[60,75], 'window_sha256':source_hash},
+        'schema':2, 'case':{'company':'比亚迪','security':'002594.SZ','current_period':'2026H1','prior_period':'2025H1', 'scope':'截至6月30日的六个月累计，合并口径', 'input':'data/' + p['REPORT_INPUT']['file'], 'physical_pages':[1,p['REPORT_INPUT']['pages']], 'report_sha256':source_hash, 'source_pdf_sha256':p['REPORT_INPUT']['source_pdf_sha256']},
+        'history_input':{'physical_pages':[60,75], 'window_sha256':history['window_sha256'], 'note':'旧历史定位使用当时的页窗，不是本次全文运行；后续来自对应历史02/04。'},
         'model':p['MODEL'], 'mainline':[p['APPROACHES'][i] for i in [1,3,5]],
         'approaches':[{'number':f'{i+1:02d}', 'id':id, 'label':labels[i],
                        'parent':None if i < 2 else p['APPROACHES'][1 if i < 4 else 3],
@@ -233,7 +237,7 @@ def materials():
         'rules':{'amount_divisor':100000,'amount_decimals':2,'eps_unit':'元/股','yoy_formula':'(current-prior)/prior*100','yoy_decimals':2,'zero_prior':'stop','missing_values':'stop; null/blank are not zero','tool_requirement':'五项都须发生有效调用，参数必须与精确父输入一致，程序执行后将结果交回模型。'},
         'checks':[{'number':i+1,'name':x[0].split('．',1)[1], 'rule':x[1]} for i,x in enumerate(LESSON['evals'])],
         'reference':'checks/case-reference.json 只供程序评分，不进入运行模型上下文。',
-        'receipts':['kind','job_id','approach','parent_job_id','window_sha256','model','raw_output','parsed','grade','caseStates','workflowState','tool_calls','usage','usage_complete','elapsed_seconds'],
+        'receipts':['kind','job_id','approach','parent_job_id','report_sha256','model','raw_output','parsed','grade','caseStates','workflowState','tool_calls','usage','usage_complete','elapsed_seconds'],
         'receipt_notes':'程序可用字段适配，但必须保留上述含义；不得有 apiKey。历史保存 recorded_grade 与原收据指纹，历史工具 usage_scope=last_response。',
         'credentials':'Evals本次运行视图的网页隐藏输入，仅当前页面与请求内存；同页供各行连续使用，手动清空或刷新时清除。不进存储、文件、日志或截图，不使用OpenCode登录文件或共享Key。',
     }
@@ -255,7 +259,7 @@ def materials():
     def js(value):
         return (json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode()
     files = {
-        'data/report-pages-60-75.txt':source.read_bytes(),
+        'data/report-full-text.txt':source.read_bytes(),
         'history/lesson-one-history.json':history_file.read_bytes(),
         'contracts/workflow.json':js(contract),
         'checks/case-reference.json':js(reference),
@@ -272,10 +276,10 @@ def materials():
 
 ## 已提供的材料
 
-- data/report-pages-60-75.txt：与现场产品完全相同的报告文字窗口，保留物理页边界。不是完整 PDF。
+- data/report-full-text.txt：一份完整 207 页财报文本，与现场产品本次 Run 使用的文件相同，保留第 1–207 物理页边界。不裁剪、不提前提供目标页。
 - contracts/workflow.json：案例、阶段、字段、工具、停止和重跑约定。
-- prompts/runtime：五份财报任务模板。程序替换 {{CHECKED_INPUT_JSON}} 为本轮已检查前序的真实输入。01 与 02 共用 locate.txt，只改变 thinking。
-- history/lesson-one-history.json：六条原始历史输出，供只读回放，不是本轮输入。
+- prompts/runtime：五个提示词文件，不是五份财报。程序替换 {{CHECKED_INPUT_JSON}} 为本轮已检查前序的真实输入。01 与 02 共用 locate.txt，只改变 thinking。
+- history/lesson-one-history.json：六条原始历史输出，定位输入当时为第 60–75 页窗口，下游来自对应历史02/04。保留原输出、提示词、评分与指纹，供只读回放，不是全文运行结果或本轮输入。
 - checks/case-reference.json：固定案例评分参考，含案例答案，只给程序检查器，不给财报运行模型。
 - checks/history-recomputed.json：历史链按当前规则复算的评分与前序关系。
 - checks/synthetic-cases.json：工具与流程的离线检查，不消耗模型额度，结果不能称为真实 Run。
@@ -299,14 +303,14 @@ def materials():
 - 先读取 TASKBOOK.md 和 contracts/workflow.json，按教师当前步骤逐层构建，不一次生成全部应用。
 - 服务说明随第1步建立，本次收据查看与下载随第3步建立，后续阶段复用。每步完成本步入口、中文状态、检查和操作说明，第7步只汇总验收，不首次补做前面缺失的功能。
 - data、history、checks 是只读材料。实际文件、指纹和失败结果必须保留，不通过改答案或改参考表使检查通过。
-- 历史只用于回放，检查参考只用于固定案例评分。财报运行模型只能收到该阶段任务、实际报告窗口或本轮前序，以及当前工具返回。
+- 历史只用于回放，检查参考只用于固定案例评分。定位模型接收完整207页 report-full-text.txt，不裁剪、不先摘要；后续阶段读取本轮前序和当前工具返回。收据用 report_sha256 绑定全文，不接受旧窗口运行作为前序。
 - 在线 03/04 只读本轮通过的 02；05/06 只读本轮通过的 04。重跑正式前序清空对应下游，01/03不注册为父结果。
 - 编程 Agent 不能索取 Key 或读取其私有登录凭据。个人 Key 由本人在网页隐藏输入，只在请求内存中使用。
 - 第3–6步先实现模块并运行离线检查，第7步程序定稿后才由本人填写Key，连续真实运行02/04/06。未配置财报Key不阻止继续搭建。离线测试必须标明测试响应，不得冒充真实模型运行。未经本人网页运行，不登记真实验收通过。
 - 临时检查输出保存在本项目内，不为测试请求访问项目外临时目录。
 - 每步结束用普通中文报告文件、实际检查、可点击的本机网址和下一步。启动、停止、重启由编程Agent操作，不让老师自行猜终端命令；改后台后停止本项目旧服务再启动，避免看旧端口。
 ''').encode()
-    manifest = {'schema':1, 'case':'BYD 2026H1 vs 2025H1, prepared text window', 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(files.items())}}
+    manifest = {'schema':2, 'case':'BYD 2026H1 vs 2025H1, complete 207-page report text', 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(files.items())}}
     files['checks/manifest.json'] = js(manifest)
     with zipfile.ZipFile(ROOT / 'lesson-one-materials.zip', 'w', compression=zipfile.ZIP_DEFLATED) as z:
         for name, data in sorted(files.items()):

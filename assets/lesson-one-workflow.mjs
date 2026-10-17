@@ -1,4 +1,9 @@
 export const MODEL = 'Qwen/Qwen3.5-4B';
+export const REPORT_INPUT = Object.freeze({
+  file:'report-full-text.txt', pages:207,
+  sha256:'74cf20b1bb94bd8ec93aaeaa2374b977104638802427529f1ad2878ca2e7a6a5',
+  source_pdf_sha256:'2648a8c4ebf637da4eeb79e58791c1faf457daa687914e325ff37d1b9676a48c',
+});
 export const APPROACHES = ['locator-baseline-api', 'locator-thinking-api', 'unit-baseline-api', 'unit-api', 'yoy-baseline-api', 'yoy-api'];
 export const METRICS = ['revenue', 'operating_cost', 'operating_profit', 'parent_net_profit', 'basic_eps'];
 const EXPECTED = {
@@ -9,7 +14,7 @@ const EXPECTED = {
   basic_eps: {current:1.35, prior:1.71, change:'-21.05%'},
 };
 const CASES = ['section-location', 'table-location', 'value-extraction', 'unit', 'change'];
-export const LOCATOR_PROMPT = `下面是比亚迪2026年半年度报告第60–75物理页的完整文字窗口，每页以“=== 第 N 页 ===”开头。
+export const LOCATOR_PROMPT = `下面是比亚迪2026年半年度报告的完整207页文本，每页以“=== 第 N 页 ===”开头，页码为PDF物理页。
 请根据原文定位合并利润表及其续页，抄录2026H1与2025H1的五项原值。区分合并与母公司，附注号与数值，基本与稀释EPS。不要换算或计算同比，不根据常识补齐。
 只返回JSON：section_name、section_start_page、table_name、table_pages、current_period_header、prior_period_header、unit、values。
 section_name与section_start_page来自实际章节标题，table_pages为包含目标表及续表的物理页整数数组。两期列头与金额单位照原文填写，不清楚就填null。
@@ -119,13 +124,14 @@ export function historicalResult(history, approach) {
     prompt:record.prompt, prompt_note:record.prompt_note, recorded_at:record.recorded_at,
     recorded_grade:record.recorded_grade, receipt_sha256:record.receipt_sha256,
     usage:record.usage, usage_scope:record.usage_scope,
-    note:`${parent ? `输入与前序检查沿用历史第 ${approach.startsWith('unit') ? '02':'04'} 步。` : ''}历史原始输出按修正规则复算，原评分另行保留。`,
+    input_report:{file:'report-pages-60-75.txt', physical_pages:[60,75], sha256:history.window_sha256},
+    note:`历史定位输入为第60–75物理页窗口，并非全文运行。${parent ? `输入与前序检查沿用历史第 ${approach.startsWith('unit') ? '02':'04'} 步。` : ''}历史原始输出按修正规则复算，原评分另行保留。`,
   };
   if (approach === 'locator-baseline-api' && !record.parsed.values) {
     result.caseStates[2] = 'pending'; result.violations[2] = '待测';
     result.caseCounts['value-extraction'] = '原任务未要求';
     result.score = `定位 ${Number(grade.section === 'pass') + Number(grade.table === 'pass')}/2`;
-    result.note = '此历史任务未要求提取数字，也未要求章节起始页，原评分却检查了该页码；不能据此单独比较 thinking。';
+    result.note = '历史定位输入为第60–75物理页窗口。此历史任务未要求提取数字，也未要求章节起始页，原评分却检查了该页码；不能据此单独比较 thinking，也不能当成全文运行结果。';
   }
   return result;
 }

@@ -4,7 +4,7 @@ import { resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runJob } from '../netlify/lib/jobs.mjs';
 import { runTrial } from '../netlify/lib/workflow.mjs';
-import { history, memoryStore, modelFixture, windowText } from './fixtures.mjs';
+import { memoryStore, modelFixture, reportText } from './fixtures.mjs';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const store = memoryStore();
@@ -15,7 +15,7 @@ createServer(async (req, res) => {
     let raw = ''; for await (const chunk of req) raw += chunk;
     const body = JSON.parse(raw);
     res.writeHead(202); res.end();
-    runJob(body, {store, history, loadWindow:async () => windowText, execute:(args) => runTrial({...args, fetchImpl:modelFixture(args.approach)})});
+    runJob(body, {store, loadReport:async () => reportText, execute:(args) => runTrial({...args, fetchImpl:modelFixture(args.approach)})});
     return;
   }
   if (url.pathname === '/api/run-status') {

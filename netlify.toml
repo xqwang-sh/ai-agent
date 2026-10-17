@@ -10,7 +10,7 @@
   node_bundler = "esbuild"
 
 [functions."run-background"]
-  included_files = ["netlify/data/report-pages-60-75.txt"]
+  included_files = ["netlify/data/report-full-text.txt"]
 
 [[redirects]]
   from = "/api/run"

@@ -72,19 +72,30 @@ def check():
         for filename, digest in manifest['files'].items():
             assert sha256(z.read('earnings-workflow/' + filename)).hexdigest() == digest, filename
         assert len(manifest['files']) == len(names) - 1
-        for local, packed in [('netlify/data/report-pages-60-75.txt','data/report-pages-60-75.txt'), ('assets/lesson-one-history.json','history/lesson-one-history.json')]:
+        for local, packed in [('netlify/data/report-full-text.txt','data/report-full-text.txt'), ('assets/lesson-one-history.json','history/lesson-one-history.json')]:
             assert (ROOT / local).read_bytes() == z.read('earnings-workflow/' + packed)
-        window = z.read('earnings-workflow/data/report-pages-60-75.txt').decode()
-        assert list(map(int,re.findall(r'=== 第 (\d+) 页 ===',window))) == list(range(60,76))
+        report = z.read('earnings-workflow/data/report-full-text.txt').decode()
+        assert list(map(int,re.findall(r'^=== 第 (\d+) 页 ===$',report,re.M))) == list(range(1,208))
+        assert 'earnings-workflow/data/report-pages-60-75.txt' not in names
         contract = json.loads(z.read('earnings-workflow/contracts/workflow.json'))
         assert contract['model'] == p['MODEL']
         assert list(contract['metrics']) == p['METRICS']
         assert [a['id'] for a in contract['approaches']] == p['APPROACHES']
         assert contract['tool_definitions'] == p['tools']
+        assert contract['case']['physical_pages'] == [1,207]
+        assert contract['case']['report_sha256'] == p['REPORT_INPUT']['sha256'] == sha256(report.encode()).hexdigest()
+        assert contract['history_input']['physical_pages'] == [60,75]
+        history = json.loads(z.read('earnings-workflow/history/lesson-one-history.json'))
+        assert contract['history_input']['window_sha256'] == history['window_sha256']
+        assert history['window_sha256'] != contract['case']['report_sha256']
+        pages = re.split(r'(?m)(?=^=== 第 \d+ 页 ===$)',report)
+        old_window = '\n\n'.join(text.rstrip() for text in pages if re.match(r'=== 第 (?:6\d|7[0-5]) 页 ===',text))
+        assert old_window.strip() == (ROOT / 'netlify/data/report-pages-60-75.txt').read_text().strip()
+        assert 'included_files = ["netlify/data/report-full-text.txt"]' in (ROOT / 'netlify.toml').read_text()
         for filename, content in p['prompts'].items():
             assert z.read('earnings-workflow/prompts/runtime/' + filename).decode().strip() == content
         reference = json.loads(z.read('earnings-workflow/checks/case-reference.json'))
-        assert reference['window_sha256'] == sha256(window.encode()).hexdigest()
+        assert reference['report_sha256'] == sha256(report.encode()).hexdigest()
         for filename in p['prompts']:
             text = z.read('earnings-workflow/prompts/runtime/' + filename).decode()
             assert 'case-reference' not in text and '344815421' not in text and '67' not in text

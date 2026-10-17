@@ -133,7 +133,7 @@
 </section><section class="chapter" id="units">
 <div class="chapter-head"><span class="chapter-num">4</span><h2>第 4 步：实现 04，检查它只读取本轮 02</h2></div>
 <p class="chapter-question">固定两个期间的金额换算，保留 EPS 的原单位。</p>
-<h3>现在怎么做</h3><ol><li>在同一会话发送本步主 Prompt。让 OpenCode 替你执行两期换算、EPS、缺前序、错参数和缺工具调用的离线检查。</li><li>看它用普通中文报告“04 只接受本轮通过的 02；两期换算与 EPS 检查通过”。页面仍可保持未运行，不需要你先去重跑一次真实 02。</li><li>真实按钮留到第 7 步一起点。届时先完成本轮 02，再点 04；刷新或重启后必须重新从 02 开始。</li></ol>
+<h3>现在怎么做</h3><ol><li>在同一会话发送本步主 Prompt。让 OpenCode 替你执行两期换算、EPS、缺前序、错参数和缺工具调用的离线检查。</li><li>等它报告离线检查完成，打开或刷新它给出的本地网址。点 Evals → 本次运行，找到“运行 04 单位换算”。本轮 02 尚未运行时，这个按钮应不可用，并说明要先完成本轮 02。再点下方 04 行的“查看记录”，应写明尚无本轮 02 输入，不能显示历史结果。</li><li>真实按钮留到第 7 步一起点。届时先完成本轮 02，再点 04；刷新或重启后必须重新从 02 开始。</li></ol>
 <div class="prompt-block"><div class="prompt-heading"><h3>发给 OpenCode</h3><button type="button" data-copy="prompt-units">复制 Prompt</button></div><pre id="prompt-units">这是讲义搭建第 4 步。产品运行行号 01–06 与搭建步骤不同。完成本步后，只提醒我复制讲义第 5 步主 Prompt，不跳步。
 
 在现有应用实现 04 的 convert_units 工具阶段，严格使用本轮 02 的真实结果。在 Evals 的“本次运行”中提供“运行 04”按钮，与 02 共用当前页面内存中的个人 Key；保留各行“查看记录”，查看不触发模型调用。
@@ -146,7 +146,7 @@
 6. 用 checks/synthetic-cases.json 检查两期、EPS、缺值、错参数和缺工具调用。测试响应标明测试用途，不写成真实模型结果。由你执行这些离线检查，不让我要先填 Key 或先跑真实 02。修改后台后重启本项目服务并报告当前网址。用普通中文说明前序和工具检查结果；真实 04 留到第 7 步，与 02 连续运行。然后停止。
 
 只实现这个阶段，不改写原值，不以模型心算代替工具，不从历史收据取本轮输入。</pre></div>
-<div class="learner-card expected"><h3>你应看到</h3><ul><li>Agent 报告两期金额、EPS 保持原值、错误参数和缺少真实工具调用的离线检查通过。</li><li>缺少本轮 02 的测试会停止，历史 02 和对照 01 都不能替代；这由 Agent 做测试并用中文报告，你无需手动改 JSON。</li><li>第 7 步真实运行时，04 的输入应标明来自本轮 02。两期金额显示为亿元，EPS 仍为元/股，同比仍待检查。</li></ul></div>
+<div class="learner-card expected"><h3>你应看到</h3><ul><li>Agent 报告两期金额、EPS 保持原值、错误参数和缺少真实工具调用的离线检查通过。</li><li>缺少本轮 02 时，网页的 04 按钮不可用，“查看记录”说明缺少本轮 02。历史 02 和对照 01 不能替代，由 Agent 离线检查并用中文报告，你无需手动改 JSON。</li><li>第 7 步真实运行时，04 的输入应标明来自本轮 02。两期金额显示为亿元，EPS 仍为元/股，同比仍待检查。</li></ul></div>
 <p class="files"><b>文件与数据：</b>04 读取 02.raw_values，新增 unit_values；工具记录保存在本轮收据。</p>
 <div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="units-0"><span>离线检查覆盖两个期间，不只检查本期；EPS 没有除以 100000。</span></label><label><input type="checkbox" data-check="units-1"><span>Agent 已验证重跑 02 会清空相关后续结果；本步可以继续到第 5 步，真实运行暂不勾为完成。</span></label></div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>
@@ -155,7 +155,7 @@
 </section><section class="chapter" id="yoy">
 <div class="chapter-head"><span class="chapter-num">5</span><h2>第 5 步：实现 06，检查同比与失败停止</h2></div>
 <p class="chapter-question">用刚换算好的两期数据计算五个同比，每个结果都能追到原值。</p>
-<h3>现在怎么做</h3><ol><li>发送本步主 Prompt，让 OpenCode 替你完成同比公式、精度、零分母、缺前序和工具调用的离线检查。没有 Key 也照常完成这一层。</li><li>看它报告“06 只读取本轮通过的 04”，并给出本地网址。此时未填 Key，网页没有本次成功简报是正常的。</li><li>等第 6 步也搭好后，再按第 7 步集中真实运行，不在改代码期间反复重跑前序。</li></ol>
+<h3>现在怎么做</h3><ol><li>发送本步主 Prompt，让 OpenCode 替你完成同比公式、精度、零分母、缺前序和工具调用的离线检查。没有 Key 也照常完成这一层。</li><li>等它报告“06 只读取本轮通过的 04”，打开或刷新给出的本地网址。点 Evals → 本次运行，找到“运行 06 同比计算”。本轮 04 尚未完成时，按钮应不可用；点 06 行的“查看记录”，应说明先完成本轮 04。再看 Product，仍显示本轮未完成，不能出现本次成功简报。</li><li>等第 6 步也搭好后，再按第 7 步集中真实运行，不在改代码期间反复重跑前序。</li></ol>
 <div class="prompt-block"><div class="prompt-heading"><h3>发给 OpenCode</h3><button type="button" data-copy="prompt-yoy">复制 Prompt</button></div><pre id="prompt-yoy">这是讲义搭建第 5 步。产品运行行号 01–06 与搭建步骤不同。完成本步后，只提醒我复制讲义第 6 步主 Prompt，不跳步。
 
 在现有应用实现 06 的 calculate_yoy 工具阶段与本次候选简报。在 Evals 的“本次运行”中提供“运行 06”按钮，与 02/04 共用当前页面内存中的个人 Key；保留各行“查看记录”，查看不触发模型调用。
@@ -177,7 +177,7 @@
 </section><section class="chapter" id="comparisons">
 <div class="chapter-head"><span class="chapter-num">6</span><h2>第 6 步：加入 01、03、05，对照不同做法</h2></div>
 <p class="chapter-question">先有完整主线，再观察改变一种做法会影响什么。失败与成功都如实保留。</p>
-<h3>现在怎么做</h3><ol><li>发送本步主 Prompt，补上 01、03、05 对照行。让 Agent 完成离线检查，改完后台后重新启动，并给出当前地址。</li><li>本步先在“历史结果”里比较三组做法。没有 Key 时仍可以完成搭建；不要为了看历史点 Run，也不把历史分数当作自己的运行成绩。</li><li>程序完成后，第 7 步先真实跑通 02 → 04 → 06。再决定是否加跑对照；当前 02 可供 03 使用，当前 04 可供 05 使用，不能用对照替换正式前序。</li></ol>
+<h3>现在怎么做</h3><ol><li>发送本步主 Prompt，补上 01、03、05 对照行。让 Agent 完成离线检查，改完后台后重新启动，并给出当前地址。</li><li>等 Agent 给出当前网址，打开或刷新后点 Evals → 历史结果。先分别点 01、02 行的“查看记录”，关闭窗口后再看下一行；接着比较 03 与 04、05 与 06。03/04 的输入应标为历史 02，05/06 标为历史 04。查看记录不会调用模型，不用填写 Key。</li><li>再切到“本次运行”，确认六行都有“查看记录”，01、03、05 也有各自的运行入口。此时没有本轮 02/04，03、04、05、06 不可运行是正常的；不要把历史分数当作本次成绩。</li><li>程序完成后，第 7 步先真实跑通 02 → 04 → 06。再决定是否加跑对照；当前 02 可供 03 使用，当前 04 可供 05 使用，不能用对照替换正式前序。</li></ol>
 <div class="prompt-block"><div class="prompt-heading"><h3>发给 OpenCode</h3><button type="button" data-copy="prompt-comparisons">复制 Prompt</button></div><pre id="prompt-comparisons">这是讲义搭建第 6 步。产品运行行号 01–06 与搭建步骤不同。完成本步后，只提醒我复制讲义第 7 步主 Prompt，不跳步。
 
 现在只实现三条本轮对照行，保留已有 02 → 04 → 06 主线与历史查看。在 Evals 的“本次运行”中补齐 01、03、05 各行的运行按钮，与主线共用个人 Key；“运行”和“查看记录”分开，查看不触发模型调用。
@@ -190,7 +190,7 @@
 6. 使用离线响应检查分支隔离、两期评分与 usage 累计，不发真实模型请求。修改后台后由你重启本项目服务，报告完整网址和中文离线检查结果。本人真实运行集中在第 7 步；本步不要求先填 Key。完成后给我可照做的历史查看和后续对照点击顺序，然后停止。
 
 不要把六行改成六个串行 Agent，不增加历史输入兜底，也不要为得到教学对比而强制制造错误。</pre></div>
-<div class="learner-card expected"><h3>你应看到</h3><ul><li>六行都能查看历史和本次结果；本次对照共用对应前序，分别评分。</li><li>运行 03 后，已有 04 的 job_id 和依赖它的 06 保持原状。</li><li>01/02 本轮提示词一致，历史提示词差异保留说明。</li></ul></div>
+<div class="learner-card expected"><h3>你应看到</h3><ul><li>六行都能查看历史和本次结果；本次对照共用对应前序，分别评分。</li><li>Agent 的离线检查报告：运行对照 03 后，已有 04 和 06 保持原状。你无需自己修改数据或查看 job_id 来造测试。</li><li>01/02 本轮提示词一致，历史提示词差异保留说明。</li></ul></div>
 <p class="files"><b>文件与数据：</b>复用 prompts/runtime 的五份任务文件；六行各有独立本次结果。</p>
 <div class="self-check"><h3>确认后再继续</h3><label><input type="checkbox" data-check="comparisons-0"><span>01、03 的成功不会代替主线父结果。</span></label><label><input type="checkbox" data-check="comparisons-1"><span>对照结论来自实际收据；没有把单次结果写成保证或因果证明。</span></label></div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>

@@ -43,6 +43,11 @@ def chapter(step, index):
         operations = '<details class="repair"><summary>以后怎样启动、停止、重新打开？</summary><p>下面的话也发给 OpenCode，不需要你自己使用终端。</p>'
         operations += ''.join(prompt_block(x['prompt'], 'operation-'+x['id'], x['title']) for x in step['operations'])
         operations += '</details>'
+    run_guide = ""
+    if step.get('run_steps'):
+        run_guide = (f'<div class="learner-card"><h3>{e(step["run_title"])}</h3>'
+                     '<p>程序定稿后再执行这些操作，搭建期间先完成离线检查。</p>'
+                     f'{listing(step["run_steps"], True)}</div>')
     return f'''<section class="chapter" id="{step['id']}">
 <div class="chapter-head"><span class="chapter-num">{index}</span><h2>{e(step['title'])}</h2></div>
 <p class="chapter-question">{e(step['aim'])}</p>
@@ -50,6 +55,7 @@ def chapter(step, index):
 {prompt_block(step['prompt'], 'prompt-'+step['id'], '发给 OpenCode')}
 <div class="learner-card expected"><h3>你应看到</h3>{listing(step['expected'])}</div>
 <p class="files"><b>文件与数据：</b>{inline(step['files'])}</p>
+{run_guide}
 <div class="self-check"><h3>确认后再继续</h3>{checkboxes}</div>
 <details class="repair"><summary>卡住时，发送这条修复 Prompt</summary>
 {prompt_block(step['repair'], 'repair-'+step['id'], '只修复当前步骤')}</details>
@@ -156,6 +162,9 @@ def render_markdown(prompts_only=False):
         lines += [f'{i+1}. {x}' for i, x in enumerate(s['actions'])]
         lines += ['', '### 发给 OpenCode', '', '```text', s['prompt'], '```', '', '### 你应看到', '']
         lines += ['- ' + x for x in s['expected']]
+        if s.get('run_steps'):
+            lines += ['', '### ' + s['run_title'], '', '程序定稿后再执行这些操作，搭建期间先完成离线检查。', '']
+            lines += [f'{i+1}. {x}' for i, x in enumerate(s['run_steps'])]
         lines += ['', '### 确认后再继续', '']
         lines += ['- [ ] ' + x for x in s['checks']]
         lines += ['', '文件与数据：' + s['files'], '', '### 卡住时发送', '', '```text', s['repair'], '```', '']
@@ -278,6 +287,8 @@ def materials():
 
 先建立空网页，再接历史，再实现 02、04、06，最后加入 01、03、05 对照并验收。第3–6步由编程Agent运行离线检查，不要求本人现在填写财报Key。等程序定稿、服务重新启动后，第7步再由本人在同一页面连续真实运行02→04→06。程序负责工具、检查、数据依赖和停止；模型执行指定的定位、抄录与工具调用。五项检查通过仍是待人工复核的候选简报。
 
+服务启停与 RUN.md 在第1步完成；历史查看和下载在第2步完成；个人 Key、错误提示、本次收据查看与下载在第3步建立。第4、5步补齐各自的前序与工具记录，第6步加入对照。每项功能的操作方法随对应步骤讲清，第7步只复用已有功能做最终验收和交接。
+
 每步完成后，用普通中文报告实际保存的文件、实际检查结果、老师现在该点哪里，以及唯一下一步。启动、停止、重启由编程Agent执行，给出确认可访问的本机网址；不要把终端命令或进程编号当作老师必须自行执行的操作。后台改动后停止本项目旧服务再启动，不同时保留多个旧版本服务。
 
 讲义：https://suibe-ai-agent.netlify.app/handout.html
@@ -286,6 +297,7 @@ def materials():
     files['AGENTS.md'] = ('''# 第一讲练习
 
 - 先读取 TASKBOOK.md 和 contracts/workflow.json，按教师当前步骤逐层构建，不一次生成全部应用。
+- 服务说明随第1步建立，本次收据查看与下载随第3步建立，后续阶段复用。每步完成本步入口、中文状态、检查和操作说明，第7步只汇总验收，不首次补做前面缺失的功能。
 - data、history、checks 是只读材料。实际文件、指纹和失败结果必须保留，不通过改答案或改参考表使检查通过。
 - 历史只用于回放，检查参考只用于固定案例评分。财报运行模型只能收到该阶段任务、实际报告窗口或本轮前序，以及当前工具返回。
 - 在线 03/04 只读本轮通过的 02；05/06 只读本轮通过的 04。重跑正式前序清空对应下游，01/03不注册为父结果。

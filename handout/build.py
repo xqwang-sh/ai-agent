@@ -226,7 +226,7 @@ def materials():
         'reference':'checks/case-reference.json 只供程序评分，不进入运行模型上下文。',
         'receipts':['kind','job_id','approach','parent_job_id','window_sha256','model','raw_output','parsed','grade','caseStates','workflowState','tool_calls','usage','usage_complete','elapsed_seconds'],
         'receipt_notes':'程序可用字段适配，但必须保留上述含义；不得有 apiKey。历史保存 recorded_grade 与原收据指纹，历史工具 usage_scope=last_response。',
-        'credentials':'网页隐藏输入，仅页面与本次请求内存；不进存储、文件、日志或截图，不使用OpenCode登录文件或共享Key。',
+        'credentials':'Evals本次运行视图的网页隐藏输入，仅当前页面与请求内存；同页供各行连续使用，手动清空或刷新时清除。不进存储、文件、日志或截图，不使用OpenCode登录文件或共享Key。',
     }
     synthetic = {
         'purpose':'仅测试响应与固定函数，不代表真实模型运行。不调用远程服务。',
@@ -291,6 +291,7 @@ def materials():
 - 在线 03/04 只读本轮通过的 02；05/06 只读本轮通过的 04。重跑正式前序清空对应下游，01/03不注册为父结果。
 - 编程 Agent 不能索取 Key 或读取其私有登录凭据。个人 Key 由本人在网页隐藏输入，只在请求内存中使用。
 - 第3–6步先实现模块并运行离线检查，第7步程序定稿后才由本人填写Key，连续真实运行02/04/06。未配置财报Key不阻止继续搭建。离线测试必须标明测试响应，不得冒充真实模型运行。未经本人网页运行，不登记真实验收通过。
+- 临时检查输出保存在本项目内，不为测试请求访问项目外临时目录。
 - 每步结束用普通中文报告文件、实际检查、可点击的本机网址和下一步。启动、停止、重启由编程Agent操作，不让老师自行猜终端命令；改后台后停止本项目旧服务再启动，避免看旧端口。
 ''').encode()
     manifest = {'schema':1, 'case':'BYD 2026H1 vs 2025H1, prepared text window', 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(files.items())}}

@@ -30,6 +30,15 @@ Prompt 是发给 OpenCode 的任务说明。Product 看简报，Approaches 看�
 
 API Key 是服务控制台创建的调用凭据，不是账号登录密码。OpenCode 能回复，不代表本地财报程序已经有硅基流动授权。
 
+准备财报运行 Key 时，由本人操作：
+
+1. 登录 [硅基流动控制台](https://cloud.siliconflow.cn/)，进入“API 密钥 / API Keys”。
+2. 已有可用 Key 就复制该 Key；尚未创建时，点“新建 API 密钥 / Create API Key”，按页面提示创建后复制完整密钥。
+3. 回到自己做出的网页，等第 7 步程序定稿后，粘贴到 Evals → 本次运行的隐藏输入框。Key 不发给 OpenCode。
+
+按钮名称可对照 [硅基流动官方快速上手](https://docs.siliconflow.cn/docs/userguide/quickstart)中的“创建 API Key”一节。注册、登录和创建由本人完成；没有可用 Key 时，先完成离线搭建，把真实 Run 保留为待完成。
+
+
 ## 3. 下载、解压，再选择正确目录
 
 1. 下载 [第一讲实操材料](../lesson-one-materials.zip)。在电脑“下载”文件夹找到 `lesson-one-materials.zip`。

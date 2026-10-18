@@ -12,8 +12,8 @@
     "app.js": "80bc082e3805922aa286edf80fa6d64e9ddde0b959f123145ae44f885efd620d"
   },
   "files": {
-    "EarningsReview-第二讲讲义包.zip": "7df5601b221e71ec33039c3fb479900381e6022d7b471eb0a9296ea62cdde37e",
-    "PROMPTS.md": "dc24a728158cb82fbf4857de8b7ad2e7f5e9679b9dab1719422751aeeef7dd68",
+    "EarningsReview-第二讲讲义包.zip": "65b1b270fd73afb380969d2690cc79224b35c5c5d3ac393962c50055bb95c805",
+    "PROMPTS.md": "e784f281d150e217dfdc0085dfe0dba42dba7d70eb00a77011a756619a377722",
     "assets/earnings-review-example.jpg": "1effd55aee70658939f7f6c303bb281bfca13eac5b56bd1449720cf3dc56e861",
     "assets/handout.css": "2adf51c2b36f6a04c2b6a8cfa1f74e232dc0a50dc17b086a6463214a04d7d4e3",
     "assets/handout.js": "255560e53e1572ec4563521138343e7b7ac82055f8ab68e0270a2a074d28c0a9",
@@ -28,8 +28,31 @@
     "earnings-review/data/trace.json": "f0310ac31da279c9e025b113cdc9710750a70b5625c08985a0b6aa0d31d081ee",
     "earnings-review/index.html": "9f04263da4dc85b3f7aaecbd30bfe7b5acfe19b6de97697be65006a7249567db",
     "earnings-review/style.css": "14b59e16e93a368747260b25316e5bce88c24d433c823574f55fcf2f733afeae",
-    "earnings-review-materials.zip": "4c0db48dd9d203bbfa689dee1d4d32a29afbd6111ad66e6f4d529548627f7dae",
-    "index.html": "b8d5fc3dc1a057a5e9ca2204346054b7ed67c4668910f3d23568f35da7cd8bd1",
-    "讲义.md": "453c753369c994853c9264bb2aaf293197208deb9c539eaed2fc2070c9e1c38d"
-  }
+    "earnings-review-materials.zip": "54572b409943b1d1ab9bf23fb56654fa8d47ea516864bab63f4f17aa3a032d6f",
+    "index.html": "c16a30fef48c3f848925aeecb91fb0fdd0ba7f2144aad52a8ed0987339ca8950",
+    "source-snapshot/AGENTS.md": "dba54f53e40562bfd6bb8dc9171d8162105e1b8d7feed2caf7e08bf341b0bd17",
+    "source-snapshot/README.md": "08bd181d8341689826098aa0a936ffe53c4e18d575271585744534015c2b5b90",
+    "source-snapshot/SOURCE-SNAPSHOT.json": "24e0a77e21f7e056c092c3991e18826362e223b3fb69b3a85570b427ab16088e",
+    "source-snapshot/materials/earnings-review/prompts/runtime/extract.md": "07e2d55819d95e6d676fad47f43db4d3b10246694c2e068d203e45d63ce4fc7a",
+    "source-snapshot/materials/earnings-review/prompts/runtime/feedback.md": "be68421cce64117ab10129b9b3f28cfd074bbff029225d3ccff3b4e738a53d93",
+    "source-snapshot/materials/earnings-review/prompts/runtime/locate.md": "c7e39f19964bb98e6d08d2359a0a9296635624c6ab95d0d714593b942d695c3b",
+    "source-snapshot/materials/earnings-review/prompts/runtime/vision.md": "5871e3a29a09983135c685d3dbc4c585e4be1e501f4bbf3b673496b1f8ef89b1",
+    "source-snapshot/qa/check_handout.py": "c6c1624a39dbf253007b03dc82c78b72efc2262f56aefc60c18baaf5197c761a",
+    "source-snapshot/source/acceptance/README.md": "762245045ac8b5ee834946bbf43b0d5e69ddc82700773a1606bbf9055ba0a92e",
+    "source-snapshot/source/acceptance/__init__.py": "e3859b6681ac35aeba4603fa14ddf1294daa063d2af448f3c69ad854ff3292c1",
+    "source-snapshot/source/acceptance/checks.py": "fc4cbcc1e3228439c826cb62134e016ac4d9f595a96ee84fb6377f6052e32e1c",
+    "source-snapshot/source/acceptance/fixtures.py": "404cda6b8831bbfd7dee9af5a376ab7ed2f0f50624a4469d436cf213a5cfab58",
+    "source-snapshot/source/acceptance/guard_child/sitecustomize.py": "40ebb45c97d7c5909461fc133f881a548f33172e5f49db32d978fa6365345095",
+    "source-snapshot/source/acceptance/offline_guard.py": "27413b81b05754c1051c9c958de13692047b9e511a1b7d9be59c4f8adb60f6a0",
+    "source-snapshot/source/acceptance/services.py": "2cf53f6c3f4b417aa35b9938ab58a4826754b3cff1aebc866bfd7d316039908a",
+    "source-snapshot/source/build.py": "13e2998a5c7b04689998ef892219f268006248248bd9ca832a1e732061022989",
+    "source-snapshot/source/lesson.json": "100fab3ad178ccfe604f4b1a0f637570c336bb8c74a3d2b1c453a280b0f6e281",
+    "source-snapshot/source/prepare_materials.py": "ea4ad3adc001c643dfcd09e623478cc3cc39a410a22bfdf1a4ecf154f63a8c4e",
+    "source-snapshot/source/publish.py": "6a792a13b6adb7253d6aacad98d9c848d2efca54748df800164c924fb5cfa82c",
+    "source-snapshot/source/verified-example.json": "7def6ede281b71b54170b9b037d296a30a32c7de3d311f8422f1b71c52917825",
+    "source-snapshot/source/verified-rebuild.json": "dcbb495d36e4a088a185881a7fab4d0a975fadc06d06fa3f15923ffd205d1844",
+    "讲义.md": "fc043d700c66d6a9332f87cc8315eb25a02b94ee178a67099a94f5c0ecd3f8ea"
+  },
+  "handout_updated": "2026-10-18",
+  "source_snapshot_digest": "63b57730943e50019daadba5b795c8fec75320538d6708ecb628ab3eb67531f9"
 }

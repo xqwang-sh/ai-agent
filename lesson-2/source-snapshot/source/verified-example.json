@@ -1,0 +1,127 @@
+{
+  "label": "课前示例实跑，不是学习者当前结果",
+  "date": "2026-10-16",
+  "company": "顺丰控股",
+  "model": {
+    "id": "qwen27",
+    "label": "Qwen 27B",
+    "text_model": "Qwen/Qwen3.8-27B",
+    "vision_model": "Qwen/Qwen3.8-27B",
+    "description": "文本提取与独立视觉复读均使用27B"
+  },
+  "usage": {
+    "requests": 6,
+    "prompt_tokens": 93604,
+    "completion_tokens": 3836,
+    "total_tokens": 97440,
+    "cached_tokens": 0,
+    "pending_calls": [],
+    "unknown_calls": []
+  },
+  "stages": [
+    {
+      "id": "prepare",
+      "label": "读取PDF",
+      "kind": "program",
+      "status": "completed",
+      "model_ids": [],
+      "tokens": 0,
+      "usage_state": "complete",
+      "pending_calls": [],
+      "unknown_calls": [],
+      "calls": 0,
+      "elapsed_seconds": 2.911,
+      "api_seconds": 0
+    },
+    {
+      "id": "locate",
+      "label": "定位证据",
+      "kind": "model",
+      "status": "completed",
+      "model_ids": [
+        "Qwen/Qwen3.8-27B"
+      ],
+      "tokens": 18536,
+      "usage_state": "complete",
+      "pending_calls": [],
+      "unknown_calls": [],
+      "calls": 1,
+      "elapsed_seconds": 17.275,
+      "api_seconds": 17.275
+    },
+    {
+      "id": "extract",
+      "label": "提取与补证",
+      "kind": "model",
+      "status": "completed",
+      "model_ids": [
+        "Qwen/Qwen3.8-27B"
+      ],
+      "tokens": 44221,
+      "usage_state": "complete",
+      "pending_calls": [],
+      "unknown_calls": [],
+      "calls": 2,
+      "elapsed_seconds": 190.365,
+      "api_seconds": 190.365
+    },
+    {
+      "id": "vision",
+      "label": "内部视觉核验",
+      "kind": "model",
+      "status": "completed",
+      "model_ids": [
+        "Qwen/Qwen3.8-27B"
+      ],
+      "tokens": 34683,
+      "usage_state": "complete",
+      "pending_calls": [],
+      "unknown_calls": [],
+      "calls": 3,
+      "elapsed_seconds": 160.505,
+      "api_seconds": 159.767
+    },
+    {
+      "id": "external",
+      "label": "同花顺外部核验",
+      "kind": "service",
+      "status": "completed",
+      "model_ids": [],
+      "tokens": 0,
+      "usage_state": "complete",
+      "pending_calls": [],
+      "unknown_calls": [],
+      "calls": 0,
+      "elapsed_seconds": 0.345,
+      "api_seconds": 0
+    },
+    {
+      "id": "delivery",
+      "label": "生成Earnings Review",
+      "kind": "program",
+      "status": "completed",
+      "model_ids": [],
+      "tokens": 0,
+      "usage_state": "complete",
+      "pending_calls": [],
+      "unknown_calls": [],
+      "calls": 0,
+      "elapsed_seconds": 0.038,
+      "api_seconds": 0
+    }
+  ],
+  "workflow_seconds": 371.627,
+  "api_seconds": 367.407,
+  "feedback_count": 3,
+  "internal": {
+    "status": "matched",
+    "matched": 10,
+    "total": 10
+  },
+  "external": {
+    "status": "matched",
+    "matched": 10,
+    "total": 10
+  },
+  "source_result_sha256": "905f76e5c2a2fc5fe78bdef0a07c6fe52b13f5739132d69ee27700993dfad7e8"
+}

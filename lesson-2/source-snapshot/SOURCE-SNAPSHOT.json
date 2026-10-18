@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "canonical_owner": "finance_agent_workshop/lesson2-earnings-review",
+  "purpose": "reviewable teaching source snapshot, not the learner application or a run freeze",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "dba54f53e40562bfd6bb8dc9171d8162105e1b8d7feed2caf7e08bf341b0bd17",
+      "bytes": 4378
+    },
+    {
+      "path": "README.md",
+      "sha256": "08bd181d8341689826098aa0a936ffe53c4e18d575271585744534015c2b5b90",
+      "bytes": 3984
+    },
+    {
+      "path": "source/build.py",
+      "sha256": "13e2998a5c7b04689998ef892219f268006248248bd9ca832a1e732061022989",
+      "bytes": 19351
+    },
+    {
+      "path": "source/prepare_materials.py",
+      "sha256": "ea4ad3adc001c643dfcd09e623478cc3cc39a410a22bfdf1a4ecf154f63a8c4e",
+      "bytes": 13707
+    },
+    {
+      "path": "source/publish.py",
+      "sha256": "6a792a13b6adb7253d6aacad98d9c848d2efca54748df800164c924fb5cfa82c",
+      "bytes": 13336
+    },
+    {
+      "path": "source/lesson.json",
+      "sha256": "100fab3ad178ccfe604f4b1a0f637570c336bb8c74a3d2b1c453a280b0f6e281",
+      "bytes": 78138
+    },
+    {
+      "path": "source/verified-example.json",
+      "sha256": "7def6ede281b71b54170b9b037d296a30a32c7de3d311f8422f1b71c52917825",
+      "bytes": 2969
+    },
+    {
+      "path": "source/verified-rebuild.json",
+      "sha256": "dcbb495d36e4a088a185881a7fab4d0a975fadc06d06fa3f15923ffd205d1844",
+      "bytes": 8403
+    },
+    {
+      "path": "qa/check_handout.py",
+      "sha256": "c6c1624a39dbf253007b03dc82c78b72efc2262f56aefc60c18baaf5197c761a",
+      "bytes": 6360
+    },
+    {
+      "path": "source/acceptance/README.md",
+      "sha256": "762245045ac8b5ee834946bbf43b0d5e69ddc82700773a1606bbf9055ba0a92e",
+      "bytes": 13394
+    },
+    {
+      "path": "source/acceptance/__init__.py",
+      "sha256": "e3859b6681ac35aeba4603fa14ddf1294daa063d2af448f3c69ad854ff3292c1",
+      "bytes": 79
+    },
+    {
+      "path": "source/acceptance/checks.py",
+      "sha256": "fc4cbcc1e3228439c826cb62134e016ac4d9f595a96ee84fb6377f6052e32e1c",
+      "bytes": 47511
+    },
+    {
+      "path": "source/acceptance/fixtures.py",
+      "sha256": "404cda6b8831bbfd7dee9af5a376ab7ed2f0f50624a4469d436cf213a5cfab58",
+      "bytes": 8130
+    },
+    {
+      "path": "source/acceptance/guard_child/sitecustomize.py",
+      "sha256": "40ebb45c97d7c5909461fc133f881a548f33172e5f49db32d978fa6365345095",
+      "bytes": 1948
+    },
+    {
+      "path": "source/acceptance/offline_guard.py",
+      "sha256": "27413b81b05754c1051c9c958de13692047b9e511a1b7d9be59c4f8adb60f6a0",
+      "bytes": 1937
+    },
+    {
+      "path": "source/acceptance/services.py",
+      "sha256": "2cf53f6c3f4b417aa35b9938ab58a4826754b3cff1aebc866bfd7d316039908a",
+      "bytes": 4422
+    },
+    {
+      "path": "materials/earnings-review/prompts/runtime/extract.md",
+      "sha256": "07e2d55819d95e6d676fad47f43db4d3b10246694c2e068d203e45d63ce4fc7a",
+      "bytes": 2415
+    },
+    {
+      "path": "materials/earnings-review/prompts/runtime/feedback.md",
+      "sha256": "be68421cce64117ab10129b9b3f28cfd074bbff029225d3ccff3b4e738a53d93",
+      "bytes": 2277
+    },
+    {
+      "path": "materials/earnings-review/prompts/runtime/locate.md",
+      "sha256": "c7e39f19964bb98e6d08d2359a0a9296635624c6ab95d0d714593b942d695c3b",
+      "bytes": 1444
+    },
+    {
+      "path": "materials/earnings-review/prompts/runtime/vision.md",
+      "sha256": "5871e3a29a09983135c685d3dbc4c585e4be1e501f4bbf3b673496b1f8ef89b1",
+      "bytes": 3033
+    }
+  ],
+  "source_digest": "63b57730943e50019daadba5b795c8fec75320538d6708ecb628ab3eb67531f9"
+}

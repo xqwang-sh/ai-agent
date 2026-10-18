@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "date": "2026-10-18",
+  "status": "verified",
+  "scope": {
+    "operating_system": "macOS26.6.2 arm64",
+    "coding_agent": "OpenCode CLI1.18.26",
+    "coding_model": "deepseek/deepseek-flash high",
+    "runtime_text_model": "Qwen/Qwen3.8-27B",
+    "runtime_vision_model": "Qwen/Qwen3.8-27B",
+    "company": "顺丰控股股份有限公司",
+    "thscode": "002352.SZ",
+    "source_pdf_sha256": "8f7b0cd6d0dc2d8f2d10d14e7eedd0fdf64e697fbdd675c588c087782be014f0",
+    "not_established": [
+      "OpenCode Desktop UI replay",
+      "Windows",
+      "qwen9 runtime",
+      "other companies real financial results"
+    ]
+  },
+  "rebuild": {
+    "initial_application_files": 0,
+    "initial_material_files": 23,
+    "auxiliary_project_config_files": 1,
+    "material_zip_sha256": "54572b409943b1d1ab9bf23fb56654fa8d47ea516864bab63f4f17aa3a032d6f",
+    "copyable_prompts": 31,
+    "main_steps_completed": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "stage8_repair_prompt_invocations_before_success": 10,
+    "stage8_repair_prompt_invocations_after_success_web_only": 1,
+    "stage8_repair_prompts_identical": true,
+    "observer_workspace_repair_drift_recorded_separately": 1,
+    "application_business_code_authored_by": "learner OpenCode agent",
+    "independent_teaching_tests_and_observations_authored_by": "reviewing agent",
+    "copyable_prompts_unchanged_from_initial_freeze": 30,
+    "observer_prompt_revised_after_run": true,
+    "observer_prompt_revision_scope": "Explicit taskID, already-terminal same-task observation, strict no writes, separate existing evidence from fresh hash/browser recomputation"
+  },
+  "actual_attempts": [
+    {
+      "task_id": "task-20261018031558-f99ec5cc",
+      "status": "stopped",
+      "last_stage": "locate",
+      "cause": "valid single JSON fence rejected",
+      "model_calls": 2,
+      "total_tokens": 52396,
+      "cached_tokens_included": 0
+    },
+    {
+      "task_id": "task-20261018034249-8f96374f",
+      "status": "stopped",
+      "last_stage": "extract",
+      "cause": "combined consolidated/company title falsely rejected",
+      "model_calls": 5,
+      "total_tokens": 147158,
+      "cached_tokens_included": 29440
+    },
+    {
+      "task_id": "task-20261018040414-a2da70bf",
+      "status": "candidate_ready",
+      "last_stage": "delivery",
+      "model_calls": 3,
+      "total_tokens": 65561,
+      "cached_tokens_included": 0,
+      "internal_matched": 10,
+      "internal_total": 10,
+      "external_matched": 10,
+      "external_total": 10,
+      "failed_gate_evaluations": 0,
+      "feedback_emitted": 0,
+      "feedback_requests": 0
+    }
+  ],
+  "usage_totals": {
+    "actual_runtime_model_calls": 10,
+    "known_runtime_tokens": 265115,
+    "cached_tokens_included_in_prompt_not_added": 29440,
+    "pending": 0,
+    "unknown": 0,
+    "coding_agent_usage_included": false
+  },
+  "successful_run": {
+    "task_id": "task-20261018040414-a2da70bf",
+    "reported_seconds": 181.7,
+    "time_boundary": "evidence_completed_before_seal; final publication follows ZIP success",
+    "stage_receipts": [
+      {
+        "name": "prepare",
+        "status": "done",
+        "model": "—",
+        "requests": 0,
+        "model_tokens": 0,
+        "pending": 0,
+        "unknown": 0,
+        "elapsed_seconds": 53.7,
+        "pending_elapsed_seconds": null,
+        "elapsed_status": "recorded",
+        "program_stage": true
+      },
+      {
+        "name": "locate",
+        "status": "done",
+        "model": "Qwen/Qwen3.8-27B",
+        "requests": 1,
+        "model_tokens": 25717,
+        "pending": 0,
+        "unknown": 0,
+        "elapsed_seconds": 25.1,
+        "pending_elapsed_seconds": null,
+        "elapsed_status": "recorded",
+        "program_stage": false
+      },
+      {
+        "name": "extract",
+        "status": "done",
+        "model": "Qwen/Qwen3.8-27B",
+        "requests": 1,
+        "model_tokens": 29527,
+        "pending": 0,
+        "unknown": 0,
+        "elapsed_seconds": 72.0,
+        "pending_elapsed_seconds": null,
+        "elapsed_status": "recorded",
+        "program_stage": false
+      },
+      {
+        "name": "vision",
+        "status": "done",
+        "model": "Qwen/Qwen3.8-27B",
+        "requests": 1,
+        "model_tokens": 10317,
+        "pending": 0,
+        "unknown": 0,
+        "elapsed_seconds": 30.3,
+        "pending_elapsed_seconds": null,
+        "elapsed_status": "recorded",
+        "program_stage": false
+      },
+      {
+        "name": "external",
+        "status": "done",
+        "model": "—",
+        "requests": 0,
+        "model_tokens": 0,
+        "pending": 0,
+        "unknown": 0,
+        "elapsed_seconds": 0.4,
+        "pending_elapsed_seconds": null,
+        "elapsed_status": "recorded",
+        "program_stage": true
+      },
+      {
+        "name": "delivery",
+        "status": "done",
+        "model": "—",
+        "requests": 0,
+        "model_tokens": 0,
+        "pending": 0,
+        "unknown": 0,
+        "elapsed_seconds": 0.0,
+        "pending_elapsed_seconds": null,
+        "elapsed_status": "recorded",
+        "program_stage": true
+      }
+    ],
+    "program_files": 32,
+    "evidence_files_checked_by_hash": 230,
+    "sealed_archive_sha256": "f7b737eeb8dc1f3d814d1e8ede8be86fbd68687b8a404d9fb35b7f60214e9a2b",
+    "sealed_archive_bytes": 69889129,
+    "reference_raw_report_count": 8,
+    "reference_target_records": 2,
+    "all_raw_quarters_retained": true
+  },
+  "verification": {
+    "public_offline_checks": 18,
+    "generated_project_local_checks": 99,
+    "independent_os_outbound_network_denied": true,
+    "credential_environment_removed_for_tests": true,
+    "tests_executed_sequentially": true,
+    "seal_checks_passed": 24,
+    "financial_context_image_checks_passed": 45,
+    "browser_widths_checked": [
+      1280,
+      375,
+      320
+    ],
+    "new_browser_errors": 0,
+    "readonly_refresh_added_runtime_requests": 0,
+    "evidence_http_links_checked": 6,
+    "postsuccess_web_changes_preserved_business_source_files": 28,
+    "all_successful_task_files_unchanged": 275,
+    "final_readonly_observer": {
+      "status": "passed_separately_after_explicit_task_id_revision",
+      "task_id": "task-20261018040414-a2da70bf",
+      "same_task_terminal_status_and_usage_correct": true,
+      "reported_model_calls": 3,
+      "reported_total_tokens": 65561,
+      "protected_files": 59,
+      "changed_files": 0,
+      "allowed_tools": [
+        "read",
+        "glob",
+        "grep"
+      ],
+      "file_writes_allowed": false,
+      "fresh_hash_zip_or_browser_verification_performed": false,
+      "existing_observer_input_financial_checks": 42,
+      "existing_observer_input_browser_status": "pending as of the earlier display-only repair record",
+      "final_independent_reviewing_agent_financial_checks": 45,
+      "final_independent_reviewing_agent_browser_verified": true,
+      "nonmaterial_tool_errors": [
+        "one read past end-of-file"
+      ],
+      "prior_observer_attempt": "same-task binding failed while all58 protected files stayed unchanged; attempted shell and status writes denied"
+    },
+    "original_financial_full_pages_visually_inspected": 2
+  },
+  "notes": [
+    "This is a fresh rebuild/run record, separate from the2026-10-16 preclass example. The old published product remains byte-identical.",
+    "The main0–8 prompts, repair prompts and material kit were frozen for this replay;30 of31 prompt templates remain unchanged. The observer template was revised after the successful financial run and tested separately against its explicit ID. Repair iterations used the same published stage8 repair prompt and retained actual QA findings. This was not a one-shot build.",
+    "The first observer prompt made unintended workspace changes; later observations use enforced tool permissions and protected-file hash checks; final observation allows no file writes. The unintended repair is not counted as an explicit repair-prompt invocation.",
+    "The public source snapshot contains teaching sources and sanitized verification statistics. Full application snapshots, raw provider logs and the approximately70MB sealed run remain local.",
+    "Tokens come from actual provider usage and exclude the coding conversation. Cached tokens are included in prompt tokens, not added again.",
+    "Machine results still require human review."
+  ]
+}

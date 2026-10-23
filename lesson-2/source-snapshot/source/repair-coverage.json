@@ -1,0 +1,618 @@
+{
+  "schema": 1,
+  "purpose": "公开实现约定和可执行反例映射，不含真实财务答案。",
+  "main_messages": 9,
+  "extra_messages": 0,
+  "repairs": [
+    {
+      "repair": 1,
+      "problem": "首轮静态/来源/终身进度/中断/原始参考/源哈希六类缺口",
+      "main_steps": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_02_static_product_assets",
+        "test_05_failed_selection_does_not_advance",
+        "test_07_raw_json_text_and_vision",
+        "test_07_lifetime_pass_survives_candidate_change",
+        "test_07_timeout_preserves_existing_state",
+        "test_07_mixed_reference_and_immutable_evaluations",
+        "test_03_catalog_hash_drift_rejected",
+        "test_03_copied_pdf_hash_is_checked"
+      ]
+    },
+    {
+      "repair": 2,
+      "problem": "窄屏长路径溢出",
+      "main_steps": [
+        2,
+        8
+      ],
+      "public_tests": [
+        "test_02_static_product_assets"
+      ]
+    },
+    {
+      "repair": 3,
+      "problem": "亿元数字与原单位混标",
+      "main_steps": [
+        5,
+        6,
+        8
+      ],
+      "public_tests": [
+        "test_07_live_projection_history_review_and_evidence"
+      ]
+    },
+    {
+      "repair": 4,
+      "problem": "失败候选遗漏与ZIP重复成员",
+      "main_steps": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_07_candidate_journal_and_unique_archive_members",
+        "test_07_production_composition"
+      ]
+    },
+    {
+      "repair": 5,
+      "problem": "文字/视觉围栏JSON及实时用量",
+      "main_steps": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_07_raw_json_text_and_vision",
+        "test_07_live_projection_history_review_and_evidence"
+      ]
+    },
+    {
+      "repair": 6,
+      "problem": "终态程序阶段与历史刷新",
+      "main_steps": [
+        1,
+        2,
+        3,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_07_live_projection_history_review_and_evidence",
+        "test_07_timeout_preserves_existing_state",
+        "test_02_frontend_restoration",
+        "test_07_http_frontend_restore"
+      ]
+    },
+    {
+      "repair": 7,
+      "problem": "程序阶段开始先持久化",
+      "main_steps": [
+        1,
+        3,
+        4,
+        6,
+        8
+      ],
+      "public_tests": [
+        "test_07_production_composition",
+        "test_07_live_projection_history_review_and_evidence"
+      ]
+    },
+    {
+      "repair": 8,
+      "problem": "合并公司联合列、活动任务竞态、部分已知usage",
+      "main_steps": [
+        3,
+        4,
+        5,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_05_joint_scope_columns",
+        "test_07_http_idempotency_and_active_lock",
+        "test_07_live_projection_history_review_and_evidence",
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ]
+    },
+    {
+      "repair": 9,
+      "problem": "合并母公司标题、冻结测试串行、真实等待语义",
+      "main_steps": [
+        1,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_05_joint_scope_columns",
+        "test_06_frozen_execution",
+        "test_07_timeout_preserves_existing_state"
+      ]
+    },
+    {
+      "repair": 10,
+      "problem": "完整混合8季度窗口唯一选目标Q2",
+      "main_steps": [
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_06_mixed_reference_window",
+        "test_07_mixed_reference_and_immutable_evaluations"
+      ]
+    }
+  ],
+  "browser_acceptance": {
+    "required_viewports": [
+      1280,
+      375,
+      320
+    ],
+    "checks": [
+      "无横向溢出、长路径换行和阶段标签可读",
+      "初始及预检状态文字准确",
+      "一次点击创建、刷新、重复点击、公司切换及晚到响应",
+      "实际当前两层10/10、用量、同源证据下载与人工复核",
+      "刷新/换公司再切回恢复同一任务、冻结模型、阶段与用量；无新增任务或服务请求"
+    ],
+    "scope": "静态/HTTP测试不能证明浏览器布局。主线实跑结束由已有浏览器独立验收；任何需要补充Agent指令的版本判未通过。"
+  },
+  "extra_display_requirements": [
+    "预检结果中性说明，不残留启动前警告",
+    "窄屏阶段标签和数值不互相覆盖"
+  ],
+  "test_scheduling": "公共冻结/canary及本地冻结检查严格串行。禁止扩大等待时间掩盖死worker或测试竞态。",
+  "additional_protocol_requirement": "九条主Prompt开头均限定项目内临时路径。默认本地测试使用公开acceptance.local_checks，在发现/导入前安装守卫，并把TMPDIR/TEMP/TMP及Python临时目录设为项目内；不能依赖tests/__init__副作用或裸discover命令。权限拒绝或无最终回复均未完成，不能追加恢复消息冒充通过。 路径约束：每步先从工具输出确认当前项目根目录。支持相对路径的命令和文件工具使用项目相对路径；要求绝对路径的写入工具，必须从刚确认的根目录原文生成，禁止重打、猜写目录名或日期。写入前确认父目录实际存在且属于本项目；无法确保时改用当前目录下的相对路径写入命令，不试探项目外写入。",
+  "incremental_build": {
+    "counts": [
+      1,
+      1,
+      3,
+      6,
+      6,
+      11,
+      16,
+      35,
+      35
+    ],
+    "production_complete_by": 7,
+    "first_frozen_worker": 3,
+    "first_source_loop": 5,
+    "first_sealed_success": 6,
+    "final_step": "UI acceptance, complete regression and actual service launch; no new backend subsystem",
+    "generation_limit_failure": "A length finish or missing final reply is incomplete even with CLI exit0; preserve and restart with revised teaching inputs."
+  },
+  "additional_regressions": [
+    {
+      "problem": "刷新及重选报告恢复已有任务，身份/哈希/模型绑定与晚到响应",
+      "main_steps": [
+        2,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_02_frontend_restoration",
+        "test_07_http_frontend_restore"
+      ]
+    },
+    {
+      "problem": "累计半年词形、编号行名、附注与括号负数、表头索引及多组列",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ]
+    },
+    {
+      "problem": "同一验收输出目录重复执行时旧任务与幂等键污染新一轮",
+      "main_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_07_http_idempotency_and_active_lock",
+        "test_07_live_projection_history_review_and_evidence"
+      ],
+      "runner": "Each CLI invocation creates a unique child output directory; root summary points to that invocation; within-case restart shares its persistent task root."
+    },
+    {
+      "problem": "无截止日或非六月末六个月、续页借用前页H1、同页无关表头误配",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ]
+    },
+    {
+      "problem": "schema能力ID误作CLI命令，合成HTTP绕开真实argv分支",
+      "main_steps": [
+        6,
+        7,
+        8
+      ],
+      "public_tests": [
+        "test_06_reference_cli_transport"
+      ],
+      "boundary": "Normal frozen worker and ReferenceClient, executable transport injection only; financials/income separate argv, complete envelope, no real call."
+    },
+    {
+      "problem": "EPS排除句及缩放单位误证、公司表默认合并、六月中旬日期前缀误配、明确附注列裸括号编号误拒",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "positive_controls": [
+        "full Jan1–Jun30 range",
+        "honest consolidated-only title without redundant scope row",
+        "unscaled EPS own-row unit",
+        "bare parenthesized note in explicit note column with negative financial cells preserved"
+      ]
+    },
+    {
+      "problem": "缩放或外币EPS单位包含元/股后缀而误放行；官方目标记录缺代码或null时跳过身份检查",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "positive_controls": [
+        "unscaled yuan per share with and without explicit RMB",
+        "unscaled own EPS row inside a quote containing separate amount-scale context",
+        "normalized records with documented top-level code"
+      ],
+      "negative_classes": [
+        "scaled and foreign-currency EPS suffixes",
+        "each target CLI item missing/null/empty security code even with correct outer code"
+      ]
+    },
+    {
+      "problem": "有限EPS币种/倍率黑名单遗漏日元、欧元、未知前缀和新倍率，且拒绝合法专属人民币元说明",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Bind and extract an entire EPS-own expression, then use a closed positive grammar shared by text and vision; no blacklist-plus-suffix acceptance.",
+      "positive_controls": [
+        "bare basic-EPS label with own yuan/share caption",
+        "bare basic-EPS label with own RMB yuan/share caption",
+        "bare basic-EPS label with own RMB yuan caption",
+        "separate amount-scale context preserved"
+      ],
+      "negative_classes": [
+        "foreign and deterministically generated unknown currency prefixes",
+        "unallowed scale prefixes including RMB hundred/mega yuan per share"
+      ]
+    },
+    {
+      "problem": "完整EPS表达仅检查左前缀，右侧未知字符和无斜杠人民币元别名仍可部分匹配",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Extract the entire EPS-own expression before positive full-match; all alias paths consume both boundaries.",
+      "positive_controls": [
+        "all three declared unit aliases and separate amount-scale context"
+      ],
+      "negative_classes": [
+        "deterministic unknown left and right affixes applied to allowed aliases",
+        "own-row RMB-yuan suffix cannot use unanchored fallback"
+      ]
+    },
+    {
+      "problem": "worker遗漏role参数使混合预设的视觉请求使用默认文字模型",
+      "main_steps": [
+        4,
+        6
+      ],
+      "public_tests": [
+        "test_06_structured_verification"
+      ],
+      "mechanism": "One production stage-to-model boundary, asserted against actual retained requests through the normal frozen worker.",
+      "scope": "Offline qwen9 text9B/vision27B routing only; real financial validation remains separately scoped."
+    },
+    {
+      "problem": "同页完整表头被固定回看窗口排除，合法长表较后项目误拒",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Same-page table intervals bind rows without a body-distance limit; every new table/header boundary ends the old interval, even when invalid.",
+      "positive_controls": [
+        "different long body lengths and ordinary sections",
+        "later valid local table",
+        "local repeated header with different continuation order"
+      ],
+      "negative_classes": [
+        "intervening company or quarterly table",
+        "new title with missing header",
+        "continuation missing local header",
+        "borrowed old-table column indices"
+      ]
+    },
+    {
+      "problem": "无新标题的局部列头借旧H1日期，忽略自身单季或冲突期间",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Each header block owns and consistently resolves every local period declaration; rejected blocks remain barriers.",
+      "positive_controls": [
+        "untitled repeated header with its own complete H1"
+      ],
+      "negative_classes": [
+        "own Q2",
+        "own period missing",
+        "H1 and Q2 in both orders"
+      ]
+    },
+    {
+      "problem": "正确毛利润与错误收入别名摘要同时存在；舍入展示和成本转换缺少语义约束",
+      "main_steps": [
+        5,
+        6,
+        8
+      ],
+      "public_tests": [
+        "test_06_structured_verification"
+      ],
+      "mechanism": "One source-derived Decimal review; durable exact expense normalization; actual production reviewCards selects by semantic ID with no duplicate summary/series.",
+      "positive_controls": [
+        "fictional raw rounding trap through normal frozen worker",
+        "actual JS card selection and independent revenue/gross mutations"
+      ],
+      "negative_classes": [
+        "gross card aliases revenue",
+        "subtract/divide rounded displays",
+        "missing signed-to-magnitude record",
+        "test-only card function unused by normal UI"
+      ]
+    },
+    {
+      "problem": "不完整的新项目列头因年份解析不足而被忽略，目标行沿用旧H1所有者",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Recognize the explicit boundary before judging completeness; every rejected owner retains its interval and blocks fallback.",
+      "positive_controls": [
+        "complete untitled H1 header",
+        "ordinary item/prose with project/note/year words",
+        "complete header after an incomplete empty block"
+      ],
+      "negative_classes": [
+        "zero-year header",
+        "one-year header",
+        "missing or mismatched scope",
+        "contradictory scopes in both orders",
+        "incomplete Q2 header"
+      ]
+    },
+    {
+      "problem": "表题到列头仍受固定窗口限制，合法长表头丢失本块H1及合并口径",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Consume the complete continuous metadata span in the existing same-page binder; structure determines ownership, never a distance constant.",
+      "positive_controls": [
+        "16/64 consistent unit-caption lines with three joint column orders",
+        "consolidated-only title plus two years without a scope row",
+        "one normal worker containing both long body and long header"
+      ],
+      "negative_classes": [
+        "long metadata followed by an incomplete owner",
+        "contradictory scope declarations in both orders",
+        "H1/Q2 declarations separated by long metadata in both orders"
+      ]
+    },
+    {
+      "problem": "存在一条H1且未发现Q2就通过，忽略同块其他明确非目标或不完整期间",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Discover and normalize every whole explicit claim, retain other/unresolved, and require a nonempty set of all target-H1 claims in one shared binder.",
+      "positive_controls": [
+        "repeated identical H1",
+        "equivalent Jan1–Jun30 H1 in both orders",
+        "existing ordinary-year body and year-only column components"
+      ],
+      "negative_classes": [
+        "non-June end",
+        "June15 end",
+        "other duration",
+        "other start",
+        "missing end day",
+        "missing duration"
+      ],
+      "normal_worker": "Same byte-exact two-page38/27 input; no additional worker."
+    },
+    {
+      "problem": "年份前缀让缺时长声明逃逸为裸日期target，column_path仍沿用独立any-H1判定",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "One closed PeriodCertificate consumed by local blocks and both column paths. Discover whole declarations before classification; retain unresolved and never rediscover a good substring from a bad declaration.",
+      "positive_controls": [
+        "same explicit year on complete H1",
+        "equivalent H1 extra path component on current and prior",
+        "all existing ordinary-year and original H1 controls"
+      ],
+      "negative_classes": [
+        "same year on missing-duration declaration",
+        "other-duration extra path component",
+        "missing-duration extra path component"
+      ],
+      "normal_worker": "Same byte-exact38/27 two-page worker; new06 cases use pure compare, no new worker."
+    },
+    {
+      "problem": "同一fragment已有好H1时跳过后续缺损声明，去重fragment标记无法证明逐条完整认证",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Enumerate and cover every declaration span before classification; retain each original span and reject uncovered or unresolved intent. Block/current/prior consume the same certificate.",
+      "positive_controls": [
+        "two complete equivalent declarations in one fragment, both orders",
+        "all prior single and cross-fragment H1 controls"
+      ],
+      "negative_classes": [
+        "complete H1 plus missing-duration declaration in one fragment, both orders, block/current/prior"
+      ],
+      "normal_worker": "Same byte-exact38/27 two-page worker; new06 cases are direct compare only."
+    },
+    {
+      "problem": "完整无年份起止日期未被发现，其他H1声明使原正控掩盖了已允许语法缺口",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "One optional-year grammar for discovery and whole-span classification of the three existing complete families; each family must suffice without another H1 form.",
+      "positive_controls": [
+        "month_range, date_range, end_duration each with and without year as sole family in all owners"
+      ],
+      "negative_classes": [
+        "all existing216 calls retain missing-day/duration, other-window, composite-fragment and column-year controls"
+      ],
+      "normal_worker": "Same byte-exact38/27 two-page worker; new06 cases are direct compare only."
+    },
+    {
+      "problem": "表题专属首期间前缀提前返回，漏掉同标题后续缺时长声明",
+      "main_steps": [
+        5,
+        6
+      ],
+      "public_tests": [
+        "test_05_structured_source_binding",
+        "test_06_structured_verification"
+      ],
+      "mechanism": "Full raw title shares the existing fragment discovery and all-claims certificate; no first-prefix shortcut.",
+      "positive_controls": [
+        "two existing complete H1 declarations in either title order"
+      ],
+      "negative_classes": [
+        "existing complete H1 plus missing-duration declaration in either title order"
+      ],
+      "normal_worker": "Same byte-exact38/27 worker; only title and verbatim scope quote differ in four pure05/06 cases."
+    }
+  ],
+  "coding_replay_profile": {
+    "platform": "macOS",
+    "opencode_version": "1.18.26",
+    "agent": "build",
+    "model": "deepseek/deepseek-flash",
+    "variant": "low",
+    "observed_default_output_token_cap": 32000,
+    "experimental_output_override": false
+  },
+  "implementation_first_write_checkpoint": "第5步现在先执行首个生产检查点，不先阅读验收测试或fixture。确认根目录后，最多两次读取必要的现有生产接口、observation.schema或本步runtime提示词片段，工具回传正文合计不超过6000字符；已在本对话中的约定不重复读取。随后立即把严格JSON回复解码与基本输入校验的最小可执行实现写入同一app/contracts.py、app/extract.py，并编译。这段必须真实识别合法对象、完整单围栏与非法传输，缺失的来源能力诚实失败，不能只写pass、TODO、未接入的helper或全为未实现的壳。首次业务写入前禁止读取acceptance测试体；首次写入和编译完成后立即运行through5公开检查。接着以首个真实失败为线索，每轮只读一个相关测试或fixture的局部定义，以80行和4000字符为参考目标；完整定义更长时只读当前失败所需的连续片段并记录实际范围；完成该段生产修正、编译和重测后再读下一段。先补输入/动作协议与完整数词，再补同一binder的表块、期间、列、单位绑定，最后接现有冻结TaskRunner来源循环。每段在当前消息内自动继续，不等新的指令。所有下文业务要求仍有效，最终完整through5全部11项及本地检查均须通过，不得改验收或以阶段性失败交付。",
+  "implementation_sequence": {
+    "test_body_reading": "only after executable production write, successful compile and current failure",
+    "main5_prewrite_read_calls_max": 2,
+    "main5_prewrite_visible_characters_max": 6000,
+    "logs": "retain complete project-local stderr; emit genuine stdout receipt in same invocation",
+    "limits_apply_to": "development tool output only, never production PDF evidence or binding distance",
+    "failure_slice_target_lines": 80,
+    "failure_slice_target_characters": 4000,
+    "failure_slice_targets_are_business_gates": false,
+    "additional_period_pretest_reading_gate": false
+  },
+  "execution_regressions": [
+    {
+      "problem": "Low main5 read seven test/fixture blocks before any source write and exhausted32000 reasoning with no final",
+      "main_steps": [
+        0,
+        1,
+        5
+      ],
+      "verification": [
+        "visible checks",
+        "material parity",
+        "actual coding events and export",
+        "unchanged public through5 and local gates"
+      ],
+      "financial_assertions_changed": false,
+      "current_execution_rule_ref": "implementation_sequence"
+    }
+  ]
+}

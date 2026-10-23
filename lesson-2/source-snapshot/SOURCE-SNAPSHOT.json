@@ -5,8 +5,8 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "665edf253ed28de6963a99f9a2c816867e50faedfb96e2679032b69f681f4411",
-      "bytes": 18103
+      "sha256": "5687484154d99053b356e1010fe587f250e93bf02178a0a8771865b1fea91f27",
+      "bytes": 19876
     },
     {
       "path": "README.md",
@@ -30,13 +30,13 @@
     },
     {
       "path": "source/lesson.json",
-      "sha256": "a2ebaf8b7683ee8e8e2387fedd3a26be382aa3672b0ec9d67d4f02ce38d9fb7f",
-      "bytes": 174180
+      "sha256": "c71e907e2b83845d4384693a84a3e25f459a357c492e93e4050a11a3bda113aa",
+      "bytes": 145801
     },
     {
       "path": "source/repair-coverage.json",
-      "sha256": "3abc519e63b1ed55c43628689f0dc473a41fc8748d87c1e53f67c91cc31b679e",
-      "bytes": 22957
+      "sha256": "e1bdc9c4de2f89dce013c101a271168d804c53e88d2a8ea5ffc57cf6444ff54c",
+      "bytes": 23183
     },
     {
       "path": "source/verified-example.json",
@@ -50,8 +50,8 @@
     },
     {
       "path": "qa/check_handout.py",
-      "sha256": "540d79bae08710291d7e86ba41b9543f85909c6de694eaf3ced9763918e60bcb",
-      "bytes": 15880
+      "sha256": "1265af9f5eb839574a53938332a1dab682f46fbd76c048428e564f105aa269aa",
+      "bytes": 13654
     },
     {
       "path": "source/acceptance/README.md",
@@ -139,5 +139,5 @@
       "bytes": 7285
     }
   ],
-  "source_digest": "5e0c7bcb4cc7dc25b336975f01ca40bbcc7ce2abd08e151d3259211a9cfddf5d"
+  "source_digest": "e02ebb4fb251cfb5d2a137cc8470e39c2bc081016b219c46a4bbb402d837217a"
 }

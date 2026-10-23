@@ -15,8 +15,8 @@
     },
     {
       "path": "source/build.py",
-      "sha256": "f515c01a886c7940cbb9fb3e571099254486f39af05e08edffdae8454d4f9cdf",
-      "bytes": 19790
+      "sha256": "674e49ecb149c1859bd099788a45cc450012f6497cb481e1cf699173afd5d0ae",
+      "bytes": 20854
     },
     {
       "path": "source/prepare_materials.py",
@@ -30,8 +30,8 @@
     },
     {
       "path": "source/lesson.json",
-      "sha256": "bc5712fee19348ffe569e98d4540c3254237a837402e64f7149c00e342e2fec4",
-      "bytes": 173208
+      "sha256": "a2ebaf8b7683ee8e8e2387fedd3a26be382aa3672b0ec9d67d4f02ce38d9fb7f",
+      "bytes": 174180
     },
     {
       "path": "source/repair-coverage.json",
@@ -139,5 +139,5 @@
       "bytes": 7285
     }
   ],
-  "source_digest": "a259ed224c25e9daab529934719425c63868a30c501481becda2f49fe0015b1a"
+  "source_digest": "5e0c7bcb4cc7dc25b336975f01ca40bbcc7ce2abd08e151d3259211a9cfddf5d"
 }

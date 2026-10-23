@@ -1,6 +1,7 @@
 {
   "schema": 1,
   "purpose": "公开实现约定和可执行反例映射，不含真实财务答案。",
+  "mapping_note": "2026-10-23 七层结构重排后，判例细节不再逐字写入主提示词；每项修复由 public_tests 列出的可执行公共验收承载，main_steps 表示对应验收关卡所在的主步骤。",
   "main_messages": 9,
   "extra_messages": 0,
   "repairs": [

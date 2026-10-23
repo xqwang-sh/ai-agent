@@ -14,6 +14,10 @@ import tempfile
 import unittest
 import zipfile
 from .fixtures import observation, swapped, selection, reference, script, write_pdf, PAGES, alternate, alternate_reference, run_selection, RUN_PAGES, COMPANY, TEXT, income_envelope
+from .product_checks import ProductChecks
+from .recovery_checks import RecoveryChecks
+from .source_binding_checks import SourceBindingChecks
+from .reference_cli_checks import ReferenceCliChecks
 
 SUBJECT = None
 PROJECT = None
@@ -36,7 +40,13 @@ def text_leaves(value):
     if isinstance(value,dict):return [item for part in value.values() for item in text_leaves(part)]
     return []
 
-class Acceptance(unittest.TestCase):
+class Acceptance(ProductChecks, RecoveryChecks, SourceBindingChecks, ReferenceCliChecks, unittest.TestCase):
+    @property
+    def subject(self):return SUBJECT
+    @property
+    def project(self):return PROJECT
+    @property
+    def output(self):return OUTPUT
     def test_00_offline_parent_and_child(self):
         from .offline_guard import OfflineNetworkError
         with self.assertRaises(OfflineNetworkError):
@@ -209,6 +219,7 @@ class Acceptance(unittest.TestCase):
         (folder/'transport-receipts.json').write_text(json.dumps(services,ensure_ascii=False,indent=2))
         self.assertTrue(Path(result['task_dir']).is_dir())
         state=load(result['state_file']);trace=load(result['trace_file']);ledger=load(result['ledger_file'])
+        self.assert_journal(result, require_all=state['status']=='candidate_ready', receipts=services)
         program=Path(result['task_dir'])/'program'
         requests=trace['requests'];self.assertEqual(len(requests),len(ledger['requests']))
         self.assertEqual(len(requests),len(services['model_receipts']))
@@ -327,6 +338,7 @@ class Acceptance(unittest.TestCase):
                 self.assertEqual(state['current'][gate]['candidate_id'],state['current']['candidate_id'])
             self.assertEqual(len(requests),len(scenario['model_script']))
             with zipfile.ZipFile(result['sealed_archive']) as z:
+                self.assertEqual(len(z.namelist()),len(set(z.namelist())),'sealed ZIP members must be unique')
                 for f in manifest['files']:
                     self.assertEqual(hashlib.sha256(z.read('program/'+f['path'])).hexdigest(),f['sha256'])
                 payloads=[z.read(name) for name in z.namelist() if not name.endswith('/')]
@@ -336,6 +348,12 @@ class Acceptance(unittest.TestCase):
                 immutable.extend(im['path'] for im in prepared['images'])
                 immutable.extend(req[key] for req in requests for key in ('request_path','response_path'))
                 immutable.extend(event[key] for event in trace.get('external_evaluations',[]) for key in ('candidate_path','reference_path'))
+                candidates=trace['candidates'];self.assertTrue(candidates,'persist every submitted candidate before validation')
+                self.assertEqual(len(candidates),len({item['path'] for item in candidates}))
+                for item in candidates:
+                    self.assertEqual(sha(item['path']),item['sha256'])
+                    immutable.append(item['path'])
+                immutable.append(result['journal_file'])
                 for filename in immutable:
                     self.assertIn(sha(filename),embedded,f'missing actual sealed evidence: {filename}')
                 objects=[]
@@ -395,11 +413,11 @@ class Acceptance(unittest.TestCase):
             self.assertEqual(event['matched'],sum(expected.values()));self.assertEqual(event['total'],10)
             self.assertEqual(event['passed'],i==1)
 
-    def test_08_production_composition(self):
+    def test_07_production_composition(self):
         for case in ('combined','vision_self_repair','vision_revision','external_revision','no_progress'):
             with self.subTest(case=case):self.run_case(case)
 
-    def test_08_malformed_usage_stops_before_another_request(self):
+    def test_07_malformed_usage_stops_before_another_request(self):
         from .services import run_with_services
         for number,usage in enumerate(({'completion_tokens':10},{'total_tokens':-1},
                 {'prompt_tokens':1.25,'completion_tokens':10,'total_tokens':11},
@@ -416,7 +434,7 @@ class Acceptance(unittest.TestCase):
                 self.assertEqual(len(services['model_receipts']),1);self.assertEqual(services['reference_receipts'],[])
                 self.assertIn('unknown',json.dumps(ledger).lower());self.assertTrue(state['latest_failure'])
 
-    def test_08_wrong_reference_identity_or_date_stops(self):
+    def test_07_wrong_reference_identity_or_date_stops(self):
         from .services import run_with_services
         for field in ('thscode','record_thscode','period_end','ok','command','period'):
             with self.subTest(field=field):
@@ -438,7 +456,7 @@ class Acceptance(unittest.TestCase):
                 self.assertFalse(state['current']['external']['passed'])
                 self.assertEqual(len(services['model_receipts']),5);self.assertEqual(len(services['reference_receipts']),1)
 
-    def test_08_invalid_action_uses_dispatcher(self):
+    def test_07_invalid_action_uses_dispatcher(self):
         from .services import run_with_services
         folder=OUTPUT/'invalid-action';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
@@ -451,7 +469,7 @@ class Acceptance(unittest.TestCase):
         self.assertEqual([a['action'] for a in trace['actions']],['invent','invent'])
         self.assertEqual(len(services['model_receipts']),2);self.assertEqual(services['reference_receipts'],[])
 
-    def test_08_candidate_company_is_bound_to_task(self):
+    def test_07_candidate_company_is_bound_to_task(self):
         from .services import run_with_services
         folder=OUTPUT/'wrong-candidate-company';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
@@ -466,7 +484,7 @@ class Acceptance(unittest.TestCase):
         self.assertEqual([r['stage'] for r in trace['requests']],['locate','locate','locate','extract','extract'])
         self.assertEqual(state['counters']['failed_gate_evaluations'],2);self.assertEqual(services['reference_receipts'],[])
 
-    def test_08_page_pack_change_invalidates_same_text(self):
+    def test_07_page_pack_change_invalidates_same_text(self):
         from .services import run_with_services
         folder=OUTPUT/'page-pack';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
@@ -498,7 +516,7 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(at_new_pack['proof']['selected_pages'],[1,2])
         self.assertFalse(at_new_pack['proof']['vision_hash'])
 
-    def test_08_vision_cannot_cite_unsent_image(self):
+    def test_07_vision_cannot_cite_unsent_image(self):
         from .services import run_with_services
         folder=OUTPUT/'unsent-image';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf,texts=(TEXT,TEXT));scenario['pdf_path']=str(pdf)
@@ -518,7 +536,7 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(len({r['session_id'] for r in visions}),1)
         self.assertEqual(load(result['proof_file'])['selected_pages'],[1])
 
-    def test_08_uncertain_selection_clears_live_proofs(self):
+    def test_07_uncertain_selection_clears_live_proofs(self):
         from .services import run_with_services
         folder=OUTPUT/'uncertain-pack';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
@@ -539,7 +557,7 @@ class Acceptance(unittest.TestCase):
         self.assertGreaterEqual(projection['state']['counters']['model_requests'],4)
         state=load(result['state_file']);self.assertEqual(state['status'],'stopped');self.assertFalse(state.get('review'))
 
-    def test_08_failed_tools_deliver_current_error(self):
+    def test_07_failed_tools_deliver_current_error(self):
         from .services import run_with_services
         bad_selection=selection();bad_selection['anchors'][0]['quote']='NOT_PRINTED_ON_PAGE'
         pairs=[({'action':'search_fulltext','query':'合并利润表','offset':0},{'action':'search_fulltext','query':'','offset':0}),
@@ -562,7 +580,7 @@ class Acceptance(unittest.TestCase):
                 for error in errors:self.assertIn(error['code'],delivered,'current failed tool must not replay an earlier success')
                 self.assertEqual(load(result['state_file'])['counters']['failed_gate_evaluations'],0)
 
-    def test_08_timeout_preserves_existing_state(self):
+    def test_07_timeout_preserves_existing_state(self):
         from .services import run_with_services
         folder=OUTPUT/'timeout';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
@@ -571,14 +589,17 @@ class Acceptance(unittest.TestCase):
         state=load(result['state_file'])
         self.assertEqual(state['status'],'interrupted');self.assertFalse(state.get('review'))
         self.assertTrue(state['latest_failure'])
+        self.assert_journal(result)
         received=len(services['model_receipts']);self.assertLessEqual(received,1)
         self.assertEqual(services['reference_receipts'],[])
         ledger=load(result['ledger_file']);reserved=len(ledger['requests'])
         self.assertIn(reserved,{received,1});self.assertEqual(state['counters']['model_requests'],reserved)
         if reserved:
             self.assertIn('unknown',json.dumps(ledger).lower(),'interrupted reserved/send outcome has unknown usage, not zero or permanent pending')
+            for receipt in ledger['requests']:
+                self.assertIn(receipt['usage_status'],('known','unknown'),'each interrupted receipt must leave reserved/pending')
 
-    def test_08_retrieval_is_bounded_without_candidate_failures(self):
+    def test_07_retrieval_is_bounded_without_candidate_failures(self):
         from .services import run_with_services
         folder=OUTPUT/'retrieval-budget';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
@@ -595,7 +616,7 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(services['reference_receipts'],[])
         self.assertIn('source',json.dumps(state['latest_failure']).lower())
 
-    def test_08_corrupt_freeze_stops_before_model(self):
+    def test_03_corrupt_freeze_stops_before_model(self):
         folder=OUTPUT/'corrupt-freeze';folder.mkdir(parents=True,exist_ok=True)
         scenario=script('freeze');pdf=folder/'synthetic.pdf';write_pdf(pdf);scenario['pdf_path']=str(pdf)
         def corrupt(task_dir):
@@ -608,7 +629,7 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(services['model_receipts'],[])
         self.assertIn('freeze',json.dumps(state['latest_failure']).lower())
 
-    def test_08_frozen_execution(self):
+    def test_06_frozen_execution(self):
         importlib.import_module('app.contracts')  # Exercise an already-cached authoring module.
         targets=[PROJECT/'app/contracts.py',PROJECT/'prompts/runtime/extract.md',PROJECT/'contracts/workflow.json']
         saved={p:p.read_bytes() for p in targets}
@@ -626,20 +647,36 @@ class Acceptance(unittest.TestCase):
 
 def main():
     global SUBJECT,PROJECT,THROUGH,OUTPUT
-    p=argparse.ArgumentParser();p.add_argument('--project',type=Path,default=Path.cwd());p.add_argument('--through',type=int,choices=(0,5,6,7,8),default=8);p.add_argument('--output',type=Path)
+    p=argparse.ArgumentParser();p.add_argument('--project',type=Path,default=Path.cwd());p.add_argument('--through',type=int,choices=range(9),default=8);p.add_argument('--output',type=Path)
     args=p.parse_args();PROJECT=args.project.resolve();THROUGH=args.through
-    OUTPUT=(args.output or PROJECT/'tests/output/public-acceptance').resolve();OUTPUT.mkdir(parents=True,exist_ok=True)
+    report_output=(args.output or PROJECT/'tests/output/public-acceptance').resolve()
+    report_output.mkdir(parents=True,exist_ok=True)
+    OUTPUT=Path(tempfile.mkdtemp(prefix='run-',dir=report_output))
+    def publish(receipt):
+        receipt.update(output_directory=str(OUTPUT),invocation_id=OUTPUT.name)
+        summary=json.dumps(receipt,ensure_ascii=False,indent=2)+'\n'
+        (OUTPUT/'summary.json').write_text(summary)
+        pending=report_output/('summary.'+OUTPUT.name+'.tmp')
+        pending.write_text(summary);pending.replace(report_output/'summary.json')
+    receipt={'synthetic_only':True,'ok':False,'tests':0,'through':THROUGH,'status':'running'}
+    publish(receipt)
     sys.path.insert(0,str(PROJECT))
-    if THROUGH>=5:
-        module=importlib.import_module('app.acceptance');SUBJECT=module.create_subject(PROJECT)
-    suite=unittest.TestSuite()
-    for name in unittest.defaultTestLoader.getTestCaseNames(Acceptance):
-        phase=int(name.split('_')[1])
-        if phase<=THROUGH:suite.addTest(Acceptance(name))
-    result=unittest.TextTestRunner(verbosity=2).run(suite)
+    try:
+        if THROUGH>=3:
+            module=importlib.import_module('app.acceptance');SUBJECT=module.create_subject(PROJECT)
+        suite=unittest.TestSuite()
+        for name in unittest.defaultTestLoader.getTestCaseNames(Acceptance):
+            phase=int(name.split('_')[1])
+            if phase<=THROUGH:suite.addTest(Acceptance(name))
+        result=unittest.TextTestRunner(verbosity=2).run(suite)
+    except BaseException as error:
+        receipt.update(status='incomplete',error_type=type(error).__name__)
+        publish(receipt)
+        raise
     receipt={'synthetic_only':True,'ok':result.wasSuccessful(),'tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'through':THROUGH,
+             'status':'complete',
              'network_guard':'process-level, inherited by Python workers; not an OS security sandbox'}
-    (OUTPUT/'summary.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n')
+    publish(receipt)
     print(json.dumps(receipt,ensure_ascii=False));return 0 if result.wasSuccessful() else 1
 
 if __name__=='__main__':raise SystemExit(main())

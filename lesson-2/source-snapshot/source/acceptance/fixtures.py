@@ -56,6 +56,33 @@ def income_envelope(normalized):
     return {'ok':True,'command':'financials.income','data':{'timestamp':1782781200000,'item':items},
             'meta':{'source':'remote','requestId':'synthetic-reference','count':len(items),'truncated':False,'schemaVersion':'1'}}
 
+def mixed_reference_envelope():
+    from datetime import datetime, timezone
+    result=income_envelope(reference())
+    targets={item['fiscal_year']:deepcopy(item) for item in result['data']['item']}
+    items=[]
+    for year,quarter,month,day in [(2026,'Q2',6,30),(2026,'Q1',3,31),
+            (2025,'Q4',12,31),(2025,'Q3',9,30),(2025,'Q2',6,30),
+            (2025,'Q1',3,31),(2024,'Q4',12,31),(2024,'Q3',9,30)]:
+        item=deepcopy(targets.get(year,targets[2025]))
+        timestamp=int(datetime(year,month,day,tzinfo=timezone.utc).timestamp()*1000)
+        item.update(fiscal_year=year,fiscal_period=quarter,period_end_ms=timestamp,report_date_ms=timestamp+86400000)
+        items.append(item)
+    result['data']['item']=items;result['meta']['count']=len(items)
+    return result
+
+def joint_statement_case(title='合并及公司利润表', columns='consolidated'):
+    pages=deepcopy(PAGES);value=observation()
+    pages[0]['text']=pages[0]['text'].replace('合并利润表',title)
+    pages[0]['text']+='\n合并\n公司\n母公司\n2026年1-6月 合并\n2025年1-6月 合并'
+    value['scope_evidence']['quote']=title
+    if columns!='ambiguous':
+        column='合并' if columns=='consolidated' else '公司'
+        for side in ('current','prior'):
+            value[side+'_column_path'].append(column)
+            value[side+'_column_evidence'].append({'page':1,'quote':column})
+    return pages,value
+
 def alternate():
     value = observation()
     value['scope_evidence']['page'] = 2

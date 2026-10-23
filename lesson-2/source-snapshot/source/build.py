@@ -52,7 +52,13 @@ def render_html():
     nav = '<a href="#workflow-map">先看程序与模型流程</a><a href="#start">开始前</a>' + ''.join(f'<a href="#{s["id"]}"><span>{s["number"]}</span>{e(s["title"])}</a>' for s in d['steps']) + '<a href="#extensions">扩展验证</a><a href="#help">卡住时</a><a href="#finish">交付检查</a><a href="#runtime-prompts">运行时提示词</a>'
     roles = ''.join(f'<div><h3>{e(r["who"])}</h3><p>{e(r["task"])}</p></div>' for r in d['roles'])
     flow = '<ol class="flow">' + ''.join(f'<li><span class="owner">{e(s["owner"])}</span><strong>{e(s["label"])}</strong><p>{e(s["work"])}</p></li>' for s in d['flow']) + '</ol>'
-    preparation = ''.join(f'<li><h3>{e(p["title"])}</h3><p>{e(p["body"])}</p></li>' for p in d['preparation'])
+    def prep_item(p):
+        out = f'<li><h3>{e(p["title"])}</h3><p>{e(p["body"])}</p>'
+        if p.get('services'):
+            rows = ''.join('<tr><td class="confirm">☐</td><th scope="row">{}</th><td>{}</td><td>{}</td><td><a href="{}" target="_blank" rel="noopener">{} ↗</a></td></tr>'.format(e(s['name']), e(s['role']), e(s['confirm']), e(s['url']), e(s['url_label'])) for s in p['services'])
+            out += '<div class="table-scroll" tabindex="0" aria-label="课前服务确认清单，可横向滚动"><table class="process-table"><thead><tr><th>确认</th><th>服务</th><th>它负责什么</th><th>课前要确认</th><th>官方入口</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+        return out + '</li>'
+    preparation = ''.join(prep_item(p) for p in d['preparation'])
     trouble = ''.join(f'<details><summary>{e(t["symptom"])}</summary><p>{e(t["action"])}</p>{prompt("prompt-help-"+str(i),t["prompt"])}</details>' for i,t in enumerate(d['troubleshooting']))
     runtime = ''
     for name, label in [('locate','定位'),('extract','文字抄录'),('vision','独立视觉复读'),('feedback','失败反馈')]:
@@ -94,7 +100,12 @@ def markdown():
     out += [d['fixed'],'## 完成标准','\n'.join('- '+x for x in d['success']),'## 同一流程在网页中的六个运行步骤']
     out += ['- '+s['label']+' · '+s['owner']+'：'+s['work'] for s in d['flow']]
     out += ['## 准备项目',d['materials']]
-    out += [str(i+1)+'. '+p['title']+'。'+p['body'] for i,p in enumerate(d['preparation'])]
+    for i,p in enumerate(d['preparation']):
+        out += [str(i+1)+'. '+p['title']+'。'+p['body']]
+        if p.get('services'):
+            table_lines = ['| 确认 | 服务 | 它负责什么 | 课前要确认 | 官方入口 |','| --- | --- | --- | --- | --- |']
+            table_lines += ['| ☐ | '+s['name']+' | '+s['role']+' | '+s['confirm']+' | ['+s['url_label']+']('+s['url']+') |' for s in p['services']]
+            out += ['\n'.join(table_lines)]
     out += [d['cadence']]
     for s in d['steps']:
         out += ['## 第'+s['number']+'步：'+s['title'],s['goal'],'### 现在怎么做','\n'.join('- '+x for x in s['actions']),'### 发给你的编程 Agent','```text\n'+s['prompt']+'\n```']

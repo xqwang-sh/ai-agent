@@ -30,8 +30,8 @@
     },
     {
       "path": "source/lesson.json",
-      "sha256": "c71e907e2b83845d4384693a84a3e25f459a357c492e93e4050a11a3bda113aa",
-      "bytes": 145801
+      "sha256": "106accc71cbc942f06e1d3c090e165a77b80b598955921da2ba14a8967e97c8f",
+      "bytes": 144915
     },
     {
       "path": "source/repair-coverage.json",
@@ -139,5 +139,5 @@
       "bytes": 7285
     }
   ],
-  "source_digest": "e02ebb4fb251cfb5d2a137cc8470e39c2bc081016b219c46a4bbb402d837217a"
+  "source_digest": "b7c7c63b5bdf2b5a2b8154613a06773235f1581d1056558cceaf5566c87f8ff9"
 }

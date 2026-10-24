@@ -150,7 +150,7 @@ EPS先识别与该行直接关联的完整单位表达及币种、倍率，再�
 
 ## 编码实跑配置与首写检查点
 
-本版编码实跑配置为macOS、OpenCode CLI1.18.26、Build、deepseek/deepseek-flash、Low推理档，输出上限沿用本机32000，不启用实验性输出覆盖。连接编码模型后直接从第0步开始，不额外发送测试对话。CLI的run方式使用 --model deepseek/deepseek-flash --variant low；交互界面按本机模型选项切到Low。编码模型和财报运行模型不是同一个配置，财报默认仍是Qwen27B。其他配置需另记实跑，不能据此保证Desktop或High档通过。
+本版默认编码配置为macOS、OpenCode＋DeepSeek、Build、deepseek/deepseek-flash、High推理档，输出上限沿用本机32000，不启用实验性输出覆盖。连接编码模型后直接从第0步开始，不额外发送测试对话。CLI的run方式使用 --model deepseek/deepseek-flash --variant high；交互界面按本机模型选项切到High。若High出现无进展、输出上限耗尽、以length结束或效果不足，保留该次结果，在全新空项目中用Max重跑（CLI使用 --variant max），不把两档结果合并为同一次。编码模型和财报运行模型不是同一个配置，财报默认仍是Qwen27B。其他配置需另记实跑。
 本步先落盘再扩展：首次业务写入前，只读observation.schema.json、locate/extract运行时提示词和现有接口必要片段，不通读全部验收脚本。先写app/contracts.py与app/extract.py的最小通用实现、明确未实现的失败结果并编译；初版落盘后立即运行through5公开检查，再只读失败所指的测试方法片段，逐段补行列绑定、期间/单位及来源动作循环。每段写入和编译后再分析下一段，不在单次生成里推演整步最终方案。中间缺功能必须真实失败，最终仍须全部11项公开检查与本地检查通过，不能以初版或占位交付。
 
 ## EPS正向完整单位语法

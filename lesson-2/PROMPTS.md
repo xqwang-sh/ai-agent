@@ -9,7 +9,7 @@
 
 【本步任务】我们要在当前 earnings-review 项目中搭建一个本地 Earnings Review 程序。请先读取 TASKBOOK.md、contracts 目录和 prompts/runtime 目录，现在只完成环境检查。本步不调用财报生成模型，不获取公司利润表，不开始写整个应用。
 
-编码配置检查：记录正在使用的编码模型与推理档。OpenCode＋DeepSeek 方案推荐 deepseek/deepseek-flash 的 Low 档，CLI 启动参数是 --variant low；这不是程序运行时的 Qwen27B。若当前配置不同，明确记录差异，不能冒称同配置通过；High 档曾仅推理就耗尽 32000 输出上限并以 length 结束，不能把这种结束当完成。
+编码配置检查：记录正在使用的编码模型与推理档。OpenCode＋DeepSeek 方案默认使用 High 档，CLI 启动参数是 --variant high；交互界面按本机模型选项切到 High。这不是程序运行时的 Qwen27B。若 High 出现无进展、输出上限耗尽、以 length 结束或效果不足，保留这次结果，在全新空项目中再用 Max 重跑（CLI 使用 --variant max）；不把不同档位的结果合并或冒称同一次。若当前配置不同，明确记录差异，不能冒称同配置通过。
 
 1. 报告你当前工作目录的绝对路径。确认项目根目录下有 reports、contracts、prompts/runtime。列出实际 PDF 文件名，不根据文件名猜财务数据。
 2. 检查我的操作系统、可用 Python、项目虚拟环境、pypdf，以及可用的 PDF 页图渲染工具；程序要适配我的实际操作系统，不写入别人的绝对路径。同时记录 Node 实际版本与可执行路径，第 2 步需要用已有 Node 执行公开前端恢复行为检查（它只导入生产模块，不安装浏览器、DOM 模拟库或新的前端框架）。

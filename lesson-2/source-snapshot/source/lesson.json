@@ -2,7 +2,7 @@
   "title": "用自己的 Agent，搭建 Earnings Review",
   "subtitle": "从本地半年报文件夹开始，做出能运行、能核验、能追溯的财报复盘网页。",
   "edition": "第二讲 · 教师实操讲义",
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "lead": "本讲不限定工具：Codex、Claude Code、Cursor、Kimi Code、ZCode、WorkBuddy、Qoder、Trae 等任意编程 Agent，或 OpenCode 搭配 DeepSeek，都可以。接下来每次复制一条 Prompt（提示词，就是你原样复制给 Agent 的一段指令文字），让自己的编程 Agent 写出一部分程序、运行检查，再由你核对结果。提示词里的技术名词不需要逐个看懂，原样复制发出去即可；你要做的只是复制、等待、再对照每步的检查点。完成后，用户只需要选公司、选模型、点运行，就能看到进度、两层核验和公司的半年报 Earnings Review。",
   "success": [
     "公司列表来自本地真实 PDF；新增一份符合条件的报告，重新扫描就能出现。",
@@ -75,15 +75,33 @@
     },
     {
       "title": "确认编码模型可以工作",
-      "body": "按你所用编程 Agent 的官方文档连接好编码模型，连接后直接从第 0 步开始，不额外发送测试对话。用 OpenCode 时，CLI 的 run 方式使用 --model deepseek/deepseek-flash --variant low；交互界面按本机模型选项切到 Low 推理档。编码模型和财报运行模型不是同一个配置，财报默认仍是 Qwen27B。"
+      "body": "按你所用编程 Agent 的官方文档连接好编码模型，连接后直接从第 0 步开始，不额外发送测试对话。用 OpenCode 时，CLI 的 run 方式使用 --model deepseek/deepseek-flash --variant high；交互界面按本机模型选项切到 High 推理档。若 High 出现无进展、输出上限耗尽、以 length 结束或效果不足，保留该次结果并在全新空项目中改用 Max（CLI 使用 --variant max）重跑，不把两档结果合并为同一次。编码模型和财报运行模型不是同一个配置，财报默认仍是 Qwen27B。"
     },
     {
       "title": "准备程序运行所需的服务",
       "body": "财报模型的服务端 API 凭据，以及同花顺金融数据服务凭据，需要单独确认。编程 Agent 能聊天写代码，不代表生成的程序能读取同一项授权。课前对照下表逐项确认；第 0 步会再检查缺什么，并给出适合你电脑的配置方法。暂无服务凭据时，可以先搭建离线模块；第 8 步真实运行前必须补齐，不能把未完成写成通过。",
       "services": [
-        {"name": "编程 Agent（任选其一）", "role": "读提示词、写程序、运行检查", "confirm": "已安装任意一种 Coding Agent。只有选择 OpenCode＋DeepSeek 方案时，才需要在 DeepSeek 开放平台注册并充值；使用其他工具不需要。", "url": "https://platform.deepseek.com/", "url_label": "DeepSeek 开放平台（仅 OpenCode 方案需要）"},
-        {"name": "硅基流动", "role": "财报模型的服务端 API Key，文字抄录与视觉复读都走这里", "confirm": "已注册，并在控制台创建好自己账号的 API Key。", "url": "https://siliconflow.cn/", "url_label": "硅基流动官网"},
-        {"name": "同花顺金融数据服务", "role": "外部核验用的独立财务数据", "confirm": "已注册，并取得自己账号的 API Key。", "url": "https://fuyao.aicubes.cn/admin", "url_label": "同花顺金融数据 API 入口"}
+        {
+          "name": "编程 Agent（任选其一）",
+          "role": "读提示词、写程序、运行检查",
+          "confirm": "已安装任意一种 Coding Agent。只有选择 OpenCode＋DeepSeek 方案时，才需要在 DeepSeek 开放平台注册并充值；使用其他工具不需要。",
+          "url": "https://platform.deepseek.com/",
+          "url_label": "DeepSeek 开放平台（仅 OpenCode 方案需要）"
+        },
+        {
+          "name": "硅基流动",
+          "role": "财报模型的服务端 API Key，文字抄录与视觉复读都走这里",
+          "confirm": "已注册，并在控制台创建好自己账号的 API Key。",
+          "url": "https://siliconflow.cn/",
+          "url_label": "硅基流动官网"
+        },
+        {
+          "name": "同花顺金融数据服务",
+          "role": "外部核验用的独立财务数据",
+          "confirm": "已注册，并取得自己账号的 API Key。",
+          "url": "https://fuyao.aicubes.cn/admin",
+          "url_label": "同花顺金融数据 API 入口"
+        }
       ]
     }
   ],
@@ -99,7 +117,7 @@
         "完成上面的新建文件夹与解压操作。",
         "把本步 Prompt 发给你的编程 Agent。它如需要你手动输入凭据，只在相应服务的隐藏输入处操作，完成后再告诉它“已配置，请重新检查”。"
       ],
-      "prompt": "【环境护栏】先建立当前项目 runtime/step-0 和 runtime/step-0/tmp。所有日志、临时脚本、诊断输出和页图检查均留在该目录或 tests/output；Python 临时目录显式指定项目内 dir。禁止使用 /tmp、系统临时目录或其它项目，也不为诊断请求项目外权限；OpenCode CLI 在项目外权限被自动拒绝时可能直接结束本轮，不能把试探拒绝当成可恢复步骤。每步先从工具输出确认当前项目根目录：支持相对路径的命令和文件工具使用项目相对路径；要求绝对路径的写入工具，必须从刚确认的根目录原文生成，禁止重打、猜写目录名或日期；写入前确认父目录实际存在且属于本项目，无法确保时改用当前目录下的相对路径写入命令，不试探项目外写入。\n\n【本步任务】我们要在当前 earnings-review 项目中搭建一个本地 Earnings Review 程序。请先读取 TASKBOOK.md、contracts 目录和 prompts/runtime 目录，现在只完成环境检查。本步不调用财报生成模型，不获取公司利润表，不开始写整个应用。\n\n编码配置检查：记录正在使用的编码模型与推理档。OpenCode＋DeepSeek 方案推荐 deepseek/deepseek-flash 的 Low 档，CLI 启动参数是 --variant low；这不是程序运行时的 Qwen27B。若当前配置不同，明确记录差异，不能冒称同配置通过；High 档曾仅推理就耗尽 32000 输出上限并以 length 结束，不能把这种结束当完成。\n\n1. 报告你当前工作目录的绝对路径。确认项目根目录下有 reports、contracts、prompts/runtime。列出实际 PDF 文件名，不根据文件名猜财务数据。\n2. 检查我的操作系统、可用 Python、项目虚拟环境、pypdf，以及可用的 PDF 页图渲染工具；程序要适配我的实际操作系统，不写入别人的绝对路径。同时记录 Node 实际版本与可执行路径，第 2 步需要用已有 Node 执行公开前端恢复行为检查（它只导入生产模块，不安装浏览器、DOM 模拟库或新的前端框架）。\n3. 检查 hithink-finance 命令是否存在。已安装时读取 version、auth status 和 financials.income 的 schema，只报告状态，不显示凭据；不存在时先给出 Node.js 和官方 CLI 的最少准备步骤，不改装已能工作的环境。\n4. 检查财报模型服务端凭据是否存在，只返回「已配置」或「未配置」。不要读取或复制 OpenCode 私有登录文件来冒充本程序授权。查找约定：优先进程 SILICONFLOW_API_KEY；否则 macOS/Linux 读取用户级 ~/.config/siliconflow/credentials.env，Windows 读取 %APPDATA%/siliconflow/credentials.env 中的同名变量；只检查非空与文件权限，不输出内容、不复制进项目。后续程序使用同一查找规则，不读取 OpenCode 登录文件。\n5. 缺少凭据时，给出对应官方服务入口，以及适合我电脑的隐藏输入配置方法；凭据保存在用户级安全位置或当前进程环境，不进入项目、聊天、命令参数或日志。等我完成后再检查。\n6. 保存 environment-check.json，记录操作系统、工具版本、检查结果和唯一的下一步操作；没有通过的项如实写 missing，不能写 ready。环境或凭据不足不能标成 ready，但可把「离线开发可继续」和「真实运行被阻塞」分别写清。\n\n缺少项目虚拟环境或 pypdf 时，在当前项目创建虚拟环境并安装最少依赖，固定实际版本写入 requirements.txt；页图工具优先用已有工具。\n\n本次只使用当前解压的材料和本项目内由你新写的代码。不要读取、复制其他项目、历史成品、作者源码或已有财报任务。先核对 MATERIALS.json 中每份 PDF、运行时提示词和 acceptance 文件哈希，读取 contracts/development-checks.json；材料哈希不符先报告，不能悄悄替换。后续步骤先依据本条主 Prompt 与 acceptance/README.md 的接口约定实现，不要求提前通读acceptance源码。\n\n【验收回路】读取 acceptance/README.md，使用本项目 Python 运行 python -m acceptance.checks --through 0，证明父/子进程离线守卫有效；不为了离线检查查询证券身份或公司利润表。完整检查日志保留在本项目 runtime/step-0：执行验收时只将 stderr 重定向到该步日志，stdout 中的真实 JSON 结果原样回传，保留同一次检查的退出状态；不要把真实结果截断、改写成自述，或用后一次命令输出冒充本次结果。\n\n【完成与停止】本条任务的完成条件：把实际版本和 missing/ready 状态写入 environment-check.json，确认文件存在、JSON 可读之后，运行本步公开验收；失败时在本条消息内自行读失败日志、修复并复测，直到通过后再返回并停下。不要把「实现完了」「测试命令已启动」或退出码 0 当成验收证据；保存实际结果。不读取其他项目或讲义外观察文件，不要求我再发一条修复或恢复指令；授权或环境确实缺失时明确阻塞及已完成部分。",
+      "prompt": "【环境护栏】先建立当前项目 runtime/step-0 和 runtime/step-0/tmp。所有日志、临时脚本、诊断输出和页图检查均留在该目录或 tests/output；Python 临时目录显式指定项目内 dir。禁止使用 /tmp、系统临时目录或其它项目，也不为诊断请求项目外权限；OpenCode CLI 在项目外权限被自动拒绝时可能直接结束本轮，不能把试探拒绝当成可恢复步骤。每步先从工具输出确认当前项目根目录：支持相对路径的命令和文件工具使用项目相对路径；要求绝对路径的写入工具，必须从刚确认的根目录原文生成，禁止重打、猜写目录名或日期；写入前确认父目录实际存在且属于本项目，无法确保时改用当前目录下的相对路径写入命令，不试探项目外写入。\n\n【本步任务】我们要在当前 earnings-review 项目中搭建一个本地 Earnings Review 程序。请先读取 TASKBOOK.md、contracts 目录和 prompts/runtime 目录，现在只完成环境检查。本步不调用财报生成模型，不获取公司利润表，不开始写整个应用。\n\n编码配置检查：记录正在使用的编码模型与推理档。OpenCode＋DeepSeek 方案默认使用 High 档，CLI 启动参数是 --variant high；交互界面按本机模型选项切到 High。这不是程序运行时的 Qwen27B。若 High 出现无进展、输出上限耗尽、以 length 结束或效果不足，保留这次结果，在全新空项目中再用 Max 重跑（CLI 使用 --variant max）；不把不同档位的结果合并或冒称同一次。若当前配置不同，明确记录差异，不能冒称同配置通过。\n\n1. 报告你当前工作目录的绝对路径。确认项目根目录下有 reports、contracts、prompts/runtime。列出实际 PDF 文件名，不根据文件名猜财务数据。\n2. 检查我的操作系统、可用 Python、项目虚拟环境、pypdf，以及可用的 PDF 页图渲染工具；程序要适配我的实际操作系统，不写入别人的绝对路径。同时记录 Node 实际版本与可执行路径，第 2 步需要用已有 Node 执行公开前端恢复行为检查（它只导入生产模块，不安装浏览器、DOM 模拟库或新的前端框架）。\n3. 检查 hithink-finance 命令是否存在。已安装时读取 version、auth status 和 financials.income 的 schema，只报告状态，不显示凭据；不存在时先给出 Node.js 和官方 CLI 的最少准备步骤，不改装已能工作的环境。\n4. 检查财报模型服务端凭据是否存在，只返回「已配置」或「未配置」。不要读取或复制 OpenCode 私有登录文件来冒充本程序授权。查找约定：优先进程 SILICONFLOW_API_KEY；否则 macOS/Linux 读取用户级 ~/.config/siliconflow/credentials.env，Windows 读取 %APPDATA%/siliconflow/credentials.env 中的同名变量；只检查非空与文件权限，不输出内容、不复制进项目。后续程序使用同一查找规则，不读取 OpenCode 登录文件。\n5. 缺少凭据时，给出对应官方服务入口，以及适合我电脑的隐藏输入配置方法；凭据保存在用户级安全位置或当前进程环境，不进入项目、聊天、命令参数或日志。等我完成后再检查。\n6. 保存 environment-check.json，记录操作系统、工具版本、检查结果和唯一的下一步操作；没有通过的项如实写 missing，不能写 ready。环境或凭据不足不能标成 ready，但可把「离线开发可继续」和「真实运行被阻塞」分别写清。\n\n缺少项目虚拟环境或 pypdf 时，在当前项目创建虚拟环境并安装最少依赖，固定实际版本写入 requirements.txt；页图工具优先用已有工具。\n\n本次只使用当前解压的材料和本项目内由你新写的代码。不要读取、复制其他项目、历史成品、作者源码或已有财报任务。先核对 MATERIALS.json 中每份 PDF、运行时提示词和 acceptance 文件哈希，读取 contracts/development-checks.json；材料哈希不符先报告，不能悄悄替换。后续步骤先依据本条主 Prompt 与 acceptance/README.md 的接口约定实现，不要求提前通读acceptance源码。\n\n【验收回路】读取 acceptance/README.md，使用本项目 Python 运行 python -m acceptance.checks --through 0，证明父/子进程离线守卫有效；不为了离线检查查询证券身份或公司利润表。完整检查日志保留在本项目 runtime/step-0：执行验收时只将 stderr 重定向到该步日志，stdout 中的真实 JSON 结果原样回传，保留同一次检查的退出状态；不要把真实结果截断、改写成自述，或用后一次命令输出冒充本次结果。\n\n【完成与停止】本条任务的完成条件：把实际版本和 missing/ready 状态写入 environment-check.json，确认文件存在、JSON 可读之后，运行本步公开验收；失败时在本条消息内自行读失败日志、修复并复测，直到通过后再返回并停下。不要把「实现完了」「测试命令已启动」或退出码 0 当成验收证据；保存实际结果。不读取其他项目或讲义外观察文件，不要求我再发一条修复或恢复指令；授权或环境确实缺失时明确阻塞及已完成部分。",
       "expected": [
         "项目里出现 environment-check.json。",
         "Agent 清楚说明了当前项目路径、Python 与渲染工具状态，以及两项服务是否配置。"
@@ -739,9 +757,11 @@
       "opencode_version": "1.18.26",
       "agent": "build",
       "model": "deepseek/deepseek-flash",
-      "variant": "low",
+      "variant": "high",
       "observed_default_output_token_cap": 32000,
-      "experimental_output_override": false
+      "experimental_output_override": false,
+      "fallback_variant": "max",
+      "selection_rule": "Use High by default; if High is ineffective or ends by length/no progress, preserve it and restart in a new empty project with Max."
     },
     "implementation_sequence": {
       "test_body_reading": "only after executable production write, successful compile and current failure",

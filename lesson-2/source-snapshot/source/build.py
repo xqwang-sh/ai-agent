@@ -158,7 +158,7 @@ def main():
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
         project=ROOT/'materials/earnings-review'
         manifest=json.loads((project/'MATERIALS.json').read_text())
-        paths=[project/'TASKBOOK.md',project/'MATERIALS.json',project/'reports/SOURCES.json']
+        paths=[project/'AGENTS.md',project/'TASKBOOK.md',project/'MATERIALS.json',project/'reports/SOURCES.json']
         paths += [project/'reports'/r['filename'] for r in manifest['pdfs']]
         paths += list((project/'contracts').glob('*.json')) + list((project/'prompts/runtime').glob('*.md'))
         paths += [project/name for name in manifest['acceptance_hashes']]
@@ -172,7 +172,7 @@ def main():
             zip_entry(z,'earnings-review-lesson2/'+name,(ROOT/name).read_bytes())
         for p in sorted((ROOT/'assets').glob('*')):
             if p.is_file():zip_entry(z,'earnings-review-lesson2/assets/'+p.name,p.read_bytes())
-        zip_entry(z,'earnings-review-lesson2/先读我.txt','解压后打开index.html阅读讲义，也可以阅读讲义.md。\n\n讲义里的主Prompt按第0至第8步发给你的编程 Agent（Codex、Claude Code、Cursor、Kimi Code 等任意一种，或 OpenCode 搭配 DeepSeek，都可以）。每条主Prompt须自行修正公开检查失败，通过后再发下一条。仅0–8九条构成主线；折叠修复Prompt为人工诊断备用，不能用于证明九条主线已跑通。\n\nearnings-review-materials.zip是实操材料，再解压得到earnings-review文件夹。它的根目录下应有reports、contracts、prompts和TASKBOOK.md。用你的编程 Agent 打开这个文件夹作为新项目，不要把讲义阅读目录当成应用项目。\n\n材料没有成品应用或预填财务答案，代码由自己的Agent分步搭建。环境、模型与同花顺授权在第0步检查。前面的合成检查不发生成请求；完整真实运行在第8步由学习者手动点击。\n')
+        zip_entry(z,'earnings-review-lesson2/先读我.txt','解压后打开index.html阅读讲义，也可以阅读讲义.md。\n\n讲义里的主Prompt按第0至第8步发给你的编程 Agent（Codex、Claude Code、Cursor、Kimi Code 等任意一种，或 OpenCode 搭配 DeepSeek，都可以）。共同规则已放进项目AGENTS.md，每条主Prompt只写本步任务；自行修正公开检查失败，通过后再发下一条。仅0–8九条构成主线；折叠修复Prompt为人工诊断备用，不能用于证明九条主线已跑通。\n\nearnings-review-materials.zip是实操材料，再解压得到earnings-review文件夹。它的根目录下应有AGENTS.md、TASKBOOK.md、reports、contracts和prompts。用你的编程 Agent 打开这个文件夹作为新项目，不要把讲义阅读目录当成应用项目。\n\n材料没有成品应用或预填财务答案，代码由自己的Agent分步搭建。环境、模型与同花顺授权在第0步检查。前面的合成检查不发生成请求；完整真实运行在第8步由学习者手动点击。\n')
     print(json.dumps({'main_steps':len(DATA['steps']),'copyable_prompts':len(DATA['steps'])*2+len(DATA['extensions'])+len(DATA['troubleshooting'])+4+sum('after_click_prompt' in s for s in DATA['steps']),'archive_bytes':archive.stat().st_size},ensure_ascii=False))
 
 

@@ -121,15 +121,10 @@ def main():
     task += '定位selection包含status、pages、anchors、reason。anchors每项含page、原文quote和purpose，purpose为statement、continuation、amount_unit、eps_unit、header之一；最终引用只来自最终页包的完整已读文本。模型反馈只指出自己的失败与已有进度，禁止泄露外部参考值、差额或答案页。视觉失败续跑留在独立视觉会话，文字候选变化后开启全新视觉会话。\n\n'
     task += '同花顺CLI可用时先读取当前schema，完整原始响应落盘；请求仅公司证券代码、季度报告窗口和有界条数，唯一筛选2026/2025 Q2累计H1。缺失或非唯一不猜。当前已核验的命令形状是 hithink-finance financials income --thscode 所选真实代码 --period quarterly --limit 8 --output 本轮/reference/income.json --format json，实际参数以当前schema为准。\n\n'
     task += 'API Key不放在项目、网页、请求回执、聊天或命令参数。后台从用户级安全凭据或进程环境读取。前端不直接调用模型或金融数据服务。后台仅监听127.0.0.1，限制允许的证据路由并核对变更请求。\n'
-    task += '\n本版默认编码配置为macOS、OpenCode＋DeepSeek、Build、deepseek/deepseek-flash、High推理档，输出上限沿用本机32000，不启用实验性输出覆盖。连接编码模型后直接从第0步开始，不额外发送测试对话。CLI的run方式使用 --model deepseek/deepseek-flash --variant high；交互界面按本机模型选项切到High。若High出现无进展、输出上限耗尽、以length结束或效果不足，保留该次结果，在全新空项目中用Max重跑（CLI使用 --variant max），不把两档结果合并为同一次。编码模型和财报运行模型不是同一个配置，财报默认仍是Qwen27B。其他配置需另记实跑。\n第5步现在先执行首个生产检查点，不先阅读验收测试或fixture。确认根目录后，最多两次读取必要的现有生产接口、observation.schema或本步runtime提示词片段，工具回传正文合计不超过6000字符；已在本对话中的约定不重复读取。随后立即把严格JSON回复解码与基本输入校验的最小可执行实现写入同一app/contracts.py、app/extract.py，并编译。这段必须真实识别合法对象、完整单围栏与非法传输，缺失的来源能力诚实失败，不能只写pass、TODO、未接入的helper或全为未实现的壳。首次业务写入前禁止读取acceptance测试体；首次写入和编译完成后立即运行through5公开检查。接着以首个真实失败为线索，每轮只读一个相关测试或fixture的局部定义，以80行和4000字符为参考目标；完整定义更长时只读当前失败所需的连续片段并记录实际范围；完成该段生产修正、编译和重测后再读下一段。先补输入/动作协议与完整数词，再补同一binder的表块、期间、列、单位绑定，最后接现有冻结TaskRunner来源循环。每段在当前消息内自动继续，不等新的指令。所有下文业务要求仍有效，最终完整through5全部11项及本地检查均须通过，不得改验收或以阶段性失败交付。\n完整检查日志保留在本项目runtime/step-N，不把全量日志展开到对话。执行python -m acceptance.checks --through N时只将stderr重定向到该步日志，stdout中的真实JSON结果原样回传，保留同一次检查的退出状态；失败再按用例名和行号读取首个相关片段。不要把真实结果截断、改写成自述，或用后一次命令输出冒充本次结果。本地检查也保存完整日志并回传实际结果。日志与测试输出仍全部可审查。\n'
-    write(PROJECT / 'TASKBOOK.md', task)
-    task += '\n## 公共验收与当前证明\n\n阅读acceptance/README.md，实现生产模块适配器。每步运行 python -m acceptance.checks --through 对应数字。第2步检查真实生产前端恢复模块，第3步有真实冻结worker，第5步接来源循环及结构化行绑定，第6步有完整封存成功链，第7步原30项及新增5项共35项生产验收，第8步网页回归和启动。默认测试不联网，公共断言不改动。程序动作先分派再提交，视觉/外部分歧可回原文字会话；仅当前同一候选的两层证据有效才封存。终身进度与当前有效性分开。任务实际执行复制的源码，不能只记录摘要。\n'
-    task += '\n## 九条主线与公开反例\n\n按0–8九条主Prompt完成。每条消息内根据公开验收失败自行修改生产代码并重测，不要求学习者另发修复、恢复或观察消息。只使用本项目材料，不读其它项目、历史应用或讲义外观察文件。contracts/development-checks.json逐项映射此前暴露的问题、所属主步骤和可执行公开检查。\n'
-    task += '\n第2步先跑 --through 2；所有0–8数字均可用。公共冻结/canary、合成任务和本地单测串行，不能同时改工作区并冻结。原始回复解析、联合标题、混合季度、真实并发/状态/历史、全部候选封存、单位与DOM都有公开检查；不允许仅用自写测试替代。\n'
-    task += '\napp.acceptance.serve(scenario, output_root)是唯一新增服务测试入口，使用正常启动也用的真实server工厂、TaskManager和冻结worker，仅注入已确认的合成身份与回环传输。它不能另造状态、计算或编排。网页状态从持久ledger、proof和stage-journal投影。第8步给出服务后，学习者点击即可让固定程序自行完成，不需要第二条观察指令。\n'
-    task += '\n路径约束：每步先从工具输出确认当前项目根目录。支持相对路径的命令和文件工具使用项目相对路径；要求绝对路径的写入工具，必须从刚确认的根目录原文生成，禁止重打、猜写目录名或日期。写入前确认父目录实际存在且属于本项目；无法确保时改用当前目录下的相对路径写入命令，不试探项目外写入。\n'
-    task += '\n默认本地检查统一用 python -m acceptance.local_checks，在发现/导入前安装公开守卫，并把临时目录设在本项目。先建tests/__init__.py，不能只依赖它的副作用再用裸unittest discover。每步日志、诊断、试渲染都留在runtime/step-N或tests/output，不请求系统临时目录权限。该入口与acceptance.checks串行。\n'
-    task += '\n来源绑定按真实显示行名、附注位置、完整数词及已证明表头列索引进行；半年累计允许原文六个月止六月三十日表达，仍须绑定各自年份和合并列，不能借公司列、附注或单季。文字/视觉共用一个绑定器。刷新及重选报告通过正常网页使用的task-view.mjs恢复同一持久任务，按报告id+PDF哈希匹配、显示冻结模型，恢复只有GET，错误不冒充空记录。公开检查对这些问题使用纯合成正反例，并通过正常CLI子进程分支验证financials income两段命令；只有显式合成配置可注入reference_cli假可执行路径。\n'
+    task += '\n\n## 开发与验收\n\n共同的目录、权限、增量开发、凭据、编码配置和完成条件见项目 AGENTS.md。按讲义第0–8步九条消息完成，每条消息内自行检查与修正；只读取本步需要的材料，不提前通读全部验收源码。\n'
+    task += '\n字段、模型预设、预算与财务判定以 contracts 为准；生产适配器、HTTP、createTaskView、证据和封存接口见 acceptance/README.md。判例由公开正反例强制，不新增测试专用业务分支。\n'
+    task += '\n第3步已有真实冻结worker，第5步接来源循环，第6步形成完整合成成功链，第7步通过全部35项生产组合，第8步验收网页并启动服务。每步公开验收与默认本地检查按AGENTS.md串行执行；真实财报由学习者最后手动点击，合成通过不冒充真实通过。\n'
+    write(PROJECT / 'AGENTS.md', (ROOT / 'source/project-agents.md').read_text())
     write(PROJECT / 'TASKBOOK.md', task)
     acceptance_hashes = {}
     for source in sorted((ROOT / 'source/acceptance').rglob('*')):
@@ -138,7 +133,7 @@ def main():
             write(target, source.read_text())
             acceptance_hashes[str(target.relative_to(PROJECT))] = hashlib.sha256(target.read_bytes()).hexdigest()
     inputs = json.loads((PROJECT / 'reports/SOURCES.json').read_text())
-    provenance = {'created_date': '2026-10-18', 'purpose': 'answer-free build materials', 'pdfs': inputs, 'runtime_prompt_hashes': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((PROJECT / 'prompts/runtime').glob('*.md'))}, 'contains_application_code': False, 'contains_synthetic_acceptance_code': True, 'acceptance_hashes': acceptance_hashes, 'contains_precomputed_financial_answer_key_or_selected_pages': False}
+    provenance = {'created_date': lesson['updated'], 'purpose': 'answer-free build materials', 'pdfs': inputs, 'runtime_prompt_hashes': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((PROJECT / 'prompts/runtime').glob('*.md'))}, 'project_guidance_hashes': {name: hashlib.sha256((PROJECT / name).read_bytes()).hexdigest() for name in ('AGENTS.md', 'TASKBOOK.md')}, 'contains_application_code': False, 'contains_synthetic_acceptance_code': True, 'acceptance_hashes': acceptance_hashes, 'contains_precomputed_financial_answer_key_or_selected_pages': False}
     save(PROJECT / 'MATERIALS.json', provenance)
     print('Prepared contracts and learner taskbook without finished app or financial answers.')
 

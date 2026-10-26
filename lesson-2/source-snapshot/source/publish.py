@@ -57,7 +57,7 @@ def export_handout(lesson, target):
 
 
 def export_source_snapshot(lesson, target):
-    paths = [lesson / "AGENTS.md", lesson / "README.md", *sorted((lesson / "source").glob("*.py")), *sorted((lesson / "source").glob("*.json")), lesson / "qa/check_handout.py"]
+    paths = [lesson / "AGENTS.md", lesson / "README.md", *sorted((lesson / "source").glob("*.py")), *sorted((lesson / "source").glob("*.json")), *sorted((lesson / "source").glob("*.md")), lesson / "qa/check_handout.py"]
     for folder in (lesson / "source/acceptance", lesson / "materials/earnings-review/prompts/runtime"):
         paths.extend(p for p in sorted(folder.rglob('*')) if p.is_file() and p.suffix in ('.py', '.md') and '__pycache__' not in p.parts)
     records = []

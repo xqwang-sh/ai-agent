@@ -58,21 +58,23 @@ def main():
     protocol=d['mainline_protocol']
     coverage=json.loads((ROOT/'source/repair-coverage.json').read_text())
     methods={node.name for file in (ROOT/'source/acceptance').glob('*.py') for node in ast.walk(ast.parse(file.read_text())) if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef))}
-    layer_labels=('【环境护栏】','【本步任务】','【验收回路】','【完成与停止】')
+    shared_rules=(ROOT/'materials/earnings-review/AGENTS.md').read_text()
+    source_rules=(ROOT/'source/project-agents.md').read_text()
+    policy_source=json.loads((ROOT/'materials/earnings-review/contracts/workflow.json').read_text())
     step_module={'0':'environment-check.json','1':'app/task_manager.py','2':'app/server.py','3':'app/pdf_tools.py','4':'app/model_client.py','5':'app/extract.py','6':'app/verify.py','7':'app/feedback.py','8':'web/task-view.mjs'}
     checks['nine_main_messages_without_observer']=protocol['development_messages']==9 and protocol['extra_repair_resume_or_observer_messages']==0 and not any(s.get('after_click_prompt') for s in d['steps'])
     checks['incremental_production_gates']=protocol.get('incremental_public_checks')==[1,1,3,6,6,11,16,35,35] and protocol.get('production_ready_by_step')==7
-    checks['seven_layer_main_prompt_structure']=all(all(label in s['prompt'] for label in layer_labels) and step_module[s['number']] in s['prompt'] and 'python -m acceptance.checks --through '+s['number'] in s['prompt'] for s in d['steps'])
-    checks['environment_guardrail_in_all_main_prompts']=all(s['prompt'].startswith('【环境护栏】') and 'runtime/step-'+s['number'] in s['prompt'] and '确认当前项目根目录' in s['prompt'] and '/tmp' in s['prompt'] for s in d['steps'])
+    checks['compact_main_prompts_reference_packaged_rules']=shared_rules==source_rules and protocol.get('shared_rules')=='AGENTS.md' and all('AGENTS.md' in s['prompt'] and step_module[s['number']] in s['prompt'] and '第 '+s['number']+' 步' in s['prompt'] for s in d['steps'])
+    checks['shared_environment_and_completion_rules']=all(x in shared_rules for x in ('确认当前项目根目录','runtime/step-N','/tmp','stderr','stdout','project_status.md','两者','串行')) and all('AGENTS.md' in s['prompt'] for s in d['steps'])
     checks['patch_cases_carried_by_public_acceptance']='test_05_structured_source_binding' in d['steps'][5]['prompt'] and all(name in d['steps'][6]['prompt'] for name in ('test_06_structured_verification','test_06_frozen_execution','test_06_reference_cli_transport')) and 'test_07_http_frontend_restore' in d['steps'][7]['prompt'] and all(name in methods for name in ('test_05_structured_source_binding','test_06_structured_verification','test_06_frozen_execution','test_06_reference_cli_transport','test_07_http_frontend_restore'))
     checks['no_private_observation_dependency']=not any(name in s['prompt'] for s in d['steps'] for name in ('browser-observation.json','opencode-observation.json'))
-    checks['declared_high_coding_profile_and_max_fallback_checkpoint']=d['mainline_protocol']['coding_profile']['variant']=='high' and '--variant high' in d['steps'][0]['prompt'] and '--variant max' in d['steps'][0]['prompt'] and 'High 推理档' in d['preparation'][2]['body'] and '首次业务写入前' in d['steps'][5]['prompt'] and '全部11项' in d['steps'][5]['prompt']
+    checks['declared_high_coding_profile_and_max_fallback_checkpoint']=protocol['coding_profile']['variant']=='high' and all(x in shared_rules for x in ('--variant high','--variant max','High 推理档','首次业务写入前','全部11项')) and 'High 推理档' in d['preparation'][2]['body'] and '首写检查点' in d['steps'][5]['prompt']
     checks['vision_runtime_has_no_text_tool_hint']='按已有动作补证' not in (ROOT/'materials/earnings-review/prompts/runtime/vision.md').read_text() and '不调用文字检索、读页或换页动作' in (ROOT/'materials/earnings-review/prompts/runtime/vision.md').read_text()
-    checks['canonical_financial_projection_and_actual_cards']=all(x in d['steps'][6]['prompt'] for x in ('review.normalizations','reviewCards(review)','review.summary或review.series','current_signed_yuan','ROUND_HALF_UP')) and 'reviewCards(review)' in d['steps'][8]['prompt']
+    checks['canonical_financial_projection_and_actual_cards']=all(x in shared_rules for x in ('review.normalizations','reviewCards(review)','review.summary','review.series','current_signed_yuan','ROUND_HALF_UP')) and all('reviewCards(review)' in d['steps'][n]['prompt'] for n in (6,8)) and policy_source['review_projection']['browser']['does_financial_calculations'] is False
     checks['header_boundary_precedes_validity']='structured_incomplete_header_case' in methods
     checks['complete_structural_header_chain']='structured_long_header_case' in methods
     checks['all_explicit_periods_are_certified']='structured_period_consistency_case' in methods
-    checks['first_write_precedes_test_body_reads']=all(x in d['steps'][5]['prompt'] for x in ('首次业务写入前禁止读取acceptance测试体','最多两次','6000字符','立即运行through5','stderr','stdout')) and '原文写入AGENTS.md' in d['steps'][1]['prompt'] and '不要求提前通读acceptance源码' in d['steps'][0]['prompt'] and coverage['implementation_sequence']['main5_prewrite_read_calls_max']==2
+    checks['first_write_precedes_test_body_reads']=all(x in shared_rules for x in ('首次业务写入前禁止读取acceptance测试体','最多两次','6000字符','立即运行through5','stderr','stdout')) and '首写检查点' in d['steps'][5]['prompt'] and coverage['implementation_sequence']['main5_prewrite_read_calls_max']==2
     checks['period_certificate_shared_and_closed']='structured_year_period_case' in methods and 'structured_column_path_period_case' in methods and coverage['implementation_sequence']['failure_slice_targets_are_business_gates'] is False
     checks['every_period_declaration_in_fragment_is_covered']='structured_fragment_period_case' in methods
     checks['all_allowed_period_families_suffice_without_backup']='structured_sole_period_case' in methods and d['mainline_protocol']['implementation_sequence']['additional_period_pretest_reading_gate'] is False
@@ -82,6 +84,8 @@ def main():
     with zipfile.ZipFile(ROOT/'earnings-review-materials.zip') as z:
         names=z.namelist()
         checks['archive_integrity']=z.testzip() is None
+        guidance=json.loads(z.read('earnings-review/MATERIALS.json'))['project_guidance_hashes']
+        checks['packaged_shared_rules_match_source']=z.read('earnings-review/AGENTS.md')==source_rules.encode() and all(hashlib.sha256(z.read('earnings-review/'+name)).hexdigest()==sha for name,sha in guidance.items())
         acceptance_names={'earnings-review/'+n for n in json.loads(z.read('earnings-review/MATERIALS.json'))['acceptance_hashes']}
         checks['no_application_or_secret_files']=not any((Path(n).suffix in ('.py','.js','.html','.env') and n not in acceptance_names) or '/app/' in n or 'runtime/jobs' in n or 'TEACHER_ANSWER' in n for n in names)
         checks['public_acceptance_matches_source']=all(z.read(n)==(ROOT/'source/acceptance'/Path(n).relative_to('earnings-review/acceptance')).read_bytes() for n in acceptance_names)
@@ -106,7 +110,7 @@ def main():
         taskbook=z.read('earnings-review/TASKBOOK.md').decode()
         checks['anchor_contract_matches_runtime']='anchors每项含page、原文quote和purpose' in taskbook and '每项含page、quote、purpose' in z.read('earnings-review/prompts/runtime/locate.md').decode()
         checks['development_coverage_in_materials']=json.loads(z.read('earnings-review/contracts/development-checks.json'))==coverage
-        checks['guarded_local_test_entry_in_materials']='earnings-review/acceptance/local_checks.py' in names and all('python -m acceptance.local_checks' in step['prompt'] for step in d['steps'][1:])
+        checks['guarded_local_test_entry_in_materials']='earnings-review/acceptance/local_checks.py' in names and 'python -m acceptance.local_checks' in shared_rules and all('AGENTS.md' in step['prompt'] for step in d['steps'])
     with zipfile.ZipFile(ROOT/'EarningsReview-第二讲讲义包.zip') as z:
         checks['share_bundle_integrity']=z.testzip() is None
         checks['share_bundle_matches_final_handout']=z.read('earnings-review-lesson2/index.html')==(ROOT/'index.html').read_bytes() and z.read('earnings-review-lesson2/earnings-review-materials.zip')==(ROOT/'earnings-review-materials.zip').read_bytes()

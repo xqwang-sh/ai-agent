@@ -2,7 +2,7 @@
 
 打开 `index.html` 阅读网页讲义。`讲义.md` 是同内容的 Markdown 版本，`PROMPTS.md` 收集全部开发与修复 Prompt。实操材料包为 `earnings-review-materials.zip`，没有成品应用、真实公司答案、预选答案页或凭据。
 
-`source/lesson.json` 是学习者内容的唯一来源。`source/prepare_materials.py` 生成数据约定、任务书和材料清单，并复制四份通用运行时提示词与 `source/acceptance/` 公共合成验收。验收代码调用学习者编写的生产模块；第8步必须走实际任务创建和冻结工作进程，不能另写测试专用流程。
+`source/lesson.json` 维护九条本步任务；`source/project-agents.md` 维护共同规则，构建时复制为材料包根目录的 `AGENTS.md`。学习者解压即有规则文件，第0步读取，后续各步引用，不再另发一条消息创建。`source/prepare_materials.py` 生成数据约定、任务书和材料清单，并复制四份通用运行时提示词与 `source/acceptance/` 公共合成验收。验收代码调用学习者编写的生产模块；第8步必须走实际任务创建和冻结工作进程，不能另写测试专用流程。
 
 生成与内容检查：
 

@@ -5,33 +5,33 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "5687484154d99053b356e1010fe587f250e93bf02178a0a8771865b1fea91f27",
-      "bytes": 19876
+      "sha256": "b70246996e4f3f254334d70ea783f75bffc7876d46f158e9d2d558a552b63219",
+      "bytes": 20599
     },
     {
       "path": "README.md",
-      "sha256": "4dde129fd07a8da8079c64457988326cffecce4614629b86c9b8a1784b415399",
-      "bytes": 5099
+      "sha256": "386ec6592973d4969a48186b2e78b7d97e185aad3c25ab33796dbf3a49cd4aa9",
+      "bytes": 5298
     },
     {
       "path": "source/build.py",
-      "sha256": "674e49ecb149c1859bd099788a45cc450012f6497cb481e1cf699173afd5d0ae",
-      "bytes": 20854
+      "sha256": "e6f220930b07846ce5361b59cc63cfddedbfbc1ca2e32ee61a7c1bc5b71a07a7",
+      "bytes": 20943
     },
     {
       "path": "source/prepare_materials.py",
-      "sha256": "6b2a80f5c7f12fe364c27acd1713b566b882071640f35764d82ed61453109d1b",
-      "bytes": 31074
+      "sha256": "6e483f230383eae8febeb6b99594a7e9660908bbbfd8b8bb933891fdd556c74f",
+      "bytes": 26167
     },
     {
       "path": "source/publish.py",
-      "sha256": "6a792a13b6adb7253d6aacad98d9c848d2efca54748df800164c924fb5cfa82c",
-      "bytes": 13336
+      "sha256": "4447d7a6a4ae8a0f6bb7c14ae8052353cb54065cee511b4ba02f77ba660f605d",
+      "bytes": 13379
     },
     {
       "path": "source/lesson.json",
-      "sha256": "f4f69233d6b6ff6f821f5b8f2fabbc1e5da67e0335cf125818f49895a4040173",
-      "bytes": 147796
+      "sha256": "4f0cb50f8110435917866347285d23a7b0b07a6ddc3470461e3b4d45afe25cae",
+      "bytes": 74646
     },
     {
       "path": "source/repair-coverage.json",
@@ -49,9 +49,14 @@
       "bytes": 8403
     },
     {
+      "path": "source/project-agents.md",
+      "sha256": "781928cd83f4b09b23694fe8868a727ed2f8e3f4280c80e40018cd3124c798d7",
+      "bytes": 11223
+    },
+    {
       "path": "qa/check_handout.py",
-      "sha256": "7a7a953ba8a4260e6f6181286e77995deaf037b57e889dda6681fe46fb7c4739",
-      "bytes": 13692
+      "sha256": "6191986136e5357dccb309ac2b0e9d540060c2bfebba0d1f9285ad07f79fa5ae",
+      "bytes": 14188
     },
     {
       "path": "source/acceptance/README.md",
@@ -139,5 +144,5 @@
       "bytes": 7285
     }
   ],
-  "source_digest": "726802dd9b7434f35a8c1888ff0480ef3993adfefb4559f16309f682b970e2fc"
+  "source_digest": "e8dd50746d016adc996e23976c7b09db26d67b3bd8ea86938f5f67bdf6fd1ad0"
 }

@@ -47,9 +47,14 @@ def overview_html(overview):
     return f'<section class="overview" id="workflow-map" aria-labelledby="overview-title"><h2 id="overview-title">{e(overview["title"])}</h2><p>{e(overview["lead"])}</p><div class="process-legend"><span>程序执行</span><span>模型请求</span><span>检查关卡</span></div><div class="process-layout"><ol class="process-diagram" aria-label="从 PDF 到复盘的程序与模型流程">{nodes}</ol>{branch}</div><p class="small">{e(overview["calls_note"])}</p><h3>每一步具体做什么</h3>{table}<p>{e(overview["delivery_note"])}</p><p>{e(overview["mapping_note"])}</p></section>'
 
 
+def material_guide_html(guide):
+    rows = ''.join('<tr><th scope="row"><code>'+e(item['path'])+'</code></th><td>'+e(item['contents'])+'</td><td>'+e(item['use'])+'</td></tr>' for item in guide['items'])
+    return '<section id="materials-guide" aria-labelledby="materials-title"><h2 id="materials-title">'+e(guide['title'])+'</h2><p>'+e(guide['lead'])+'</p><div class="table-scroll" tabindex="0" aria-label="材料包内容与用途，可横向滚动"><table class="process-table"><thead><tr><th>文件或文件夹</th><th>里面是什么</th><th>这次怎么用</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+items(guide['notes'])+'</section>'
+
+
 def render_html():
     d = DATA
-    nav = '<a href="#workflow-map">先看程序与模型流程</a><a href="#start">开始前</a>' + ''.join(f'<a href="#{s["id"]}"><span>{s["number"]}</span>{e(s["title"])}</a>' for s in d['steps']) + '<a href="#extensions">扩展验证</a><a href="#help">卡住时</a><a href="#finish">交付检查</a><a href="#runtime-prompts">运行时提示词</a>'
+    nav = '<a href="#workflow-map">先看程序与模型流程</a><a href="#start">开始前</a><a href="#materials-guide">认识材料包</a>' + ''.join(f'<a href="#{s["id"]}"><span>{s["number"]}</span>{e(s["title"])}</a>' for s in d['steps']) + '<a href="#extensions">扩展验证</a><a href="#help">卡住时</a><a href="#finish">交付检查</a><a href="#runtime-prompts">运行时提示词</a>'
     roles = ''.join(f'<div><h3>{e(r["who"])}</h3><p>{e(r["task"])}</p></div>' for r in d['roles'])
     flow = '<ol class="flow">' + ''.join(f'<li><span class="owner">{e(s["owner"])}</span><strong>{e(s["label"])}</strong><p>{e(s["work"])}</p></li>' for s in d['flow']) + '</ol>'
     def prep_item(p):
@@ -72,7 +77,7 @@ def render_html():
 <a class="skip" href="#content">跳到讲义</a><aside class="sidebar"><a class="brand" href="#top"><span class="brand-mark">er</span><span>Earnings Review<small>第二讲 · 实操讲义</small></span></a><nav aria-label="讲义目录">{nav}</nav><div class="reading-status"><span>我的搭建记录</span><strong id="completion-count">0 / 9 步</strong><p>勾选只记录学习进度，<br>不代表财务核验通过。</p></div></aside>
 <main id="content"><header id="top"><p class="eyebrow">从本地 PDF 到可核验的复盘网页</p><h1>{e(d['title'])}</h1><p class="subtitle">{e(d['subtitle'])}</p><p>{e(d['lead'])}</p><div class="downloads"><a class="primary" href="earnings-review-materials.zip" download>下载实操材料包</a><a href="#step-0">从第 0 步开始 ↘</a><a href="PROMPTS.md" download>全部 Prompt</a><a href="讲义.md" download>Markdown 讲义</a></div><p class="small">{e(d['materials'])}</p></header>
 {overview_html(d['overview'])}
-<section class="intro" id="start"><h2>先分清谁在搭建，谁在运行</h2><div class="roles">{roles}</div><p>{e(d['fixed'])}</p><h3 class="flow-heading">同一流程在网页中的六个运行步骤</h3>{flow}<details class="success"><summary>做到什么程度算完成</summary>{items(d['success'])}</details><h2 class="prepare-title">打开一个新项目</h2><ol class="preparation">{preparation}</ol><p class="small">OpenCode 用户可参考 <a href="https://opencode.ai/docs/" target="_blank" rel="noopener">官方使用文档</a>、<a href="https://opencode.ai/docs/models/" target="_blank" rel="noopener">模型配置</a>；使用其他编程 Agent 请查阅各自官方文档。这些入口可能随版本调整；本讲不依赖某个固定快捷键。</p><div class="cadence"><strong>跟做方式</strong><p>{e(d['cadence'])}</p></div></section>
+<section class="intro" id="start"><h2>先分清谁在搭建，谁在运行</h2><div class="roles">{roles}</div><p>{e(d['fixed'])}</p><h3 class="flow-heading">同一流程在网页中的六个运行步骤</h3>{flow}<details class="success"><summary>做到什么程度算完成</summary>{items(d['success'])}</details>{material_guide_html(d['material_guide'])}<h2 class="prepare-title">打开一个新项目</h2><ol class="preparation">{preparation}</ol><p class="small">OpenCode 用户可参考 <a href="https://opencode.ai/docs/" target="_blank" rel="noopener">官方使用文档</a>、<a href="https://opencode.ai/docs/models/" target="_blank" rel="noopener">模型配置</a>；使用其他编程 Agent 请查阅各自官方文档。这些入口可能随版本调整；本讲不依赖某个固定快捷键。</p><div class="cadence"><strong>跟做方式</strong><p>{e(d['cadence'])}</p></div></section>
 {''.join(step_html(s) for s in d['steps'])}
 <section class="section" id="extensions"><p class="eyebrow">核心程序完成后</p><h2>继续验证，而不是急着扩大功能</h2><p>下面按需要选做。先保留已完成的程序和真实回执，再扩展样本、模型或失败路径。</p>{''.join(extension_html(x,i) for i,x in enumerate(d['extensions']))}</section>
 <section class="section" id="help"><h2>卡住时，把这一条发给 Agent</h2><p>不用先猜技术原因。让 Agent 读取当前项目和真实日志，明确问题后再修改。</p><div class="help">{trouble}</div></section>
@@ -99,6 +104,8 @@ def markdown():
     out += ['- '+r['who']+'：'+r['task'] for r in d['roles']]
     out += [d['fixed'],'## 完成标准','\n'.join('- '+x for x in d['success']),'## 同一流程在网页中的六个运行步骤']
     out += ['- '+s['label']+' · '+s['owner']+'：'+s['work'] for s in d['flow']]
+    guide=d['material_guide']
+    out += ['## '+guide['title'],guide['lead'],'| 文件或文件夹 | 里面是什么 | 这次怎么用 |\n| --- | --- | --- |\n'+'\n'.join('| `'+item['path']+'` | '+item['contents']+' | '+item['use']+' |' for item in guide['items']),'\n'.join('- '+note for note in guide['notes'])]
     out += ['## 准备项目',d['materials']]
     for i,p in enumerate(d['preparation']):
         out += [str(i+1)+'. '+p['title']+'。'+p['body']]

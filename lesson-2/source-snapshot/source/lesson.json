@@ -802,5 +802,51 @@
     },
     "shared_rules": "AGENTS.md",
     "prompt_format": "task_specific_messages_with_packaged_shared_rules"
+  },
+  "material_guide": {
+    "title": "先认识材料包",
+    "lead": "下载并解压实操材料包后，会得到 earnings-review 文件夹。里面已经备好原始报告、任务规则和检查工具，后面的程序就在这个文件夹里搭建。",
+    "items": [
+      {
+        "path": "AGENTS.md",
+        "contents": "编程 Agent 的共同规则",
+        "use": "每一步都按它执行，主提示词只交代本步任务。"
+      },
+      {
+        "path": "TASKBOOK.md",
+        "contents": "项目目标、财务范围和交付要求",
+        "use": "先读它，了解本讲要做什么、最后交付什么。"
+      },
+      {
+        "path": "reports/",
+        "contents": "六份完整的 2026 半年报及来源清单",
+        "use": "程序读取的原始资料，取数和核验都要回到这些 PDF。"
+      },
+      {
+        "path": "contracts/",
+        "contents": "数据格式、计算口径、预算和停止条件",
+        "use": "Agent 按这些约定实现程序，统一输入、计算和输出。"
+      },
+      {
+        "path": "prompts/runtime/",
+        "contents": "定位、抄录、视觉核验和反馈的四份提示词",
+        "use": "程序运行时读取，再交给财报模型完成对应任务。"
+      },
+      {
+        "path": "acceptance/",
+        "contents": "公开检查脚本与合成测试材料",
+        "use": "Agent 每完成一步就运行检查，报告通过项和失败原因。"
+      },
+      {
+        "path": "MATERIALS.json",
+        "contents": "文件清单与内容指纹",
+        "use": "第 0 步核对材料是否齐全、内容是否一致。"
+      }
+    ],
+    "notes": [
+      "先读 TASKBOOK.md，浏览 reports/ 中的一份 PDF，其余文件交给编程 Agent 按步骤读取。",
+      "第 0–8 步主提示词在本讲义里，逐条发给编程 Agent；prompts/runtime/ 由搭好的程序在运行时读取。",
+      "搭建后会陆续出现 app/、web/、tests/ 和 runtime/，分别保存程序、网页、测试和运行记录。"
+    ]
   }
 }

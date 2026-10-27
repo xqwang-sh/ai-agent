@@ -65,10 +65,7 @@ def render_html():
         return out + '</li>'
     preparation = ''.join(prep_item(p) for p in d['preparation'])
     trouble = ''.join(f'<details><summary>{e(t["symptom"])}</summary><p>{e(t["action"])}</p>{prompt("prompt-help-"+str(i),t["prompt"])}</details>' for i,t in enumerate(d['troubleshooting']))
-    runtime = ''
-    for name, label in [('locate','定位'),('extract','文字抄录'),('vision','独立视觉复读'),('feedback','失败反馈')]:
-        text = (ROOT / 'materials/earnings-review/prompts/runtime' / (name+'.md')).read_text()
-        runtime += f'<details><summary>{e(label)} · {name}.md</summary>{prompt("prompt-runtime-"+name,text,"程序运行时发送给财报模型；交给你的编程 Agent 读取该文件")}</details>'
+    runtime = '<ul>' + ''.join(f'<li>第 {step} 步生成 <code>prompts/runtime/{e(name)}</code></li>' for name, step in d['mainline_protocol']['runtime_prompt_generation'].items()) + '</ul>'
     example = json.loads((ROOT / 'source/verified-example.json').read_text())
     table = '<table><thead><tr><th>阶段</th><th>模型 tokens</th><th>阶段耗时</th><th>调用</th></tr></thead><tbody>' + ''.join(f'<tr><td>{e(s["label"])}</td><td>{s["tokens"]:,}</td><td>{s["elapsed_seconds"]:.3f} 秒</td><td>{s["calls"]}</td></tr>' for s in example['stages']) + '</tbody></table>'
     source_links = ''.join(f'<li><a href="{e(s["url"])}" target="_blank" rel="noopener">{e(s["title"])} ↗</a><span>{e(s["note"])}</span></li>' for s in d['sources'])
@@ -82,7 +79,7 @@ def render_html():
 <section class="section" id="extensions"><p class="eyebrow">核心程序完成后</p><h2>继续验证，而不是急着扩大功能</h2><p>下面按需要选做。先保留已完成的程序和真实回执，再扩展样本、模型或失败路径。</p>{''.join(extension_html(x,i) for i,x in enumerate(d['extensions']))}</section>
 <section class="section" id="help"><h2>卡住时，把这一条发给 Agent</h2><p>不用先猜技术原因。让 Agent 读取当前项目和真实日志，明确问题后再修改。</p><div class="help">{trouble}</div></section>
 <section class="section" id="finish"><h2>交付前，逐条检查</h2>{items(d['checklist'])}<p class="stop-rule">{e(d['stopRule'])}</p><h3>一份完整运行账本长什么样</h3><p>以下是 {e(example['date'])} 课前顺丰 27B 示例，非学习者当前运行结果。两层均为 10/10，共 {example['usage']['requests']} 次模型调用，{example['usage']['total_tokens']:,} tokens，流程 {example['workflow_seconds']:.3f} 秒。包含一次文本续跑和两次视觉续跑。不同运行可能成功、补证或停止，消耗也会变化。</p><div class="table-scroll">{table}</div><p class="small">阶段耗时累计该阶段记录的调用与程序操作；总流程还含阶段切换等开销。编程 Agent 开发对话的 tokens 与产品运行账本分开统计。</p><figure><a href="assets/earnings-review-example.jpg" target="_blank"><img src="assets/earnings-review-example.jpg" alt="顺丰课前示例，显示真实六阶段、97440 tokens、两层10/10与最终复盘" loading="lazy"></a><figcaption>示例产品截图，可点击放大。学习者的页面以自己的运行结果为准。</figcaption></figure></section>
-<section class="section" id="runtime-prompts"><h2>附录：程序读的四份运行时提示词</h2><p>前面每步的大框发给你的编程 Agent。这里的四份文件由程序在运行时交给财报模型，材料包已经附带。它们给的是任务与输出格式，没有公司答案或页码。</p>{runtime}<details><summary>依赖与本地文件约定</summary><p>Python 使用项目虚拟环境（这个项目独立的一套 Python 运行环境，不影响电脑里其他 Python），安装 pypdf。页图可以用已有 Poppler 工具或由 Agent 选择合适的本机实现，必须记录渲染器及版本。当前示例在 macOS 实跑，Windows 需要适配启动和文件锁，不能把 Unix 代码原样照搬。</p><p>同花顺 CLI 的当前安装包为 @hithink-tech/hithink-finance-cli，本机已核对的版本要求 Node.js ≥22.12.0。若已安装先检查，不为课堂重装。让 Agent 读取当前 schema 与官方内置帮助，认证使用隐藏输入，结果原样落盘。</p><p>财报服务从服务端读取自己的 API Key。编程 Agent 的订阅或登录不自动赋予这个程序 API 权限。模型 ID、图像支持、额度与数据权限以账号实际检查为准，不用离线测试代替授权验证。</p></details></section>
+<section class="section" id="runtime-prompts"><h2>附录：第5–7步生成运行时提示词</h2><p>前面每步的大框发给你的编程 Agent。它按任务书与 contracts 生成下列文件，并接入程序实际发给财报模型的请求。初始材料包不预置这四份文件；生成后会随本轮程序一起冻结保存。</p>{runtime}<details><summary>依赖与本地文件约定</summary><p>Python 使用项目虚拟环境（这个项目独立的一套 Python 运行环境，不影响电脑里其他 Python），安装 pypdf。页图可以用已有 Poppler 工具或由 Agent 选择合适的本机实现，必须记录渲染器及版本。当前示例在 macOS 实跑，Windows 需要适配启动和文件锁，不能把 Unix 代码原样照搬。</p><p>同花顺 CLI 的当前安装包为 @hithink-tech/hithink-finance-cli，本机已核对的版本要求 Node.js ≥22.12.0。若已安装先检查，不为课堂重装。让 Agent 读取当前 schema 与官方内置帮助，认证使用隐藏输入，结果原样落盘。</p><p>财报服务从服务端读取自己的 API Key。编程 Agent 的订阅或登录不自动赋予这个程序 API 权限。模型 ID、图像支持、额度与数据权限以账号实际检查为准，不用离线测试代替授权验证。</p></details></section>
 <footer><h2>参考与验证范围</h2><ul class="sources">{source_links}</ul><p>接口与文档核对日期：{e(d['updated'])}。</p><p>{e(d['limits'])}</p><p>本地实操材料。程序运行使用自己的模型与数据服务授权。</p></footer><div id="copy-status" role="status" aria-live="polite"></div></main></body></html>'''
 
 
@@ -128,15 +125,14 @@ def markdown():
     example=json.loads((ROOT/'source/verified-example.json').read_text())
     out += ['## 课前示例账本',f"{example['date']}顺丰27B示例，不是学习者当前结果。两层10/10，{example['usage']['requests']}次调用、{example['usage']['total_tokens']:,}tokens、{example['workflow_seconds']:.3f}秒。示例仅说明怎样读取账本，不保证下一次运行有相同结果或消耗。",
             '| 阶段 | 模型tokens | 阶段秒数 | 调用数 |\n| --- | ---: | ---: | ---: |\n'+'\n'.join('| '+s['label']+' | '+str(s['tokens'])+' | '+str(s['elapsed_seconds'])+' | '+str(s['calls'])+' |' for s in example['stages']),
-            '阶段耗时累计已记录调用与操作，总流程另含切换开销；编程Agent开发对话的tokens另计。','## 程序运行时提示词','下面的四个文件由程序交给财报模型，不是发给你的编程 Agent 立即执行的开发步骤。']
-    for p in sorted((ROOT/'materials/earnings-review/prompts/runtime').glob('*.md')):
-        out += ['### '+p.name,'```text\n'+p.read_text().strip()+'\n```']
+            '阶段耗时累计已记录调用与操作，总流程另含切换开销；编程Agent开发对话的tokens另计。','## 第5–7步生成运行时提示词','编程 Agent 按任务书与 contracts 生成以下文件，再接入程序实际发给财报模型的请求。初始材料包不预置全文，生成后随本轮程序一起冻结保存。']
+    out += [f'- 第 {step} 步生成 `prompts/runtime/{name}`。' for name, step in d['mainline_protocol']['runtime_prompt_generation'].items()]
     out += ['## 参考与验证范围','\n'.join('- ['+s['title']+']('+s['url']+')：'+s['note'] for s in d['sources']),d['limits']]
     return '\n\n'.join(out)+'\n'
 
 
 def all_prompts():
-    out=['# Earnings Review · 逐步搭建Prompt','主Prompt按0至8顺序发送，每步检查后再继续。扩展按需选做。运行时提示词另在材料包prompts/runtime中。']
+    out=['# Earnings Review · 逐步搭建Prompt','主Prompt按0至8顺序发送，每步检查后再继续。扩展按需选做。运行时提示词在第5–7步生成，保存到项目prompts/runtime中。']
     for s in DATA['steps']:
         out += ['## 第'+s['number']+'步：'+s['title'],'```text\n'+s['prompt']+'\n```']
         if s.get('after_click_prompt'):out += ['### 点击后，查看本轮运行','```text\n'+s['after_click_prompt']+'\n```']
@@ -167,7 +163,7 @@ def main():
         manifest=json.loads((project/'MATERIALS.json').read_text())
         paths=[project/'AGENTS.md',project/'TASKBOOK.md',project/'MATERIALS.json',project/'reports/SOURCES.json']
         paths += [project/'reports'/r['filename'] for r in manifest['pdfs']]
-        paths += list((project/'contracts').glob('*.json')) + list((project/'prompts/runtime').glob('*.md'))
+        paths += list((project/'contracts').glob('*.json'))
         paths += [project/name for name in manifest['acceptance_hashes']]
         for p in sorted(paths):
             assert p.is_file() and not p.is_symlink(),p
@@ -179,8 +175,8 @@ def main():
             zip_entry(z,'earnings-review-lesson2/'+name,(ROOT/name).read_bytes())
         for p in sorted((ROOT/'assets').glob('*')):
             if p.is_file():zip_entry(z,'earnings-review-lesson2/assets/'+p.name,p.read_bytes())
-        zip_entry(z,'earnings-review-lesson2/先读我.txt','解压后打开index.html阅读讲义，也可以阅读讲义.md。\n\n讲义里的主Prompt按第0至第8步发给你的编程 Agent（Codex、Claude Code、Cursor、Kimi Code 等任意一种，或 OpenCode 搭配 DeepSeek，都可以）。共同规则已放进项目AGENTS.md，每条主Prompt只写本步任务；自行修正公开检查失败，通过后再发下一条。仅0–8九条构成主线；折叠修复Prompt为人工诊断备用，不能用于证明九条主线已跑通。\n\nearnings-review-materials.zip是实操材料，再解压得到earnings-review文件夹。它的根目录下应有AGENTS.md、TASKBOOK.md、reports、contracts和prompts。用你的编程 Agent 打开这个文件夹作为新项目，不要把讲义阅读目录当成应用项目。\n\n材料没有成品应用或预填财务答案，代码由自己的Agent分步搭建。环境、模型与同花顺授权在第0步检查。前面的合成检查不发生成请求；完整真实运行在第8步由学习者手动点击。\n')
-    print(json.dumps({'main_steps':len(DATA['steps']),'copyable_prompts':len(DATA['steps'])*2+len(DATA['extensions'])+len(DATA['troubleshooting'])+4+sum('after_click_prompt' in s for s in DATA['steps']),'archive_bytes':archive.stat().st_size},ensure_ascii=False))
+        zip_entry(z,'earnings-review-lesson2/先读我.txt','解压后打开index.html阅读讲义，也可以阅读讲义.md。\n\n讲义里的主Prompt按第0至第8步发给你的编程 Agent（Codex、Claude Code、Cursor、Kimi Code 等任意一种，或 OpenCode 搭配 DeepSeek，都可以）。共同规则已放进项目AGENTS.md，每条主Prompt只写本步任务；自行修正公开检查失败，通过后再发下一条。仅0–8九条构成主线；折叠修复Prompt为人工诊断备用，不能用于证明九条主线已跑通。\n\nearnings-review-materials.zip是实操材料，再解压得到earnings-review文件夹。它的根目录下应有AGENTS.md、TASKBOOK.md、reports、contracts和acceptance。用你的编程 Agent 打开这个文件夹作为新项目，不要把讲义阅读目录当成应用项目。\n\n材料没有成品应用或预填财务答案，代码由自己的Agent分步搭建。运行时提示词不预置，第5步生成locate.md/extract.md，第6步生成vision.md，第7步生成feedback.md，保存在prompts/runtime并接入实际请求。环境、模型与同花顺授权在第0步检查。前面的合成检查不发生成请求；完整真实运行在第8步由学习者手动点击。\n')
+    print(json.dumps({'main_steps':len(DATA['steps']),'copyable_prompts':len(DATA['steps'])*2+len(DATA['extensions'])+len(DATA['troubleshooting'])+sum('after_click_prompt' in s for s in DATA['steps']),'archive_bytes':archive.stat().st_size},ensure_ascii=False))
 
 
 if __name__ == '__main__':main()

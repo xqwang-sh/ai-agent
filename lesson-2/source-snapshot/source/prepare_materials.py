@@ -21,6 +21,8 @@ def save(path, value):
 
 
 def main():
+    for legacy in (PROJECT / 'prompts/runtime').glob('*.md'):
+        legacy.unlink()
     metrics = ['revenue', 'operating_cost', 'operating_profit', 'parent_net_profit', 'basic_eps']
     nullable_string = {'type': ['string', 'null']}
     nullable_page = {'type': ['integer', 'null'], 'minimum': 1}
@@ -112,7 +114,7 @@ def main():
     lesson = json.loads((ROOT / 'source/lesson.json').read_text())
     task = '# 本地Earnings Review任务书\n\n' + lesson['lead'] + '\n\n## 做成什么样\n\n' + '\n'.join('- ' + s for s in lesson['success'])
     task += '\n\n## 共同约定\n\n' + lesson['fixed'] + '\n\n'
-    task += 'reports是唯一真实财报输入。contracts是公开的结构、规则与合成检查。prompts/runtime是程序以后发送给财报模型的指令，不是现在让OpenCode立即执行的任务。程序代码由学习者自己的Agent分步创建。\n\n'
+    task += 'reports是唯一真实财报输入。contracts是公开的结构、规则与合成检查。程序代码与prompts/runtime运行时提示词由学习者自己的Agent分步创建：第5步生成locate.md、extract.md，第6步生成vision.md，第7步生成feedback.md。依据本任务书与contracts写明任务和输出格式，接入实际模型请求；初始材料不预置这四份文件。\n\n'
     task += '每个开发步骤结束时更新project_status.md。完整真实运行到第8步才由学习者手动点击开始，前面使用本地合成测试。缺少服务授权时如实停止，样例、合成测试与真实结果分别标记。\n\n'
     task += 'OpenCode开发对话的tokens由编码工具自身统计；网页账本只统计本轮财报程序实际发出的模型调用，包含文本和视觉续跑，不包含外部数据服务调用或这次编程对话。\n\n'
     task += '实现适配当前操作系统。不要依赖作者电脑的路径、凭据或已有运行。所有源PDF按哈希绑定。只有当前文字候选、独立视觉结果与外部比较全部一致，才封存并生成复盘，仍保留人工复核。\n\n'
@@ -133,7 +135,7 @@ def main():
             write(target, source.read_text())
             acceptance_hashes[str(target.relative_to(PROJECT))] = hashlib.sha256(target.read_bytes()).hexdigest()
     inputs = json.loads((PROJECT / 'reports/SOURCES.json').read_text())
-    provenance = {'created_date': lesson['updated'], 'purpose': 'answer-free build materials', 'pdfs': inputs, 'runtime_prompt_hashes': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((PROJECT / 'prompts/runtime').glob('*.md'))}, 'project_guidance_hashes': {name: hashlib.sha256((PROJECT / name).read_bytes()).hexdigest() for name in ('AGENTS.md', 'TASKBOOK.md')}, 'contains_application_code': False, 'contains_synthetic_acceptance_code': True, 'acceptance_hashes': acceptance_hashes, 'contains_precomputed_financial_answer_key_or_selected_pages': False}
+    provenance = {'created_date': lesson['updated'], 'purpose': 'answer-free build materials', 'pdfs': inputs, 'runtime_prompt_hashes': {}, 'runtime_prompt_generation': lesson['mainline_protocol']['runtime_prompt_generation'], 'project_guidance_hashes': {name: hashlib.sha256((PROJECT / name).read_bytes()).hexdigest() for name in ('AGENTS.md', 'TASKBOOK.md')}, 'contains_application_code': False, 'contains_synthetic_acceptance_code': True, 'acceptance_hashes': acceptance_hashes, 'contains_precomputed_financial_answer_key_or_selected_pages': False}
     save(PROJECT / 'MATERIALS.json', provenance)
     print('Prepared contracts and learner taskbook without finished app or financial answers.')
 

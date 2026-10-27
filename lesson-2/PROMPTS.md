@@ -1,6 +1,6 @@
 # Earnings Review · 逐步搭建Prompt
 
-主Prompt按0至8顺序发送，每步检查后再继续。扩展按需选做。运行时提示词另在材料包prompts/runtime中。
+主Prompt按0至8顺序发送，每步检查后再继续。扩展按需选做。运行时提示词在第5–7步生成，保存到项目prompts/runtime中。
 
 ## 第0步：让 Agent 检查项目和运行条件
 
@@ -108,7 +108,7 @@ app/acceptance.py 提供 create_subject(project_root)，按 acceptance/README.md
 ## 第5步：把定位、抄录与来源检查接进运行器
 
 ```text
-按 AGENTS.md 完成第 5 步，先执行其中的首写检查点，再扩展 app/contracts.py、app/extract.py 与现有冻结 TaskRunner。读取 observation.schema.json、workflow.json 及 locate/extract 运行时提示词的本步必要部分。
+按 AGENTS.md 完成第 5 步，先执行其中的首写检查点，再扩展 app/contracts.py、app/extract.py 与现有冻结 TaskRunner。依据 TASKBOOK.md、observation.schema.json 和 workflow.json，在 prompts/runtime/ 生成 locate.md、extract.md，写明本步定位、动作、锚点及完整 observation 格式，并接入实际模型请求。
 
 实现同一严格单 JSON/单围栏解析器和 ExtractSession 动作分派，统一处理 search_fulltext、read_pages、select_pages、submit 及裸 selection/observation。真实工具回执进入保留文字会话；只有页包和锚点已接受、完整页已读后才能抄录。动作/协议错误保存原始回复和真实用量，重复无效回复按契约停止，不计成财务候选失败。
 
@@ -132,7 +132,7 @@ app/acceptance.py 提供 create_subject(project_root)，按 acceptance/README.md
 ## 第6步：接通两层核验，跑完首条完整合成链
 
 ```text
-按 AGENTS.md 完成第 6 步，实现 app/verify.py、外部参考归一化、规范 review 与封存，并接入同一冻结 TaskRunner。
+按 AGENTS.md 完成第 6 步，实现 app/verify.py、外部参考归一化、规范 review 与封存，并接入同一冻结 TaskRunner。依据任务书与 contracts 生成 prompts/runtime/vision.md，限定原页图盲读、相同 observation 格式和缺证据填 null，不调用文字检索、读页或换页动作，用于实际视觉请求。
 
 来源候选通过后，开启独立视觉会话盲读最终原 PDF 整页图，按物理页标签、实际图片哈希和候选版本绑定。视觉输出复用同一来源绑定器，再与文字候选做十项比较；自身证据错误留在原视觉会话，文字或页包变化则重建盲读。数字一致但标题、期间、单位或版本不成立仍失败。
 
@@ -156,7 +156,7 @@ app/acceptance.py 提供 create_subject(project_root)，按 acceptance/README.md
 ## 第7步：接通有界补证，通过全部生产验收
 
 ```text
-按 AGENTS.md 完成第 7 步，扩展 app/feedback.py、app/workflow.py 和同一个 TaskRunner，读取 feedback.md 与 workflow.json。
+按 AGENTS.md 完成第 7 步，扩展 app/feedback.py、app/workflow.py 和同一个 TaskRunner，依据 workflow.json 生成 prompts/runtime/feedback.md，区分文字补证与视觉自身修订；读取本轮冻结文件，把其原文和失败信息一起用于实际补证请求。
 
 把来源失败、视觉与文字分歧、外部分歧交回保留文字会话，只给失败规则、受影响指标、模型已有进度和预算；不泄露正确值、差额、替代引文或答案页。模型继续经同一工具分派检索、读页、选页或提交；视觉自身错误留在视觉会话，文字或页包变化后重新盲读和逐项比较。
 

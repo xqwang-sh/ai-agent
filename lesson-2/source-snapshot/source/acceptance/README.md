@@ -4,6 +4,10 @@
 
 先读当前步骤对应的约定和用例，完整检查失败后再读相关测试体；不要在第一次业务写入前通读全部脚本。实现 app/acceptance.py 中唯一工厂 create_subject(project_root)。工厂返回对象，下列方法只适配生产代码的输入输出，不重新实现校验或阶段循环。
 
+初始材料不预置运行时提示词。第5步依据任务书与contracts生成`prompts/runtime/locate.md`、`extract.md`，第6步生成`vision.md`，第7步生成`feedback.md`。公开入口按`--through N`检查本步已到期的文件是项目内非符号链接普通文件、UTF-8且非空；不要求未来文件存在，不创建占位。早期步骤回归时允许后续已生成文件保留。
+
+实际定位、抄录和视觉请求包含对应冻结文件原文。第7步组合检查还核对实际补证请求的输入消息中包含冻结`feedback.md`全文，兼容system/user/tool等输入及JSON编码，不把模型自己的回显当作接入。生成文件后必须接入生产请求，不能只把文件留在目录里。该检查复用原35项业务场景，不改变其财务判定。
+
 - validate(observation, pages, selected_pages, expected_company=None) 返回 passed、rules、五项 bound_rows。rules 非空即不能通过。pages 是 physical_page/text 对象数组。
 - dispatch(actions, pages, phase) 驱动生产 ExtractSession 的同一动作分派。返回 trace 动作名称数组、candidate_count、source_actions、failures。裸selection和裸完整observation先归一化。
 - compare(text, vision, reference, pages, expected_thscode, expected_company=None) 调用生产两层核验与反馈脱敏。返回 internal/external，各有 passed、matched、total，以及只含规则和指标的 feedback。合成 reference.records 是规范化传输夹具，进入生产唯一H1筛选和比较函数，不另写测试比较。

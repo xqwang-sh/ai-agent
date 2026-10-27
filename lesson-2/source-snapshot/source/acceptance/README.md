@@ -6,7 +6,7 @@
 
 初始材料不预置运行时提示词。第5步依据任务书与contracts生成`prompts/runtime/locate.md`、`extract.md`，第6步生成`vision.md`，第7步生成`feedback.md`。公开入口按`--through N`检查本步已到期的文件是项目内非符号链接普通文件、UTF-8且非空；不要求未来文件存在，不创建占位。早期步骤回归时允许后续已生成文件保留。
 
-实际定位、抄录和视觉请求包含对应冻结文件原文。第7步组合检查还核对实际补证请求的输入消息中包含冻结`feedback.md`全文，兼容system/user/tool等输入及JSON编码，不把模型自己的回显当作接入。生成文件后必须接入生产请求，不能只把文件留在目录里。该检查复用原35项业务场景，不改变其财务判定。
+实际定位、抄录和视觉请求包含对应冻结文件原文。第7步组合检查还逐个核对真正的文字补证与视觉自身修订请求，其输入消息须包含冻结`feedback.md`全文，兼容system/user/tool等输入及JSON编码，不把模型自己的回显当作接入。视觉自身修订不借用文字补证计数判定。生成文件后必须接入生产请求，不能只把文件留在目录里。该检查复用原35项业务场景，不改变其财务判定。
 
 - validate(observation, pages, selected_pages, expected_company=None) 返回 passed、rules、五项 bound_rows。rules 非空即不能通过。pages 是 physical_page/text 对象数组。
 - dispatch(actions, pages, phase) 驱动生产 ExtractSession 的同一动作分派。返回 trace 动作名称数组、candidate_count、source_actions、failures。裸selection和裸完整observation先归一化。

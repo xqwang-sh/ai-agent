@@ -7,7 +7,7 @@
 - 每步先从工具输出确认当前项目根目录。优先使用相对路径；必须写绝对路径时，从实际根目录生成并确认父目录存在，不重打或猜测路径。
 - 先建 runtime/step-N 和 runtime/step-N/tmp，N 为当前步骤。日志、临时脚本、诊断、试渲染和测试输出只写在本步目录或 tests/output；Python 临时目录显式指定项目内 dir，不使用 /tmp、系统临时目录或其他项目，不请求项目外写入权限。
 - 只使用本次材料及本项目新写的代码，不读取或复制其他项目、历史成品、已有财报任务或讲义外观察文件。保留公开 acceptance、contracts 与本文件的约定；不能改断言、跳过检查或另造测试专用成功路径。
-- reports 是完整真实 PDF 输入；prompts/runtime 是程序发送给财报模型的指令，不是当前开发任务。先校验 MATERIALS.json 已提供的 PDF、验收与项目规则哈希，差异先报告。初始材料不含 prompts/runtime；第5步生成 locate.md、extract.md，第6步生成 vision.md，第7步生成 feedback.md。依据任务书与 contracts 写好后保存，模型请求使用本轮冻结文件原文，反馈指令进入实际补证消息。
+- reports 是完整真实 PDF 输入；prompts/runtime 是程序发送给财报模型的指令，不是当前开发任务。先校验 MATERIALS.json 已提供的 PDF、验收与项目规则哈希，差异先报告。初始材料不含 prompts/runtime；第5步生成 locate.md、extract.md，第6步生成 vision.md，第7步生成 feedback.md。依据任务书与 contracts 写好后保存，模型请求使用本轮冻结文件原文，反馈指令进入文字补证与视觉自身修订消息。
 - 适配实际操作系统，使用最少依赖：Python 后台、原生 HTML/CSS/JavaScript 前台。端口冲突时另选空闲端口，或只停本项目有记录的自有进程。权限被拒、空回复、length 或退出码 0 均不等于完成。
 
 ## 分段开发

@@ -239,7 +239,7 @@ class Acceptance(ProductChecks, RecoveryChecks, SourceBindingChecks, ReferenceCl
                                 'vision_revision': (5,), 'external_revision': (5,),
                                 'no_progress': (3,), 'freeze': ()}[name]
             check_feedback_requests(program, [load(requests[index]['request_path'])['messages'] for index in feedback_indices],
-                                    state['counters']['feedback_requests'])
+                                    len(feedback_indices))
         from pypdf import PdfReader
         actual_text={i+1:p.extract_text() for i,p in enumerate(PdfReader(str(pdf)).pages)}
         text_requests=[req for req in requests if req['stage'] in ('locate','extract')]

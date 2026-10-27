@@ -44,9 +44,8 @@ def main():
         assert all(s[k] for k in ('actions','goal','expected','checks','files','repair'))
     for i,x in enumerate(d['extensions']):expected['prompt-extension-'+str(i)]=x['prompt']
     for i,x in enumerate(d['troubleshooting']):expected['prompt-help-'+str(i)]=x['prompt']
-    for p in (ROOT/'materials/earnings-review/prompts/runtime').glob('*.md'):expected['prompt-runtime-'+p.stem]=p.read_text()
     checks={'single_title':page.h1==1,'unique_ids':len(page.ids)==len(set(page.ids)),
-            'all_full_prompts_match_source':page.pre==expected and len(expected)==len(d['steps'])*2+len(d['extensions'])+len(d['troubleshooting'])+4+sum(bool(s.get('after_click_prompt')) for s in d['steps']),
+            'all_full_prompts_match_source':page.pre==expected and len(expected)==len(d['steps'])*2+len(d['extensions'])+len(d['troubleshooting'])+sum(bool(s.get('after_click_prompt')) for s in d['steps']),
             'copy_targets_match':set(page.targets)==set(expected) and len(page.targets)==len(expected),
             'nine_sequential_steps':[s['number'] for s in d['steps']]==list(map(str,range(9))),
             'no_author_machine_paths':not re.search(r'/Users/|OneDrive|xqwang|codex://',raw),
@@ -69,7 +68,7 @@ def main():
     checks['patch_cases_carried_by_public_acceptance']='test_05_structured_source_binding' in d['steps'][5]['prompt'] and all(name in d['steps'][6]['prompt'] for name in ('test_06_structured_verification','test_06_frozen_execution','test_06_reference_cli_transport')) and 'test_07_http_frontend_restore' in d['steps'][7]['prompt'] and all(name in methods for name in ('test_05_structured_source_binding','test_06_structured_verification','test_06_frozen_execution','test_06_reference_cli_transport','test_07_http_frontend_restore'))
     checks['no_private_observation_dependency']=not any(name in s['prompt'] for s in d['steps'] for name in ('browser-observation.json','opencode-observation.json'))
     checks['declared_high_coding_profile_and_max_fallback_checkpoint']=protocol['coding_profile']['variant']=='high' and all(x in shared_rules for x in ('--variant high','--variant max','High 推理档','首次业务写入前','全部11项')) and 'High 推理档' in d['preparation'][2]['body'] and '首写检查点' in d['steps'][5]['prompt']
-    checks['vision_runtime_has_no_text_tool_hint']='按已有动作补证' not in (ROOT/'materials/earnings-review/prompts/runtime/vision.md').read_text() and '不调用文字检索、读页或换页动作' in (ROOT/'materials/earnings-review/prompts/runtime/vision.md').read_text()
+    checks['generated_vision_retains_blind_rules']=all(x in d['steps'][6]['prompt'] for x in ('生成 prompts/runtime/vision.md','原页图盲读','不调用文字检索、读页或换页动作'))
     checks['canonical_financial_projection_and_actual_cards']=all(x in shared_rules for x in ('review.normalizations','reviewCards(review)','review.summary','review.series','current_signed_yuan','ROUND_HALF_UP')) and all('reviewCards(review)' in d['steps'][n]['prompt'] for n in (6,8)) and policy_source['review_projection']['browser']['does_financial_calculations'] is False
     checks['header_boundary_precedes_validity']='structured_incomplete_header_case' in methods
     checks['complete_structural_header_chain']='structured_long_header_case' in methods
@@ -94,7 +93,11 @@ def main():
         checks['six_full_pdf_inputs']=sum(n.lower().endswith('.pdf') for n in names)==6
         manifest=json.loads(z.read('earnings-review/reports/SOURCES.json'))
         checks['all_pdf_hashes_match']=all(hashlib.sha256(z.read('earnings-review/reports/'+m['filename'])).hexdigest()==m['sha256'] for m in manifest)
-        checks['four_generic_runtime_prompts']=sum(n.startswith('earnings-review/prompts/runtime/') and n.endswith('.md') for n in names)==4
+        checks['no_preprovided_runtime_prompts']=not any(n.startswith('earnings-review/prompts/runtime/') for n in names)
+        provenance=json.loads(z.read('earnings-review/MATERIALS.json'))
+        schedule={'locate.md':5,'extract.md':5,'vision.md':6,'feedback.md':7}
+        checks['runtime_prompt_generation_schedule']=provenance['runtime_prompt_hashes']=={} and provenance['runtime_prompt_generation']==schedule==d['mainline_protocol']['runtime_prompt_generation'] and all('prompts/runtime/'+name in d['steps'][step]['files'] and name in d['steps'][step]['prompt'] and '生成' in d['steps'][step]['prompt'] for name,step in schedule.items())
+        checks['runtime_prompt_lifecycle_acceptance']='earnings-review/acceptance/runtime_prompts.py' in names and 'check_runtime_prompts(PROJECT, THROUGH)' in z.read('earnings-review/acceptance/checks.py').decode() and 'check_feedback_requests' in z.read('earnings-review/acceptance/checks.py').decode()
         policy=json.loads(z.read('earnings-review/contracts/workflow.json'))
         checks['two_explicit_model_presets']=policy['presets']['qwen9']['vision_model']==policy['presets']['qwen27']['vision_model'] and policy['presets']['qwen9']['text_model']!=policy['presets']['qwen27']['text_model']
         checks['header_boundary_precedes_validity'] &= policy['header_boundary']['recognition_independent_of_completeness'] is True
@@ -108,7 +111,7 @@ def main():
         checks['synthetic_usage_sum']=sum(x['total_tokens'] for x in examples['usage_cases']['receipts'])==examples['usage_cases']['expected_total_tokens']
         checks['synthetic_rounding']=all((Decimal(x['reference_yuan']).quantize(Decimal('0.1'),rounding=ROUND_HALF_UP)==Decimal(x['pdf_original']))==x['match'] for x in examples['precision_cases'])
         taskbook=z.read('earnings-review/TASKBOOK.md').decode()
-        checks['anchor_contract_matches_runtime']='anchors每项含page、原文quote和purpose' in taskbook and '每项含page、quote、purpose' in z.read('earnings-review/prompts/runtime/locate.md').decode()
+        checks['anchor_contract_guides_generated_locator']='anchors每项含page、原文quote和purpose' in taskbook and all(x in d['steps'][5]['prompt'] for x in ('生成 locate.md','锚点及完整 observation 格式'))
         checks['development_coverage_in_materials']=json.loads(z.read('earnings-review/contracts/development-checks.json'))==coverage
         checks['guarded_local_test_entry_in_materials']='earnings-review/acceptance/local_checks.py' in names and 'python -m acceptance.local_checks' in shared_rules and all('AGENTS.md' in step['prompt'] for step in d['steps'])
     with zipfile.ZipFile(ROOT/'EarningsReview-第二讲讲义包.zip') as z:

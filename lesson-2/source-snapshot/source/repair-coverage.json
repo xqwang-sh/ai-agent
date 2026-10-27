@@ -586,7 +586,7 @@
     "observed_default_output_token_cap": 32000,
     "experimental_output_override": false
   },
-  "implementation_first_write_checkpoint": "第5步现在先执行首个生产检查点，不先阅读验收测试或fixture。确认根目录后，最多两次读取必要的现有生产接口、observation.schema或本步runtime提示词片段，工具回传正文合计不超过6000字符；已在本对话中的约定不重复读取。随后立即把严格JSON回复解码与基本输入校验的最小可执行实现写入同一app/contracts.py、app/extract.py，并编译。这段必须真实识别合法对象、完整单围栏与非法传输，缺失的来源能力诚实失败，不能只写pass、TODO、未接入的helper或全为未实现的壳。首次业务写入前禁止读取acceptance测试体；首次写入和编译完成后立即运行through5公开检查。接着以首个真实失败为线索，每轮只读一个相关测试或fixture的局部定义，以80行和4000字符为参考目标；完整定义更长时只读当前失败所需的连续片段并记录实际范围；完成该段生产修正、编译和重测后再读下一段。先补输入/动作协议与完整数词，再补同一binder的表块、期间、列、单位绑定，最后接现有冻结TaskRunner来源循环。每段在当前消息内自动继续，不等新的指令。所有下文业务要求仍有效，最终完整through5全部11项及本地检查均须通过，不得改验收或以阶段性失败交付。",
+  "implementation_first_write_checkpoint": "第5步现在先执行首个生产检查点，不先阅读验收测试或fixture。确认根目录后，最多两次读取必要的现有生产接口或observation.schema片段，工具回传正文合计不超过6000字符；已在本对话中的约定不重复读取。随后立即把严格JSON回复解码与基本输入校验的最小可执行实现写入同一app/contracts.py、app/extract.py，并编译。这段必须真实识别合法对象、完整单围栏与非法传输，缺失的来源能力诚实失败，不能只写pass、TODO、未接入的helper或全为未实现的壳。首次业务写入前禁止读取acceptance测试体；首次写入和编译完成后立即运行through5公开检查。接着以首个真实失败为线索，每轮只读一个相关测试或fixture的局部定义，以80行和4000字符为参考目标；完整定义更长时只读当前失败所需的连续片段并记录实际范围；完成该段生产修正、编译和重测后再读下一段。先补输入/动作协议与完整数词，再补同一binder的表块、期间、列、单位绑定，最后接现有冻结TaskRunner来源循环。每段在当前消息内自动继续，不等新的指令。所有下文业务要求仍有效，最终完整through5全部11项及本地检查均须通过，不得改验收或以阶段性失败交付。",
   "implementation_sequence": {
     "test_body_reading": "only after executable production write, successful compile and current failure",
     "main5_prewrite_read_calls_max": 2,

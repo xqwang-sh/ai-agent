@@ -57,9 +57,13 @@ def export_handout(lesson, target):
 
 
 def export_source_snapshot(lesson, target):
-    paths = [lesson / "AGENTS.md", lesson / "README.md", *sorted((lesson / "source").glob("*.py")), *sorted((lesson / "source").glob("*.json")), *sorted((lesson / "source").glob("*.md")), lesson / "qa/check_handout.py"]
-    for folder in (lesson / "source/acceptance", lesson / "materials/earnings-review/prompts/runtime"):
+    paths = [lesson / "AGENTS.md", lesson / "README.md", *sorted((lesson / "source").glob("*.py")), *sorted((lesson / "source").glob("*.json")), *sorted((lesson / "source").glob("*.md")), lesson / "qa/check_handout.py", lesson / "qa/check_runtime_prompts.py"]
+    for folder in (lesson / "source/acceptance",):
         paths.extend(p for p in sorted(folder.rglob('*')) if p.is_file() and p.suffix in ('.py', '.md') and '__pycache__' not in p.parts)
+    for name in ('locate.md', 'extract.md', 'vision.md', 'feedback.md'):
+        legacy = target / 'source-snapshot/materials/earnings-review/prompts/runtime' / name
+        if legacy.is_file():
+            legacy.unlink()
     records = []
     for source in paths:
         relative = source.relative_to(lesson)

@@ -18,6 +18,7 @@ from .product_checks import ProductChecks
 from .recovery_checks import RecoveryChecks
 from .source_binding_checks import SourceBindingChecks
 from .reference_cli_checks import ReferenceCliChecks
+from .runtime_prompts import check_runtime_prompts, check_feedback_requests
 
 SUBJECT = None
 PROJECT = None
@@ -233,6 +234,12 @@ class Acceptance(ProductChecks, RecoveryChecks, SourceBindingChecks, ReferenceCl
             self.assertEqual(req['stage'],receipt['expected_stage'])
             self.assertEqual(response['id'],receipt['script_id'])
             self.assertIn((program/'prompts/runtime'/f"{req['stage']}.md").read_text(),actual['messages'][0]['content'])
+        if THROUGH >= 7:
+            feedback_indices = {'combined': (4, 7), 'vision_self_repair': (5,),
+                                'vision_revision': (5,), 'external_revision': (5,),
+                                'no_progress': (3,), 'freeze': ()}[name]
+            check_feedback_requests(program, [load(requests[index]['request_path'])['messages'] for index in feedback_indices],
+                                    len(feedback_indices))
         from pypdf import PdfReader
         actual_text={i+1:p.extract_text() for i,p in enumerate(PdfReader(str(pdf)).pages)}
         text_requests=[req for req in requests if req['stage'] in ('locate','extract')]
@@ -662,6 +669,7 @@ def main():
     publish(receipt)
     sys.path.insert(0,str(PROJECT))
     try:
+        runtime_prompts = check_runtime_prompts(PROJECT, THROUGH)
         if THROUGH>=3:
             module=importlib.import_module('app.acceptance');SUBJECT=module.create_subject(PROJECT)
         suite=unittest.TestSuite()
@@ -670,11 +678,12 @@ def main():
             if phase<=THROUGH:suite.addTest(Acceptance(name))
         result=unittest.TextTestRunner(verbosity=2).run(suite)
     except BaseException as error:
-        receipt.update(status='incomplete',error_type=type(error).__name__)
+        receipt.update(status='incomplete',error_type=type(error).__name__,error=str(error))
         publish(receipt)
+        print(json.dumps(receipt,ensure_ascii=False))
         raise
     receipt={'synthetic_only':True,'ok':result.wasSuccessful(),'tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'through':THROUGH,
-             'status':'complete',
+             'status':'complete','runtime_prompts':runtime_prompts,
              'network_guard':'process-level, inherited by Python workers; not an OS security sandbox'}
     publish(receipt)
     print(json.dumps(receipt,ensure_ascii=False));return 0 if result.wasSuccessful() else 1

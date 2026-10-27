@@ -67,7 +67,7 @@
   "preparation": [
     {
       "title": "准备一个新项目",
-      "body": "下载并解压实操材料包，用包内 earnings-review 文件夹作为新项目。确认根目录有 AGENTS.md、TASKBOOK.md、contracts、prompts，以及 reports 下的六份 PDF。AGENTS.md 已写好共同规则，不用另发一条提示词创建它。"
+      "body": "下载并解压实操材料包，用包内 earnings-review 文件夹作为新项目。确认根目录有 AGENTS.md、TASKBOOK.md、contracts、acceptance，以及 reports 下的六份 PDF。AGENTS.md 已写好共同规则，不用另发一条提示词创建它。"
     },
     {
       "title": "让你的编程 Agent 打开这个文件夹",
@@ -121,7 +121,7 @@
       "body": "本讲可以先使用赠送额度，不必先充值；可用额度不足时再按实际需要充值。接着在控制台「API 密钥」创建自己的 Key，按第 0 步配置给程序使用。当前官方活动持续至 2026 年 12 月 31 日，代金券自获得之日起 180 天有效；实际可用金额、使用范围和到期时间以账号中的代金券详情及官方活动规则为准。活动与认证说明见文末官方链接，核对日期为 2026 年 10 月 24 日。"
     }
   ],
-  "materials": "材料包有项目共同规则 AGENTS.md、六份完整 2026 半年报、任务书、数据约定、合成案例、四份运行时提示词和可执行公共验收。验收代码不是成品应用，不含真实公司答案、预选页码或 API Key。",
+  "materials": "材料包有项目共同规则 AGENTS.md、六份完整 2026 半年报、任务书、数据约定、合成案例和可执行公共验收。验收代码不是成品应用，不含真实公司答案、预选页码或 API Key。 运行时提示词由编程 Agent 在第5–7步生成。",
   "cadence": "主线按0–8发送九条短提示词。共同的目录、权限、增量开发、财务边界和验收规则已放进材料包根目录 AGENTS.md；每条只写本步任务，Agent按共同规则自行检查和修正，通过后再发下一步。字段与判例分别以 contracts 和公开验收为准。第3步已有冻结进程，第5步接来源循环，第6步走完整合成成功链，第7步通过全部35项公开验收，第8步完成网页和本地启动，再由学习者点击真实运行。折叠修复与扩展供遇到问题时另做诊断，不属于九条主线通过的证据。",
   "steps": [
     {
@@ -297,14 +297,15 @@
       "goal": "真实冻结运行器完成定位、工具动作、抄录与来源检查，保留每次候选。",
       "actions": [
         "发送本步 Prompt。",
-        "检查 Agent 读取了定位与文字抄录提示词，并做了离线检查。",
+        "检查 Agent 生成并接入定位与文字抄录提示词，并做了离线检查。",
         "让Agent逐段扩展同一个生产主干，写入并检查当前最小层，再继续；不用额外继续消息。"
       ],
-      "prompt": "按 AGENTS.md 完成第 5 步，先执行其中的首写检查点，再扩展 app/contracts.py、app/extract.py 与现有冻结 TaskRunner。读取 observation.schema.json、workflow.json 及 locate/extract 运行时提示词的本步必要部分。\n\n实现同一严格单 JSON/单围栏解析器和 ExtractSession 动作分派，统一处理 search_fulltext、read_pages、select_pages、submit 及裸 selection/observation。真实工具回执进入保留文字会话；只有页包和锚点已接受、完整页已读后才能抄录。动作/协议错误保存原始回复和真实用量，重复无效回复按契约停止，不计成财务候选失败。\n\n抄录输出完整 observation，缺证据为 null。文字与后续视觉共用一个生产来源绑定器：按完整数词、对应指标行、表块归属、两期合并 H1 列序及完整单位表达证明取值；EPS 独立证明未缩放人民币元/股。歧义失败，不借其他表、页或列。具体期间、表头、数词和单位正反例由 contracts 与公开 test_05_structured_source_binding 强制，按真实失败局部读取。\n\n每次可解析 submit 先保存独立候选及 sequence/id/path/hash，再做来源检查。页包变化或 uncertain 立即清当前两层 proof 和旧图像绑定，保留终身预算与进度。用 Decimal 生成规范值，不让模型计算或补造引文。\n\n把 prepare→locate→extract 接入同一真实运行器；来源通过后可停在尚未实现的 vision，review 为空，不增设跳阶段模式。按 AGENTS.md 完成全部11项公开检查及本地验收后停下。",
+      "prompt": "按 AGENTS.md 完成第 5 步，先执行其中的首写检查点，再扩展 app/contracts.py、app/extract.py 与现有冻结 TaskRunner。依据 TASKBOOK.md、observation.schema.json 和 workflow.json，在 prompts/runtime/ 生成 locate.md、extract.md，写明本步定位、动作、锚点及完整 observation 格式，并接入实际模型请求。\n\n实现同一严格单 JSON/单围栏解析器和 ExtractSession 动作分派，统一处理 search_fulltext、read_pages、select_pages、submit 及裸 selection/observation。真实工具回执进入保留文字会话；只有页包和锚点已接受、完整页已读后才能抄录。动作/协议错误保存原始回复和真实用量，重复无效回复按契约停止，不计成财务候选失败。\n\n抄录输出完整 observation，缺证据为 null。文字与后续视觉共用一个生产来源绑定器：按完整数词、对应指标行、表块归属、两期合并 H1 列序及完整单位表达证明取值；EPS 独立证明未缩放人民币元/股。歧义失败，不借其他表、页或列。具体期间、表头、数词和单位正反例由 contracts 与公开 test_05_structured_source_binding 强制，按真实失败局部读取。\n\n每次可解析 submit 先保存独立候选及 sequence/id/path/hash，再做来源检查。页包变化或 uncertain 立即清当前两层 proof 和旧图像绑定，保留终身预算与进度。用 Decimal 生成规范值，不让模型计算或补造引文。\n\n把 prepare→locate→extract 接入同一真实运行器；来源通过后可停在尚未实现的 vision，review 为空，不增设跳阶段模式。按 AGENTS.md 完成全部11项公开检查及本地验收后停下。",
       "expected": [
         "定位与抄录模块已经能处理工具动作和完整结构化输出。",
         "合成例子覆盖单位、EPS、分母与舍入，失败不会产生真实复盘。",
-        "真实冻结worker中选页被拒绝后没有进入extract，也没有候选或复盘。"
+        "真实冻结worker中选页被拒绝后没有进入extract，也没有候选或复盘。",
+        "已生成并在实际模型请求中使用 prompts/runtime/locate.md、prompts/runtime/extract.md。"
       ],
       "checks": [
         "搜索是全报告搜索，读页是完整页，最终引用来自已读页。",
@@ -339,7 +340,9 @@
         "app/contracts.py",
         "tests/test_contracts.py",
         "runtime/.../trace.json",
-        "runtime/.../candidates/"
+        "runtime/.../candidates/",
+        "prompts/runtime/locate.md",
+        "prompts/runtime/extract.md"
       ],
       "repair": "请只修复第 5 步定位、抄录和代码检查。先运行合成检查，找出具体违反的规则，在程序中修复解析、工具返回或计算函数。不要通过修改真实原值、放宽核验阈值、补造单位引文或给模型答案页来通过。代码只声明自己能证明的检查范围，无法确认的字段保留null。完成本地测试后停下，不启动财报模型。\n重新运行本步公共acceptance检查并逐项保留失败输出。修复生产实现或必要接线，不修改测试断言、不新增测试专用通过分支、不提高预算。若公共测试本身有矛盾，报告具体断言和生产证据，先停止该项，不伪造通过。\n来源绑定必须在解析出的对应行范围内选择完整数词并保存原始位置，不能只凭正负240字邻近窗口，更不能因为11是110的子串就借用另一行的11。允许按明确规则续接被换行的行名，但跨到其他指标行就不属于本行。多个符合候选而无法消歧时返回来源歧义，不能任取第一处。数词语法须支持不带千分位的长整数、ASCII正负号与Unicode负号−、中英文括号；符号属于原token，先保存字面量再记录Decimal规范化。\n单位也按完整含义与上下文识别。不能把“万元”尾部的“元”当成EPS的元/股证据，也不能把“元/股”的前缀当成金额单位元。EPS需自身每股行的未缩放元证据或明确的元/股表述，总表千元/万元标题不能证明EPS单位。金额说明可写为“单位：人民币万元”“除另有注明外，金额单位均为人民币万元”或“除基本每股收益外，金额单位为人民币万元”，不要求固定冒号格式。按明确通用规则识别这些表达，保留原引文和归一化依据，不改原数值。\n错误位于已完成的前置模块时，修复通用依赖并重跑受影响的检查，保留已经完成的开发进度；先读tests/output中的实际失败与审查记录。"
     },
@@ -353,12 +356,13 @@
         "先检查程序结构和隔离条件，不在这一步反复消耗真实调用。",
         "让Agent逐段扩展同一个生产主干，写入并检查当前最小层，再继续；不用额外继续消息。"
       ],
-      "prompt": "按 AGENTS.md 完成第 6 步，实现 app/verify.py、外部参考归一化、规范 review 与封存，并接入同一冻结 TaskRunner。\n\n来源候选通过后，开启独立视觉会话盲读最终原 PDF 整页图，按物理页标签、实际图片哈希和候选版本绑定。视觉输出复用同一来源绑定器，再与文字候选做十项比较；自身证据错误留在原视觉会话，文字或页包变化则重建盲读。数字一致但标题、期间、单位或版本不成立仍失败。\n\n后台按当前 hithink-finance schema 查询 financials income，完整原始 envelope 留存；从季度包唯一选取 2026/2025 Q2 累计 H1，核对已确认证券身份、CNY 和上海报表日期。按绑定原数词的披露精度，用 Decimal ROUND_HALF_UP 比较；参考原值及差额不进入模型。区分视觉自身错误、文字分歧、外部分歧和服务不可用，为第 7 步保留正确续跑或停止原因。\n\n按 workflow.json.review_projection 只生成一份规范 review：五指标及同比、成本正幅度与原符号规范化、毛利润和利润率；最后才做展示舍入。web/task-view.mjs 的 reviewCards(review) 统一选择三张摘要卡，毛利卡只取 gross_profit，实时、刷新和历史共用。\n\n当前两层证明一致后，将本轮全部候选、原始请求/响应、原 PDF/页图、完整参考和实际冻结程序封存，成功后才发布 candidate_ready；否则 review 为空。通过真实冻结 worker 的完整合成成功链和封存，含 test_06_frozen_execution、test_06_structured_verification、test_06_reference_cli_transport，不把接线留到第 8 步。\n\n按 AGENTS.md 执行第 6 步验收后停下。",
+      "prompt": "按 AGENTS.md 完成第 6 步，实现 app/verify.py、外部参考归一化、规范 review 与封存，并接入同一冻结 TaskRunner。依据任务书与 contracts 生成 prompts/runtime/vision.md，限定原页图盲读、相同 observation 格式和缺证据填 null，不调用文字检索、读页或换页动作，用于实际视觉请求。\n\n来源候选通过后，开启独立视觉会话盲读最终原 PDF 整页图，按物理页标签、实际图片哈希和候选版本绑定。视觉输出复用同一来源绑定器，再与文字候选做十项比较；自身证据错误留在原视觉会话，文字或页包变化则重建盲读。数字一致但标题、期间、单位或版本不成立仍失败。\n\n后台按当前 hithink-finance schema 查询 financials income，完整原始 envelope 留存；从季度包唯一选取 2026/2025 Q2 累计 H1，核对已确认证券身份、CNY 和上海报表日期。按绑定原数词的披露精度，用 Decimal ROUND_HALF_UP 比较；参考原值及差额不进入模型。区分视觉自身错误、文字分歧、外部分歧和服务不可用，为第 7 步保留正确续跑或停止原因。\n\n按 workflow.json.review_projection 只生成一份规范 review：五指标及同比、成本正幅度与原符号规范化、毛利润和利润率；最后才做展示舍入。web/task-view.mjs 的 reviewCards(review) 统一选择三张摘要卡，毛利卡只取 gross_profit，实时、刷新和历史共用。\n\n当前两层证明一致后，将本轮全部候选、原始请求/响应、原 PDF/页图、完整参考和实际冻结程序封存，成功后才发布 candidate_ready；否则 review 为空。通过真实冻结 worker 的完整合成成功链和封存，含 test_06_frozen_execution、test_06_structured_verification、test_06_reference_cli_transport，不把接线留到第 8 步。\n\n按 AGENTS.md 执行第 6 步验收后停下。",
       "expected": [
         "有内部与外部两类检查结果，各能描述五指标两期的比较。",
         "程序能证明视觉上下文没有混入文字答案或外部数值。",
         "候选修改后，上一轮核验结果会失效。",
-        "公开冻结后改工作区的完整合成成功链通过，已有真实ZIP与同候选两层证明。"
+        "公开冻结后改工作区的完整合成成功链通过，已有真实ZIP与同候选两层证明。",
+        "已生成并在实际模型请求中使用 prompts/runtime/vision.md。"
       ],
       "checks": [
         "数字一致但缺少单位或口径证据时，整体仍未通过。",
@@ -394,7 +398,8 @@
         "runtime/.../proof.json",
         "runtime/.../stage-journal.json",
         "web/task-view.mjs",
-        "web/app.js"
+        "web/app.js",
+        "prompts/runtime/vision.md"
       ],
       "repair": "第 6 步还没有达到独立核验要求。请用本地检查审计：视觉会话里有没有文字答案或外部值，文字候选变化时是否作废旧检查，外部数据是否核对唯一公司和两期累计H1。修复程序和版本绑定，不改源数字、不放宽比较精度。仅当实际预检确认认证或服务不可用，才标注对应阻塞；尚未发真实请求应写“真实运行未验证”，不能写成服务不可用。离线开发和本地验收可完成。给出修复证据后停下，不自动重跑收费流程。\n重新运行本步公共acceptance检查并逐项保留失败输出。修复生产实现或必要接线，不修改测试断言、不新增测试专用通过分支、不提高预算。若公共测试本身有矛盾，报告具体断言和生产证据，先停止该项，不伪造通过。\n错误位于已完成的前置模块时，修复通用依赖并重跑受影响的检查，保留已经完成的开发进度；先读tests/output中的实际失败与审查记录。"
     },
@@ -408,11 +413,12 @@
         "核对两类失败：可以继续补证的语义失败，以及必须停止的未知用量或服务失败。",
         "让Agent逐段扩展同一个生产主干，写入并检查当前最小层，再继续；不用额外继续消息。"
       ],
-      "prompt": "按 AGENTS.md 完成第 7 步，扩展 app/feedback.py、app/workflow.py 和同一个 TaskRunner，读取 feedback.md 与 workflow.json。\n\n把来源失败、视觉与文字分歧、外部分歧交回保留文字会话，只给失败规则、受影响指标、模型已有进度和预算；不泄露正确值、差额、替代引文或答案页。模型继续经同一工具分派检索、读页、选页或提交；视觉自身错误留在视觉会话，文字或页包变化后重新盲读和逐项比较。\n\n实现契约中的统一请求/token/时间/反馈预算、终身最好规则、首次通过、连续无进展和重复状态停止。候选变化只清当前证明，不重置 ever_passed、最好规则、计数或用量；检索不是进展，终止前不再多发反馈。分别记录失败评估、已发反馈、实际补证、来源动作和模型请求。\n\n生产 HTTP 与后台就绪后启用网页运行按钮，沿用幂等启动和同一任务投影。公开 --through 7 的35项必须全部由真实生产主干通过，包括退回修订、并发/恢复、全部候选封存及 test_07_http_frontend_restore；不发真实财报或利润表请求。\n\n按 AGENTS.md 执行第 7 步验收后停下。",
+      "prompt": "按 AGENTS.md 完成第 7 步，扩展 app/feedback.py、app/workflow.py 和同一个 TaskRunner，依据 workflow.json 生成 prompts/runtime/feedback.md，区分文字补证与视觉自身修订；文字补证与视觉自身修订请求都读取本轮冻结文件，并携带其原文和各自失败信息。\n\n把来源失败、视觉与文字分歧、外部分歧交回保留文字会话，只给失败规则、受影响指标、模型已有进度和预算；不泄露正确值、差额、替代引文或答案页。模型继续经同一工具分派检索、读页、选页或提交；视觉自身错误留在视觉会话，文字或页包变化后重新盲读和逐项比较。\n\n实现契约中的统一请求/token/时间/反馈预算、终身最好规则、首次通过、连续无进展和重复状态停止。候选变化只清当前证明，不重置 ever_passed、最好规则、计数或用量；检索不是进展，终止前不再多发反馈。分别记录失败评估、已发反馈、实际补证、来源动作和模型请求。\n\n生产 HTTP 与后台就绪后启用网页运行按钮，沿用幂等启动和同一任务投影。公开 --through 7 的35项必须全部由真实生产主干通过，包括退回修订、并发/恢复、全部候选封存及 test_07_http_frontend_restore；不发真实财报或利润表请求。\n\n按 AGENTS.md 执行第 7 步验收后停下。",
       "expected": [
         "固定流程能按受控动作继续，而不是每次失败重写整套程序。",
         "可以看到失败反馈、工具动作、候选版本、进展与停止原因。",
-        "全部35项公开生产验收在本条消息内通过，Runner/HTTP/封存不再留待第8步。"
+        "全部35项公开生产验收在本条消息内通过，Runner/HTTP/封存不再留待第8步。",
+        "已生成并在实际模型请求中使用 prompts/runtime/feedback.md。"
       ],
       "checks": [
         "反馈中没有同花顺正确值、差额或正确页码。",
@@ -428,7 +434,8 @@
         "app/feedback.py",
         "app/workflow.py",
         "tests/test_feedback.py",
-        "runtime/step-7/public-acceptance/summary.json"
+        "runtime/step-7/public-acceptance/summary.json",
+        "prompts/runtime/feedback.md"
       ],
       "repair": "请修复第 7 步的反馈与停止机制。读取本地失败测试及运行轨迹，定位是否泄露答案、丢失历史、重复计费、重置预算或把检索当进展。只修复通用机制，不给任何公司写特殊规则。使用合成失败验证停止条件，报告通过与未通过项，然后停下。\n重新运行本步公共acceptance检查并逐项保留失败输出。修复生产实现或必要接线，不修改测试断言、不新增测试专用通过分支、不提高预算。若公共测试本身有矛盾，报告具体断言和生产证据，先停止该项，不伪造通过。\n错误位于已完成的前置模块时，修复通用依赖并重跑受影响的检查，保留已经完成的开发进度；先读tests/output中的实际失败与审查记录。"
     },
@@ -801,7 +808,13 @@
       "additional_period_pretest_reading_gate": false
     },
     "shared_rules": "AGENTS.md",
-    "prompt_format": "task_specific_messages_with_packaged_shared_rules"
+    "prompt_format": "task_specific_messages_with_packaged_shared_rules",
+    "runtime_prompt_generation": {
+      "locate.md": 5,
+      "extract.md": 5,
+      "vision.md": 6,
+      "feedback.md": 7
+    }
   },
   "material_guide": {
     "title": "先认识材料包",
@@ -828,11 +841,6 @@
         "use": "Agent 按这些约定实现程序，统一输入、计算和输出。"
       },
       {
-        "path": "prompts/runtime/",
-        "contents": "定位、抄录、视觉核验和反馈的四份提示词",
-        "use": "程序运行时读取，再交给财报模型完成对应任务。"
-      },
-      {
         "path": "acceptance/",
         "contents": "公开检查脚本与合成测试材料",
         "use": "Agent 每完成一步就运行检查，报告通过项和失败原因。"
@@ -845,8 +853,8 @@
     ],
     "notes": [
       "先读 TASKBOOK.md，浏览 reports/ 中的一份 PDF，其余文件交给编程 Agent 按步骤读取。",
-      "第 0–8 步主提示词在本讲义里，逐条发给编程 Agent；prompts/runtime/ 由搭好的程序在运行时读取。",
-      "搭建后会陆续出现 app/、web/、tests/ 和 runtime/，分别保存程序、网页、测试和运行记录。"
+      "第 0–8 步主提示词在本讲义里，逐条发给编程 Agent。第5步生成定位与抄录、第6步生成视觉、第7步生成反馈提示词，保存到 prompts/runtime/，再由程序读取。",
+      "搭建后会陆续出现 app/、web/、tests/、prompts/runtime/ 和 runtime/，分别保存程序、网页、测试、运行时提示词和运行记录。"
     ]
   }
 }

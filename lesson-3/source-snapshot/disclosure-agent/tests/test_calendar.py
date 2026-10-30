@@ -113,14 +113,49 @@ def test_missing_source_cannot_generate_a_confirmed_reminder():
 def test_participation_steps_are_contiguous_physical_page_quotes_from_bound_pdf(tmp_path, monkeypatch):
     import hashlib
     from types import SimpleNamespace
-    from disclosure_agent import presentation
+    from disclosure_agent import source_text
     path=tmp_path/'source.pdf';path.write_bytes(b'explicitly synthetic test source')
     pages=['第一页无参与部分', '四、投资者参加方式\n（一）登录合成入口参加\n（二）请先报名', '续接前页的合成报名说明\n五、联系人及咨询办法\n不应进入参与摘录']
-    monkeypatch.setattr(presentation,'PdfReader',lambda _:SimpleNamespace(pages=[SimpleNamespace(extract_text=lambda text=text:text) for text in pages]))
+    monkeypatch.setattr(source_text,'PdfReader',lambda _:SimpleNamespace(pages=[SimpleNamespace(extract_text=lambda text=text:text) for text in pages]))
     source={'pdf_path':str(path),'pdf_sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
-    excerpts=presentation.participation_excerpts(source)
+    excerpts=source_text.participation_excerpts(source)
     assert [item['page'] for item in excerpts] == [2,3]
     assert all(item['quote'] in pages[item['page']-1] for item in excerpts)
     assert '不应进入参与摘录' not in str(excerpts)
     source['pdf_sha256']='mismatch'
-    assert presentation.participation_excerpts(source) == []
+    assert source_text.participation_excerpts(source) == []
+
+
+@pytest.mark.parametrize('quote,label', [
+    ('投资者可于2030年11月24日16:00前进行预报名。','预报名截止'),
+    ('报名截止时间为2030年11月24日16:00。','报名截止'),
+    ('投资者提问征集截至2030年11月24日16:00。','提问截止'),
+    ('截止时间为2030年11月24日16:00。','截止时间'),
+])
+def test_deadline_role_is_shared_by_event_and_calendar_export(quote,label):
+    from disclosure_agent.source_text import event_deadline_label
+    event,notices=sample()
+    notices['original']['extraction']={'question_deadline_date':'2030-11-24','deadline_evidence':{'page':2,'quote':quote}}
+    assert event_deadline_label(event,notices)==label
+    component=next(item for item in reminder_items(event,notices) if item['kind']=='deadline')
+    assert component['title'].endswith(' · '+label)
+    projected=product_data({'events':{event['id']:event},'notices':notices},{'as_of':'2030-10-30T08:30:00+08:00'})
+    assert projected['events'][0]['deadline_label']==label
+
+
+def test_role_context_must_contain_exact_quote_and_stay_in_same_subsection():
+    from disclosure_agent.source_text import deadline_label
+    quote='2030年11月24日16:00前登录网站首页'
+    notice={'extraction':{'deadline_evidence':{'page':2,'quote':quote}},'participation_evidence':[{'page':2,'quote':'（一）预报名截止为2030年11月23日。\n（二）投资者可于'+quote+'，点击“提问预征集”栏目。'}]}
+    assert deadline_label(notice)=='提问截止'
+    notice['extraction']['deadline_evidence']['quote']='原文中不存在的截止句'
+    assert deadline_label(notice)=='截止时间'
+
+
+def test_unchanged_old_deadline_uses_its_original_role_not_latest_notice_other_task():
+    from disclosure_agent.source_text import event_deadline_label
+    event,notices=sample()
+    notices['original']['extraction']={'question_deadline_date':'2030-11-24','deadline_evidence':{'page':2,'quote':'投资者提问截止为2030年11月24日16:00。'}}
+    notices['change']={'extraction':{'question_deadline_date':'2030-11-23','deadline_evidence':{'page':2,'quote':'预报名截止2030年11月23日16:00。'}}}
+    event['source_ids'].append('change')
+    assert event_deadline_label(event,notices)=='提问截止'

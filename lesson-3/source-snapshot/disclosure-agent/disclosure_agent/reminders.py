@@ -6,6 +6,7 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 from .ledger import event_review_reasons
+from .source_text import event_deadline_label
 
 TZ = ZoneInfo("Asia/Shanghai")
 BLOCKING_REASONS = {"company_coverage_incomplete", "ambiguous_or_missing_original_notice", "incomplete_initial_event", "report_period_conflict", "source_hash_changed"}
@@ -51,7 +52,7 @@ def reminder_items(event, notices, issues=()):
     components = []
     for kind, fields, label in [
         ("meeting", ("meeting_date", "start_time", "end_time"), title),
-        ("deadline", ("question_deadline_date", "question_deadline_time"), title + " · 提问/报名截止"),
+        ("deadline", ("question_deadline_date", "question_deadline_time"), title + " · " + event_deadline_label(event, notices)),
     ]:
         if set(fields) & set(pending):
             continue

@@ -37,3 +37,5 @@ event至少含`id,stock_code,company,report_period,meeting_date,start_time,end_t
 render_product(state, summary, frozen=False, back_url=None)生成一份自包含HTML。月历→日期公司→事件摘要→参与入口及原公告为主线，运行来源是辅助检查入口。calendar.js与calendar.css随应用分发、纳入程序指纹，运行时内嵌，不依赖外部网页服务。product_data只选择公开字段，不嵌入查询异常或作者路径。participation_excerpts从指纹匹配的源PDF按页摘录参与章节，摘要的结构化字段继续沿用原模型核验，不增加模型调用。
 
 reminder_items按字段独立判断提醒资格；冲突截止不阻止明确会议，未关联变更/源冲突/检查不完整则阻止受影响旧安排的新提醒。render_ics生成RFC5545日历文件，UID锚定事件，UTC时间，SEQUENCE递增，UTF-8按75字节折行，DISPLAY提醒为提前1天与30分钟。页面只下载文件，不直接改写用户个人日历。快照不自动同步，产品明确提示改期或取消后核对已导入提醒。
+
+source_text.py拥有源PDF参与章节摘录与截止事项命名。deadline_label、event_deadline_label依据已核验的截止原文或包含同一引文的参与段落判断提问/预报名/报名，不能按公司或网址猜。旧结构question_deadline_*字段名与历史评分保留，前台和ICS使用同一个原文角色。提醒入口仅在具体事件详情；公告原文按URL去重，每份文件只显示一次链接。

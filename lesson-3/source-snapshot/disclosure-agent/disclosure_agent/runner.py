@@ -4,7 +4,6 @@ from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 import hashlib
-from html import escape
 import json
 import os
 from pathlib import Path
@@ -173,37 +172,8 @@ def _fixture_sources(path: Path, config: dict, workspace: Path) -> tuple[dict, s
 
 
 def render_calendar(state: dict, summary: dict, workspace: Path) -> str:
-    rows = []
-    now = datetime.fromisoformat(summary["as_of"])
-    for event in sorted(state["events"].values(), key=lambda e: (e.get("meeting_date") or "9999", e.get("start_time") or "", e["stock_code"])):
-        meeting_date = event.get("meeting_date")
-        effective = event.get("status") == "scheduled" and meeting_date is not None and event.get("validity") != "needs_review"
-        phase = "日期待确认" if not meeting_date else "即将举行"
-        if effective:
-            at = datetime.fromisoformat(meeting_date + "T" + (event.get("end_time") or event.get("start_time") or "23:59")).replace(tzinfo=BUSINESS_TZ)
-            if at <= now:
-                phase = "日期已过，未据此确认已召开"
-        if event.get("status") == "cancelled":
-            phase = "已取消"
-        if event.get("status") == "postponed":
-            phase = "延期，待定新日期"
-        if event.get("validity") == "needs_review":
-            phase = "旧记录未通过当前证据检查，待复核"
-        sources = []
-        for source_id in event["source_ids"]:
-            record = state["notices"].get(source_id, {})
-            sources.append('<a href="' + escape(record.get("url", ""), quote=True) + '">' + escape(source_id) + "</a>")
-        pending = "<br>".join(escape(field + "：" + json.dumps(values, ensure_ascii=False)) for field, values in event.get("pending_fields", {}).items())
-        rows.append("<tr><td>" + escape(event["company"] + " " + event["stock_code"]) + "</td><td>" + escape(event.get("report_period") or "待确认") + "</td><td>" + escape((meeting_date or "待确认") + " " + (event.get("start_time") or "") + " 至 " + (event.get("end_time") or "未注明")) + "</td><td>" + escape(phase) + "</td><td>" + escape((event.get("question_deadline_date") or "未注明") + " " + (event.get("question_deadline_time") or "")) + ("<details><summary>待复核字段</summary>" + pending + "</details>" if pending else "") + "</td><td>" + "<br>".join(sources) + "</td></tr>")
-    companies = "".join("<li>" + escape(code + " " + info["status"]) + "，上次完整成功：" + escape(info.get("last_success") or "尚无") + "</li>" for code, info in state["companies"].items())
-    issues = "".join("<li>" + escape(json.dumps(issue, ensure_ascii=False)) + "</li>" for issue in summary["issues"])
-    html = """<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>投研业绩说明会日历</title><style>body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;margin:0;background:#f4f6f9;color:#20344d;line-height:1.75;padding:26px}main{max-width:1180px;margin:auto}section{padding:20px;background:white;border:1px solid #dce3ec;border-radius:8px;margin:16px 0}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #dce3ec;padding:10px;text-align:left;vertical-align:top}th{background:#eaf0f7}a{color:#1a5597}details{overflow-wrap:anywhere}.scroll{overflow:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere}@media(max-width:600px){body{padding:12px}section{padding:14px}table{min-width:780px}}</style><main><h1>投研业绩说明会日历</h1>"""
-    html += "<p>来源：巨潮资讯 · 业务时区：Asia/Shanghai · 模式：" + escape(summary["mode"]) + "</p>"
-    baseline_count = sum(c["kind"] == "baseline" for c in summary["changes"])
-    html += "<section><h2>本轮检查</h2><p>" + escape(summary["status"]) + " · " + escape(summary["as_of"]) + "</p><p>基线录入 " + str(baseline_count) + " 项，新增或变化 " + str(len(summary["changes"]) - baseline_count) + " 项，待处理 " + str(len(summary["issues"])) + " 项。无变化不代表全部公司都已检查成功，请核对覆盖状态。</p><ul>" + companies + "</ul><p>本轮实际模型调用 " + str(summary["model_calls"]) + " 次，已报告token " + str(summary["usage"]["known_total_tokens"]) + "，缺用量回执 " + str(summary["usage"]["calls_with_unknown_usage"]) + " 次。</p></section>"
-    html += "<section><h2>会议安排</h2><div class=scroll><table><thead><tr><th>公司</th><th>报告期</th><th>会议时间</th><th>日期状态</th><th>提问截止</th><th>原公告</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></div></section>"
-    html += "<section><h2>变化与需要处理的事项</h2><pre>" + escape(json.dumps(summary["changes"], ensure_ascii=False, indent=2)) + "</pre><ul>" + issues + "</ul></section><p>该版本按指定公司、关键词和日期窗口检查，不能据此声称覆盖全部相关披露。PDF中的不确定信息保留待核验。</p></main></html>"
-    return html
+    from .presentation import render_product
+    return render_product(state, summary)
 
 
 def run(config_path: Path, workspace: Path, trigger: str = "manual", fixture: Path | None = None, claim_id: str | None = None) -> dict:

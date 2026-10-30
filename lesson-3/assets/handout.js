@@ -1,4 +1,42 @@
-document.querySelectorAll('table').forEach(table=>{const wrap=document.createElement('div');wrap.className='table-wrap';table.before(wrap);wrap.append(table);});
-document.querySelectorAll('blockquote').forEach((quote,index)=>{const text=quote.textContent.trim();const button=document.createElement('button');button.type='button';button.className='copy';button.textContent='复制这句';button.setAttribute('aria-label',`复制第${index+1}句需求或反馈`);button.addEventListener('click',async()=>{try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}else{const area=document.createElement('textarea');area.value=text;document.body.append(area);area.select();if(!document.execCommand('copy'))throw new Error('copy unavailable');area.remove();}button.textContent='已复制';document.getElementById('copy-status').textContent='已复制这句需求或反馈，可按自己的进度修改后发送。';setTimeout(()=>button.textContent='复制这句',1800);}catch{button.textContent='请选择文字复制';}});quote.prepend(button);});
-const acceptance=[...document.querySelectorAll('h2')].find(h=>h.textContent.includes('逐项验收'));
-if(acceptance){let node=acceptance.nextElementSibling;while(node&&!node.querySelector('table'))node=node.nextElementSibling;if(node){node.querySelectorAll('tbody tr td:first-child').forEach(cell=>{const box=document.createElement('input');box.type='checkbox';box.setAttribute('aria-label',`已检查：${cell.textContent}`);cell.prepend(box);});}}
+'use strict';
+const status = document.getElementById('copy-status');
+let clearMessage;
+function announce(message) {
+  status.textContent = message;
+  status.classList.add('visible');
+  clearTimeout(clearMessage);
+  clearMessage = setTimeout(() => status.classList.remove('visible'), 3200);
+}
+for (const button of document.querySelectorAll('[data-copy]')) {
+  button.addEventListener('click', async () => {
+    const text = document.getElementById(button.dataset.copy).textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      const previous = button.textContent;
+      button.textContent = '已复制';
+      announce('已复制这句需求或反馈，可按自己的情况调整。');
+      setTimeout(() => { button.textContent = previous; }, 1800);
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(document.getElementById(button.dataset.copy));
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      announce('浏览器未允许自动复制，已选中文字，请按系统复制快捷键。');
+    }
+  });
+}
+const checks = [...document.querySelectorAll('[data-complete]')];
+function updateCount() {
+  const counter = document.getElementById('completion-count');
+  if (!counter) return;
+  counter.textContent = checks.filter(c => c.checked).length + ' / ' + checks.length + ' 步';
+}
+for (const check of checks) {
+  try { check.checked = localStorage.getItem('announcement-lesson3.' + check.dataset.complete) === 'done'; } catch {}
+  check.addEventListener('change', () => {
+    try { localStorage.setItem('announcement-lesson3.' + check.dataset.complete, check.checked ? 'done' : ''); } catch {}
+    updateCount();
+  });
+}
+updateCount();

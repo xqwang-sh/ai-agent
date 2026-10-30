@@ -6,7 +6,6 @@ import ast
 from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
-from html import escape
 import json
 from pathlib import Path
 import re
@@ -14,7 +13,6 @@ import shutil
 import sys
 import zipfile
 
-import markdown
 from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parent
@@ -23,7 +21,8 @@ APP = ROOT.parent / "disclosure-agent"
 EVIDENCE = LESSON / "04-tests/implementation-2026-10-30"
 OLD = LESSON / "06-preparation/cninfo-exploration-2026-10-28"
 sys.path.insert(0, str(APP))
-from disclosure_agent.runner import load_publication, render_calendar
+from disclosure_agent.runner import load_publication
+from disclosure_agent.presentation import render_product
 
 
 def sha(path):
@@ -54,12 +53,9 @@ def public(value):
 
 
 def page(source, target, asset_prefix="assets/", back="../index.html"):
-    md = markdown.Markdown(extensions=["tables", "fenced_code", "toc", "attr_list"], extension_configs={"toc": {"toc_depth": "2-2"}})
-    body = md.convert(source)
-    title = re.search(r"^# (.+)$", source, re.MULTILINE).group(1)
-    shell = f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从投研业务需求开始，搭建从巨潮自主取数、提取、核验和定时运行的公告Agent。"><title>{escape(title)} · 第三讲</title><link rel="stylesheet" href="{asset_prefix}handout.css"><script src="{asset_prefix}handout.js" defer></script></head><body><a class="skip" href="#content">跳到正文</a><aside class="sidebar"><a class="brand" href="#content">公告与事件日历<small>第三讲 · 需求对话与迭代</small></a><nav aria-label="讲义目录">{md.toc}</nav><a class="back" href="{back}">返回课程</a></aside><main id="content"><div class="edition">LOCAL AGENT WORKSHOP · 2026-10-30</div><div class="toolbar"><a href="{asset_prefix}../lesson3-starter.zip">起步材料</a><a href="{asset_prefix}../lesson3-validation.zip">独立验证材料</a><a href="{asset_prefix}../PROMPTS.md">短需求与反馈</a></div><p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>{body}<footer>实际结果与历史测试分开记录。示例页不会在线调用模型，密钥只交给你自己的本机运行环境。</footer></main></body></html>'''
+    from layout import render
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(shell, encoding="utf-8")
+    target.write_text(render(source, asset_prefix=asset_prefix, back=back), encoding="utf-8")
 
 
 def archive(directory, target):
@@ -82,7 +78,7 @@ def materials(output, staging):
     starter = staging / "lesson3-starter"
     starter.mkdir(parents=True)
     write_json(starter / "sources.json", {"source": "https://www.cninfo.com.cn/", "query_page": "https://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search", "companies": [{"code": "600887", "name": "伊利股份"}, {"code": "688246", "name": "嘉和美康"}]})
-    (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新会议日历的助手。先和我聊清楚需求。\n\n先核对公司、范围、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
+    (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新公告事件工作台的助手。先和我聊清楚需求。\n\n先核对公司、范围、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
     archive(starter, output / "lesson3-starter.zip")
     validation = staging / "lesson3-validation"
     (validation / "pdfs").mkdir(parents=True)
@@ -151,8 +147,7 @@ def main():
         for key in ["pdf_path", "model_receipts"]:
             record.pop(key, None)
     public_summary = public(summary)
-    html = render_calendar(state, public_summary, output / "example")
-    html = html.replace("<h1>投研业绩说明会日历</h1>", '<h1>投研业绩说明会日历</h1><p><strong>冻结实跑示例 · 2026-10-30</strong> · <a href="../index.html">返回讲义</a> · 本页只展示当次结果，不在线执行。</p>')
+    html = render_product(state, public_summary, frozen=True, back_url="../index.html")
     (output / "example").mkdir()
     (output / "example/index.html").write_text(html, encoding="utf-8")
     write_json(output / "example/summary.json", public_summary)

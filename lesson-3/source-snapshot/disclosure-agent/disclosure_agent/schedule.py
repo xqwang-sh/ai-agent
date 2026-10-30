@@ -26,6 +26,16 @@ def _now():
     return datetime.now(TZ)
 
 
+def business_settings(config):
+    weekdays=config.get('schedule_weekdays',list(range(7)))
+    clock=config.get('schedule_time','08:30')
+    if not isinstance(weekdays,list) or not weekdays or any(type(day) is not int or not 0<=day<=6 for day in weekdays) or len(set(weekdays))!=len(weekdays):
+        raise ValueError('schedule_weekdays must list distinct weekdays 0 through 6')
+    if not isinstance(clock,str) or len(clock)!=5 or datetime.strptime(clock,'%H:%M').strftime('%H:%M')!=clock:
+        raise ValueError('schedule_time must be HH:MM')
+    return weekdays,clock
+
+
 def _root(workspace):
     root = Path(workspace).resolve() / 'schedule'
     root.mkdir(parents=True, exist_ok=True)
@@ -85,6 +95,7 @@ def install(config_path: Path, workspace: Path, project_root: Path) -> dict:
     workspace, project_root, config_path = Path(workspace).resolve(), Path(project_root).resolve(), Path(config_path).resolve()
     if not config_path.is_file() or not (project_root / 'run_agent.py').is_file():
         raise ValueError('Config and run_agent.py must exist before installing a schedule')
+    weekdays,clock=business_settings(json.loads(config_path.read_text()))
     root = _root(workspace)
     plan_path = root / 'plan.json'
     if plan_path.exists():
@@ -96,10 +107,10 @@ def install(config_path: Path, workspace: Path, project_root: Path) -> dict:
     plan = {'label': label, 'platform': platform.system(), 'enabled': True,
             'installed_at': _now().isoformat(), 'config_path': str(config_path),
             'workspace': str(workspace), 'project_root': str(project_root), 'python': python,
-            'timezone': 'Asia/Shanghai', 'weekdays': [0, 1, 2, 3, 4], 'time': '08:30',
+            'timezone': 'Asia/Shanghai', 'weekdays': weekdays, 'time': clock,
             'tick_seconds': 60, 'claims': [], 'test_due': None,
             'pause_behavior': 'The OS still ticks every minute; pause blocks new business runs and lets an active run finish.',
-            'wake_policy': 'Catch up the current weekday after 08:30; skip dates before install and past dates.'}
+            'wake_policy': 'Catch up today after its configured time on a configured weekday; skip dates before install and past dates.'}
     if plan['platform'] == 'Darwin':
         plist_path = Path.home() / 'Library' / 'LaunchAgents' / f'{label}.plist'
         plist_path.parent.mkdir(parents=True, exist_ok=True)

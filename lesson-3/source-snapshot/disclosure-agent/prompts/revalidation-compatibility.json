@@ -1,0 +1,7 @@
+{
+  "previous_prompt_sha256": "b504e03f826d1491978df0580d208606bb9797188488cb8042b9bc8f3785b7f1",
+  "current_prompt_sha256": "ce9cb8d21a8dd7fad982bbda3f8c8e5480e1f5e7cdc91a085d17978e5509b9ce",
+  "schema_sha256": "02f41f5a577d1140c85d61129228c1856601c28c475681b217ea5eb2b7a5132b",
+  "previous_system_file": "system-v4.txt",
+  "reason": "Clarify current company quarterly collective earnings briefings versus generic reception days; reuse only same-source, same-model-config results that pass all current evidence checks, preserving original extraction identity."
+}

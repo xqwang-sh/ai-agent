@@ -13,6 +13,7 @@ def main():
     parser.add_argument("--config", type=Path, default=Path(__file__).parent / "config.json")
     parser.add_argument("--workspace", type=Path, default=Path(__file__).parent / "runtime/live")
     parser.add_argument("--fixture", type=Path)
+    parser.add_argument("--refresh", action="store_true", help="市场模式显式刷新来源；分批续跑默认复用当前候选快照。")
     parser.add_argument("--trigger", default="manual", choices=["manual", "scheduler"])
     parser.add_argument("--claim-id")
     parser.add_argument("--after-seconds", type=int, default=90)
@@ -20,7 +21,7 @@ def main():
     try:
         root = Path(__file__).resolve().parent
         if args.command == "run":
-            result = run(args.config, args.workspace, args.trigger, args.fixture, claim_id=args.claim_id)
+            result = run(args.config, args.workspace, args.trigger, args.fixture, claim_id=args.claim_id, refresh=args.refresh)
         elif args.command == "tick":
             result = schedule.tick(args.config, args.workspace, root)
         elif args.action == "install":

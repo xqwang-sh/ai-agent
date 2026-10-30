@@ -1,0 +1,151 @@
+{
+  "checked_at": "2026-10-30T19:16:43.621385+00:00",
+  "gold_sha256": "ffe7b512f255cef8450a066914b057466880cf737f4196948f85b0f52fb18d5a",
+  "gold_freeze_sha256": "4f0d017c43a2fc4841a821c6aefffac8da9c367d88518a445cd50e05e0050d4c",
+  "records": 20,
+  "fields_correct": 20,
+  "new_model_calls": 0,
+  "results": [
+    {
+      "id": "1225641828",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "http://roadshow.sseinfo.com/",
+      "actual_participation": "http://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225642078",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225633518",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225646501",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225641297",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225650317",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "http://roadshow.sseinfo.com/",
+      "actual_participation": "http://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225638729",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225642404",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://eseb.cn/1CsvQy1XbXi",
+      "actual_participation": "https://eseb.cn/1CsvQy1XbXi"
+    },
+    {
+      "id": "1225643722",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "http://roadshow.sseinfo.com/",
+      "actual_participation": "http://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225650265",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225646454",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225639946",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225639607",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://eseb.cn/1C6L1RaQmqY",
+      "actual_participation": "https://eseb.cn/1C6L1RaQmqY"
+    },
+    {
+      "id": "1225649533",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://www.cs.com.cn/roadshow/yjsmh/",
+      "actual_participation": "https://www.cs.com.cn/roadshow/yjsmh/"
+    },
+    {
+      "id": "1225646982",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225642474",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com",
+      "actual_participation": "https://roadshow.sseinfo.com"
+    },
+    {
+      "id": "1225643963",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225648152",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "http://www.zqrb.cn/huiyi/lyhd/index.html",
+      "actual_participation": "http://www.zqrb.cn/huiyi/lyhd/index.html"
+    },
+    {
+      "id": "1225642271",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    },
+    {
+      "id": "1225646374",
+      "pass": true,
+      "field_errors": [],
+      "expected_participation": "https://roadshow.sseinfo.com/",
+      "actual_participation": "https://roadshow.sseinfo.com/"
+    }
+  ],
+  "note": "Post-hoc source-blind audit of positive predictions selected at a checkpoint. Not final-population error rate. Gold was frozen before this comparison."
+}

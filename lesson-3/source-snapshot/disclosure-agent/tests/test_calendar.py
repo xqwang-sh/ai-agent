@@ -126,6 +126,57 @@ def test_participation_steps_are_contiguous_physical_page_quotes_from_bound_pdf(
     assert source_text.participation_excerpts(source) == []
 
 
+def test_full_participation_keeps_cross_page_routes_and_ignores_hidden_pdf_links(tmp_path, monkeypatch):
+    import hashlib
+    from types import SimpleNamespace
+    from disclosure_agent import source_text
+    path = tmp_path / 'synthetic.pdf'
+    path.write_bytes(b'explicit synthetic participation source')
+    texts = [
+        '四、投 资 者 参 与 方 式\n（一）电话会议\n路径1：登录https://example.invalid/register\n路径2：公司官网\n路径3：微信公众号',
+        '2\n预报名说明接续上一页。\n（二）音频直播结合网络互动\n1、登录https://example.invalid/roadshow\n2、登录https://example.invalid/\nquestionCollection.do提问。\n五、联系方式\n非参与部分',
+    ]
+    pages = [SimpleNamespace(extract_text=lambda text=text: text,
+                             get=lambda _: [{'/A': {'/URI': 'https://example.invalid/hidden-old-event'}}])
+             for text in texts]
+    monkeypatch.setattr(source_text, 'PdfReader', lambda _: SimpleNamespace(pages=pages))
+    source = {'pdf_path': str(path), 'pdf_sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+    excerpts = source_text.participation_excerpts(source)
+    rendered = source_text.participation_html(excerpts)
+    assert [row['page'] for row in excerpts] == [1, 2]
+    assert all(row['quote'] in texts[row['page'] - 1] for row in excerpts)
+    assert all(word in rendered for word in ['路径1', '路径2', '路径3', '微信公众号', '音频直播结合网络互动'])
+    assert 'href="https://example.invalid/questionCollection.do"' in rendered
+    assert '联系方式' not in rendered and 'hidden-old-event' not in rendered
+    assert '<details' not in rendered and '…' not in rendered
+
+
+def test_participation_links_only_visible_urls_and_escapes_the_remaining_source_text():
+    from disclosure_agent.source_text import participation_html
+    from html.parser import HTMLParser
+    class Links(HTMLParser):
+        def __init__(self):
+            super().__init__(); self.urls = []
+        def handle_starttag(self, tag, attrs):
+            if tag == 'a':
+                self.urls.append(dict(attrs)['href'])
+    text = '（一）电话会议\n路径1：登录https://example.invalid/sign-\nup?x=1&y=2。\n路径2：官网https://example.invalid/。\n路径3：微信公众号。\n（二）网络互动\n1、登录https://roadshow.example.invalid/。\n2、提问https://roadshow.example.invalid/\npreCallQa。\n<script>不执行</script>'
+    html = participation_html([{'page': 2, 'quote': text}])
+    parser = Links(); parser.feed(html)
+    assert parser.urls == ['https://example.invalid/sign-up?x=1&y=2', 'https://example.invalid/',
+                           'https://roadshow.example.invalid/', 'https://roadshow.example.invalid/preCallQa']
+    assert '<h4>（一）电话会议</h4>' in html and '<h4>（二）网络互动</h4>' in html
+    assert '<script>' not in html and '&lt;script&gt;' in html
+
+
+def test_bound_pdf_is_verified_even_when_a_participation_cache_is_present(tmp_path):
+    from disclosure_agent.source_text import participation_excerpts
+    path = tmp_path / 'changed.pdf'; path.write_bytes(b'changed synthetic bytes')
+    notice = {'pdf_path': str(path), 'pdf_sha256': 'wrong',
+              'participation_evidence': [{'page': 1, 'quote': '不应沿用的缓存'}]}
+    assert participation_excerpts(notice) == []
+
+
 @pytest.mark.parametrize('quote,label', [
     ('投资者可于2030年11月24日16:00前进行预报名。','预报名截止'),
     ('报名截止时间为2030年11月24日16:00。','报名截止'),
@@ -159,3 +210,19 @@ def test_unchanged_old_deadline_uses_its_original_role_not_latest_notice_other_t
     notices['change']={'extraction':{'question_deadline_date':'2030-11-23','deadline_evidence':{'page':2,'quote':'预报名截止2030年11月23日16:00。'}}}
     event['source_ids'].append('change')
     assert event_deadline_label(event,notices)=='提问截止'
+
+
+def test_unheaded_participation_paragraph_keeps_the_actual_mini_program(monkeypatch,tmp_path):
+    from disclosure_agent import source_text
+    import hashlib
+    text='证券代码：000000。公司定于2030年10月19日下午3:00至5:00在“虚构公司投资者关系”小程序举行三季度说明会，投资者可登录该小程序参与互动。此前投资者可登录旧网址回看上次会议。'
+    class Page:
+        def extract_text(self): return text
+    class PDF:
+        pages=[Page()]
+    path=tmp_path/'synthetic.pdf';path.write_bytes(b'synthetic source binding')
+    monkeypatch.setattr(source_text,'PdfReader',lambda path:PDF())
+    excerpts=source_text.participation_excerpts({'pdf_path':str(path),'pdf_sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
+    assert '“虚构公司投资者关系”小程序' in ''.join(x['quote'] for x in excerpts)
+    assert all('旧网址' not in x['quote'] for x in excerpts)
+    assert all(x['quote'] in text for x in excerpts)

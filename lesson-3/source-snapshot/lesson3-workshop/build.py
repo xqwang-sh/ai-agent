@@ -20,7 +20,8 @@ APP = ROOT.parent / "disclosure-agent"
 EVIDENCE = LESSON / "04-tests/implementation-2026-10-30"
 OLD = LESSON / "06-preparation/cninfo-exploration-2026-10-28"
 sys.path.insert(0, str(APP))
-from disclosure_agent.presentation import render_product, participation_excerpts
+from disclosure_agent.presentation import render_product, product_data, participation_excerpts
+from disclosure_agent.scope import period_matches, scoped_issues
 
 
 def sha(path):
@@ -44,10 +45,36 @@ def public(value):
     if isinstance(value, str):
         return value.replace(str(LESSON), "[local lesson]").replace(str(Path.home()), "[user home]")
     if isinstance(value, dict):
-        return {key: public(item) for key, item in value.items()}
+        return {public(key): public(item) for key, item in value.items()}
     if isinstance(value, list):
         return [public(item) for item in value]
     return value
+
+
+def frozen_market():
+    manifest = json.loads((ROOT / 'frozen-market.json').read_text())
+    workspace = (LESSON / manifest['workspace']).resolve()
+    if not workspace.is_relative_to(LESSON):
+        raise ValueError('Frozen workspace must be inside this lesson')
+    reference = workspace / 'runs' / manifest['run_id']
+    for name in ('state.json', 'summary.json'):
+        if sha(reference / name) != manifest['files'][name]:
+            raise ValueError('Frozen market input changed: ' + name)
+    state = json.loads((reference / 'state.json').read_text())
+    summary = json.loads((reference / 'summary.json').read_text())
+    if state['last_run_id'] != manifest['run_id'] or summary['run_id'] != manifest['run_id']:
+        raise ValueError('Frozen market run IDs disagree')
+    if (summary['status'] != 'complete' or summary.get('issues') or summary['market']['pending']
+            or summary['market']['needs_review'] or summary['scope'].get('universe') != 'a_share'):
+        raise ValueError('Only an accepted full-market run can be the main product example')
+    return state, summary, manifest
+
+
+def prepare_participation(state):
+    for record in state['notices'].values():
+        record['participation_evidence'] = participation_excerpts(record)
+        for key in ('pdf_path', 'model_receipts'):
+            record.pop(key, None)
 
 
 def page(source, target, asset_prefix="assets/", back="../index.html"):
@@ -64,7 +91,7 @@ def archive(directory, target):
 
 
 def source_files():
-    root_files = {"AGENTS.md", "INTERFACES.md", "README.md", "requirements.txt", "config.json", "config-adaptive.json", "run_agent.py", ".gitignore"}
+    root_files = {"AGENTS.md", "INTERFACES.md", "README.md", "requirements.txt", "config.json", "config-adaptive.json", "config-market.json", "config-market-scheduled.json", "run_agent.py", ".gitignore"}
     for file in sorted(APP.rglob("*")):
         relative = file.relative_to(APP)
         included = relative.as_posix() in root_files or relative.parts[0] in {"disclosure_agent", "prompts", "tests"}
@@ -76,7 +103,7 @@ def materials(output, staging):
     starter = staging / "lesson3-starter"
     starter.mkdir(parents=True)
     write_json(starter / "sources.json", {"source": "https://www.cninfo.com.cn/", "query_page": "https://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search", "companies": [{"code": "600887", "name": "伊利股份"}, {"code": "688246", "name": "嘉和美康"}]})
-    (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新事件日历、查看摘要和设置提醒的助手。先和我聊清楚需求。\n\n先核对公司、范围、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
+    (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新事件日历、查看摘要和设置提醒的助手。先和我聊清楚需求。\n\n先明确只看2026年三季度说明会，再核对公司、会议日期窗口、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
     archive(starter, output / "lesson3-starter.zip")
     validation = staging / "lesson3-validation"
     (validation / "pdfs").mkdir(parents=True)
@@ -101,8 +128,21 @@ def materials(output, staging):
     write_json(validation / "sources.json", sources)
     shutil.copy2(APP / "prompts/output.schema.json", validation / "output.schema.json")
     tree = ast.parse((APP / "disclosure_agent/extract.py").read_text())
-    needed = {"compact", "_date_in", "_time_in", "_source_period", "_meeting_span", "validate_evidence"}
+    needed = {"compact", "_date_in", "_time_in", "_meeting_span", "_has_grounded_original_relation", "evidence_text", "source_notice_numbers", "validate_evidence"}
     code = "import json, re\nfrom datetime import date, datetime\nfrom pathlib import Path\nimport jsonschema\nSCHEMA=json.loads((Path(__file__).parent/'output.schema.json').read_text())\nACTIVE_KINDS={'initial','change','postponed','cancelled'}\n\n"
+    scope_tree = ast.parse((APP / "disclosure_agent/scope.py").read_text())
+    scope_functions = {node.name: node for node in scope_tree.body if isinstance(node, ast.FunctionDef)}
+    scope_needed = {node.id for function in tree.body
+                    if isinstance(function, ast.FunctionDef) and function.name in needed
+                    for node in ast.walk(function)
+                    if isinstance(node, ast.Name) and node.id in scope_functions}
+    while True:
+        dependencies = {node.id for name in scope_needed for node in ast.walk(scope_functions[name])
+                        if isinstance(node, ast.Name) and node.id in scope_functions}
+        if dependencies <= scope_needed:
+            break
+        scope_needed.update(dependencies)
+    code += "\n\n".join(ast.unparse(node) for node in scope_tree.body if isinstance(node, ast.FunctionDef) and node.name in scope_needed) + "\n\n"
     code += "\n\n".join(ast.unparse(node) for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in needed) + "\n"
     (validation / "evidence.py").write_text(code, encoding="utf-8")
     shutil.copy2(ROOT / "check_gold.py", validation / "check_gold.py")
@@ -135,10 +175,14 @@ def main():
     shutil.copytree(ROOT / "assets", output / "assets")
     lesson = (ROOT / "lesson.md").read_text()
     (output / "lesson.md").write_text(lesson, encoding="utf-8")
+    shutil.copy2(ROOT / 'materials.md', output / 'materials.md')
     prompts = re.findall(r"^> (.+)$", lesson, re.MULTILINE)
     (output / "PROMPTS.md").write_text("# 课堂短需求与反馈\n\n按自己的实际进度选择和修改，不要一次性全部发送。\n\n" + "\n\n".join(f"{i}. {text}" for i, text in enumerate(prompts, 1)) + "\n", encoding="utf-8")
     page(lesson, output / "index.html")
-    materials(output, staging)
+    historical_validation = materials(output, staging)
+    from q3_validation import create as create_q3_validation, create_formats
+    create_q3_validation(output, staging, historical_validation, APP, LESSON, archive)
+    create_formats(output, staging, historical_validation, LESSON, archive)
     activity = json.loads((ROOT / "frozen-activity.json").read_text())
     reference = APP / "runtime/live/runs" / activity["reference_run_id"]
     for name in ["state.json", "summary.json"]:
@@ -150,17 +194,38 @@ def main():
         raise ValueError("Frozen calendar run IDs disagree")
     for identity, value in activity["events"].items():
         state["events"][identity]["activity"] = value
-    for record in state["notices"].values():
-        record["participation_evidence"] = participation_excerpts(record)
-        for key in ["pdf_path", "model_receipts"]:
-            record.pop(key, None)
+    scope = json.loads((ROOT / "product-scope.json").read_text())
+    summary["scope_projection"] = {"original_status": summary["status"], "original_event_count": len(state["events"]),
+                                   "basis": "Read-only projection of the verified historical run into the confirmed Q3 scope; not a new live run."}
+    summary["issues"] = scoped_issues(state, summary.get("issues", []), scope["report_period"])
+    state["events"] = {identity: event for identity, event in state["events"].items()
+                       if period_matches(event.get("report_period"), scope["report_period"])}
+    state["scope"] = summary["scope"] = scope
+    summary["event_count"] = len(state["events"])
+    summary["changes"] = [change for change in summary.get("changes", []) if change["event_id"] in state["events"]]
+    if summary["status"] in {"complete", "needs_review"}:
+        summary["status"] = "needs_review" if summary["issues"] else "complete"
+    prepare_participation(state)
     public_summary = public(summary)
     html = render_product(state, public_summary, frozen=True, back_url="../index.html")
     (output / "example").mkdir()
     (output / "example/index.html").write_text(html, encoding="utf-8")
     write_json(output / "example/summary.json", public_summary)
-    write_json(output / "example/events.json", public(list(state["events"].values())))
+    write_json(output / "example/events.json", public(product_data(state, public_summary, frozen=True)['events']))
     write_json(output / "example/activity-provenance.json", activity)
+    write_json(output / "example/scope.json", scope)
+    for original, target in [('index.html', 'small-sample.html'), ('summary.json', 'small-summary.json'),
+                             ('events.json', 'small-events.json'), ('activity-provenance.json', 'small-activity-provenance.json')]:
+        shutil.copy2(output / 'example' / original, output / 'example' / target)
+    if (ROOT / 'frozen-market.json').is_file():
+        state, summary, manifest = frozen_market()
+        prepare_participation(state)
+        public_summary = public(summary)
+        (output / 'example/index.html').write_text(render_product(state, public_summary, frozen=True, back_url='../index.html'), encoding='utf-8')
+        write_json(output / 'example/summary.json', public_summary)
+        write_json(output / 'example/events.json', public(product_data(state, public_summary, frozen=True)['events']))
+        write_json(output / 'example/activity-provenance.json', public(manifest))
+        write_json(output / 'example/scope.json', summary['scope'])
     evidence = output / "evidence"
     evidence.mkdir()
     for name in ["model-comparison.json", "final-model-evidence-validation-v4.json", "new-source-check.json", "final-code-review-v3.json", "validation-package-pass-v1.json", "validation-package-reject-v1.json"]:
@@ -173,6 +238,27 @@ def main():
                            ("schedule-execution.json", "calendar-schedule-execution.json"),
                            ("ics-independent-check.json", "calendar-reminder-check.json")]:
         write_json(evidence / target, public(json.loads((calendar_evidence / source).read_text())))
+    expansion = LESSON / '04-tests/market-expansion-2026-10-31'
+    for original, target in [('new-template-pilot/model-runs/4b-v1/score.json', 'q3-template-4b-score.json'),
+                             ('new-template-pilot/model-runs/9b-v1/score.json', 'q3-template-9b-score.json'),
+                             ('new-template-pilot/model-runs/27b-v1/score.json', 'q3-template-27b-score.json'),
+                             ('heldout-source-review/model-runs/27b-production-v1/revalidation-v2.json', 'q3-heldout-revalidation.json'),
+                             ('accepted-source-audit/actual-comparison-v1.json', 'q3-positive-source-audit.json'),
+                             ('ignored-class-source-audit/classification-source-audit.json', 'q3-classification-source-audit.json'),
+                             ('v5-ledger-source-check.json', 'q3-real-amendment-check.json'),
+                             ('full-market-acceptance.json', 'full-market-acceptance.json'),
+                             ('schedule-market-verification.json', 'schedule-market-verification.json'),
+                             ('stable-repeat-check.json', 'stable-repeat-check.json'),
+                             ('product-artifact-checks.json', 'product-artifact-checks.json'),
+                             ('market-pause-resume.json', 'market-pause-resume.json'),
+                             ('browser-qa-final/checks.json', 'product-browser-checks.json')]:
+        source = expansion / original
+        if source.is_file():
+            write_json(evidence / target, public(json.loads(source.read_text())))
+    for model in ('4b', '9b', '27b'):
+        source = expansion / 'new-template-pilot/model-runs' / (model + '-v1') / 'actual.jsonl'
+        if source.is_file():
+            write_jsonl(evidence / ('q3-template-' + model + '-original-answers.jsonl'), public(jsonl(source)))
     report = (ROOT / "report.md").read_text()
     (evidence / "report.md").write_text(report, encoding="utf-8")
     page(report, evidence / "report.html", "../assets/", "../index.html")

@@ -1,77 +1,14 @@
 {
-  "reference_run_id": "20261030T091136-ec2fa73c",
-  "reference_state_sha256": "0847cf976b31c2363f1ba7aaee320dab977a910e64b5c2bb98ffad445eed61f4",
-  "basis": "Inspected historical result files and bound current state. Does not assert an independent historical publication chain. Original runs unchanged.",
-  "events": {
-    "688246:1225526162": {
-      "first_seen_at": "2026-10-30T15:35:07.543185+08:00",
-      "updated_at": "2026-10-30T15:35:07.543185+08:00",
-      "kind": "baseline",
-      "revision": 0,
-      "run_id": "20261030T073507-b52d44fb"
-    },
-    "688246:1225639820": {
-      "first_seen_at": "2026-10-30T15:35:07.543185+08:00",
-      "updated_at": "2026-10-30T15:35:07.543185+08:00",
-      "kind": "baseline",
-      "revision": 0,
-      "run_id": "20261030T073507-b52d44fb"
-    },
-    "600887:1225481292": {
-      "first_seen_at": "2026-10-30T15:51:59.583447+08:00",
-      "updated_at": "2026-10-30T15:51:59.583447+08:00",
-      "kind": "baseline",
-      "revision": 0,
-      "run_id": "20261030T075159-0f04b0b7"
-    },
-    "600887:1225615375": {
-      "first_seen_at": "2026-10-30T15:51:59.583447+08:00",
-      "updated_at": "2026-10-30T15:59:02.371295+08:00",
-      "kind": "extraction_revision",
-      "revision": 1,
-      "run_id": "20261030T075902-52d7872f"
-    }
+  "status": "accepted source and software snapshot; full-market visual review pending",
+  "workspace": "03-source/disclosure-agent/runtime/market-2026-q3-oct-nov",
+  "run_id": "20261030T224845-71330806",
+  "program_sha256": "a07a3f3205a453fb20ceb6f2f23015e0c4bc679ec058e7b5ead8ec3bf5ffb0b1",
+  "source_as_of": "2026-10-31T06:52:02.989744+08:00",
+  "files": {
+    "state.json": "747c5ba8561c7d5a1f47d508e7a7037f74a8289b8f565b4e277cd170cb18a575",
+    "summary.json": "3517829be42ac3819758babca1329f3308480e8528a9952f6b65805dbd56d981"
   },
-  "evidence": {
-    "20261030T073507-b52d44fb": {
-      "state.json": "9abd397f76ef1a173aadfddb9323e81b0b6a1d6a81a1d603551be40ba6b2592e",
-      "summary.json": "89e731a56bacdc063b4b6127d0082cf6e572a7c6d05f450edec41c39ce999c66"
-    },
-    "20261030T075159-0f04b0b7": {
-      "state.json": "81341f6f1bf8bf8358050830f38f54e29e3a52a7a73ab007fff5bd5ec1120517",
-      "summary.json": "2bb9e11e43cf38755506b371693e7920961a796d4367685a34871139b3a24fc8"
-    },
-    "20261030T075902-52d7872f": {
-      "state.json": "d572ebec0dc0458d4784be79ab3d65508372e1f5c41e866bc566b5a441471f5d",
-      "summary.json": "28533ecf983bfef8083aa5fa754937f4f94ac6528c10fb465e2c5a3dafbc92e4"
-    },
-    "20261030T080447-8dd165c7": {
-      "state.json": "83f39289681b8767cc2d00dce78109d7433ea75295b5bcb264491fd50bb102e7",
-      "summary.json": "3658a2236ecdac30190a6d21e9022749d65195c04e5b0c128fc6f1f3109d1725"
-    },
-    "20261030T082057-af8ccacf": {
-      "state.json": "9c2615cfc22018acb516f75ce625ff63b39b00266bf23fa4e58d9edbbd29e4ee",
-      "summary.json": "afdefa48232fd014128de96d81659c91bd2e968923ddd5473d43635d7924469d"
-    },
-    "20261030T082615-f1ed3cf4": {
-      "state.json": "29aa1cb214b29c8bf4c7fba5758ccf9ded2a9bbbadc72b559c788116c600bb92",
-      "summary.json": "8a8560dc46bce6e2330f219f010473031ce79f16103770e372673fadd847be52"
-    },
-    "20261030T082809-32ee7457": {
-      "state.json": "5f53dbdae67eb6ee1daf907c5cba5db8e5b94efa5da79809a7eec94e48b9fa41",
-      "summary.json": "50b0552a722427df8ee45f303584cc53fca65fe5bfb9a52e15899de8a3c15aa6"
-    },
-    "20261030T083449-3475a57e": {
-      "state.json": "c3a258573cd677e56a1bac4bd13284fbf543820f90b7eddb527a8d7b02fca4ca",
-      "summary.json": "9f61d9185b35b88a96c51b351a087485e49e5c4a586f0b6c20471c0f12befcce"
-    },
-    "20261030T084219-8cebe624": {
-      "state.json": "7216b8b5548baa8bedfac410eb50f5def2c0c3e5f094996b2f79ffcff64358c1",
-      "summary.json": "8990b5b2e10bd6421302cc2570edd9edb437b23b07f75e33a54e37159674c7e6"
-    },
-    "20261030T091136-ec2fa73c": {
-      "state.json": "0847cf976b31c2363f1ba7aaee320dab977a910e64b5c2bb98ffad445eed61f4",
-      "summary.json": "7ee315f10ca349023893787f30198f44233b5673f96e5d24d3997476f5ddc230"
-    }
-  }
+  "acceptance_sha256": "39d880e18d6f1d248f72f60158ddd78a4cd24d58b989fd4bc505e914cc060404",
+  "schedule_verification_sha256": "076c790bdd54032972447a608cb5675e7ae639fe42b4c32c0103208a52dab725",
+  "basis": "Immutable actual OS-run projection; source queries have the documented keyword and overlap boundaries."
 }

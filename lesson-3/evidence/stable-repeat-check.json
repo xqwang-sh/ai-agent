@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "basis": "Same frozen program; actual manual run followed by actual OS fresh-source run",
+  "manual_run_id": "20261030T223831-7cee9b26",
+  "os_run_id": "20261030T224845-71330806",
+  "checked_fields": [
+    "id",
+    "stock_code",
+    "company",
+    "report_period",
+    "meeting_date",
+    "start_time",
+    "end_time",
+    "question_deadline_date",
+    "question_deadline_time",
+    "participation_url",
+    "status",
+    "source_ids",
+    "source_numbers",
+    "pending_fields",
+    "history",
+    "activity"
+  ],
+  "before_state_events": 1078,
+  "after_state_events": 1078,
+  "changed_event_ids": [],
+  "business_changes": [],
+  "new_os_model_calls": 0,
+  "source_mode": "live_refresh"
+}

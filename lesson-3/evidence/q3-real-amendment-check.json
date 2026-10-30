@@ -1,0 +1,347 @@
+{
+  "status": "offline read-only source comparison passed; no business run or provider call",
+  "checked_utc": "2026-10-30T20:12:14.458973+00:00",
+  "source_checks": [
+    {
+      "id": "1225613522",
+      "pdf_sha256": "13df00a9740c6a8a8ad556bb18666e735e6f306fe214d802d6edb609d419ccb9",
+      "pages_sha256": "93e9134f56bfd3da1b84f7171a178435757269a8c6d1d96b00f50c99783f1af6",
+      "physical_pages": 2,
+      "all_reextracted_text_equal": true,
+      "current_validator_errors": []
+    },
+    {
+      "id": "1225624767",
+      "pdf_sha256": "cef25b373ff3963dc294850fc96b8ba892c70288047217d4b088bb8d3e5a70b5",
+      "pages_sha256": "acaccfce152a1dc2d9b9a505e9d52756c794256e9b05a36c6548af3b8e035291",
+      "physical_pages": 2,
+      "all_reextracted_text_equal": true,
+      "current_validator_errors": []
+    },
+    {
+      "id": "1225612401",
+      "pdf_sha256": "84c65ae9d69693336b2cb8f32e58f1b95e40ac5018f01b8be05e309ee635be1e",
+      "pages_sha256": "c393a8218c4bd4098e77203e30fea1512510e4334027febde8ace137238e6a4a",
+      "physical_pages": 2,
+      "all_reextracted_text_equal": true,
+      "current_validator_errors": []
+    },
+    {
+      "id": "1225630510",
+      "pdf_sha256": "87629078efafe26430b0027b463cd99b2cdd79769869961f46ec9cd25613f498",
+      "pages_sha256": "222083853828f8316d51bcd037aa8ebede39637fce49ca1e12a05f41dc488fea",
+      "physical_pages": 2,
+      "all_reextracted_text_equal": true,
+      "current_validator_errors": []
+    }
+  ],
+  "pair_checks": [
+    {
+      "event_id": "605266:1225613522",
+      "source_ids": [
+        "1225613522",
+        "1225624767"
+      ],
+      "expected_deadline_date": "2026-10-30",
+      "expected_deadline_time": "16:00",
+      "v4_effective_deadline_date": "2026-10-28",
+      "v4_pending": {
+        "question_deadline_date": [
+          {
+            "source_id": "1225624767",
+            "old": "2026-10-28",
+            "candidate": "2026-10-30",
+            "evidence": {
+              "page": 2,
+              "quote": "（二）投资者可于    10月 30日 （星期五）16:00 前登录上证路演中心网站\n首页，点击“提问预征集”栏目（https://roadshow.sseinfo.com/preCallQa），"
+            },
+            "reason": "deadline_change_not_explicit"
+          }
+        ]
+      },
+      "v5_effective_fields": {
+        "report_period": "2026-Q3",
+        "meeting_date": "2026-11-02",
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "question_deadline_date": "2026-10-30",
+        "question_deadline_time": "16:00",
+        "participation_url": "https://roadshow.sseinfo.com/",
+        "status": "scheduled"
+      },
+      "v5_pending": {},
+      "gold_business_fields_equal": true,
+      "no_extraction_versions_created": true,
+      "next_day_activity_unchanged": true
+    },
+    {
+      "event_id": "001301:1225612401",
+      "source_ids": [
+        "1225612401",
+        "1225630510"
+      ],
+      "expected_deadline_date": "2026-11-10",
+      "expected_deadline_time": "12:00",
+      "v4_effective_deadline_date": "2026-10-26",
+      "v4_pending": {
+        "question_deadline_date": [
+          {
+            "source_id": "1225630510",
+            "old": "2026-10-26",
+            "candidate": "2026-11-10",
+            "evidence": {
+              "parts": [
+                {
+                  "page": 1,
+                  "quote": "投资者可于           2026年11月"
+                },
+                {
+                  "page": 2,
+                  "quote": "10日12:00前登录“互动易”平台“云访谈”栏目进入公司      2026年三季度业绩\n说明会页面进行提问。"
+                }
+              ]
+            },
+            "reason": "deadline_change_not_explicit"
+          }
+        ]
+      },
+      "v5_effective_fields": {
+        "report_period": "2026-Q3",
+        "meeting_date": "2026-11-10",
+        "start_time": "15:30",
+        "end_time": "16:30",
+        "question_deadline_date": "2026-11-10",
+        "question_deadline_time": "12:00",
+        "participation_url": "http://irm.cninfo.com.cn",
+        "status": "scheduled"
+      },
+      "v5_pending": {},
+      "gold_business_fields_equal": true,
+      "no_extraction_versions_created": true,
+      "next_day_activity_unchanged": true
+    }
+  ],
+  "new_provider_requests": 0,
+  "runtime_touched": false,
+  "raw_model_json_quote_score_unchanged": true,
+  "baseline": {
+    "archive": "[local lesson]/04-tests/market-expansion-2026-10-31/fixed-program-before-market-v4.zip",
+    "archive_sha256": "4fa2b50bcdae86befea67a225eeb691413238f5b46de9c779ef554169ad12e2a",
+    "member": "disclosure_agent/ledger.py",
+    "member_sha256": "11ed343582d6c28166422aef749f06df7ea940c86f3081eb67b05cfc30d40ba3",
+    "issues": [
+      {
+        "stock_code": "001301",
+        "source_id": "1225630510",
+        "reason": "deadline_change_not_explicit",
+        "field": "question_deadline_date",
+        "event_id": "001301:1225612401"
+      },
+      {
+        "stock_code": "605266",
+        "source_id": "1225624767",
+        "reason": "deadline_change_not_explicit",
+        "field": "question_deadline_date",
+        "event_id": "605266:1225613522"
+      }
+    ]
+  },
+  "current_prompt_sha256": "ce9cb8d21a8dd7fad982bbda3f8c8e5480e1f5e7cdc91a085d17978e5509b9ce",
+  "current_extractor_fingerprint": "6ebe9cfaad291c9d4d599550dda171f09a470ead9a2ac3dc45c2a694bab992c3",
+  "cache_checks": [
+    {
+      "id": "1225613522",
+      "status": "cached_revalidated",
+      "new_provider_requests": 0,
+      "second_record_is_none": true,
+      "original_extraction_unchanged": true,
+      "original_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+      "original_extraction_run_id": "heldout/27b-production-v1",
+      "compatible_prompt_revalidation": {
+        "source_id": "1225613522",
+        "pdf_sha256": "13df00a9740c6a8a8ad556bb18666e735e6f306fe214d802d6edb609d419ccb9",
+        "old_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+        "current_extractor_fingerprint": "6ebe9cfaad291c9d4d599550dda171f09a470ead9a2ac3dc45c2a694bab992c3",
+        "run_id": "offline-v5-source-check"
+      },
+      "original_model_deadline_evidence": {
+        "page": 1,
+        "quote": "投资者可于  2026年10月22日 （星期四）   至 10月28日 （星期三）\n16:00前登录上证路演中心网站首页点击“提问预征集”栏目"
+      },
+      "program_source_context": null
+    },
+    {
+      "id": "1225624767",
+      "status": "cached_revalidated",
+      "new_provider_requests": 0,
+      "second_record_is_none": true,
+      "original_extraction_unchanged": true,
+      "original_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+      "original_extraction_run_id": "heldout/27b-production-v1",
+      "compatible_prompt_revalidation": {
+        "source_id": "1225624767",
+        "pdf_sha256": "cef25b373ff3963dc294850fc96b8ba892c70288047217d4b088bb8d3e5a70b5",
+        "old_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+        "current_extractor_fingerprint": "6ebe9cfaad291c9d4d599550dda171f09a470ead9a2ac3dc45c2a694bab992c3",
+        "run_id": "offline-v5-source-check"
+      },
+      "original_model_deadline_evidence": {
+        "page": 2,
+        "quote": "（二）投资者可于    10月 30日 （星期五）16:00 前登录上证路演中心网站\n首页，点击“提问预征集”栏目（https://roadshow.sseinfo.com/preCallQa），"
+      },
+      "program_source_context": {
+        "source_id": "1225624767",
+        "pdf_sha256": "cef25b373ff3963dc294850fc96b8ba892c70288047217d4b088bb8d3e5a70b5",
+        "page": 2,
+        "quote": "（二）投资者可于    10月 30日 （星期五）16:00 前登录上证路演中心网站\n首页，点击“提问预征集”栏目（https://roadshow.sseinfo.com/preCallQa），\n根据活动时间，选中本次活动或通过公司邮箱        ir@jzj.cn向公司提问，公司将在",
+        "original_evidence": {
+          "page": 2,
+          "quote": "（二）投资者可于    10月 30日 （星期五）16:00 前登录上证路演中心网站\n首页，点击“提问预征集”栏目（https://roadshow.sseinfo.com/preCallQa），"
+        }
+      }
+    },
+    {
+      "id": "1225612401",
+      "status": "cached_revalidated",
+      "new_provider_requests": 0,
+      "second_record_is_none": true,
+      "original_extraction_unchanged": true,
+      "original_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+      "original_extraction_run_id": "heldout/27b-production-v1",
+      "compatible_prompt_revalidation": {
+        "source_id": "1225612401",
+        "pdf_sha256": "84c65ae9d69693336b2cb8f32e58f1b95e40ac5018f01b8be05e309ee635be1e",
+        "old_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+        "current_extractor_fingerprint": "6ebe9cfaad291c9d4d599550dda171f09a470ead9a2ac3dc45c2a694bab992c3",
+        "run_id": "offline-v5-source-check"
+      },
+      "original_model_deadline_evidence": {
+        "page": 2,
+        "quote": "投资者可于          2026年10月\n26日12:00前登录“互动易”平台“云访谈”栏目进入公司      2026年三季度业绩\n说明会页面进行提问。"
+      },
+      "program_source_context": null
+    },
+    {
+      "id": "1225630510",
+      "status": "cached_revalidated",
+      "new_provider_requests": 0,
+      "second_record_is_none": true,
+      "original_extraction_unchanged": true,
+      "original_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+      "original_extraction_run_id": "heldout/27b-production-v1",
+      "compatible_prompt_revalidation": {
+        "source_id": "1225630510",
+        "pdf_sha256": "87629078efafe26430b0027b463cd99b2cdd79769869961f46ec9cd25613f498",
+        "old_extractor_fingerprint": "3619cbf4092ce081ddf3be346b0ce5256e1d967c936379ee51f1795c749c19aa",
+        "current_extractor_fingerprint": "6ebe9cfaad291c9d4d599550dda171f09a470ead9a2ac3dc45c2a694bab992c3",
+        "run_id": "offline-v5-source-check"
+      },
+      "original_model_deadline_evidence": {
+        "parts": [
+          {
+            "page": 1,
+            "quote": "投资者可于           2026年11月"
+          },
+          {
+            "page": 2,
+            "quote": "10日12:00前登录“互动易”平台“云访谈”栏目进入公司      2026年三季度业绩\n说明会页面进行提问。"
+          }
+        ]
+      },
+      "program_source_context": {
+        "source_id": "1225630510",
+        "pdf_sha256": "87629078efafe26430b0027b463cd99b2cdd79769869961f46ec9cd25613f498",
+        "page": 2,
+        "quote": "10日12:00前登录“互动易”平台“云访谈”栏目进入公司      2026年三季度业绩\n说明会页面进行提问。",
+        "original_evidence": {
+          "parts": [
+            {
+              "page": 1,
+              "quote": "投资者可于           2026年11月"
+            },
+            {
+              "page": 2,
+              "quote": "10日12:00前登录“互动易”平台“云访谈”栏目进入公司      2026年三季度业绩\n说明会页面进行提问。"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "frozen_input_hashes": {
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/items.json": "5ae9e13bb11358fcfe4fe6993985005b0760f64d31559d47132499f09e986781",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/evidence-format-v2/candidate-gold.jsonl": "29ca28816c79460cc1a9b5774608d1d61ab58c272a0f18ec422f255ca460abd7",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/candidate-gold.jsonl": "e5d57e728af77d476a61f56c7fa18fc8a2faf6291be3d3d6742b75df9b3f0f3a",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/score.json": "db48040c73c9c27012e682a62129fa277a1a1f40f209f496d61a03a06270bb24",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/model-calls/1225613522/20261031T030428295850-69e46100cd43.json": "8f87888fe1588be237ab33b0d9f4f729cd8234f963ebd0aced3e5329f598aa95",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/raw/1225613522.pdf": "13df00a9740c6a8a8ad556bb18666e735e6f306fe214d802d6edb609d419ccb9",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/pages/1225613522.json": "93e9134f56bfd3da1b84f7171a178435757269a8c6d1d96b00f50c99783f1af6",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/1225613522.json": "bf701e09c1203a6f0e82e49989e55992c5ef56a7afdf6e75e9bcb29a39556083",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/model-calls/1225624767/20261031T030428295783-25661e77ab35.json": "a5297ff7d70c96dee477b607ed5d00b4e9c24dd68c2ac9c00196309a913e640c",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/raw/1225624767.pdf": "cef25b373ff3963dc294850fc96b8ba892c70288047217d4b088bb8d3e5a70b5",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/pages/1225624767.json": "acaccfce152a1dc2d9b9a505e9d52756c794256e9b05a36c6548af3b8e035291",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/1225624767.json": "878c08d3c5ade981e7e216d91821ddc0c178482810a26f90899417f315e1c779",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/model-calls/1225612401/20261031T030437775996-d142f5dae4cb.json": "bb0636838ca98ffccd19492968d1dea08b70ffa38bcad041fc374245c95b22c8",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/raw/1225612401.pdf": "84c65ae9d69693336b2cb8f32e58f1b95e40ac5018f01b8be05e309ee635be1e",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/pages/1225612401.json": "c393a8218c4bd4098e77203e30fea1512510e4334027febde8ace137238e6a4a",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/1225612401.json": "778dba9871ddb0a4031ad0aa0e833e0a9c2d5a225d9c98f0b1672af5697c6637",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/model-calls/1225630510/20261031T030443197220-e7fbe8a6acb9.json": "b9fd56010b551c6a1ff80c49d29db5bdc036f513d0c1a3164967e347771b4599",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/raw/1225630510.pdf": "87629078efafe26430b0027b463cd99b2cdd79769869961f46ec9cd25613f498",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/pages/1225630510.json": "222083853828f8316d51bcd037aa8ebede39637fce49ca1e12a05f41dc488fea",
+    "[local lesson]/04-tests/market-expansion-2026-10-31/heldout-source-review/model-runs/27b-production-v1/1225630510.json": "da02fc0dd730d21df2ed1d51346e37c0420d5b40112ea8a32fd4eca68ae570c3"
+  },
+  "frozen_input_hashes_after_equal": true,
+  "modified_app_files": {
+    "ledger.py": "21bc93e865fa5da78abf3d8092e627edf616027709fbbd5bc9ef6b0da54849e7",
+    "worker.py": "57eaefab4c576b7ad1a0602cb042a261b867a6c36113f3cd6bf5c3bf5ad61eb7",
+    "runner.py": "17c241d9702529dd677ccd085e382ce0bc7d4618611c96c53b2226007a0cbb8f",
+    "market.py": "8ac6325fe516e28ae19b141062ce593a4918948a8511d3dcadd31f5b00cd48b9"
+  },
+  "new_test_file": {
+    "path": "[local lesson]/03-source/disclosure-agent/tests/test_deadline_context.py",
+    "sha256": "4a9c4c7775f5bc7aca622d4fbf25c42ed749370bdc388b4f95143eedda8b27f2"
+  },
+  "tests": {
+    "initial_deadline_suite_before_fix": {
+      "failed": 12,
+      "passed": 11
+    },
+    "watchlist_cache_before_fix": {
+      "failed": 1
+    },
+    "cache_unknown_receipt_before_fix": {
+      "failed": 1
+    },
+    "compatibility_before_fix": {
+      "failed": 2
+    },
+    "latest_targeted_suites": {
+      "passed": 83,
+      "failed": 0,
+      "files": [
+        "test_deadline_context.py",
+        "test_ledger.py",
+        "test_market_pipeline.py",
+        "test_worker_recovery.py"
+      ]
+    },
+    "broader_initial_run": {
+      "passed": 120,
+      "failed": 1,
+      "failure": "test_extract_runner.py:208 old expectation conflicting with regional explicit title period; parent owns correction",
+      "resolution": "Superseded by final project suite:252 passed; historical failure retained as iteration evidence."
+    },
+    "final_project_suite": {
+      "passed": 252,
+      "failed": 0,
+      "evidence_path": "[local lesson]/04-tests/market-expansion-2026-10-31/pytest-iteration-15.txt",
+      "evidence_sha256": "12fad72d0ea3522832166c8beb3998552c84412cbc0c4b4fc31ca945f98e655b"
+    }
+  },
+  "limits": [
+    "Only the two frozen real source pairs and synthetic offline paths were checked here.",
+    "Candidate gold and original model score are preserved; this is reconciliation verification, not a new extraction score.",
+    "Original model-run directory is retained as baseline provenance; these are reconstructed in-memory records, not runtime-state edits."
+  ],
+  "app_edits_stopped": true
+}

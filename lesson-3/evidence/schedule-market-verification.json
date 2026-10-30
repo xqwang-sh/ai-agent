@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-30T22:54:22.479258+00:00",
+  "basis": "Persistent launchd minute task claimed a future test; no manual tick or kickstart was used.",
+  "program_sha256": "a07a3f3205a453fb20ceb6f2f23015e0c4bc679ec058e7b5ead8ec3bf5ffb0b1",
+  "run_id": "20261030T224845-71330806",
+  "schedule_claim_id": "test:2026-10-31T06:48:13.625735+08:00",
+  "scheduled_for": "2026-10-31T06:48:13.625735+08:00",
+  "actual_start": "2026-10-31T06:48:44.840160+08:00",
+  "actual_end": "2026-10-31T06:54:17.130068+08:00",
+  "exit_code": 0,
+  "execution_status": "complete",
+  "business_status": "complete",
+  "market_task_label": "local.disclosure-agent.45fed9978123",
+  "market_os_installed": true,
+  "market_business_enabled": true,
+  "old_small_os_installed": false,
+  "old_small_business_enabled": false,
+  "daily_plan": {
+    "timezone": "Asia/Shanghai",
+    "time": "08:30",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "tick_seconds": 60
+  },
+  "test_due_cleared": true,
+  "model_calls": 0,
+  "source_mode": "live_refresh",
+  "source_as_of": "2026-10-31T06:52:02.989744+08:00",
+  "artifacts": {
+    "state.json": {
+      "filename": "state.json",
+      "sha256": "747c5ba8561c7d5a1f47d508e7a7037f74a8289b8f565b4e277cd170cb18a575"
+    },
+    "summary.json": {
+      "filename": "summary.json",
+      "sha256": "3517829be42ac3819758babca1329f3308480e8528a9952f6b65805dbd56d981"
+    },
+    "calendar.html": {
+      "filename": "calendar.html",
+      "sha256": "6289dd016177237a98dbbb97d28313df75abab4a112c97947bb91ed20a256ad3"
+    }
+  },
+  "limitations": [
+    "One real macOS test does not establish long-term reliability.",
+    "Windows and personal-calendar notification delivery were not tested."
+  ]
+}

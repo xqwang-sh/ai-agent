@@ -1,0 +1,85 @@
+{
+  "model": "Qwen/Qwen3.8-27B",
+  "records": 8,
+  "fields_correct_records": 8,
+  "combined_accepted_records": 8,
+  "attempts": 8,
+  "known_total_tokens": 23644,
+  "calls_with_unknown_usage": 0,
+  "results": [
+    {
+      "id": "1225612401",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225613522",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225624767",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225630510",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225647067",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225647951",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225648374",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225648429",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    }
+  ],
+  "gold_status": "candidate; teacher sign-off pending",
+  "gold_sha256": "29ca28816c79460cc1a9b5774608d1d61ab58c272a0f18ec422f255ca460abd7",
+  "program_files": {
+    "disclosure_agent/extract.py": "1a6e1284400c6d1efb39bdc11c7e2efac7dad7a0c0804b1b9cbd88414f647388",
+    "disclosure_agent/scope.py": "4fca23ef9c99c19d9ed01d0edf583ee6733bccee3f90560a84a86a6e5e12f6b1",
+    "prompts/system.txt": "eb3014fdc1112b386bb7a4d30d43c93565dbfe315308b15ee433f6da61d25fc7",
+    "prompts/output.schema.json": "471abb936488424e17189ce80ca195070fd7397364fb041ca9b988e8211c8689"
+  },
+  "original_outputs_scored": true,
+  "new_model_calls": 0,
+  "original_score_sha256": "db48040c73c9c27012e682a62129fa277a1a1f40f209f496d61a03a06270bb24",
+  "revalidated_program_files": {
+    "disclosure_agent/extract.py": "49a1cea4e39bb241a89b016e29741c51bde0b2432a2e97d9de936ff421be8014",
+    "disclosure_agent/scope.py": "4fca23ef9c99c19d9ed01d0edf583ee6733bccee3f90560a84a86a6e5e12f6b1",
+    "prompts/system.txt": "eb3014fdc1112b386bb7a4d30d43c93565dbfe315308b15ee433f6da61d25fc7",
+    "prompts/output.schema.json": "471abb936488424e17189ce80ca195070fd7397364fb041ca9b988e8211c8689"
+  },
+  "revalidation_note": "Original outputs unchanged. The failed literal SMIC quote names the briefing before its future date. A missing deterministic sentence pattern was repaired; no gold facts or model outputs changed."
+}

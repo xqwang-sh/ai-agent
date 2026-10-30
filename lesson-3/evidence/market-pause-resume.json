@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-30T23:02:09.735380+00:00",
+  "label": "local.disclosure-agent.45fed9978123",
+  "paused_business_enabled": false,
+  "resumed_business_enabled": true,
+  "os_timer_preserved": true,
+  "daily_plan_unchanged": true,
+  "plan_sha256_before": "55a140b2505a97bf8f5c3d38553c7b7c189714681aa506a38bc0f212b0757c10",
+  "plan_sha256_after": "55a140b2505a97bf8f5c3d38553c7b7c189714681aa506a38bc0f212b0757c10"
+}

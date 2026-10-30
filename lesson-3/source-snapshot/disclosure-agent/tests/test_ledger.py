@@ -258,3 +258,15 @@ def test_source_conflict_and_unlinked_amendment_are_visible_activity_without_cha
     third, _, _ = run([ambiguous], first, as_of="2030-01-11T08:30:00+08:00")
     assert event(third)["review_reasons"] == ["ambiguous_or_missing_original_notice"]
     assert event(third)["activity"]["kind"] == "review"
+
+
+def test_explicit_deadline_correction_uses_both_cross_page_parts():
+    conflict=change(question_deadline_date='2030-01-31')
+    first,_,_=run([notice(),conflict])
+    correction=change('s3',question_deadline_date='2030-02-01',
+        deadline_evidence={'parts':[{'page':1,'quote':'提问截止调整为2030年2月'},
+                                    {'page':2,'quote':'1日16:00。'}]})
+    correction['publication_date']='2030-01-06'
+    state,_,issues=run([correction],first)
+    assert event(state)['pending_fields']=={} and issues==[]
+    assert event(state)['question_deadline_date']=='2030-02-01'

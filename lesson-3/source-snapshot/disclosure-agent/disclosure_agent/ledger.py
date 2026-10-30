@@ -2,6 +2,7 @@
 from copy import deepcopy
 import json
 import re
+from .scope import period_matches, source_period
 
 EVENT_FIELDS = (
     "report_period", "meeting_date", "start_time", "end_time",
@@ -13,7 +14,7 @@ IGNORED_KINDS = {"completed", "collective", "other"}
 
 
 def _number(value):
-    return re.sub(r"[\s：:号]", "", str(value or "")).replace("－", "-").replace("—", "-")
+    return re.sub(r"[\s：:号临]", "", str(value or "")).replace("－", "-").replace("—", "-")
 
 
 def _record_version(record, status):
@@ -36,17 +37,54 @@ def _issue(record, reason, **details):
     return {"stock_code": record["stock_code"], "source_id": str(record["id"]), "reason": reason, **details}
 
 
+def _evidence_quote(evidence):
+    return (evidence or {}).get('quote','') or ''.join(part['quote'] for part in (evidence or {}).get('parts',[]))
+
+
 def _claim_text(data):
     return " ".join(
-        [str((data.get(field) or {}).get("quote", "")) for field in
+        [_evidence_quote(data.get(field)) for field in
          ("meeting_evidence", "deadline_evidence", "relation_evidence")]
         + list(data.get("review_notes") or [])
     )
 
 
-def _deadline_is_explicit(data):
-    text = str((data.get("deadline_evidence") or {}).get("quote", ""))
-    return bool(re.search(r"(提问|征集|问题).*(调整|变更|改为|改至|延期|延长)|(调整|变更|改为|改至|延期|延长).*(提问|征集|问题)", text))
+def _deadline_text(data, record):
+    evidence = data.get('deadline_evidence') or {}
+    text = _evidence_quote(evidence)
+    context = record.get('source_flags', {}).get('deadline_context') or {}
+    if (context.get('source_id') != str(record.get('id'))
+            or context.get('pdf_sha256') != record.get('pdf_sha256')
+            or context.get('original_evidence') != evidence):
+        return text
+    parts = evidence.get('parts') or [evidence]
+    matching = [index for index, part in enumerate(parts) if part.get('page') == context.get('page')]
+    if len(matching) != 1 or not isinstance(context.get('quote'), str) or len(context['quote']) > 800:
+        return text
+    index = matching[0]
+    original = re.sub(r'\s+', '', parts[index].get('quote', ''))
+    if not original or original not in re.sub(r'\s+', '', context['quote']):
+        return text
+    return ''.join(context['quote'] if i == index else part['quote'] for i, part in enumerate(parts))
+
+
+def _deadline_is_explicit(data, record, event_period):
+    text = re.sub(r'\s+', '', _deadline_text(data, record))
+    if re.search(r'原通知|原公告|原定|此前|先前|往期|上次|历史|曾经|曾于', text):
+        return False
+    if re.search(r'(?:回复|答复|回答)(?:投资者)?(?:提问|问题)?的?(?:截止)?(?:时间|时段)|(?:提问|问题)的?(?:回复|答复|回答)(?:时间|截止)', text):
+        return False
+    declared = source_period(text)
+    expected = source_period(event_period) or event_period
+    if declared and expected and not set(declared.split('+')).issubset(expected.split('+')):
+        return False
+    if re.search(r'(提问|征集|问题|报名).*(调整|变更|改为|改至|延期|延长)|(调整|变更|改为|改至|延期|延长).*(提问|征集|问题|报名)', text):
+        return True
+    if not (re.search(r'前|截止|截至', text) and re.search(r'登录|登陆|访问|进入|选中|提交|发送|填写|完成', text)
+            and re.search(r'提问|报名', text)):
+        return False
+    return bool(re.search(r'本次(?:业绩)?说明会|本次活动|本次会议', text)
+                or (declared and re.search(r'业绩(?:网上|线上|网络|电话)?说明会(?:页面|专题|栏目).{0,30}(?:提问|报名)', text)))
 
 
 def _business(event):
@@ -72,10 +110,10 @@ def _record_activity(previous, event, revised, run_id, as_of):
         event["activity"] = activity or {"first_seen_at": None, "updated_at": None,
                                           "kind": "legacy", "revision": 0, "run_id": None}
         return
-    if old is None:
-        kind = "new" if previous.get("companies", {}).get(event["stock_code"], {}).get("baseline_complete") else "baseline"
-    elif set(event.get("source_ids", [])) & revised:
+    if set(event.get("source_ids", [])) & revised:
         kind = "extraction_revision"
+    elif old is None:
+        kind = "new" if previous.get("companies", {}).get(event["stock_code"], {}).get("baseline_complete") else "baseline"
     elif _business(old) == _business(event) and old.get("source_ids") == event.get("source_ids"):
         kind = "review"
     else:
@@ -106,15 +144,16 @@ def _apply(event, record):
     source_id = str(record["id"])
     unchanged = (record.get("source_flags", {}).get("other_fields_unchanged", False)
                  or bool(re.search(r"其他.{0,12}(不变|无变|未变)|其余.{0,12}(不变|无变|未变)", _claim_text(data))))
+    explicit_deadline = _deadline_is_explicit(data, record, event.get('report_period'))
     for field in MEETING_FIELDS + DEADLINE_FIELDS + ("participation_url",):
         value = data.get(field)
         if value is None:
             continue
         if value == event.get(field):
-            if field in DEADLINE_FIELDS and not unchanged and _deadline_is_explicit(data):
+            if field in DEADLINE_FIELDS and not unchanged and explicit_deadline:
                 event["pending_fields"].pop(field, None)
             continue
-        if field in DEADLINE_FIELDS and (unchanged or not _deadline_is_explicit(data)):
+        if field in DEADLINE_FIELDS and (unchanged or not explicit_deadline):
             pending = {"source_id": source_id, "old": event.get(field), "candidate": value,
                        "evidence": deepcopy(data.get("deadline_evidence")),
                        "reason": "other_fields_unchanged_conflict" if unchanged else "deadline_change_not_explicit"}
@@ -139,12 +178,14 @@ def _apply(event, record):
                                  "before": old, "after": new})
 
 
-def _rebuild(notices, issues):
+def _rebuild(notices, issues, report_period=None):
     events = {}
     ordered = sorted(notices.values(), key=lambda row: (
         row["publication_date"], row["extraction"]["notice_kind"] != "initial", str(row["id"])))
     for record in ordered:
         data = record["extraction"]
+        if data.get("report_period") and not period_matches(data["report_period"], report_period):
+            continue
         kind = data["notice_kind"]
         if kind in IGNORED_KINDS:
             continue
@@ -170,7 +211,7 @@ def _rebuild(notices, issues):
     return events
 
 
-def merge(previous: dict, records: list[dict], coverage: dict, run_id: str, as_of: str) -> tuple[dict, list, list]:
+def merge(previous: dict, records: list[dict], coverage: dict, run_id: str, as_of: str, *, report_period=None) -> tuple[dict, list, list]:
     """Rebuild chronological events, preserving failed companies and immutable versions.
 
     Coverage is keyed by stock code. A source hash conflict never replaces the
@@ -198,23 +239,27 @@ def merge(previous: dict, records: list[dict], coverage: dict, run_id: str, as_o
             record["pending_extraction_revision"] = True
             state["notices"][notice_id] = record
         else:
-            for key in ("source_flags", "model", "extractor_fingerprint", "extraction_run_id", "model_receipts"):
+            for key in ("source_flags", "model", "extractor_fingerprint", "extraction_run_id", "model_receipts",
+                        "compatible_prompt_revalidation", "revalidated_by_fingerprint", "revalidation_run_id",
+                        "revalidated_from_receipt", "unknown_provider_receipts"):
                 if key in record:
                     old[key] = deepcopy(record[key])
     for notice in state["notices"].values():
+        if notice["extraction"].get("report_period") and not period_matches(notice["extraction"]["report_period"], report_period):
+            continue
         for version in notice.get("versions", []):
             if version.get("version_status") == "source_conflict":
                 issues.append(_issue(notice, "source_hash_changed", candidate_sha256=version.get("pdf_sha256")))
     revised = {notice_id for notice_id, notice in state["notices"].items()
                if notice.get("pending_extraction_revision", False)}
-    rebuilt = _rebuild(state["notices"], issues)
+    rebuilt = _rebuild(state["notices"], issues, report_period)
     failed_codes = {code for code, item in coverage.items()
                     if item.get("status") == "failed" or not item.get("query_complete", False)
                     or not item.get("processing_complete", False)}
     for code in failed_codes:
         rebuilt = {key: event for key, event in rebuilt.items() if event["stock_code"] != code}
         rebuilt.update({key: deepcopy(event) for key, event in previous.get("events", {}).items()
-                        if event["stock_code"] == code})
+                        if event["stock_code"] == code and period_matches(event.get("report_period"), report_period)})
         issues.append({"stock_code": code, "source_id": None, "reason": "company_coverage_incomplete"})
     changes = []
     for event_id, event in rebuilt.items():
@@ -226,6 +271,8 @@ def merge(previous: dict, records: list[dict], coverage: dict, run_id: str, as_o
                             "kind": "extraction_revision" if source_ids & revised else "new" if old is None else "updated",
                             "before": before, "after": after, "source_ids": event["source_ids"][:]})
     for event_id, old in previous.get("events", {}).items():
+        if not period_matches(old.get("report_period"), report_period):
+            continue
         if event_id not in rebuilt:
             changes.append({"event_id": event_id, "stock_code": old["stock_code"],
                             "kind": "extraction_revision", "before": _business(old), "after": None,

@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 from pypdf import PdfReader
+from .scope import title_outside_scope, source_period
 
 STOCK_URL = 'https://www.cninfo.com.cn/new/data/szse_stock.json'
 QUERY_URL = 'https://www.cninfo.com.cn/new/hisAnnouncement/query'
@@ -41,6 +42,7 @@ class CninfoSource:
             'status_code': response.status_code,
             'sha256': hashlib.sha256(raw).hexdigest(),
             'retrieved_at': datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(),
+            'retry_after': getattr(response, 'headers', {}).get('Retry-After'),
         }), encoding='utf-8')
         response.raise_for_status()
         if len(raw) > 20 * 1024 * 1024:
@@ -96,11 +98,11 @@ class CninfoSource:
                 'publication_date': published, 'pdf_url': pdf_url, 'url': pdf_url,
                 'pdf_sha256': sha, 'pdf_path': str(target), 'pages': pages}
 
-    def acquire(self, company: dict, start_date: str, end_date: str) -> dict:
+    def acquire(self, company: dict, start_date: str, end_date: str, report_period: str | None = None) -> dict:
         code = str(company['code'])
         result = {'company': {'code': code, 'name': company['name'], 'org_id': None},
                   'status': 'failed', 'query_complete': False, 'items': [], 'failed_items': [],
-                  'error': None, 'query': {'start_date': start_date, 'end_date': end_date,
+                  'error': None, 'excluded_items': [], 'query': {'start_date': start_date, 'end_date': end_date,
                                          'keyword': '业绩说明会', 'pages': []}}
         evidence = self.run_dir / 'source' / code
         if evidence.exists():
@@ -165,6 +167,11 @@ class CninfoSource:
             errors.append(f'{type(exc).__name__}: {exc}')
         # A failed later page must not discard already retrieved announcements.
         for row in rows:
+            title = re.sub('<[^>]+>', '', row['announcementTitle'])
+            if title_outside_scope(title, report_period):
+                result['excluded_items'].append({'id': str(row['announcementId']), 'title': title,
+                                                'report_period': source_period(title), 'reason': 'outside_report_period'})
+                continue
             try:
                 result['items'].append(self._pdf(row, result['company'], evidence / 'downloads'))
             except Exception as exc:

@@ -1,0 +1,14 @@
+{
+  "status": "accepted source and software snapshot; full-market visual review pending",
+  "workspace": "03-source/disclosure-agent/runtime/market-2026-q3-oct-nov",
+  "run_id": "20261030T224845-71330806",
+  "program_sha256": "a07a3f3205a453fb20ceb6f2f23015e0c4bc679ec058e7b5ead8ec3bf5ffb0b1",
+  "source_as_of": "2026-10-31T06:52:02.989744+08:00",
+  "files": {
+    "state.json": "747c5ba8561c7d5a1f47d508e7a7037f74a8289b8f565b4e277cd170cb18a575",
+    "summary.json": "3517829be42ac3819758babca1329f3308480e8528a9952f6b65805dbd56d981"
+  },
+  "acceptance_sha256": "39d880e18d6f1d248f72f60158ddd78a4cd24d58b989fd4bc505e914cc060404",
+  "schedule_verification_sha256": "076c790bdd54032972447a608cb5675e7ae639fe42b4c32c0103208a52dab725",
+  "basis": "Immutable actual OS-run projection; source queries have the documented keyword and overlap boundaries."
+}

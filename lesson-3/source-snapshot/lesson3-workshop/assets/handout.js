@@ -33,9 +33,9 @@ function updateCount() {
   counter.textContent = checks.filter(c => c.checked).length + ' / ' + checks.length + ' 步';
 }
 for (const check of checks) {
-  try { check.checked = localStorage.getItem('announcement-lesson3.' + check.dataset.complete) === 'done'; } catch {}
+  try { check.checked = localStorage.getItem('announcement-lesson3.q3-v2.' + check.dataset.complete) === 'done'; } catch {}
   check.addEventListener('change', () => {
-    try { localStorage.setItem('announcement-lesson3.' + check.dataset.complete, check.checked ? 'done' : ''); } catch {}
+    try { localStorage.setItem('announcement-lesson3.q3-v2.' + check.dataset.complete, check.checked ? 'done' : ''); } catch {}
     updateCount();
   });
 }

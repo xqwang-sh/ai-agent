@@ -81,9 +81,14 @@ def publish(workspace: Path, run_dir: Path, state: dict, summary: dict) -> dict:
 
 def load_config(path: Path) -> dict:
     config = json.loads(Path(path).read_text())
+    if config.get("report_period") is not None and not re.fullmatch(r"\d{4}-(?:FY|H1|Q[1-4])", str(config["report_period"])):
+        raise ValueError("report_period须是明确的报告期，如2026-Q3。")
     companies = config.get("companies")
-    if not isinstance(companies, list) or not 1 <= len(companies) <= 10:
+    market = config.get("universe") == "a_share"
+    if not market and (not isinstance(companies, list) or not 1 <= len(companies) <= 10):
         raise ValueError("配置需要1至10家明确的覆盖公司。")
+    if market:
+        companies = []
     if len({c.get("code") for c in companies}) != len(companies):
         raise ValueError("公司代码不能重复。")
     for company in companies:
@@ -95,12 +100,15 @@ def load_config(path: Path) -> dict:
         raise ValueError("strategy只能为fixed或adaptive。")
     if config.get("timezone", "Asia/Shanghai") != "Asia/Shanghai":
         raise ValueError("本课程版业务时区为Asia/Shanghai。")
-    for field, default, upper in [("lookback_days", 90, 366), ("overlap_days", 7, 30), ("max_model_calls", 20, 60), ("max_planner_steps", 12, 24)]:
+    for field, default, upper in [("lookback_days", 90, 366), ("overlap_days", 7, 30), ("max_model_calls", 20, 240 if market else 60), ("max_planner_steps", 12, 24)]:
         value = config.setdefault(field, default)
         if not isinstance(value, int) or not 1 <= value <= upper:
             raise ValueError("配置值超出本版本界限：" + field)
     if type(config.setdefault("reuse_extractions", True)) is not bool:
         raise ValueError("reuse_extractions须为布尔值。")
+    if market:
+        from .market import validate_market_config
+        validate_market_config(config)
     return config
 
 
@@ -176,17 +184,23 @@ def render_calendar(state: dict, summary: dict, workspace: Path) -> str:
     return render_product(state, summary)
 
 
-def run(config_path: Path, workspace: Path, trigger: str = "manual", fixture: Path | None = None, claim_id: str | None = None) -> dict:
+def run(config_path: Path, workspace: Path, trigger: str = "manual", fixture: Path | None = None, claim_id: str | None = None, *, refresh=False) -> dict:
     config = load_config(config_path)
     workspace = Path(workspace).resolve()
     workspace.mkdir(parents=True, exist_ok=True)
     with run_lock(workspace) as locked:
         if not locked:
             return {"status": "skipped_overlap", "run_id": None}
+        if config.get("universe") == "a_share":
+            if fixture:
+                raise ValueError("全市场实时来源不能经过fixture重放通道。")
+            from .market import run_market
+            return run_market(config, workspace, trigger, claim_id, refresh=refresh)
         return _run(config, workspace, trigger, fixture, claim_id)
 
 
 def _run(config: dict, workspace: Path, trigger: str, fixture: Path | None, claim_id: str | None = None) -> dict:
+    from .scope import period_matches, title_outside_scope
     start_clock = time.monotonic()
     started_at = datetime.now(timezone.utc).isoformat()
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid.uuid4().hex[:8]
@@ -212,17 +226,22 @@ def _run(config: dict, workspace: Path, trigger: str, fixture: Path | None, clai
 
     def query(company):
         code = company["code"]
-        last = previous.get("companies", {}).get(code, {}).get("last_success")
+        same_scope = previous.get("scope", {}).get("report_period") == config.get("report_period")
+        last = previous.get("companies", {}).get(code, {}).get("last_success") if same_scope else None
         start = datetime.fromisoformat(last) - timedelta(days=config["overlap_days"]) if last else datetime.fromisoformat(as_of) - timedelta(days=config["lookback_days"])
-        result = fixture_data[code] if fixture_data else source.acquire(company, start.date().isoformat(), datetime.fromisoformat(as_of).date().isoformat())
+        scope_args = {"report_period": config["report_period"]} if config.get("report_period") else {}
+        result = fixture_data[code] if fixture_data else source.acquire(company, start.date().isoformat(), datetime.fromisoformat(as_of).date().isoformat(), **scope_args)
         acquired[code] = result
         coverage[code] = {"status": result["status"], "query_complete": result["query_complete"], "processing_complete": not result["failed_items"], "query": result["query"], "error": result.get("error"), "failed_items": result["failed_items"], "announcement_count": len(result["items"])}
+        coverage[code]["excluded_items"] = result.get("excluded_items", [])
         for item in result["items"]:
             pending[item["id"]] = item
         if result["query_complete"]:
             from pypdf import PdfReader
             for source_id, old in previous.get("notices", {}).items():
                 if old["stock_code"] != code or source_id in pending:
+                    continue
+                if old.get("extraction", {}).get("report_period") and not period_matches(old["extraction"]["report_period"], config.get("report_period")):
                     continue
                 try:
                     pdf = Path(old["pdf_path"])
@@ -238,34 +257,33 @@ def _run(config: dict, workspace: Path, trigger: str, fixture: Path | None, clai
         trace.append({"action": "query_company", "id": code, "status": result["status"], "notice_ids": [x["id"] for x in result["items"]]})
 
     def process(source_id):
+        from .worker import process_source
         item = pending.pop(source_id)
-        old = previous.get("notices", {}).get(source_id)
-        cached_errors = validate_evidence(old["extraction"], item["pages"], item) if old and old.get("extraction") else []
-        receipts = (old or {}).get("model_receipts", [])
-        receipts_intact = bool(receipts) and all(Path(r["path"]).is_file() and hashlib.sha256(Path(r["path"]).read_bytes()).hexdigest() == r["sha256"] for r in receipts)
-        if old and (cached_errors or not receipts_intact or old.get("pdf_sha256") != item["pdf_sha256"] or old.get("extractor_fingerprint") != fingerprint):
+        outcome = process_source(item, previous.get("notices", {}).get(source_id), config, run_dir,
+                                 run_id=run_id, fingerprint=fingerprint,
+                                 remaining=config["max_model_calls"] - len(attempts), extract_fn=extract_notice,
+                                 validate_fn=validate_evidence,
+                                 recovery_paths=list((workspace / "runs").glob("*/model-calls/" + source_id + "/*.json")))
+        attempts.extend(outcome["attempts"])
+        trace.append({"action": "extract_notice", "id": source_id, "status": outcome["status"],
+                      "model": outcome["model"], "validation_failures": outcome["errors"]})
+        if outcome["invalidated"]:
             invalidated_sources.add(source_id)
-        if config["reuse_extractions"] and old and old.get("pdf_sha256") == item["pdf_sha256"] and old.get("extractor_fingerprint") == fingerprint and not cached_errors and receipts_intact:
+        if outcome["status"] == "outside_report_period":
+            coverage[item["stock_code"]]["excluded_items"].append({"id": source_id, "reason": "outside_report_period", "title": item.get("title")})
+        elif outcome["status"] == "cached_revalidated":
             cached_ids.append(source_id)
-            trace.append({"action": "extract_notice", "id": source_id, "status": "cached_revalidated"})
-            return
-        remaining = config["max_model_calls"] - len(attempts)
-        if remaining <= 0:
-            extraction_errors.append({"stock_code": item["stock_code"], "source_id": source_id, "reason": "model_budget_exhausted"})
+            if outcome.get("record"):
+                records.append(outcome["record"])
+        elif outcome["status"] in {"accepted", "recovered_revalidated"}:
+            records.append(outcome["record"])
+            if outcome["status"] == "recovered_revalidated":
+                cached_ids.append(source_id)
+        else:
             coverage[item["stock_code"]]["processing_complete"] = False
-            return
-        result = extract_notice(item, config["models"][:remaining], run_dir, max_calls=remaining)
-        attempts.extend(result["attempts"])
-        trace.append({"action": "extract_notice", "id": source_id, "status": result["status"], "model": result["model"], "validation_failures": result["errors"]})
-        if result["status"] != "accepted":
-            coverage[item["stock_code"]]["processing_complete"] = False
-            extraction_errors.append({"stock_code": item["stock_code"], "source_id": source_id, "reason": "extraction_failed", "errors": result["errors"]})
-            return
-        record = {key: value for key, value in item.items() if key != "pages"}
-        raw = re.sub(r"\s+", "", "\n".join(item["pages"]))
-        model_receipts = [{"path": r["receipt_path"], "sha256": hashlib.sha256(Path(r["receipt_path"]).read_bytes()).hexdigest()} for r in result["attempts"]]
-        record.update(extraction=result["data"], model=result["model"], extractor_fingerprint=fingerprint, extraction_run_id=run_id, model_receipts=model_receipts, revision_reason="extraction_revision" if old else "new_source", source_flags={"other_fields_unchanged": bool(re.search(r"其他.{0,12}(不变|无变|未变)|其余.{0,12}(不变|无变|未变)", raw))})
-        records.append(record)
+            extraction_errors.append({"stock_code": item["stock_code"], "source_id": source_id,
+                                      "reason": "model_budget_exhausted" if outcome["status"] == "deferred" else "extraction_failed",
+                                      "errors": outcome["errors"]})
 
     if config.get("strategy", "fixed") == "fixed":
         for company in config["companies"]:
@@ -303,7 +321,7 @@ def _run(config: dict, workspace: Path, trigger: str, fixture: Path | None, clai
     for event in previous.get("events", {}).values():
         if invalidated_sources.intersection(event["source_ids"]):
             event["validity"] = "needs_review"
-    state, changes, issues = merge(previous, records, coverage, run_id, as_of)
+    state, changes, issues = merge(previous, records, coverage, run_id, as_of, report_period=config.get("report_period"))
     for change in changes:
         if change["kind"] == "new" and not previous.get("companies", {}).get(change["stock_code"], {}).get("baseline_complete"):
             change["kind"] = "baseline"
@@ -313,6 +331,7 @@ def _run(config: dict, workspace: Path, trigger: str, fixture: Path | None, clai
     issues.extend(extraction_errors)
     issues.extend(planner_errors)
     state["mode"] = mode
+    state["scope"] = {"report_period": config.get("report_period")}
     state["last_run_id"] = run_id
     if _program_hash() != before_hash:
         raise RuntimeError("运行期间程序或提示词发生修改，本次不发布新状态。")
@@ -322,5 +341,6 @@ def _run(config: dict, workspace: Path, trigger: str, fixture: Path | None, clai
     all_covered = all(c.get("status") == "complete" and c.get("query_complete") and c.get("processing_complete") for c in coverage.values())
     status = "complete" if all_covered and not issues else "needs_review" if all_covered else "incomplete"
     summary = {"run_id": run_id, "status": status, "mode": mode, "strategy": config.get("strategy", "fixed"), "trigger": trigger, "schedule_claim_id": claim_id, "as_of": as_of, "started_at": started_at, "finished_at": datetime.now(timezone.utc).isoformat(), "elapsed_seconds": round(time.monotonic() - start_clock, 3), "program_sha256": before_hash, "prompt_sha256": PROMPT_HASH, "model_calls": len(attempts), "planner_calls": len(planner_receipts), "cached_notice_ids": cached_ids, "usage": {"known_total_tokens": known_tokens, "calls_with_unknown_usage": unknown_usage}, "coverage": coverage, "changes": changes, "issues": issues, "event_count": len(state["events"]), "trace": trace, "output_html": str(workspace / "calendar.html")}
+    summary["scope"] = state["scope"]
     write_json(run_dir / "processed-records.json", {"records": records})
     return publish(workspace, run_dir, state, summary)

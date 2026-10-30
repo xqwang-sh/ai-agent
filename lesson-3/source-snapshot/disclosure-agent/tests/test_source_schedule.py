@@ -409,3 +409,21 @@ def test_failed_child_does_not_claim_an_unrelated_new_run_directory(tmp_path, mo
     result = schedule.tick(config, workspace, project)
     assert result['status'] == 'failed' and result['run_id'] is None
     assert 'run_dir' not in result
+
+
+def test_daily_schedule_includes_saturday_disclosures(tmp_path,monkeypatch):
+    workspace,project,config,calls=plan(tmp_path,monkeypatch,NOW)
+    stored=schedule._load(workspace)
+    assert stored['weekdays']==list(range(7))
+    saturday=NOW+timedelta(days=(5-NOW.weekday())%7)
+    monkeypatch.setattr(schedule,'_now',lambda:saturday.replace(hour=8,minute=30))
+    runner=Mock(return_value=subprocess.CompletedProcess([],0,'{}',''))
+    monkeypatch.setattr(schedule.subprocess,'run',runner)
+    assert schedule.tick(config,workspace,project)['kind']=='business'
+    runner.assert_called_once()
+
+
+def test_business_schedule_rejects_invalid_days_and_times():
+    for config in [{'schedule_weekdays':[0,0]},{'schedule_weekdays':[True]},{'schedule_weekdays':[]},
+                   {'schedule_weekdays':[7]},{'schedule_time':'8:30'},{'schedule_time':'25:00'}]:
+        with pytest.raises(ValueError):schedule.business_settings(config)

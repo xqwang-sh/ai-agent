@@ -1,0 +1,85 @@
+{
+  "model": "Qwen/Qwen3.5-9B",
+  "records": 8,
+  "fields_correct_records": 6,
+  "combined_accepted_records": 5,
+  "attempts": 8,
+  "known_total_tokens": 20046,
+  "calls_with_unknown_usage": 0,
+  "results": [
+    {
+      "id": "1225596953",
+      "field_errors": [
+        "report_period"
+      ],
+      "evidence_errors": [
+        "unsupported_report_period"
+      ],
+      "field_pass": false,
+      "pass": false
+    },
+    {
+      "id": "1225600811",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225606710",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225606982",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225607377",
+      "field_errors": [
+        "related_notice_number"
+      ],
+      "evidence_errors": [],
+      "field_pass": false,
+      "pass": false
+    },
+    {
+      "id": "1225608842",
+      "field_errors": [],
+      "evidence_errors": [
+        "unsupported_value:start_time",
+        "unsupported_value:end_time"
+      ],
+      "field_pass": true,
+      "pass": false
+    },
+    {
+      "id": "1225610212",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    },
+    {
+      "id": "1225650260",
+      "field_errors": [],
+      "evidence_errors": [],
+      "field_pass": true,
+      "pass": true
+    }
+  ],
+  "gold_status": "candidate; teacher sign-off pending",
+  "gold_sha256": "6eac31ff7ba0481610e655b461df21f063761145ac7ae61c7bd05b9d8af5c883",
+  "program_files": {
+    "disclosure_agent/extract.py": "afc8116343d47beca22325c82972d9f43c6b673068ce596711e325724cb6082d",
+    "disclosure_agent/scope.py": "35606f794d58696681302734bbeae2579702602000faab3ae5cf4211c38b246d",
+    "prompts/system.txt": "3fb2a32507229098f1ee485e503a1932223e5c779a52b7ba5f526b920e26ce3c",
+    "prompts/output.schema.json": "39bfdd3b968db2faaecdaf765ac851ac40312acbd2563fd22dc00878e83adf74"
+  },
+  "original_outputs_scored": true
+}

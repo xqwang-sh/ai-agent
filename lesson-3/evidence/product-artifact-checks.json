@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "basis": "Static artifact and source excerpt checks, not browser interaction QA",
+  "checked_at": "2026-10-30T22:56:09.556081+00:00",
+  "run_id": "20261030T224845-71330806",
+  "calendar_html_sha256": "6289dd016177237a98dbbb97d28313df75abab4a112c97947bb91ed20a256ad3",
+  "html_bytes": 6611573,
+  "events": 1040,
+  "companies": 1040,
+  "sources": 1042,
+  "events_without_participation": [],
+  "outside_q3_events": [],
+  "duplicate_original_links": [],
+  "review_candidates": 0,
+  "browser_qa": "pending required reopen confirmation"
+}

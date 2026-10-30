@@ -5,3 +5,7 @@
 @media print{.header-actions,.workspace-tools,.month-actions,.text-button,.data-details{display:none}.calendar-layout{grid-template-columns:1fr 250px}.day{height:80px}main{padding:0}.app-header{padding:0 0 10px}dialog[open]{position:static;max-height:none;box-shadow:none;width:100%}}
 
 .original-links{display:grid;gap:10px}.original-link{font-size:13px;line-height:1.7}.reminder-note{margin:0 0 18px!important}.detail-fields dt{overflow-wrap:anywhere}
+
+.participation-content{font-size:13px;line-height:1.9;overflow-wrap:anywhere}.participation-content h4{font-size:14px;margin:18px 0 9px;font-weight:600}.participation-content p{font-size:13px;line-height:1.9;margin:10px 0}.participation-content a{font-size:inherit}
+
+@media(min-width:901px){#day-events{max-height:650px;overflow-y:auto;padding-right:5px}}

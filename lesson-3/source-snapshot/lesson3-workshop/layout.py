@@ -55,7 +55,7 @@ def render(source, *, asset_prefix="assets/", back="../index.html"):
     nav, body = [], []
     if is_lesson:
         subtitle = paragraphs.pop(0)
-        body.append('<header id="top"><p class="eyebrow">第三讲 · 从巨潮公告到投研工作台</p><h1>' + escape(title) + '</h1><p class="subtitle">' + escape(subtitle) + '</p>' + md("\n\n".join(paragraphs)) + '<div class="downloads"><a href="' + back + '">← 讲座主页</a><a href="example/index.html">查看公告事件智能体成品 ↗</a><a class="primary" href="lesson3-starter.zip" download>下载起步材料包</a><a href="#step-0">从第0步开始 ↘</a><a href="PROMPTS.md" download>短需求与反馈</a><a href="lesson.md" download>Markdown讲义</a></div><p class="small">从自己的新目录开始。原公告由Agent取得，验证材料与教师参考按进度另行使用。</p></header>')
+        body.append('<header id="top"><p class="eyebrow">第三讲 · 从巨潮公告到事件日历</p><h1>' + escape(title) + '</h1><p class="subtitle">' + escape(subtitle) + '</p>' + md("\n\n".join(paragraphs)) + '<div class="downloads"><a href="' + back + '">← 讲座主页</a><a href="example/index.html">查看公告事件智能体成品 ↗</a><a class="primary" href="lesson3-starter.zip" download>下载起步材料包</a><a href="#step-0">从第0步开始 ↘</a><a href="PROMPTS.md" download>短需求与反馈</a><a href="lesson.md" download>Markdown讲义</a></div><p class="small">从自己的新目录开始。原公告由Agent取得，验证材料与教师参考按进度另行使用。</p></header>')
     else:
         body.append('<header id="top"><p class="eyebrow">第三讲 · 教师备课参考</p><h1>' + escape(title) + '</h1>' + md(intro) + '<div class="downloads"><a href="' + back + '">← 返回讲义</a></div></header>')
 

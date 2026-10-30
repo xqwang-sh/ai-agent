@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import ast
-from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -21,8 +20,7 @@ APP = ROOT.parent / "disclosure-agent"
 EVIDENCE = LESSON / "04-tests/implementation-2026-10-30"
 OLD = LESSON / "06-preparation/cninfo-exploration-2026-10-28"
 sys.path.insert(0, str(APP))
-from disclosure_agent.runner import load_publication
-from disclosure_agent.presentation import render_product
+from disclosure_agent.presentation import render_product, participation_excerpts
 
 
 def sha(path):
@@ -70,7 +68,7 @@ def source_files():
     for file in sorted(APP.rglob("*")):
         relative = file.relative_to(APP)
         included = relative.as_posix() in root_files or relative.parts[0] in {"disclosure_agent", "prompts", "tests"}
-        if included and file.is_file() and (file.suffix in {".py", ".json", ".md", ".txt"} or file.name == ".gitignore") and not any(part in {"runtime", "__pycache__", ".pytest_cache", ".git"} for part in relative.parts):
+        if included and file.is_file() and (file.suffix in {".py", ".json", ".md", ".txt", ".js", ".css"} or file.name == ".gitignore") and not any(part in {"runtime", "__pycache__", ".pytest_cache", ".git"} for part in relative.parts):
             yield file
 
 
@@ -78,7 +76,7 @@ def materials(output, staging):
     starter = staging / "lesson3-starter"
     starter.mkdir(parents=True)
     write_json(starter / "sources.json", {"source": "https://www.cninfo.com.cn/", "query_page": "https://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search", "companies": [{"code": "600887", "name": "伊利股份"}, {"code": "688246", "name": "嘉和美康"}]})
-    (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新公告事件工作台的助手。先和我聊清楚需求。\n\n先核对公司、范围、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
+    (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新事件日历、查看摘要和设置提醒的助手。先和我聊清楚需求。\n\n先核对公司、范围、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
     archive(starter, output / "lesson3-starter.zip")
     validation = staging / "lesson3-validation"
     (validation / "pdfs").mkdir(parents=True)
@@ -141,9 +139,19 @@ def main():
     (output / "PROMPTS.md").write_text("# 课堂短需求与反馈\n\n按自己的实际进度选择和修改，不要一次性全部发送。\n\n" + "\n\n".join(f"{i}. {text}" for i, text in enumerate(prompts, 1)) + "\n", encoding="utf-8")
     page(lesson, output / "index.html")
     materials(output, staging)
-    state, summary = load_publication(APP / "runtime/live")
-    state = deepcopy(state)
+    activity = json.loads((ROOT / "frozen-activity.json").read_text())
+    reference = APP / "runtime/live/runs" / activity["reference_run_id"]
+    for name in ["state.json", "summary.json"]:
+        if sha(reference / name) != activity["evidence"][activity["reference_run_id"]][name]:
+            raise ValueError("Frozen calendar input changed: " + name)
+    state = json.loads((reference / "state.json").read_text())
+    summary = json.loads((reference / "summary.json").read_text())
+    if state["last_run_id"] != activity["reference_run_id"] or summary["run_id"] != activity["reference_run_id"]:
+        raise ValueError("Frozen calendar run IDs disagree")
+    for identity, value in activity["events"].items():
+        state["events"][identity]["activity"] = value
     for record in state["notices"].values():
+        record["participation_evidence"] = participation_excerpts(record)
         for key in ["pdf_path", "model_receipts"]:
             record.pop(key, None)
     public_summary = public(summary)
@@ -152,6 +160,7 @@ def main():
     (output / "example/index.html").write_text(html, encoding="utf-8")
     write_json(output / "example/summary.json", public_summary)
     write_json(output / "example/events.json", public(list(state["events"].values())))
+    write_json(output / "example/activity-provenance.json", activity)
     evidence = output / "evidence"
     evidence.mkdir()
     for name in ["model-comparison.json", "final-model-evidence-validation-v4.json", "new-source-check.json", "final-code-review-v3.json", "validation-package-pass-v1.json", "validation-package-reject-v1.json"]:
@@ -159,6 +168,11 @@ def main():
     for name in ["schedule-real-model-execution.json", "schedule-real-model-summary.json", "schedule-claim-binding-execution.json", "schedule-final-execution.json", "schedule-release-execution.json"]:
         write_json(evidence / name, public(json.loads((EVIDENCE / name).read_text())))
     write_json(evidence / "fresh-build-completion.json", public(json.loads((LESSON / "04-tests/fresh-build-2026-10-30/completion.json").read_text())))
+    calendar_evidence = LESSON / "04-tests/calendar-product-2026-10-30"
+    for source, target in [("schedule-verification.json", "calendar-schedule-verification.json"),
+                           ("schedule-execution.json", "calendar-schedule-execution.json"),
+                           ("ics-independent-check.json", "calendar-reminder-check.json")]:
+        write_json(evidence / target, public(json.loads((calendar_evidence / source).read_text())))
     report = (ROOT / "report.md").read_text()
     (evidence / "report.md").write_text(report, encoding="utf-8")
     page(report, evidence / "report.html", "../assets/", "../index.html")

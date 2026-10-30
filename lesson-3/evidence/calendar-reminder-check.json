@@ -1,0 +1,32 @@
+{
+  "parser": "icalendar",
+  "source": "actual browser download",
+  "events": [
+    {
+      "uid": "c22528932b3c6f20f7623d8245ac2c46.deadline@disclosure-agent.local",
+      "summary": "嘉和美康 · 2026-Q3业绩说明会 · 提问/报名截止",
+      "start": "2026-11-24T08:00:00+00:00",
+      "end": null,
+      "alarms": [
+        -86400.0,
+        -1800.0
+      ],
+      "errors": []
+    },
+    {
+      "uid": "c22528932b3c6f20f7623d8245ac2c46.meeting@disclosure-agent.local",
+      "summary": "嘉和美康 · 2026-Q3业绩说明会",
+      "start": "2026-11-25T06:00:00+00:00",
+      "end": "2026-11-25T07:00:00+00:00",
+      "alarms": [
+        -86400.0,
+        -1800.0
+      ],
+      "errors": []
+    }
+  ],
+  "passed": true,
+  "bulk_sha256": "73fbacfa327b7c72896ede764c0cdc686e2b0eaef5c029ab5cc055fab02d9b51",
+  "bulk_matches_event_download": true,
+  "parser_version": "7.3.0"
+}

@@ -138,7 +138,7 @@ def run_lock(workspace: Path):
 
 
 def _program_hash() -> str:
-    paths = [ROOT / "run_agent.py"] + sorted((ROOT / "disclosure_agent").glob("*.py")) + sorted((ROOT / "prompts").glob("*"))
+    paths = [ROOT / "run_agent.py"] + sorted(p for p in (ROOT / "disclosure_agent").iterdir() if p.suffix in {".py", ".js", ".css"}) + sorted((ROOT / "prompts").glob("*"))
     values = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths if p.is_file()}
     return hashlib.sha256(json.dumps(values, sort_keys=True).encode()).hexdigest()
 

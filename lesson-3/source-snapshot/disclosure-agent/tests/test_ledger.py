@@ -199,3 +199,62 @@ def test_deferred_extraction_revision_survives_failure_and_cached_recovery():
     assert changes == []
     _, changes, _ = run([change()], repeated)
     assert len(changes) == 1 and changes[0]["kind"] == "updated"
+
+
+def test_activity_dates_survive_duplicate_next_day_and_failed_coverage():
+    first, _, _ = run([notice()], as_of="2030-01-10T08:30:00+08:00")
+    activity = event(first)["activity"]
+    assert activity["kind"] == "baseline" and activity["revision"] == 0
+    repeated, _, _ = run([notice()], first, run_id="next", as_of="2030-01-11T08:30:00+08:00")
+    assert event(repeated)["activity"] == activity
+    failed, _, _ = run([], repeated, coverage={"600887": dict(status="failed", query_complete=False, processing_complete=False)})
+    assert event(failed)["activity"] == activity
+
+
+def test_incremental_discovery_and_amendment_keep_first_seen_and_raise_revision():
+    first, _, _ = run([notice()], as_of="2030-01-10T08:30:00+08:00")
+    first["companies"]["600887"]["baseline_complete"] = True
+    extra = notice("other", report_period="2030-Q1")
+    second, _, _ = run([extra], first, as_of="2030-01-11T08:30:00+08:00")
+    assert second["events"]["600887:other"]["activity"]["kind"] == "new"
+    changed, _, _ = run([change()], second, as_of="2030-01-12T08:30:00+08:00")
+    activity = event(changed)["activity"]
+    assert activity["first_seen_at"] == "2030-01-10T08:30:00+08:00"
+    assert activity["updated_at"] == "2030-01-12T08:30:00+08:00"
+    assert activity["kind"] == "updated" and activity["revision"] == 1
+
+
+def test_pending_only_update_is_visible_without_becoming_a_business_date_change():
+    first, _, _ = run([notice()], as_of="2030-01-10T08:30:00+08:00")
+    update = change(meeting_date="2030-02-01", question_deadline_date="2030-01-31")
+    update["source_flags"] = {"other_fields_unchanged": True}
+    second, changes, issues = run([update], first, as_of="2030-01-11T08:30:00+08:00")
+    assert changes == [] and issues
+    assert event(second)["activity"]["updated_at"] == "2030-01-11T08:30:00+08:00"
+    repeated, _, _ = run([update], second, as_of="2030-01-12T08:30:00+08:00")
+    assert event(repeated)["activity"] == event(second)["activity"]
+
+
+def test_legacy_scan_does_not_invent_discovery_date_and_correction_is_labelled():
+    first, _, _ = run([notice()])
+    event(first).pop("activity")
+    repeated, _, _ = run([notice()], first, as_of="2030-01-11T08:30:00+08:00")
+    assert event(repeated)["activity"]["first_seen_at"] is None
+    assert event(repeated)["activity"]["updated_at"] is None
+    corrected = notice(start_time="14:30")
+    second, _, _ = run([corrected], repeated, as_of="2030-01-12T08:30:00+08:00")
+    assert event(second)["activity"]["first_seen_at"] is None
+    assert event(second)["activity"]["kind"] == "extraction_revision"
+
+
+def test_source_conflict_and_unlinked_amendment_are_visible_activity_without_changing_old_time():
+    first, _, _ = run([notice()], as_of="2030-01-10T08:30:00+08:00")
+    conflicting = notice(); conflicting["pdf_sha256"] = "different-bytes"
+    second, changes, _ = run([conflicting], first, as_of="2030-01-11T08:30:00+08:00")
+    assert changes == [] and event(second)["meeting_date"] == event(first)["meeting_date"]
+    assert event(second)["review_reasons"] == ["source_hash_changed"]
+    assert event(second)["activity"]["kind"] == "review"
+    ambiguous = change(related_notice_number="nonexistent")
+    third, _, _ = run([ambiguous], first, as_of="2030-01-11T08:30:00+08:00")
+    assert event(third)["review_reasons"] == ["ambiguous_or_missing_original_notice"]
+    assert event(third)["activity"]["kind"] == "review"

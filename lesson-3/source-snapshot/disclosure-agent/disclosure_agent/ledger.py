@@ -53,6 +53,40 @@ def _business(event):
     return {field: deepcopy(event.get(field)) for field in EVENT_FIELDS}
 
 
+def _visible(event):
+    return {**_business(event), "source_ids": event.get("source_ids", []),
+            "pending_fields": event.get("pending_fields", {}), "validity": event.get("validity"),
+            "review_reasons": sorted(reason for reason in event.get("review_reasons", []) if reason != "company_coverage_incomplete")}
+
+
+def event_review_reasons(event, issues):
+    return sorted({item["reason"] for item in issues if item.get("stock_code") == event.get("stock_code") and (
+        item.get("event_id") == event.get("id") or item.get("source_id") in event.get("source_ids", [])
+        or item.get("reason") in {"ambiguous_or_missing_original_notice", "incomplete_initial_event", "company_coverage_incomplete"})})
+
+
+def _record_activity(previous, event, revised, run_id, as_of):
+    old = previous.get("events", {}).get(event["id"])
+    activity = deepcopy((old or {}).get("activity"))
+    if old is not None and _visible(old) == _visible(event):
+        event["activity"] = activity or {"first_seen_at": None, "updated_at": None,
+                                          "kind": "legacy", "revision": 0, "run_id": None}
+        return
+    if old is None:
+        kind = "new" if previous.get("companies", {}).get(event["stock_code"], {}).get("baseline_complete") else "baseline"
+    elif set(event.get("source_ids", [])) & revised:
+        kind = "extraction_revision"
+    elif _business(old) == _business(event) and old.get("source_ids") == event.get("source_ids"):
+        kind = "review"
+    else:
+        kind = "updated"
+    event["activity"] = {
+        "first_seen_at": (activity or {}).get("first_seen_at") if old else as_of,
+        "updated_at": as_of, "kind": kind,
+        "revision": (activity or {}).get("revision", 0) + (1 if old else 0), "run_id": run_id,
+    }
+
+
 def _initial(record):
     data = record["extraction"]
     event = {field: data.get(field) for field in EVENT_FIELDS}
@@ -196,6 +230,11 @@ def merge(previous: dict, records: list[dict], coverage: dict, run_id: str, as_o
             changes.append({"event_id": event_id, "stock_code": old["stock_code"],
                             "kind": "extraction_revision", "before": _business(old), "after": None,
                             "source_ids": old["source_ids"][:]})
+    for event in rebuilt.values():
+        if event["stock_code"] in failed_codes:
+            continue
+        event["review_reasons"] = event_review_reasons(event, issues)
+        _record_activity(previous, event, revised, run_id, as_of)
     for notice in state["notices"].values():
         if notice["stock_code"] not in failed_codes:
             notice.pop("pending_extraction_revision", None)

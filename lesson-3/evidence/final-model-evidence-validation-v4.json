@@ -1,0 +1,282 @@
+{
+  "validator_sha256": "9eff63a1a8af278bf2516521c5ba721d07ed46378e546f89270b291208560214",
+  "method": "Original parsed results only; no reviewed or corrected output. Exact 12-field equality plus current source identity, date-role and same-page contiguous-quote checks.",
+  "runs": [
+    {
+      "run": "27b-full-v1",
+      "schema_valid_records": 10,
+      "fields_correct_records": 10,
+      "final_evidence_checks_passed": 10,
+      "combined_accepted_records": 10,
+      "errors": []
+    },
+    {
+      "run": "27b-full-v2",
+      "schema_valid_records": 11,
+      "fields_correct_records": 11,
+      "final_evidence_checks_passed": 11,
+      "combined_accepted_records": 11,
+      "errors": []
+    },
+    {
+      "run": "4b-full-v1",
+      "schema_valid_records": 11,
+      "fields_correct_records": 7,
+      "final_evidence_checks_passed": 6,
+      "combined_accepted_records": 6,
+      "errors": [
+        {
+          "id": "1225557650",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time",
+            "question_deadline_date",
+            "question_deadline_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:question_deadline_date",
+            "non_calendar_field:question_deadline_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence",
+            "non_calendar_field:deadline_evidence"
+          ]
+        },
+        {
+          "id": "1225526162",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "notice_number",
+            "meeting_date",
+            "start_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time"
+          ]
+        },
+        {
+          "id": "1225634920",
+          "field_errors": [
+            "report_period"
+          ],
+          "evidence_errors": [
+            "unsupported_report_period"
+          ]
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "4b-full-v2",
+      "schema_valid_records": 11,
+      "fields_correct_records": 7,
+      "final_evidence_checks_passed": 8,
+      "combined_accepted_records": 7,
+      "errors": [
+        {
+          "id": "1224531007",
+          "field_errors": [
+            "notice_number"
+          ],
+          "evidence_errors": []
+        },
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "notice_number",
+            "meeting_date",
+            "start_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time"
+          ]
+        },
+        {
+          "id": "1225634920",
+          "field_errors": [
+            "report_period"
+          ],
+          "evidence_errors": [
+            "unsupported_report_period"
+          ]
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "4b-v1",
+      "schema_valid_records": 3,
+      "fields_correct_records": 2,
+      "final_evidence_checks_passed": 2,
+      "combined_accepted_records": 2,
+      "errors": [
+        {
+          "id": "1225557650",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time",
+            "question_deadline_date",
+            "question_deadline_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:question_deadline_date",
+            "non_calendar_field:question_deadline_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence",
+            "non_calendar_field:deadline_evidence"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "9b-full-v1",
+      "schema_valid_records": 11,
+      "fields_correct_records": 8,
+      "final_evidence_checks_passed": 5,
+      "combined_accepted_records": 5,
+      "errors": [
+        {
+          "id": "1225557650",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time",
+            "question_deadline_date",
+            "question_deadline_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:question_deadline_date",
+            "non_calendar_field:question_deadline_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence",
+            "non_calendar_field:deadline_evidence"
+          ]
+        },
+        {
+          "id": "1225615375",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1225481292",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1224531007",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "meeting_date",
+            "start_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:participation_url"
+          ]
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "9b-full-v2",
+      "schema_valid_records": 11,
+      "fields_correct_records": 9,
+      "final_evidence_checks_passed": 10,
+      "combined_accepted_records": 9,
+      "errors": [
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "notice_number"
+          ],
+          "evidence_errors": []
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url"
+          ]
+        }
+      ]
+    }
+  ]
+}

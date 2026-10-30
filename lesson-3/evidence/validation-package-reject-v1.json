@@ -1,0 +1,91 @@
+{
+  "status": "fail",
+  "records": 12,
+  "passed": 11,
+  "unexpected_ids": [],
+  "gold_status": "candidate; source reviewed by independent agents and cross-checked; teacher sign-off pending",
+  "actual_sha256": "77bf45863501233d113ac9818c197907c1cbc0194d0548d7abcf6c6192502731",
+  "gold_sha256": "512cedf4ab4dd73d8b36766193194276897b170da75ba4b08c26f213e72c208b",
+  "validator_sha256": "a27fc88f6ab72f1a8ad4283eda0f536de194b014b005e3c3f093caaf5ee8d2f0",
+  "results": [
+    {
+      "id": "1225557650",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225058131",
+      "pass": false,
+      "field_errors": [],
+      "evidence_errors": [
+        "ungrounded_quote:meeting_evidence",
+        "unproven_meeting_role",
+        "unsupported_value:meeting_date",
+        "unsupported_value:start_time",
+        "unsupported_value:end_time"
+      ]
+    },
+    {
+      "id": "1225615375",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225481292",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1224531007",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225540076",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225526162",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225624767",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225628113",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225634920",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1224909690",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    },
+    {
+      "id": "1225639820",
+      "pass": true,
+      "field_errors": [],
+      "evidence_errors": []
+    }
+  ],
+  "note": "Grade original outputs. Human corrections must be saved separately. Program checks do not replace reading the source PDF."
+}

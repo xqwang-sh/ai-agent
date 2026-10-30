@@ -1,0 +1,55 @@
+{
+  "scope": "在v2的上轮五项审阅基础上复核年份上下文细化、最终模型验证和真实系统触发；保留v1/v2。",
+  "model_identity": "任务请求的审阅配置为gpt-6.1-terra；此环境未暴露可独立核验的实际底层模型身份。",
+  "test": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider tests",
+    "result": "75 passed in 0.45s",
+    "note": "使用模拟服务与调度，无付费API或系统任务操作。"
+  },
+  "year_context": {
+    "result": "pass",
+    "evidence": "独立内存对照：唯一明确2026年来源+无年份10月30日引文接受2026-10-30，拒绝2025-10-30；加入2025年后同无年份引文被拒。源码允许引文已明确年份或整篇唯一明确年份。",
+    "limitation": "以原文可提取年份为依据，仍须人工抽查，不能泛化为全部跨年文本均可靠。"
+  },
+  "prior_five": "v2已记录的跨句日期、失效缓存、完整发布、调度claim绑定和解析响应脱敏均有回归测试，本次75项全通过。",
+  "model_revalidation": {
+    "v1_combined": [
+      6,
+      5,
+      10
+    ],
+    "v2_combined": [
+      7,
+      9,
+      11
+    ],
+    "denominator": 11,
+    "source": "final-model-evidence-validation-v4.json",
+    "note": "原始回答重验；v2为同批复测，不是新盲测。"
+  },
+  "final_os_trigger": {
+    "run_id": "20261030T084219-8cebe624",
+    "start": "2026-10-30T16:42:19.554782+08:00",
+    "end": "2026-10-30T16:42:21.046004+08:00",
+    "claim_id": "test:2026-10-30T16:41:20.706329+08:00",
+    "summary_claim_matches": true,
+    "model_calls": 0,
+    "cached_ids": [
+      "1225481292",
+      "1225526162",
+      "1225540076",
+      "1225615375",
+      "1225639820"
+    ],
+    "business_status": "needs_review",
+    "schedule_enabled": true,
+    "note": "读取已有记录，未发起调度；短时触发不证明长期可靠。"
+  },
+  "source_sha256": {
+    "extract.py": "9eff63a1a8af278bf2516521c5ba721d07ed46378e546f89270b291208560214",
+    "runner.py": "6b7200620cd6898ac1c4fb686b9f2bcff724e48c72da0e29bf8fa2a46284d494",
+    "ledger.py": "ef48eaa3c4979038f83acc6604610abeaa3a53ac22a6d550c033a53a5b4693c8",
+    "schedule.py": "b598f57a549b0f5cade65ad72f0c1351d844847e1aa1aa48a80a9a117c551e3f"
+  },
+  "open_issues_in_reviewed_scope": []
+}

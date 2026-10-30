@@ -1,0 +1,520 @@
+{
+  "gold_candidate_status": "source reviewed by agents; teacher sign-off pending",
+  "weight_revisions": "provider not disclosed",
+  "split_note": "v1开发/留出预先分离；v2已看过v1失败，属于同批复测。今天实时新公告另作未参与提示词调整的检查。",
+  "runs": [
+    {
+      "name": "27b-full-v1",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/27b-full-v1/20261030_162026_16f062287594",
+      "records": 11,
+      "fields_correct_records": 10,
+      "grounded_records": 10,
+      "combined_accepted_records": 10,
+      "errors": [
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "no_schema_valid_response"
+          ],
+          "evidence_errors": [
+            "no_response"
+          ]
+        }
+      ],
+      "resources": {
+        "attempts": 11,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 366.823889,
+            "total": 366.823889,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 21997,
+            "total": null,
+            "reported_attempts": 10,
+            "missing_attempts": 1
+          },
+          "completion_tokens": {
+            "observed_sum": 3187,
+            "total": null,
+            "reported_attempts": 10,
+            "missing_attempts": 1
+          },
+          "total_tokens": {
+            "observed_sum": 25184,
+            "total": null,
+            "reported_attempts": 10,
+            "missing_attempts": 1
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    },
+    {
+      "name": "27b-full-v2",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/27b-full-v2/20261030_162854_b61cff49beab",
+      "records": 11,
+      "fields_correct_records": 11,
+      "grounded_records": 11,
+      "combined_accepted_records": 11,
+      "errors": [],
+      "resources": {
+        "attempts": 11,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 198.963862,
+            "total": 198.963862,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 26918,
+            "total": 26918,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "completion_tokens": {
+            "observed_sum": 3609,
+            "total": 3609,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "total_tokens": {
+            "observed_sum": 30527,
+            "total": 30527,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    },
+    {
+      "name": "4b-full-v1",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/4b-full-v1/20261030_161647_2d4b6fb4d1f0",
+      "records": 11,
+      "fields_correct_records": 7,
+      "grounded_records": 7,
+      "combined_accepted_records": 6,
+      "errors": [
+        {
+          "id": "1225557650",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time",
+            "question_deadline_date",
+            "question_deadline_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:question_deadline_date",
+            "non_calendar_field:question_deadline_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence",
+            "non_calendar_field:deadline_evidence"
+          ]
+        },
+        {
+          "id": "1225526162",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "notice_number",
+            "meeting_date",
+            "start_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time"
+          ]
+        },
+        {
+          "id": "1225634920",
+          "field_errors": [
+            "report_period"
+          ],
+          "evidence_errors": []
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence"
+          ]
+        }
+      ],
+      "resources": {
+        "attempts": 11,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 256.358772,
+            "total": 256.358772,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 25048,
+            "total": 25048,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "completion_tokens": {
+            "observed_sum": 3748,
+            "total": 3748,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "total_tokens": {
+            "observed_sum": 28796,
+            "total": 28796,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    },
+    {
+      "name": "4b-full-v2",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/4b-full-v2/20261030_162853_41f671950cdb",
+      "records": 11,
+      "fields_correct_records": 7,
+      "grounded_records": 9,
+      "combined_accepted_records": 7,
+      "errors": [
+        {
+          "id": "1224531007",
+          "field_errors": [
+            "notice_number"
+          ],
+          "evidence_errors": []
+        },
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "notice_number",
+            "meeting_date",
+            "start_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time"
+          ]
+        },
+        {
+          "id": "1225634920",
+          "field_errors": [
+            "report_period"
+          ],
+          "evidence_errors": []
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence"
+          ]
+        }
+      ],
+      "resources": {
+        "attempts": 11,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 270.662653,
+            "total": 270.662653,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 26918,
+            "total": 26918,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "completion_tokens": {
+            "observed_sum": 4002,
+            "total": 4002,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "total_tokens": {
+            "observed_sum": 30920,
+            "total": 30920,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    },
+    {
+      "name": "4b-v1",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/4b-v1/20261030_160921_3c16e3e0bd68",
+      "records": 3,
+      "fields_correct_records": 2,
+      "grounded_records": 2,
+      "combined_accepted_records": 2,
+      "errors": [
+        {
+          "id": "1225557650",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time",
+            "question_deadline_date",
+            "question_deadline_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:question_deadline_date",
+            "non_calendar_field:question_deadline_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence",
+            "non_calendar_field:deadline_evidence"
+          ]
+        }
+      ],
+      "resources": {
+        "attempts": 3,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 44.756063,
+            "total": 44.756063,
+            "reported_attempts": 3,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 5938,
+            "total": 5938,
+            "reported_attempts": 3,
+            "missing_attempts": 0
+          },
+          "completion_tokens": {
+            "observed_sum": 974,
+            "total": 974,
+            "reported_attempts": 3,
+            "missing_attempts": 0
+          },
+          "total_tokens": {
+            "observed_sum": 6912,
+            "total": 6912,
+            "reported_attempts": 3,
+            "missing_attempts": 0
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    },
+    {
+      "name": "9b-full-v1",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/9b-full-v1/20261030_161648_3cc1a13c0f5e",
+      "records": 11,
+      "fields_correct_records": 8,
+      "grounded_records": 5,
+      "combined_accepted_records": 5,
+      "errors": [
+        {
+          "id": "1225557650",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time",
+            "question_deadline_date",
+            "question_deadline_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:question_deadline_date",
+            "non_calendar_field:question_deadline_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence",
+            "non_calendar_field:deadline_evidence"
+          ]
+        },
+        {
+          "id": "1225615375",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1225481292",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1224531007",
+          "field_errors": [],
+          "evidence_errors": [
+            "ungrounded_quote:meeting_evidence"
+          ]
+        },
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "meeting_date",
+            "start_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:participation_url"
+          ]
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url",
+            "non_calendar_field:meeting_evidence"
+          ]
+        }
+      ],
+      "resources": {
+        "attempts": 11,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 102.87169799999998,
+            "total": 102.87169799999998,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 25048,
+            "total": 25048,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "completion_tokens": {
+            "observed_sum": 3810,
+            "total": 3810,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "total_tokens": {
+            "observed_sum": 28858,
+            "total": 28858,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    },
+    {
+      "name": "9b-full-v2",
+      "run_dir": "[local lesson]/04-tests/implementation-2026-10-30/model-pilot/runs/9b-full-v2/20261030_162456_c8f61aba8f36",
+      "records": 11,
+      "fields_correct_records": 9,
+      "grounded_records": 10,
+      "combined_accepted_records": 9,
+      "errors": [
+        {
+          "id": "1225628113",
+          "field_errors": [
+            "notice_number"
+          ],
+          "evidence_errors": []
+        },
+        {
+          "id": "1224909690",
+          "field_errors": [
+            "meeting_date",
+            "start_time",
+            "end_time"
+          ],
+          "evidence_errors": [
+            "non_calendar_field:meeting_date",
+            "non_calendar_field:start_time",
+            "non_calendar_field:end_time",
+            "non_calendar_field:participation_url"
+          ]
+        }
+      ],
+      "resources": {
+        "attempts": 11,
+        "metrics": {
+          "elapsed_seconds": {
+            "observed_sum": 127.53240000000001,
+            "total": 127.53240000000001,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "prompt_tokens": {
+            "observed_sum": 26918,
+            "total": 26918,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "completion_tokens": {
+            "observed_sum": 3775,
+            "total": 3775,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          },
+          "total_tokens": {
+            "observed_sum": 30693,
+            "total": 30693,
+            "reported_attempts": 11,
+            "missing_attempts": 0
+          }
+        },
+        "note": "Each raw attempt is counted once. Missing usage makes the full total unknown; elapsed time sums attempt durations, not wall time."
+      },
+      "original_outputs_scored": true,
+      "review_closed": true
+    }
+  ]
+}

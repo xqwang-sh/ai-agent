@@ -1,0 +1,22 @@
+{
+  "companies": [
+    {
+      "code": "600887",
+      "name": "伊利股份"
+    },
+    {
+      "code": "688246",
+      "name": "嘉和美康"
+    }
+  ],
+  "timezone": "Asia/Shanghai",
+  "models": [
+    "Qwen/Qwen3.8-27B"
+  ],
+  "strategy": "fixed",
+  "lookback_days": 90,
+  "overlap_days": 7,
+  "max_model_calls": 20,
+  "max_planner_steps": 12,
+  "reuse_extractions": true
+}

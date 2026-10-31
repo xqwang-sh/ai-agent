@@ -1,0 +1,193 @@
+{
+  "status": "verified_reference_output",
+  "basis": "Two real company records from the accepted source recovery batch, with original PDF/page evidence. Reference for checking after a learner first extracts; not runtime input or teacher-signed gold.",
+  "source_run_id": "20261031T041221-95d54e27",
+  "source_catalog_as_of": "2026-10-31T11:29:03.721177+08:00",
+  "new_model_calls_for_this_export": 0,
+  "records": [
+    {
+      "id": "600887:1225615375",
+      "company": "伊利股份",
+      "stock_code": "600887",
+      "report_period": "2026-Q3",
+      "meeting_date": "2026-10-30",
+      "start_time": "09:00",
+      "end_time": "10:30",
+      "question_deadline_date": "2026-10-29",
+      "question_deadline_time": "16:00",
+      "status": "scheduled",
+      "validity": null,
+      "period": "2026年第三季度",
+      "question_collection": {
+        "text": "10月23日至10月29日16:00",
+        "source_id": "1225615375",
+        "page": 1,
+        "context_quote": " 投资者可于 2026 年 10 月 23 日（星期五）至 10 月 29 日（星期\n四）16:00 前通过电话会议预报名系统或登录上证路演中心网站首页点\n击“提问预征集”栏目进行提问",
+        "quote": "2026 年 10 月 23 日（星期五）至 10 月 29 日（星期\n四）16:00"
+      },
+      "participation_url": "https://s.comein.cn/ytuzwbqe",
+      "deadline_label": "预报名截止",
+      "sources": [
+        {
+          "id": "1225615375",
+          "title": "内蒙古伊利实业集团股份有限公司关于召开2026年第三季度业绩说明会的公告",
+          "date": "2026-10-23",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF",
+          "number": "2026-078",
+          "evidence": [
+            {
+              "label": "会议时间",
+              "page": 2,
+              "quote": "（二）会议召开时间：2026    年 10月30日（星期五）9:00-10:30，\n其中，电话会议和上证路演中心音频直播时间为         9:00-10:00，上证路演\n中心网络互动时间为    10:00-10:30。"
+            },
+            {
+              "label": "预报名截止",
+              "page": 2,
+              "quote": "投资者可于   2026年10月23日至 10月 29日16:00前进行预报名。"
+            }
+          ],
+          "participation": [
+            {
+              "page": 1,
+              "quote": " 投资者可于 2026 年 10 月 23 日（星期五）至 10 月 29 日（星期\n四）16:00 前通过电话会议预报名系统或登录上证路演中心网站首页点\n击“提问预征集”栏目进行提问。"
+            },
+            {
+              "page": 2,
+              "quote": "本次投资者说明会将采取两种方式召开，分别为电话会议及上证路\n演中心音频直播结合网络互动，投资者参加方式如下：\n（一）电话会议\n路径 1：登录 https://s.comein.cn/ytuzwbqe 或扫描下方二维码进\n行预报名。\n路径 2：登录公司官网（https://www.yili.com/），通过“投资者\n关系”--“投资者服务”--“业绩会议邀请”，获取参会电话号码和会\n议密码。\n路径 3：微信搜索“伊利股份投资者关系”公众号，通过业绩会议邀\n请，获取参会电话号码和会议密码。\n投资者可于 2026 年 10 月 23 日至 10 月 29 日 16:00 前进行预报名。"
+            },
+            {
+              "page": 3,
+              "quote": "3\n因会议当天拨入人数较多且集中，提前进行预报名有助于您快速拨入会\n议，减少等待时间。同时您也可以在预报名系统中填写您关注的问题，\n公司将在说明会上对投资者普遍关注的问题进行回答。\n（二）上证路演中心音频直播结合网络互动\n1、投 资 者 可 通 过 互 联 网 登 录 上 证 路 演 中 心\n（https://roadshow.sseinfo.com/），在线参与本次业绩说明会。\n2、投资者可于 2026 年 10 月 23 日（星期五）至 10 月 29 日（星期\n四）16:00 前登录上证路演中心网站首页，点击“提问预征集”栏目\n（https://roadshow.sseinfo.com/preCallQa），根据活动时间，选中本\n次活动向公司提问，公司将在说明会上对投资者普遍关注的问题进行回\n答。"
+            }
+          ],
+          "participation_html": "<p>投资者可于 2026 年 10 月 23 日（星期五）至 10 月 29 日（星期四）16:00 前通过电话会议预报名系统或登录上证路演中心网站首页点击“提问预征集”栏目进行提问。</p><p>本次投资者说明会将采取两种方式召开，分别为电话会议及上证路演中心音频直播结合网络互动，投资者参加方式如下：</p><h4>（一）电话会议</h4><p>路径 1：登录 <a href=\"https://s.comein.cn/ytuzwbqe\" target=\"_blank\" rel=\"noopener\">https://s.comein.cn/ytuzwbqe</a> 或扫描下方二维码进行预报名。</p><p>路径 2：登录公司官网（<a href=\"https://www.yili.com/\" target=\"_blank\" rel=\"noopener\">https://www.yili.com/</a>），通过“投资者关系”--“投资者服务”--“业绩会议邀请”，获取参会电话号码和会议密码。</p><p>路径 3：微信搜索“伊利股份投资者关系”公众号，通过业绩会议邀请，获取参会电话号码和会议密码。</p><p>投资者可于 2026 年 10 月 23 日至 10 月 29 日 16:00 前进行预报名。</p><p>因会议当天拨入人数较多且集中，提前进行预报名有助于您快速拨入会议，减少等待时间。同时您也可以在预报名系统中填写您关注的问题，公司将在说明会上对投资者普遍关注的问题进行回答。</p><h4>（二）上证路演中心音频直播结合网络互动</h4><p>1、投资者可通过互联网登录上证路演中心（<a href=\"https://roadshow.sseinfo.com/\" target=\"_blank\" rel=\"noopener\">https://roadshow.sseinfo.com/</a>），在线参与本次业绩说明会。</p><p>2、投资者可于 2026 年 10 月 23 日（星期五）至 10 月 29 日（星期四）16:00 前登录上证路演中心网站首页，点击“提问预征集”栏目（<a href=\"https://roadshow.sseinfo.com/preCallQa\" target=\"_blank\" rel=\"noopener\">https://roadshow.sseinfo.com/preCallQa</a>），根据活动时间，选中本次活动向公司提问，公司将在说明会上对投资者普遍关注的问题进行回答。</p>"
+        }
+      ],
+      "pending": {},
+      "history": [],
+      "activity": {
+        "first_seen_at": "2026-10-31T04:32:40.021971+08:00",
+        "updated_at": "2026-10-31T04:32:40.021971+08:00",
+        "kind": "baseline",
+        "revision": 0,
+        "run_id": "20261030T202750-66d00ea4"
+      },
+      "review_reasons": [],
+      "reminders": [
+        {
+          "event_id": "600887:1225615375",
+          "kind": "meeting",
+          "uid": "6c3691f84d67619b7406903dddc8dca1.meeting@disclosure-agent.local",
+          "title": "伊利股份 · 2026-Q3业绩说明会",
+          "start": "2026-10-30T09:00:00+08:00",
+          "end": "2026-10-30T10:30:00+08:00",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF",
+          "description": "时间按北京时间解释。\n公告提供的参与入口：https://s.comein.cn/ytuzwbqe\n原公告：https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF",
+          "sequence": 0,
+          "ics": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Disclosure Agent//CNINFO Calendar//ZH\r\nCALSCALE:GREGORIAN\r\nX-WR-CALNAME:公告事件提醒\r\nBEGIN:VEVENT\r\nUID:6c3691f84d67619b7406903dddc8dca1.meeting@disclosure-agent.local\r\nDTSTAMP:20261031T041257Z\r\nSEQUENCE:0\r\nDTSTART:20261030T010000Z\r\nDTEND:20261030T023000Z\r\nSUMMARY:伊利股份 · 2026-Q3业绩说明会\r\nDESCRIPTION:时间按北京时间解释。\\n公告提供的参与入口：h\r\n ttps://s.comein.cn/ytuzwbqe\\n原公告：https://static.cninfo.com.cn/fina\r\n lpage/2026-10-23/1225615375.PDF\r\nSTATUS:CONFIRMED\r\nURL:https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-P1D\r\nDESCRIPTION:伊利股份 · 2026-Q3业绩说明会\r\nEND:VALARM\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT30M\r\nDESCRIPTION:伊利股份 · 2026-Q3业绩说明会\r\nEND:VALARM\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        },
+        {
+          "event_id": "600887:1225615375",
+          "kind": "deadline",
+          "uid": "6c3691f84d67619b7406903dddc8dca1.deadline@disclosure-agent.local",
+          "title": "伊利股份 · 2026-Q3业绩说明会 · 预报名截止",
+          "start": "2026-10-29T16:00:00+08:00",
+          "end": null,
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF",
+          "description": "时间按北京时间解释。\n公告提供的参与入口：https://s.comein.cn/ytuzwbqe\n原公告：https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF",
+          "sequence": 0,
+          "ics": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Disclosure Agent//CNINFO Calendar//ZH\r\nCALSCALE:GREGORIAN\r\nX-WR-CALNAME:公告事件提醒\r\nBEGIN:VEVENT\r\nUID:6c3691f84d67619b7406903dddc8dca1.deadline@disclosure-agent.local\r\nDTSTAMP:20261031T041257Z\r\nSEQUENCE:0\r\nDTSTART:20261029T080000Z\r\nSUMMARY:伊利股份 · 2026-Q3业绩说明会 · 预报名截止\r\nDESCRIPTION:时间按北京时间解释。\\n公告提供的参与入口：h\r\n ttps://s.comein.cn/ytuzwbqe\\n原公告：https://static.cninfo.com.cn/fina\r\n lpage/2026-10-23/1225615375.PDF\r\nSTATUS:CONFIRMED\r\nURL:https://static.cninfo.com.cn/finalpage/2026-10-23/1225615375.PDF\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-P1D\r\nDESCRIPTION:伊利股份 · 2026-Q3业绩说明会 · 预报名截止\r\nEND:VALARM\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT30M\r\nDESCRIPTION:伊利股份 · 2026-Q3业绩说明会 · 预报名截止\r\nEND:VALARM\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        }
+      ],
+      "reminder_blocked": false
+    },
+    {
+      "id": "688246:1225639820",
+      "company": "嘉和美康",
+      "stock_code": "688246",
+      "report_period": "2026-Q3",
+      "meeting_date": "2026-11-25",
+      "start_time": "14:00",
+      "end_time": "15:00",
+      "question_deadline_date": "2026-11-24",
+      "question_deadline_time": "16:00",
+      "status": "scheduled",
+      "validity": null,
+      "period": "2026年第三季度",
+      "question_collection": {
+        "text": "11月18日至11月24日16:00",
+        "source_id": "1225639820",
+        "page": 2,
+        "context_quote": "（二）投资者可于 2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）\n16:00 前 登 录 上 证 路 演 中 心 网 站 首 页 ， 点 击 “ 提 问 预 征 集 ” 栏 目\n（http://roadshow.sseinfo.com/questionCollection.do），根据活动时间，选中本次活\n动或通过公司邮箱 zqb@bjgoodwill.com 向公司提问，公司将在说明会上对投资\n者普遍关注的问题进行回答",
+        "quote": "2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）\n16:00"
+      },
+      "participation_url": "http://roadshow.sseinfo.com/",
+      "deadline_label": "提问截止",
+      "sources": [
+        {
+          "id": "1225639820",
+          "title": "关于召开2026年第三季度业绩说明会的公告",
+          "date": "2026-10-30",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF",
+          "number": "2026-029",
+          "evidence": [
+            {
+              "label": "会议时间",
+              "page": 2,
+              "quote": "（一）会议召开时间：2026    年 11月 25日（星期三）下午     14:00-15:00"
+            },
+            {
+              "label": "提问截止",
+              "page": 2,
+              "quote": "（二）投资者可于    2026年 11月18日（星期三）至     11月24日（星期二）\n\n16:00前登录上证路演中心网站首页，点击               “ 提问预征集     ”栏目"
+            }
+          ],
+          "participation": [
+            {
+              "page": 2,
+              "quote": "（一）投资者可在 2026 年 11 月 25 日（星期三）下午 14:00-15:00，通过互\n联网登录上证路演中心（http://roadshow.sseinfo.com/），在线参与本次业绩说明会，\n公司将及时回答投资者的提问。\n（二）投资者可于 2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）\n16:00 前 登 录 上 证 路 演 中 心 网 站 首 页 ， 点 击 “ 提 问 预 征 集 ” 栏 目\n（http://roadshow.sseinfo.com/questionCollection.do），根据活动时间，选中本次活\n动或通过公司邮箱 zqb@bjgoodwill.com 向公司提问，公司将在说明会上对投资\n者普遍关注的问题进行回答。"
+            }
+          ],
+          "participation_html": "<p>（一）投资者可在 2026 年 11 月 25 日（星期三）下午 14:00-15:00，通过互联网登录上证路演中心（<a href=\"http://roadshow.sseinfo.com/\" target=\"_blank\" rel=\"noopener\">http://roadshow.sseinfo.com/</a>），在线参与本次业绩说明会，公司将及时回答投资者的提问。</p><p>（二）投资者可于 2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）16:00 前登录上证路演中心网站首页 ， 点击 “ 提问预征集 ” 栏目（<a href=\"http://roadshow.sseinfo.com/questionCollection.do\" target=\"_blank\" rel=\"noopener\">http://roadshow.sseinfo.com/questionCollection.do</a>），根据活动时间，选中本次活动或通过公司邮箱 zqb@bjgoodwill.com 向公司提问，公司将在说明会上对投资者普遍关注的问题进行回答。</p>"
+        }
+      ],
+      "pending": {},
+      "history": [],
+      "activity": {
+        "first_seen_at": "2026-10-31T02:42:13.356351+08:00",
+        "updated_at": "2026-10-31T02:42:13.356351+08:00",
+        "kind": "baseline",
+        "revision": 0,
+        "run_id": "20261030T183805-58a4178d"
+      },
+      "review_reasons": [],
+      "reminders": [
+        {
+          "event_id": "688246:1225639820",
+          "kind": "meeting",
+          "uid": "c22528932b3c6f20f7623d8245ac2c46.meeting@disclosure-agent.local",
+          "title": "嘉和美康 · 2026-Q3业绩说明会",
+          "start": "2026-11-25T14:00:00+08:00",
+          "end": "2026-11-25T15:00:00+08:00",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF",
+          "description": "时间按北京时间解释。\n公告提供的参与入口：http://roadshow.sseinfo.com/\n原公告：https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF",
+          "sequence": 0,
+          "ics": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Disclosure Agent//CNINFO Calendar//ZH\r\nCALSCALE:GREGORIAN\r\nX-WR-CALNAME:公告事件提醒\r\nBEGIN:VEVENT\r\nUID:c22528932b3c6f20f7623d8245ac2c46.meeting@disclosure-agent.local\r\nDTSTAMP:20261031T041257Z\r\nSEQUENCE:0\r\nDTSTART:20261125T060000Z\r\nDTEND:20261125T070000Z\r\nSUMMARY:嘉和美康 · 2026-Q3业绩说明会\r\nDESCRIPTION:时间按北京时间解释。\\n公告提供的参与入口：h\r\n ttp://roadshow.sseinfo.com/\\n原公告：https://static.cninfo.com.cn/fina\r\n lpage/2026-10-30/1225639820.PDF\r\nSTATUS:CONFIRMED\r\nURL:https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-P1D\r\nDESCRIPTION:嘉和美康 · 2026-Q3业绩说明会\r\nEND:VALARM\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT30M\r\nDESCRIPTION:嘉和美康 · 2026-Q3业绩说明会\r\nEND:VALARM\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        },
+        {
+          "event_id": "688246:1225639820",
+          "kind": "deadline",
+          "uid": "c22528932b3c6f20f7623d8245ac2c46.deadline@disclosure-agent.local",
+          "title": "嘉和美康 · 2026-Q3业绩说明会 · 提问截止",
+          "start": "2026-11-24T16:00:00+08:00",
+          "end": null,
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF",
+          "description": "时间按北京时间解释。\n公告提供的参与入口：http://roadshow.sseinfo.com/\n原公告：https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF",
+          "sequence": 0,
+          "ics": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Disclosure Agent//CNINFO Calendar//ZH\r\nCALSCALE:GREGORIAN\r\nX-WR-CALNAME:公告事件提醒\r\nBEGIN:VEVENT\r\nUID:c22528932b3c6f20f7623d8245ac2c46.deadline@disclosure-agent.local\r\nDTSTAMP:20261031T041257Z\r\nSEQUENCE:0\r\nDTSTART:20261124T080000Z\r\nSUMMARY:嘉和美康 · 2026-Q3业绩说明会 · 提问截止\r\nDESCRIPTION:时间按北京时间解释。\\n公告提供的参与入口：h\r\n ttp://roadshow.sseinfo.com/\\n原公告：https://static.cninfo.com.cn/fina\r\n lpage/2026-10-30/1225639820.PDF\r\nSTATUS:CONFIRMED\r\nURL:https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-P1D\r\nDESCRIPTION:嘉和美康 · 2026-Q3业绩说明会 · 提问截止\r\nEND:VALARM\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT30M\r\nDESCRIPTION:嘉和美康 · 2026-Q3业绩说明会 · 提问截止\r\nEND:VALARM\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        }
+      ],
+      "reminder_blocked": false
+    }
+  ]
+}

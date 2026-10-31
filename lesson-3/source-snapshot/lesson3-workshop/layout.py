@@ -59,7 +59,7 @@ def render(source, *, asset_prefix="assets/", back="../index.html"):
     else:
         body.append('<header id="top"><p class="eyebrow">第三讲 · 教师备课参考</p><h1>' + escape(title) + '</h1>' + md(intro) + '<div class="downloads"><a href="' + back + '">← 返回讲义</a></div></header>')
 
-    intro_ids = ["product", "workflow-map", "start"]
+    intro_ids = ["workflow-map", "start"]
     for index, (heading, content) in enumerate(sections):
         step = re.match(r"第(\d+)步[：:]\s*(.+)", heading)
         if step:
@@ -72,16 +72,16 @@ def render(source, *, asset_prefix="assets/", back="../index.html"):
             if parts.get("最终验收"):
                 body.append('<div class="acceptance"><h3>最终验收</h3>' + md(parts["最终验收"]) + '</div>')
             body.append('<div class="files"><span>本步产物</span>' + md(parts.get("本步产物", "")) + '</div><details class="repair"><summary>本步没做好？看反馈例子</summary>' + prompts(parts.get("卡住时", ""), "反馈") + '</details><label class="completion"><input type="checkbox" data-complete="' + identity + '">我已打开结果并核对这一步</label></section>')
-        elif is_lesson and index < 3:
+        elif is_lesson and index < len(intro_ids):
             identity = intro_ids[index]
-            nav.append('<a href="#' + identity + '">' + ("先看展示产品" if index == 0 else "整体步骤" if index == 1 else "课前准备与材料") + '</a>')
+            nav.append('<a href="#' + identity + '">' + ("整体步骤" if index == 0 else "课前准备与材料") + '</a>')
             if identity != "start":
                 body.append('<section class="' + ("overview" if identity == "workflow-map" else "intro") + '" id="' + identity + '"><h2>' + escape(heading) + '</h2>' + md(content) + '</section>')
             else:
                 opening, blocks = split_sections(content, 3)
                 parts = dict(blocks)
-                prep = [(key, value) for key, value in blocks if key not in {"分清三类材料", "这次跟做怎样推进"}]
-                body.append('<section class="intro" id="start"><h2>' + escape(heading) + '</h2>' + md(opening) + '<section id="materials-guide"><h3 class="prepare-title">先认识材料包</h3>' + md(parts.get("分清三类材料", "")) + '</section><h3 class="prepare-title">打开自己的新项目</h3><ol class="preparation">' + ''.join('<li><h3>' + escape(key) + '</h3>' + md(value) + '</li>' for key, value in prep) + '</ol><div class="cadence"><strong>跟做方式</strong>' + md(parts.get("这次跟做怎样推进", "")) + '</div></section>')
+                prep = [(key, value) for key, value in blocks if key not in {"分清材料的用途", "这次跟做怎样推进"}]
+                body.append('<section class="intro" id="start"><h2>' + escape(heading) + '</h2>' + md(opening) + '<section id="materials-guide"><h3 class="prepare-title">先认识材料包</h3>' + md(parts.get("分清材料的用途", "")) + '</section><h3 class="prepare-title">打开自己的新项目</h3><ol class="preparation">' + ''.join('<li><h3>' + escape(key) + '</h3>' + md(value) + '</li>' for key, value in prep) + '</ol><div class="cadence"><strong>跟做方式</strong>' + md(parts.get("这次跟做怎样推进", "")) + '</div></section>')
         else:
             identity = ("extensions" if "完成主线" in heading else "help" if "卡住时" in heading else "references") if is_lesson else "report-" + str(index)
             nav.append('<a href="#' + identity + '">' + escape(heading) + '</a>')

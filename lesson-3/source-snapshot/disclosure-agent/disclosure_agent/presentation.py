@@ -112,6 +112,7 @@ def product_data(state, summary, *, frozen=False, directory=None):
             "company_directory": directory if directory is not None else company_directory(events=events, run_id=summary.get('run_id')),
             "review_candidates": review_candidates,
             "status": summary.get("status"), "trigger": summary.get("trigger"),
+            "presentation_origin": summary.get("presentation_origin"),
             "model_calls": summary.get("model_calls", 0), "cache_count": len(summary.get("cached_notice_ids", [])),
             "coverage": {code: {"query_complete": value.get("query_complete", False),
                                 "processing_complete": value.get("processing_complete", False),

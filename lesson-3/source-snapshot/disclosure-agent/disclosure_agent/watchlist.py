@@ -9,6 +9,23 @@ COMPANY_TABLE_URL = "https://www.cninfo.com.cn/new/data/szse_stock.json"
 
 def directory_for_run(workspace, summary, state):
     workspace = Path(workspace).resolve()
+    origin=summary.get('presentation_origin')
+    if origin:
+        run_id=origin.get('run_id')
+        if not isinstance(run_id,str) or Path(run_id).name!=run_id or run_id in {'.','..'}:
+            raise ValueError('Invalid presentation identity source')
+        original=workspace/'runs'/run_id/'calendar.html'
+        raw=original.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=origin.get('calendar_sha256'):
+            raise ValueError('Presentation identity source failed integrity verification')
+        match=re.search(r'<script id="calendar-data" type="application/json">(.*?)</script>',raw.decode())
+        if not match:
+            raise ValueError('Presentation identity source has no company directory')
+        directory=json.loads(match[1]).get('company_directory')
+        if not isinstance(directory,dict) or not isinstance(directory.get('rows'),list):
+            raise ValueError('Presentation identity source has no company directory')
+        directory['source']['bound_run_id']=summary['run_id']
+        return directory
     table = workspace / 'runs' / summary['run_id'] / 'source/company-table.json'
     if table.is_file():
         return company_directory(table, run_id=summary['run_id'])

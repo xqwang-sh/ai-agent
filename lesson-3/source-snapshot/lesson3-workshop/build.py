@@ -177,6 +177,7 @@ def main():
     lesson = (ROOT / "lesson.md").read_text()
     (output / "lesson.md").write_text(lesson, encoding="utf-8")
     shutil.copy2(ROOT / 'materials.md', output / 'materials.md')
+    shutil.copy2(ROOT / 'two-company-data.json', output / 'two-company-data.json')
     prompts = re.findall(r"^> (.+)$", lesson, re.MULTILINE)
     (output / "PROMPTS.md").write_text("# 课堂短需求与反馈\n\n按自己的实际进度选择和修改，不要一次性全部发送。\n\n" + "\n\n".join(f"{i}. {text}" for i, text in enumerate(prompts, 1)) + "\n", encoding="utf-8")
     page(lesson, output / "index.html")
@@ -275,6 +276,16 @@ def main():
                                      ('presentation-checks.json','product-watchlist-checks.json'),
                                      ('software-checks.json','product-watchlist-software.json')]:
         source = feature / source_name
+        if source.is_file():
+            write_json(evidence / target_name, public(json.loads(source.read_text())))
+    current = LESSON / '04-tests/recovery-sequence-2026-10-31'
+    for source_name, target_name in [('recovery-verification.json','source-recovery-checks.json'),
+                                     ('render-verification.json','data-to-product-checks.json'),
+                                     ('question-period-verification.json','question-period-source-checks.json'),
+                                     ('sequence-checks.json','data-first-sequence-checks.json'),
+                                     ('software-checks.json','current-software-checks.json'),
+                                     ('browser-checks.json','product-browser-checks.json')]:
+        source = current / source_name
         if source.is_file():
             write_json(evidence / target_name, public(json.loads(source.read_text())))
     report = (ROOT / "report.md").read_text()

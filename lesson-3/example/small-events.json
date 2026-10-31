@@ -12,7 +12,13 @@
     "status": "scheduled",
     "validity": null,
     "period": "2026年第三季度",
-    "question_collection": null,
+    "question_collection": {
+      "text": "10月23日至10月29日16:00",
+      "source_id": "1225615375",
+      "page": 1,
+      "context_quote": " 投资者可于 2026 年 10 月 23 日（星期五）至 10 月 29 日（星期\n四）16:00 前通过电话会议预报名系统或登录上证路演中心网站首页点\n击“提问预征集”栏目进行提问",
+      "quote": "2026 年 10 月 23 日（星期五）至 10 月 29 日（星期\n四）16:00"
+    },
     "participation_url": "https://s.comein.cn/ytuzwbqe",
     "deadline_label": "预报名截止",
     "sources": [
@@ -106,6 +112,7 @@
       "text": "11月18日至11月24日16:00",
       "source_id": "1225639820",
       "page": 2,
+      "context_quote": "（二）投资者可于 2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）\n16:00 前 登 录 上 证 路 演 中 心 网 站 首 页 ， 点 击 “ 提 问 预 征 集 ” 栏 目\n（http://roadshow.sseinfo.com/questionCollection.do），根据活动时间，选中本次活\n动或通过公司邮箱 zqb@bjgoodwill.com 向公司提问，公司将在说明会上对投资\n者普遍关注的问题进行回答",
       "quote": "2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）\n16:00"
     },
     "participation_url": "http://roadshow.sseinfo.com/",

@@ -1,0 +1,270 @@
+{
+  "status": "pass",
+  "run_id": "20261031T041221-95d54e27",
+  "prior_run_id": "20261031T032530-f77ce228",
+  "program_sha256": "2fae19c32e4649c499bd4d06164787bee1b9bc2e677cb811a4ec408fcb528335",
+  "trigger": "manual",
+  "source_mode": "frozen_resume",
+  "source_catalog_as_of": "2026-10-31T11:29:03.721177+08:00",
+  "source_checked_at": "2026-10-31T12:12:57.860026+08:00",
+  "targeted_sources": 33,
+  "successful_sources": 33,
+  "physical_pages": 75,
+  "download_attempts": 36,
+  "download_failures_before_success": 3,
+  "new_catalog_requests": 0,
+  "new_model_calls": 0,
+  "pending": 0,
+  "needs_review": 0,
+  "events_unchanged": 1078,
+  "calendar_events": 1040,
+  "daily_schedule": {
+    "installed": true,
+    "enabled": true,
+    "time": "08:30",
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "basis": "Manual targeted recovery of the closed earlier source batch; all 33 actual PDFs refetched and matched retained hashes, existing raw model answers revalidated. No fresh market-catalog query and no new OS-complete claim.",
+  "sources": [
+    {
+      "id": "1225619063",
+      "sha256": "7247219da6bb1bbdb81743b06c5110b7a869fa08c38ccecba821c273ab8dbf86",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225621878",
+      "sha256": "b7a70d3beacfbea551ad64af3ded29f5e6c478f63ec557599b1956d102bd9d3c",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225623791",
+      "sha256": "3452a3ba48602518fa5226484d9f3ec2e39ac223bc732fbddb948f73343c516b",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225623798",
+      "sha256": "3548900ccbaddc99837febd7c8ed67921d7235c59190b2a9c3a24a035a512515",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225623810",
+      "sha256": "39e1353a6fee368e174d59dfa4a512a5145866e3813348f08cf4fc12f3502c00",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225623895",
+      "sha256": "e03856993f2649b8a9c9f83e6d00b748c2c608263bab10c80713b784f0737f3d",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225623912",
+      "sha256": "c8befcd649ca91f413a4b240fdbc39bb9e90559a804b9b99488e9032a4ee70e3",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225625559",
+      "sha256": "8ad5286dc97ffa5d194cd00dbe31bea6aabd2dfae0fa813222b14ab4411dc21e",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225625561",
+      "sha256": "0d8dbe61fe42e03bc54769b189316b13e7156e300609ba450646ff184da7871f",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225625637",
+      "sha256": "e90bbb12aa120d60a235b3a6a12b6a3d84f4e43afb819a69605beebec0ae0667",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225625646",
+      "sha256": "2c822c382d1110c9a74fa30b29a184fe41e1f43e60ef61225b640b022147c683",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225632080",
+      "sha256": "00d2914cc3a50caaffb7a3c8241eb76c1163a8740dee2bdfa5ff826d717afba6",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225632114",
+      "sha256": "c4431af64db3f045fe891e7841f26affa865920e6bf1f7193dc9120db385b7b8",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225634256",
+      "sha256": "a243c5d1b90d6f031a706ee830f2052b7b2c85cec9d7320a2e1d27d805be07a4",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225638726",
+      "sha256": "4f22c2934589ccf88e2c4fc96f3e6b785a824ba2d86c6596a7472e1e87ba652c",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225638729",
+      "sha256": "1f019af3631a55f8af7ba9ff58ea9395b937987c3554b3cf5a4e87b63a5ba8e8",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225638731",
+      "sha256": "d0229f2c63a8619cf871989e9475ed4686ca1675761888d60d8af0340bf971db",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225638733",
+      "sha256": "2e4fbbb34987ecde2eb5a0673d363a7769d9baa87ca22d7bba3570eda79f8073",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225642281",
+      "sha256": "c932b650cc579cb6e98b4cea96ce7902d9f912c86463e921048e722a7324635e",
+      "physical_pages": 3,
+      "attempts": 2,
+      "accepted": true
+    },
+    {
+      "id": "1225642465",
+      "sha256": "8b0c9848146d741968cb4e449860ec5ddeab618fcfab74e1326e432d764c33f1",
+      "physical_pages": 3,
+      "attempts": 2,
+      "accepted": true
+    },
+    {
+      "id": "1225643043",
+      "sha256": "0dd216d9f2041afd79b594411e03be9d0fad73e7915f9b7837ec320b6766e7dc",
+      "physical_pages": 2,
+      "attempts": 2,
+      "accepted": true
+    },
+    {
+      "id": "1225643062",
+      "sha256": "f2adac1ded54d3379e7af0ffaf64af95dbeffe341e03b520e8ef78d585ee13ba",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225644300",
+      "sha256": "e6c52fb45453558ebfb9f880c90cb050fe4939a98a4725b34a6b46ad22da31f8",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225646414",
+      "sha256": "5d1eff57a70794383eb9f2559242cc1d7c5333502261bcc820adbfa5e0214831",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225646454",
+      "sha256": "4ec1d0e5d0991604c46641c25327df0cae023f6076b957da5b3700e198481272",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225646465",
+      "sha256": "a050935198073b560df520e9528b42a5b6d9358c495169f32d6050248ca79400",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225646483",
+      "sha256": "abc55bc3fc41ff9698459eace7ee777090f2958dd0232af19d65027202033b4b",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225650260",
+      "sha256": "53d93d0253dd5a4674b735d54d30b76302195f5f198995eca8164a0972186d6f",
+      "physical_pages": 1,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225650265",
+      "sha256": "9a9c4e6d3b43a3bffddea13c13e8edba8f8850fd6f88fa1a013ae45d82f3d0e8",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225650266",
+      "sha256": "c6211bbb712229b62ead7b9696ded684b8f85f010d67382f1621df9e238febc8",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225650317",
+      "sha256": "dcef906baf05c045cddcab3c986c92024022a6ea66aa23cb28934b910a5ffa0f",
+      "physical_pages": 2,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225650396",
+      "sha256": "eb100a267de57ac8197f38f639377dacf33c35f3ee99a9a69cfd68c0709d2c40",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    },
+    {
+      "id": "1225650445",
+      "sha256": "7c6de7d103a18d9aa45281f8afd7fab5a6f7c1a86636df0e281120ffe7aa8469",
+      "physical_pages": 3,
+      "attempts": 1,
+      "accepted": true
+    }
+  ]
+}

@@ -1,170 +1,160 @@
 {
   "status": "pass",
   "source_run_id": "20261030T224845-71330806",
-  "calendar_html_sha256": "2d31caa664c241860cda2d34c80f7a8e7b47f493904122d26cdc52814737d87f",
-  "program_sha256": "6471b0c3f53321cef3cfcdb4d69748957e368108b55477a765da549df2af7efb",
+  "calendar_html_sha256": "0d8b83d6a2ed98bd2e47ea8810b712386203e63f69e292d4c6ead755eb6cec39",
+  "render_program_sha256": "3ddc520eb7bc032a4bc8aa2cc4638a4177e5d7b6c2ee711d3fbfcdfdb8c6ac76",
   "screenshots": [
     {
+      "file": "assets/product-preview.png",
+      "sha256": "f7092b3456991b89f609a07c608fd9814de0a0e08c6a5a0c1ea038b0d9f3c3b8",
+      "width": 1440,
+      "height": 1100
+    },
+    {
       "file": "assets/event-detail-preview.png",
-      "sha256": "362a4ed2114560d1341a7649c8ef63268d134588684de51ec607e469aec812f4",
-      "width": 1416,
-      "height": 1050
+      "sha256": "80a2b3b8533d70b43aa5adbdf3ce4629493e845936812ef622fc03e9b92ed818",
+      "width": 1440,
+      "height": 1100
+    },
+    {
+      "file": "assets/participation-preview.png",
+      "sha256": "fae9c383f7f85306c62a21420bee4e965addebf96bab001e8dd7cd89be28defc",
+      "width": 1440,
+      "height": 1100
     },
     {
       "file": "assets/mobile-calendar-preview.png",
-      "sha256": "ff9f630f570545b98303349cda109ca604275bd4bef39bf8ccf0a85283e005b4",
+      "sha256": "c45ad6cc5996d97f7458b874ab3f6a00ad007ff9de735f4b6320e56e18aade5a",
       "width": 390,
-      "height": 1709
+      "height": 844
     },
     {
       "file": "assets/mobile-event-detail-preview.png",
-      "sha256": "b9dde7ac1fe59bc37488371718379171f7d8f4acb79413326215933e9032e4ac",
+      "sha256": "0cf8f329865ac18dabbd8057c34271b23cbb03912b15cb7be1dfb80839278b32",
       "width": 390,
       "height": 844
     },
     {
       "file": "assets/mobile-participation-preview.png",
-      "sha256": "cd2f491c1c729203f7d15b61f58bf3e28035b7a02aa80156c19cbc1f4cc405e2",
+      "sha256": "ba682a6c79b74960e98e35aa27d3fb4d91da0dc180aa40202ea248179c25525d",
       "width": 390,
       "height": 844
     },
     {
-      "file": "assets/participation-preview.png",
-      "sha256": "c00e6d1442ed7243e320caee55b2be0056fb6c4cef9b8dbfeba5008cebabbaed",
-      "width": 1416,
-      "height": 1050
-    },
-    {
-      "file": "assets/product-preview.png",
-      "sha256": "1a375d60b1bf4a93f06a0d42c50322e5a9445fa6e345997f7e2a9b64b6117005",
-      "width": 1416,
-      "height": 1422
-    },
-    {
       "file": "assets/watchlist-preview.png",
-      "sha256": "726a4808ada03a9bdc5b106acccd6f63fad91a2403263f81fc04d2147176cecc",
-      "width": 1416,
-      "height": 1422
+      "sha256": "eae9cd84e7daa59665afe30f3c1ca143e77d1e33a9c7c358961b377660045b9f",
+      "width": 1440,
+      "height": 1100
     }
   ],
-  "checks": {
-    "day": {
-      "date": "11月2日",
-      "rows": 57,
-      "fresh_first": true,
-      "meeting_only": true,
-      "weekday_suffix_removed": true
-    },
-    "all_events": {
+  "all_events": {
+    "all": {
       "count": 1040,
-      "descending": true
+      "dates_desc": true,
+      "first": "2026-11-30",
+      "last": "2026-10-16"
     },
-    "updates": {
-      "label": "当日更新 198",
-      "rows": 198
-    },
-    "watchlist": {
-      "upload": {
-        "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
-        "codes": [
-          "001301",
-          "600887",
-          "605266",
-          "688246"
-        ],
-        "updates": "当日更新 0"
-      },
-      "reload": {
-        "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
-        "warning": ""
-      },
-      "badFile": {
-        "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
-        "error": "未导入：文件不是有效的.xlsx工作簿。\n现有名单和筛选保持不变。"
-      },
-      "clear": {
-        "count": 1040,
-        "summary": "简称或六位代码均可，一次筛选多家公司；名单只在本机读取和保存。"
-      }
-    },
-    "amendments": [
-      {
-        "name": "健之佳",
-        "old": "2026-10-29",
-        "latest": "2026-11-02",
-        "oldCards": 0,
-        "latestCards": 1,
-        "sources": 2
-      },
-      {
-        "name": "尚太科技",
-        "old": "2026-10-26",
-        "latest": "2026-11-10",
-        "oldCards": 0,
-        "latestCards": 1,
-        "sources": 2
-      }
-    ],
-    "mobile": {
-      "viewport": 390,
-      "pageWidth": 390,
-      "dialogWidth": 356,
-      "dialogScroll": 354
-    },
-    "jia_detail_fields": "会议时间\n2026年11月25日 14:00–15:00\n北京时间\n提问预征集\n11月18日至11月24日16:00\n最新公告\n2026-10-30\n智能体更新\n2026-10-31 02:42 · 历史建档",
-    "yili_participation_urls": [
-      "https://s.comein.cn/ytuzwbqe",
-      "https://www.yili.com/",
-      "https://roadshow.sseinfo.com/",
-      "https://roadshow.sseinfo.com/preCallQa"
-    ],
-    "template_http_download": {
-      "status": "pass",
-      "bytes": 5192,
-      "sha256": "4fffed00a3aed60fb80f7448051215084cff92059e4cac9e331ef8263f203fdf",
-      "identicalToOwnedTemplate": true,
-      "transport": "HTTP local candidate",
-      "method": "Native pointer click at observed template link; metadata checked before saving"
-    },
-    "template_file_download": {
-      "status": "pass",
-      "bytes": 5192,
-      "sha256": "4fffed00a3aed60fb80f7448051215084cff92059e4cac9e331ef8263f203fdf",
-      "identicalToOwnedTemplate": true,
-      "transport": "file:// self-contained candidate",
-      "method": "Native pointer at DOM-observed link, metadata checked before saving"
-    },
-    "live_directory": {
-      "runId": "20261031T032530-f77ce228",
-      "scope": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
-      "directory": {
-        "complete": true,
-        "run_id": "20261031T032530-f77ce228",
-        "url": "https://www.cninfo.com.cn/new/data/szse_stock.json",
-        "sha256": "59454a3e572f46159c6c741e7f3b34c43fc4a4c5be00ef26a47738bd359e0960"
-      },
-      "directoryRows": 6184,
-      "businessStatus": "incomplete",
-      "basis": "Actual live file checked after the second OS run; ordinary refresh persistence was tested separately. This is not a cross-regeneration timing claim."
-    },
-    "live_refresh": {
-      "status": "pass",
-      "before": {
-        "scope": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
-        "runId": "20261031T032530-f77ce228"
-      },
-      "after": "Test watchlist cleared through product control; no global browser storage clear."
+    "order": {
+      "count": 57,
+      "fresh": 3,
+      "fresh_first": true
     }
   },
-  "limitations": [
-    "Browser width checks do not substitute for physical phone testing.",
-    "The candidate uses a frozen verified source run.",
-    "The current live OS run has 33 source PDF transport failures and remains incomplete; the main teaching example keeps the accepted frozen source snapshot."
-  ],
-  "basis": "Actual candidate browser checks at desktop/mobile widths; source HTML SHA binds the displayed product. Source range coverage is separate from model accuracy.",
-  "related_public_evidence": [
-    "product-watchlist-checks.json",
-    "product-watchlist-software.json",
-    "product-watchlist-schedule.json"
-  ]
+  "watchlist": {
+    "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
+    "message": ""
+  },
+  "two_company_detail_checks": true,
+  "lecture_order": {
+    "headings": [
+      "先把数据跑通，再做产品和定时",
+      "开始前：准备项目、材料与账号",
+      "从需求出发，确定第一小步",
+      "让Agent从巨潮自己取回公告",
+      "把PDF转成逐页文字，先检查读到了什么",
+      "用4B提取，再逐条对照原文",
+      "加入独立标准，再决定怎样换模型",
+      "在两家公司上跑完整条数据流程",
+      "把两家公司扩到全A股的两个月，再检查一次",
+      "用已核验数据制作日历产品",
+      "接上系统定时任务，等它真的启动",
+      "按产品和实际运行验收自己的Agent",
+      "完成主线后，再比较流程和模型",
+      "卡住时，怎样继续提问",
+      "教师参考、实测与来源"
+    ],
+    "images": true,
+    "reference": "two-company-data.json",
+    "overflow": false
+  },
+  "browser": "ego-browser TaskSpace39, desktop and narrow Chromium viewport; not a physical phone test",
+  "source_recovery": "Verified separately by recovery-verification.json; these screenshots use the accepted frozen v13 data with current v18 renderer.",
+  "lecture_navigation": {
+    "status": "pass",
+    "navigation": [
+      {
+        "label": "整体步骤",
+        "href": "#workflow-map"
+      },
+      {
+        "label": "课前准备与材料",
+        "href": "#start"
+      },
+      {
+        "label": "0从需求出发，确定第一小步",
+        "href": "#step-0"
+      },
+      {
+        "label": "1让Agent从巨潮自己取回公告",
+        "href": "#step-1"
+      },
+      {
+        "label": "2把PDF转成逐页文字，先检查读到了什么",
+        "href": "#step-2"
+      },
+      {
+        "label": "3用4B提取，再逐条对照原文",
+        "href": "#step-3"
+      },
+      {
+        "label": "4加入独立标准，再决定怎样换模型",
+        "href": "#step-4"
+      },
+      {
+        "label": "5在两家公司上跑完整条数据流程",
+        "href": "#step-5"
+      },
+      {
+        "label": "6把两家公司扩到全A股的两个月，再检查一次",
+        "href": "#step-6"
+      },
+      {
+        "label": "7用已核验数据制作日历产品",
+        "href": "#step-7"
+      },
+      {
+        "label": "8接上系统定时任务，等它真的启动",
+        "href": "#step-8"
+      },
+      {
+        "label": "9按产品和实际运行验收自己的Agent",
+        "href": "#step-9"
+      },
+      {
+        "label": "完成主线后，再比较流程和模型",
+        "href": "#extensions"
+      },
+      {
+        "label": "卡住时，怎样继续提问",
+        "href": "#help"
+      },
+      {
+        "label": "教师参考、实测与来源",
+        "href": "#references"
+      }
+    ],
+    "preparationItems": 4,
+    "images": true,
+    "overflow": false
+  }
 }

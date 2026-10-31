@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import time
 import uuid
+import requests
 from zoneinfo import ZoneInfo
 from urllib.parse import urljoin
 
@@ -79,13 +80,42 @@ def _load_item(entry):
 
 
 def _fetch(row, identity, workspace, run_dir):
-    source=CninfoSource(workspace,run_dir)
-    item=source._pdf(row,identity,run_dir/'source/downloads')
+    attempts=run_dir/'source/pdf-attempts'/str(row['announcementId'])
+    attempts.mkdir(parents=True,exist_ok=True)
+    for attempt in range(1,4):
+        source=CninfoSource(workspace,run_dir)
+        receipt={'source_id':str(row['announcementId']),'attempt':attempt,
+                 'url':urljoin(STATIC_URL,row['adjunctUrl']),'started_at':datetime.now(TZ).isoformat()}
+        try:
+            item=source._pdf(row,identity,run_dir/'source/downloads')
+            receipt.update(status='complete',pdf_sha256=item['pdf_sha256'],physical_pages=len(item['pages']))
+            break
+        except Exception as exc:
+            retryable=isinstance(exc,(requests.ConnectionError,requests.Timeout,requests.exceptions.ChunkedEncodingError))
+            receipt.update(status='failed',retryable=retryable,error=type(exc).__name__+': '+str(exc)[:400])
+            if not retryable or attempt==3:
+                raise
+        finally:
+            receipt['finished_at']=datetime.now(TZ).isoformat()
+            (attempts/(uuid.uuid4().hex+'.json')).write_text(json.dumps(receipt,ensure_ascii=False,indent=2))
+            source.session.close()
+        time.sleep(1.4*attempt)
     item['source_stock_code']=row['secCode']
     item['retrieved_at']=datetime.now(TZ).isoformat()
     pages=Path(item['pdf_path']).with_suffix('.pages.json')
     item['pages_path']=str(pages);item['pages_sha256']=digest(pages)
     return item
+
+
+def _source_transport_failed(entry):
+    errors=entry.get('errors',[])
+    return entry.get('status')=='needs_review' and bool(errors) and all(
+        re.match(r'^source_download_or_text: (?:SSLError|ConnectionError|Timeout|ReadTimeout|ConnectTimeout|ChunkedEncodingError):',error)
+        for error in errors)
+
+
+def _source_download_failed(entry):
+    return any(error.startswith('source_download_or_text:') for error in entry.get('errors',[]))
 
 
 def _screen_source(item, config):
@@ -144,7 +174,7 @@ def run_market(config, workspace, trigger='manual', claim_id=None, *, refresh=Fa
         raise ValueError('市场范围变化需要新工作区，避免旧队列混入。')
     fingerprint=hashlib.sha256((PROMPT_HASH+json.dumps(config['models'])).encode()).hexdigest()
     validation_key=hashlib.sha256((fingerprint+digest(Path(__file__).with_name('extract.py'))+digest(Path(__file__).with_name('scope.py'))).encode()).hexdigest()
-    unfinished=any(entry.get('status') not in TERMINAL for entry in queue.get('items',{}).values())
+    unfinished=any(entry.get('status') not in TERMINAL or _source_transport_failed(entry) for entry in queue.get('items',{}).values())
     resume=bool(queue and unfinished and queue.get('day')==today and not refresh and trigger!='scheduler')
     source_workspace=Path(queue['source_workspace']) if resume else workspace/'market-days'/today/run_id
     if not queue:
@@ -215,6 +245,7 @@ def run_market(config, workspace, trigger='manual', claim_id=None, *, refresh=Fa
     counts={'source_rows':len(discovery['rows']),'a_share_rows':0,'metadata_excluded':0,
             'non_a_share':0,'identity_review':0,'universe_orgs':len(groups)}
     candidate_rows={};excluded=[]
+    source_retries=[]
     for row in discovery['rows']:
         key=str(row['announcementId']);pair=pairs.get((str(row.get('secCode')),row.get('orgId')))
         title=re.sub('<[^>]+>','',row['announcementTitle'])
@@ -248,15 +279,19 @@ def run_market(config, workspace, trigger='manual', claim_id=None, *, refresh=Fa
         identity={'code':str(current['code']),'name':current['zwjc'],'org_id':row['orgId']}
         stamp=hashlib.sha256(json.dumps(row,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
         entry=entries.setdefault(key,{'status':'fetch_pending','source_id':key,'attempts':[]})
+        if resume and _source_transport_failed(entry):
+            source_retries.append({'id':key,'prior_errors':entry['errors']})
+            entry['status']='fetch_pending'
         changed=entry.get('row_sha256')!=stamp
         if changed or (fresh and source_meta['date']>=refresh_start):
             entry['status']='fetch_pending'
-        if entry.get('fingerprint')!=fingerprint and entry.get('status') in {'accepted','needs_review','retry_pending'}:
+        source_blocked=entry.get('status')=='needs_review' and _source_download_failed(entry)
+        if not source_blocked and entry.get('fingerprint')!=fingerprint and entry.get('status') in {'accepted','needs_review','retry_pending'}:
             entry['status']='model_pending' if entry.get('item_path') else 'fetch_pending'
-        if entry.get('status')=='needs_review' and entry.get('item_path') and entry.get('failed_fingerprint')!=validation_key:
+        if not source_blocked and entry.get('status')=='needs_review' and entry.get('item_path') and entry.get('failed_fingerprint')!=validation_key:
             entry['status']='model_pending'
         entry.update(row_sha256=stamp,identity=identity,source=source_meta)
-        if entry.get('item_path') and entry.get('screen_revision')!=screen_revision and entry['status'] in {'excluded_source','model_pending','needs_review'}:
+        if not source_blocked and entry.get('item_path') and entry.get('screen_revision')!=screen_revision and entry['status'] in {'excluded_source','model_pending','needs_review'}:
             try:
                 item=_load_item(entry)
                 reason=_screen_source(item,config)
@@ -273,6 +308,8 @@ def run_market(config, workspace, trigger='manual', claim_id=None, *, refresh=Fa
            'discovery_sha256':digest(discovery['manifest_path']),'universe_path':str(table_path),
            'universe_sha256':digest(table_path),'items':entries,'metadata_counts':counts}
     write_json(run_dir/'metadata-exclusions.json',{'items':excluded})
+    write_json(run_dir/'source-retries.json',{'source_mode':'frozen_resume' if resume else 'live_refresh',
+               'discovery_sha256':queue['discovery_sha256'],'items':source_retries})
     def checkpoint():
         write_json(queue_path,queue)
     checkpoint()
@@ -330,7 +367,7 @@ def run_market(config, workspace, trigger='manual', claim_id=None, *, refresh=Fa
             entry.update(status='accepted',record=outcome['record'],errors=[],transport_failures=0)
             if outcome['status']=='recovered_revalidated':cached.append(key)
         elif outcome['status']=='cached_revalidated':
-            cached.append(key);entry['status']='accepted'
+            cached.append(key);entry.update(status='accepted',errors=[])
             if outcome.get('record'):
                 entry['record']=outcome['record']
         elif outcome['status']=='deferred':
@@ -405,6 +442,7 @@ def run_market(config, workspace, trigger='manual', claim_id=None, *, refresh=Fa
                   'publication_start':config['source_start'],'publication_end':source_end,
                   'source_checked_at':discovery.get('checked_at'),'source_retrieval_start':discovery.get('retrieval_start'),
                   'source_retrieval_end':discovery.get('retrieval_end'),'source_mode':'frozen_resume' if resume else 'live_refresh'}
+    market_stats['retried_source_ids']=[item['id'] for item in source_retries]
     market_stats['outside_window']=sum(meeting_window(event,scope)=='outside' for event in state['events'].values())
     market_stats['unknown_provider_outcomes']=len({path for entry in entries.values() for path in entry.get('unknown_receipts',[])})
     market_stats['calendar_event_count']=sum(meeting_window(event,scope)!='outside' for event in state['events'].values())

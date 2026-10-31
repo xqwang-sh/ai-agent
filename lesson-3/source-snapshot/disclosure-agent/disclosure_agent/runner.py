@@ -186,6 +186,31 @@ def render_calendar(state: dict, summary: dict, workspace: Path) -> str:
     return render_product(state, summary, directory=directory)
 
 
+def render_saved(workspace: Path) -> dict:
+    workspace=Path(workspace).resolve()
+    with run_lock(workspace) as locked:
+        if not locked:
+            return {'status':'skipped_overlap','run_id':None}
+        state,source=load_publication(workspace)
+        if source.get('status')!='complete' or source.get('issues'):
+            raise ValueError('数据须核验通过，才能制作产品。')
+        state,summary=deepcopy(state),deepcopy(source)
+        origin=source.get('presentation_origin')
+        if not origin:
+            origin={key:source.get(key) for key in ['run_id','as_of','program_sha256','trigger','schedule_claim_id','model_calls','usage']}
+            origin['calendar_sha256']=hashlib.sha256((workspace/'runs'/source['run_id']/'calendar.html').read_bytes()).hexdigest()
+        run_id=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-view-'+uuid.uuid4().hex[:8]
+        directory=workspace/'runs'/run_id;directory.mkdir(parents=True)
+        before_hash=_program_hash()
+        summary.update(run_id=run_id,program_sha256=before_hash,trigger='presentation',presentation_origin=origin,
+                       rendered_at=datetime.now(timezone.utc).isoformat(),schedule_claim_id=None,model_calls=0,cached_notice_ids=[],changes=[],trace=[],
+                       usage={'known_total_tokens':0,'calls_with_unknown_usage':0})
+        for field in ['started_at','finished_at','elapsed_seconds']:
+            summary.pop(field,None)
+        state['last_run_id']=run_id
+        return publish(workspace,directory,state,summary)
+
+
 def run(config_path: Path, workspace: Path, trigger: str = "manual", fixture: Path | None = None, claim_id: str | None = None, *, refresh=False) -> dict:
     config = load_config(config_path)
     workspace = Path(workspace).resolve()

@@ -42,6 +42,30 @@ def test_amendment_never_pairs_original_start_with_new_deadline():
     assert question_collection_range(event,notices,sources) is None
 
 
+def test_explicit_question_period_is_kept_separately_from_registration_deadline():
+    event,notices,sources=sample('预报名时间为2030年11月20日至11月24日16:00。')
+    paragraph='投资者可于2030年11月18日至11月24日16:00登录“提问预征集”栏目，向公司提问。'
+    sources[0]['participation'].append({'page':3,'quote':paragraph})
+    result=question_collection_range(event,notices,sources)
+    assert result['text']=='11月18日至11月24日16:00'
+    assert result['page']==3 and result['quote'] in paragraph
+
+
+def test_other_question_period_is_not_rewritten_to_match_registration_cutoff():
+    event,notices,sources=sample('预报名时间为2030年11月20日至11月24日16:00。')
+    sources[0]['participation'].append({'page':3,'quote':'2030年11月18日至11月23日16:00登录提问预征集栏目。'})
+    assert question_collection_range(event,notices,sources) is None
+
+
+@pytest.mark.parametrize('quote',[
+    '预报名时间为2030年11月18日至11月24日16:00，问题征集安排另行通知。',
+    '投资者可于2030年11月18日至11月24日16:00完成预报名，问题征集时间另见后续公告。',
+])
+def test_question_collection_mentioned_but_unannounced_does_not_relabel_registration_range(quote):
+    event,notices,sources=sample(quote)
+    assert question_collection_range(event,notices,sources) is None
+
+
 def test_source_mismatch_and_pending_field_block_display_range():
     event,notices,sources=sample()
     sources[0]['participation'][0]['quote']='另一条提问时间2030年11月18日至11月24日16:00。'

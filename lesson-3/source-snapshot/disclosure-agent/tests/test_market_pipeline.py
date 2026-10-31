@@ -87,6 +87,42 @@ def test_small_budget_resumes_without_repaying_or_duplicating_events(environment
     assert runner.load_state(workspace)['events']==original['events']
 
 
+def test_network_source_recovery_refetches_only_failed_pdf_before_reusing_answer(environment,monkeypatch):
+    import requests
+    config,workspace,calls=environment
+    runner.run(config,workspace);runner.run(config,workspace)
+    original=market._fetch
+    def broken(row,*args):
+        if str(row['announcementId'])=='101':raise requests.ConnectionError('synthetic connection reset')
+        return original(row,*args)
+    monkeypatch.setattr(market,'_fetch',broken)
+    failed=runner.run(config,workspace,refresh=True)
+    assert failed['status']=='incomplete'
+    calls['pdf'].clear();monkeypatch.setattr(market,'_fetch',original)
+    result=runner.run(config,workspace)
+    assert result['status']=='complete' and result['model_calls']==0
+    assert calls['pdf']==['101']
+    assert result['market']['source_mode']=='frozen_resume'
+    queue=json.loads((workspace/'market-queue.json').read_text())
+    assert queue['items']['101']['status']=='accepted' and queue['items']['101']['errors']==[]
+
+
+@pytest.mark.parametrize('older_field',[None,'fingerprint','screen_revision'])
+def test_unreadable_source_cannot_be_cleared_by_rechecking_its_old_cached_pdf(environment,monkeypatch,older_field):
+    config,workspace,calls=environment
+    runner.run(config,workspace);runner.run(config,workspace)
+    path=workspace/'market-queue.json';queue=json.loads(path.read_text())
+    queue['items']['101'].update(status='needs_review',errors=['source_download_or_text: HTTPError: 403 forbidden'])
+    if older_field:queue['items']['101'][older_field]='older-version'
+    queue['items']['202']['status']='model_pending'
+    path.write_text(json.dumps(queue));calls['pdf'].clear()
+    result=runner.run(config,workspace)
+    assert result['status']=='incomplete'
+    queue=json.loads(path.read_text())
+    assert queue['items']['101']['status']=='needs_review'
+    assert queue['items']['101']['errors']==['source_download_or_text: HTTPError: 403 forbidden']
+
+
 def test_failed_prefix_does_not_starve_later_records(environment):
     config,workspace,calls=environment;calls['failed'].add('101')
     first=runner.run(config,workspace)

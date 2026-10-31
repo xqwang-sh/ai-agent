@@ -3,12 +3,12 @@ import json
 from pathlib import Path
 
 from disclosure_agent import schedule
-from disclosure_agent.runner import run
+from disclosure_agent.runner import run, render_saved
 
 
 def main():
     parser = argparse.ArgumentParser(description="巨潮业绩说明会监控Agent")
-    parser.add_argument("command", choices=["run", "tick", "schedule"])
+    parser.add_argument("command", choices=["run", "render", "tick", "schedule"])
     parser.add_argument("action", nargs="?", choices=["install", "status", "test", "pause", "resume"])
     parser.add_argument("--config", type=Path, default=Path(__file__).parent / "config.json")
     parser.add_argument("--workspace", type=Path, default=Path(__file__).parent / "runtime/live")
@@ -22,6 +22,8 @@ def main():
         root = Path(__file__).resolve().parent
         if args.command == "run":
             result = run(args.config, args.workspace, args.trigger, args.fixture, claim_id=args.claim_id, refresh=args.refresh)
+        elif args.command == "render":
+            result = render_saved(args.workspace)
         elif args.command == "tick":
             result = schedule.tick(args.config, args.workspace, root)
         elif args.action == "install":

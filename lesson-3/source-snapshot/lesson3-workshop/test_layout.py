@@ -13,12 +13,16 @@ class Images(HTMLParser):
         if tag=='section' and attrs.get('id','').startswith('step-'):self.step=attrs['id']
         if tag=='img':self.images.append((self.step,attrs.get('src')))
 
-def test_lesson_keeps_calendar_showcase_in_step_seven():
+def test_lesson_shows_product_before_preparation_and_building():
     html=render((ROOT/'lesson.md').read_text());reader=Images();reader.feed(html)
-    assert {'assets/product-preview.png','assets/event-detail-preview.png','assets/watchlist-preview.png'} <= {src for step,src in reader.images if step=='step-7'}
+    images={'assets/product-preview.png','assets/event-detail-preview.png','assets/watchlist-preview.png'}
+    assert images <= {src for step,src in reader.images if step is None}
+    assert html.index('id="product-showcase"') < html.index('id="readiness"') < html.index('id="step-0"')
+    assert all(html.index('id="product-showcase"') < html.index('src="'+src+'"') < html.index('id="readiness"') for src in images)
+    assert all(html.count('src="'+src+'"')==1 for src in images)
     assert '伊利参与方式实拍' in html and '手机宽度的日历' in html and '手机宽度的完整参与方式' in html
-    assert '先看展示产品' not in html
+    assert 'href="#product-showcase"' in html
 
 def test_unknown_step_section_cannot_disappear():
-    source=(ROOT/'lesson.md').read_text().replace('### 这一阶段要交付的日历产品','### 未登记的展示内容')
+    source=(ROOT/'lesson.md').read_text().replace('### 现在怎么做','### 未登记的展示内容',1)
     with pytest.raises(ValueError,match='未登记的展示内容'):render(source)

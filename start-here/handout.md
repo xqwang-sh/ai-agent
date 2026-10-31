@@ -1,0 +1,540 @@
+# 零基础必看入门
+
+金融智能体系列讲座 · 课前必做 · 更新于 2026 年 10 月 31 日
+
+这份讲义写给平时使用 Word、Excel、PPT，没有编程经验的老师。先把模型、Harness、Agent、API 和文件格式之间的关系弄清楚，再根据自己的工具和教学需要，选择后面的操作。
+
+第一部分讲概念。第二部分从选择你已经在用的工具开始，已有可用 Agent 的老师可以直接沿用。安装软件、配置服务和检查运行环境分别提供入口，需要哪一项，就读哪一项。
+
+完成相关准备后，回到正在读的讲义，确认开头的简短清单，再继续本讲操作。已经完成的准备不用重做。
+
+## 第一部分：先把概念理清 {#concepts}
+
+### 大模型怎样被调用 {#concept-models}
+
+大模型接收一段输入，返回文字、判断结果，或者下一步要使用什么工具的请求。例如，你提供一段财报文字，要求它找出营业收入，它就会根据收到的内容生成回答。
+
+我们在电脑上看到的聊天界面，是使用模型的入口。模型本身运行在哪里、软件怎样把任务交给模型，要另外看。
+
+#### 模型可以在云端，也可以在本地运行
+
+| 方式 | 模型在哪里运行 | 软件怎样使用它 | 需要准备什么 |
+| --- | --- | --- | --- |
+| 云端托管 | DeepSeek、硅基流动等服务提供方的服务器 | 软件通过网络把请求发给服务方，再接收回答 | 对应服务的授权、可用额度和网络连接 |
+| 本地部署 | 你自己的电脑或单位的服务器 | 软件连接这台机器上已经运行的模型服务 | 部署模型的软件、模型文件和足够的计算资源 |
+
+API 可以理解为**给程序使用的通信入口**。它规定请求发到哪里、需要提交哪些内容，以及结果怎样返回。人在聊天框里输入文字，软件会把这些文字整理成模型请求。
+
+“云端还是本地”说的是模型运行的位置。“通过 API 调用”说的是软件与模型通信的方法。本地模型也经常提供 API，例如 Ollama 的本机模型服务就有这样的入口。两者可以同时成立。参见 [Ollama 官方 API 说明](https://docs.ollama.com/api/introduction)。
+
+<div class="route-map" aria-label="云端模型与本地模型的调用方式">
+<div><strong>使用云端模型</strong><p>你的软件 → 网络上的模型 API → 提供方服务器上的模型 → 返回结果</p></div>
+<div><strong>使用本地模型</strong><p>你的软件 → 本机或单位服务器上的模型 API → 已部署的模型 → 返回结果</p></div>
+</div>
+
+本系列讲座主要用云端托管模型。老师不需要先下载大模型，也不需要为此购买显卡。已经有可用本地模型的老师，可以继续使用自己的方案，留意该模型是否支持课堂需要的文字、图片和工具调用能力。
+
+#### 模型有大小，怎样选择调用方式 {#model-size}
+
+模型常用 4B、27B 等参数规模区分大小。参数规模较大的模型，通常需要更多内存、显存和计算资源，个人电脑未必能部署。有些较小的模型可以在本机运行，但仍要看电脑配置、模型的实际运行要求和任务长度。小模型也不意味着每台电脑都能顺畅运行。
+
+如果自己的电脑资源足够，可以本地部署合适的模型，让软件连接本机的模型 API。如果资源不够，也可以调用托管在服务方服务器上的模型，把计算交给对方完成。这同样适用于小模型。
+
+例如，[硅基流动](https://docs.siliconflow.cn/docs/userguide/introduction)提供多种大小模型的托管 API。你可以通过它调用需要的小模型，也可以选用平台提供的较大模型，本机负责发送请求和接收结果。它为多种模型提供较统一的调用格式，基础程序可以沿用相近的请求写法；更换模型时，仍需核对准确的模型 ID、支持的功能、价格和额度。
+
+因此，模型较小但本机算力不足时，可以选择“通过硅基流动等平台调用云端小模型”这条路线。后面的“让程序连接硅基流动”会介绍具体操作。
+
+#### 同样是调用模型，授权方式可能不同
+
+有些软件通过订阅或账号登录，已经替你安排了模型访问；有些软件需要你自己填写 API Key。是否要另外申请 Key，要看你正在使用的软件和服务。
+
+API Key 是程序调用服务时使用的授权凭据。它与登录密码、手机验证码不同。账号已经注册、Key 已经创建、账户还有额度，也是不同的状态。
+
+如果软件需要你自己连接模型，通常要对应好下面几项：
+
+| 项目 | 它回答什么问题 | 例子 |
+| --- | --- | --- |
+| 服务方 | 向谁请求模型服务 | DeepSeek 官方平台、硅基流动 |
+| API 地址 | 请求发到哪个入口 | 由所选服务方提供，可能由软件自动填写 |
+| 模型 ID | 具体使用哪一个模型 | 模型目录中的准确名称 |
+| API Key | 用谁的授权和额度 | 该服务方给本人账号签发的 Key |
+
+模型名称相似，不能据此混用不同平台的 Key。日常聊天网页能用，也不直接证明开放平台的 API 已经可用。
+
+### Harness 怎样把模型变成能办事的 Agent {#concept-harness}
+
+模型可以提出“读一下这个文件”“计算这组数字”。真正读取文件、运行计算、保存结果，需要软件把这些动作执行出来，再把结果交回模型。
+
+这层负责连接模型、提供工具、管理上下文、执行权限和后续轮次的软件，通常称为 Harness。本课可以先用一个简化关系理解：
+
+<p class="agent-formula">Agent = Harness + 模型</p>
+
+模型提供判断和生成能力，Harness 组织它怎样使用工具、怎样继续工作。OpenCode、Claude Code、Codex 等工具都提供了这类运行能力；日常说“我用的 Agent”时，往往把软件和接上的模型一起称呼。这个软件层的作用，可参考 [Anthropic 对 Agent Harness 的说明](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)。
+
+#### 一次读文件任务实际怎样发生
+
+假设你说：“请读项目里的说明，整理成一份笔记，并保存下来。”
+
+<ol class="call-loop">
+<li><strong>你提出任务。</strong>说明要读什么、做什么、结果放在哪里。</li>
+<li><strong>Harness 请求模型。</strong>把任务、需要的上下文和可用工具的说明交给模型。</li>
+<li><strong>模型提出下一步动作。</strong>例如请求列出目录、读取某个文件。</li>
+<li><strong>Harness 执行工具。</strong>在权限允许的范围内读取文件，把读到的内容返回给模型。</li>
+<li><strong>模型根据结果继续。</strong>内容不够时再读，足够时整理笔记，并请求保存。</li>
+<li><strong>Harness 写出文件。</strong>执行保存，把真实执行结果反馈给模型，再向你汇报。</li>
+</ol>
+
+所以，“文件在电脑上”和“模型已经读到文件”之间，还隔着一次实际读取。只把一个本机路径发给远程模型，远程模型并不会自动看见那里的内容。需要 Harness 的读取工具把资料取出来，或者由你明确提供内容。
+
+同一个模型接在不同软件里，能做的事情也可能不同。一个软件只让它聊天，另一个软件提供文件、终端和数据查询工具，后者就能执行更多步骤。能执行什么，还取决于你实际授予的权限。
+
+#### 编程 Agent 与你做出的程序，是两个运行过程
+
+讲座中先用自己的编程 Agent 帮忙搭建，再让搭出的工作流或应用去处理财报、公告。两处都可能调用模型，但用途和配置位置不同。
+
+| 场景 | 谁在组织这次工作 | 模型做什么 | 示例 |
+| --- | --- | --- | --- |
+| 帮你搭建程序 | 你选用的编程工具及其 Harness | 理解需求、写文件、修改程序 | OpenCode 连接 DeepSeek；已有其他工具的老师沿用自己的工具 |
+| 处理财报或公告 | 你搭出的工作流或应用 | 按程序交来的任务提取、分类或读图 | 你的程序调用任务需要的文本或视觉模型 |
+
+编程 Agent 能聊天，只说明第一处已经能用。你写出的程序能否调用模型，还要看第二处的授权和连接。
+
+工作流，workflow，是程序安排的一组处理步骤。第一讲先用固定步骤组织提取、换算和计算，程序负责顺序与检查。后续搭建 Agent 时，再根据业务需要安排模型判断、工具执行和持续运行。
+
+### 数据 API：让程序直接取得数据 {#concept-data}
+
+过去我们常在网站上搜索、下载 Excel，再打开文件处理。Agent 也可以这样取数，但如果数据源提供 API，程序就能直接提交查询条件，取回结构明确的结果。
+
+例如，程序向数据服务发送“查询某家公司2026年半年报的合并利润表”，服务返回公司、报告期、字段和数值。你不必先手工下载一张表，再告诉模型去哪里找。
+
+这类入口叫**数据 API**。它与前面讲的模型 API 作用不同。
+
+| 你在请求什么 | 使用哪一类 API | 返回什么 |
+| --- | --- | --- |
+| “请读这段财报，找出营业收入” | 模型 API | 模型根据输入生成的提取结果 |
+| “请返回这家公司这一期的营业收入记录” | 数据 API | 数据服务中对应的记录及元数据 |
+
+<div class="route-map data-route" aria-label="数据获取与模型分析的关系">
+<div><strong>先取得资料</strong><p>你的程序 → 数据 API → 取回数值、期间、单位和来源信息</p></div>
+<div><strong>需要理解或分析时，再使用模型</strong><p>你的程序 → 把取得的资料交给模型 → 形成待核对的整理或分析结果</p></div>
+</div>
+
+程序取得数据并不总需要模型参与。是否把结果交给模型，要看接下来准备完成什么任务。模型的回答也不能替代一次真实取数。
+
+#### 按数据类型选择接口 {#data-source-types}
+
+先看自己要研究的对象。GDP、物价、地区就业等属于宏观或地区统计；某一家公司的报表、行情和公告，则是公司层面的记录。下面按数据类型，把不同来源与工具放在同一张表里。
+
+<div class="data-source-table" markdown="1">
+
+| 数据类型 | 来源或工具 | 可以取得什么 | 怎样接入、费用与权限 |
+| --- | --- | --- | --- |
+| 宏观与地区统计 | Tushare Pro | 中国 GDP、CPI、货币供应量等 | 注册并取得 Token，通过 [HTTP 或 Python 接口](https://tushare.pro/document/1?doc_id=130)查询；按具体接口核对积分和权限，参见 [GDP 接口](https://tushare.pro/document/2?doc_id=227) |
+| 宏观与地区统计 | AKShare | 中国宏观指标及其他公开财经数据 | [开源 Python 接口库](https://akshare.akfamily.xyz/introduction.html)，由 Agent 在本机运行；数据从上游公开来源取得，参见 [中国宏观目录](https://akshare.akfamily.xyz/data/macro/macro_china.html)，使用条件和可用性要看具体接口与上游 |
+| 宏观与地区统计 | 世界银行，World Bank | 各国 GDP、人口、发展指标 | [Indicators API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) 可直接访问，不需要 API Key |
+| 宏观与地区统计 | IMF | 宏观、国际收支、财政和金融统计 | 公开统计数据可免费获取；[API 探索门户](https://data.imf.org/en/Resource-Pages/IMF-API)按当前要求登录，参见 [免费数据说明](https://www.imf.org/en/news/articles/2015/09/28/04/53/sonew012615a) |
+| 宏观与地区统计 | OECD | 国民经济核算、就业、教育等统计 | [官方 API](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) 免费提供，需遵守使用条件和请求频率限制 |
+| 利率、汇率时间序列 | 欧洲央行，ECB | 汇率、利率及相关金融统计 | 通过 [ECB Data Portal API](https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0)请求公开统计数据，按其规则使用 |
+| 利率、汇率时间序列 | FRED，圣路易斯联储 | 利率、汇率及其他宏观金融序列 | 使用 [免费账号](https://fred.stlouisfed.org/help/account/fred-account-features/register/)申请个人 [API Key](https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html)，具体数据遵守各自使用条件 |
+| 公司层面数据 | 同花顺金融数据服务 | A 股公司财务报表、行情等结构化记录 | 通过 [数据服务](https://fuyao.aicubes.cn/docs/quickstart/)取得本人 Key，按账号实际权限调用；本系列第二讲用它核对财务数据 |
+| 公司层面数据 | Tushare Pro | 上市公司财务报表、行情和基础资料 | HTTP 或 Python 接口，需本人 Token；[财务接口](https://tushare.pro/document/2?doc_id=33)有积分门槛，部分能力需单独开通，查看 [权限说明](https://tushare.pro/document/2?doc_id=290) |
+| 公司层面数据 | SEC EDGAR | 公司披露记录、财务报表中的结构化指标 | [公开查询 API](https://www.sec.gov/search-filings/edgar-application-programming-interfaces)无需 API Key；自动访问需按 [开发者要求](https://www.sec.gov/about/webmaster-frequently-asked-questions)标明程序身份、控制频率 |
+
+</div>
+
+表中按举例的用途归类，同一平台可能覆盖多种数据。AKShare 是本机运行的接口库；其他一些来源提供远程 HTTP 数据服务。接入方式已分别标明，选定后可以让自己的 Agent 按官方文档处理。
+
+公司层面的记录是微观数据的一种。若研究需要住户调查、企业调查的原始样本，还要另行确认能否通过 API 获取，还是需要申请数据包。宏观指标接口不能替代这些样本。
+
+这些入口供按问题选择，不需要现在逐个注册。“免费”“需要 Key”“需要积分或付费权限”分别看，具体条件以各来源当前说明为准。
+
+#### 看一个不需要 Key 的请求
+
+这是一个 [世界银行数据 API 请求](https://api.worldbank.org/v2/country/CHN/indicator/NY.GDP.MKTP.CD?format=json&date=2023)，条件是中国、2023年、以现价美元计价的 GDP，返回格式为 JSON。
+
+这个网址已经把查询条件写在请求中。打开后看到的会是数据，而不是排好版的介绍文章。返回里可以找到国家、年份、指标名称和数值。程序也可以请求同一个入口，把结果保存下来。后面讲 JSON 时，会解释这种格式为什么便于程序处理。
+
+#### 本系列讲座用到的数据来源
+
+[同花顺金融数据服务](https://fuyao.aicubes.cn/docs/quickstart/)是第二讲的外部财务数据来源。你搭出的程序从它取得结构化报表，再与财报提取值核对。它的 API Key 与模型服务的 Key 分开。
+
+数据源返回了记录，也还要核对公司、报告期、累计或单季、合并口径、币种和单位。两处结果不一致时，应回到原文和数据定义查原因。
+
+第三讲的原始资料主要来自[巨潮资讯](https://www.cninfo.com.cn/)的公开公告与 PDF。当前课堂路线使用网站实际提供的查询与下载方式，不要求老师先购买另一个“巨潮 API Key”。
+
+### Agent 怎样读取文件和文档 {#concept-files}
+
+Agent 处理资料时，需要先通过工具取得内容。格式越直接、结构越清楚，通常越容易送入后续处理。复杂排版、图片和表格往往需要专门工具。
+
+#### 先认识文件、目录与路径
+
+- 文件保存一份具体内容，例如一份 Word 文档或一段程序。
+- 文件夹，也叫目录，用来组织文件。本课的“项目工作目录”就是某个任务的资料和程序所在的文件夹。
+- 路径表示位置。完整路径从电脑上的起点写起；相对路径从当前工作目录找起。
+- 扩展名是文件名最后的 `.docx`、`.pdf` 等部分。它帮助软件判断类型，但把 `.docx` 改名为 `.md` 不会完成格式转换。
+
+例如，项目里有 `data/report.pdf`，意思是当前工作目录下的 `data` 文件夹中，有一份 `report.pdf`。Agent 打开的工作目录不同，同样的相对路径也可能指向不同位置。
+
+#### 哪些格式更直接，哪些需要额外处理
+
+| 格式 | 适合保存什么 | Agent 读取时要注意什么 |
+| --- | --- | --- |
+| `.txt` 纯文本 | 连续文字、简单记录 | 内容直接可读，标题与表格关系需要用文字交代 |
+| `.md` Markdown | 任务说明、笔记、步骤、报告正文 | 文字中直接保留标题、列表等结构，复杂图片和表格仍需另外处理 |
+| `.html` 网页 | 人可以在浏览器阅读的报告或页面 | 页面文字与结构可以提取；动态加载的内容可能要实际打开网页才取得到 |
+| `.csv` 表格文本 | 一行一条的简单数据 | 适合程序读表，必须明确列名、单位、日期、编号和缺失值 |
+| `.json` 结构化记录 | 字段明确的数据交换结果 | 适合程序按字段读取，需要区分数值、文字和空值 |
+| `.docx` Word | 正式文稿、审阅与排版 | 要借助文档读取工具，文本框、批注、图片、页眉及合并单元格可能遗漏 |
+| `.pptx` PPT | 投影展示、图表和图形关系 | 文字提取顺序可能与观看顺序不同，箭头、图片、图表和备注需要单独检查 |
+| `.pdf` PDF | 固定页面的正式文件和原始证据 | 先看文字层是否可用，再处理表格、图片、页码和阅读顺序 |
+| `.xlsx` Excel | 多工作表、公式和复杂表格 | 需要分别处理公式、计算结果、隐藏行列、单位和合并单元格 |
+
+Markdown 是带结构标记的文字。例如，`# 标题` 表示一级标题，`- 内容` 表示列表。任务说明和连续文字采用 Markdown，Agent 通常可以直接读到结构，不必先解析 Office 版式。
+
+HTML 也是文字文件，但含有页面结构和显示方式。浏览器把它显示成人可以阅读的网页；程序可以从中提取内容。它适合做结果展示，但并不是每次使用 Agent 都需要生成网页。
+
+Word、PPT、PDF 并非一概不能读。它们通常需要先用工具提取文字或转成页面图像，再交给相应模型。判断是否读全，要把结果与原件对照。
+
+#### PDF 要区分文字层与页面图像
+
+有些 PDF 有可用文字层，工具能提取正文。有些 PDF 主要是一页页扫描图片，需要 OCR 文字识别，或者让能看图片的视觉模型读取页面。
+
+已经做过 OCR 的扫描 PDF 也可能选中文字。因此，是否能选字，只是判断当前文字层是否可用的线索，不能证明所有内容都正确。
+
+即使一段正文能提取，表格仍可能列错位，多栏文字也可能混在一起。财务材料尤其要保留年份列头、指标名称、单位、负号和出处页。PDF 第几张页面与纸面印刷页码可能不同，也要分开。
+
+原始 Word、PPT、PDF 留作核对依据。另存的文字、Markdown、CSV 或 JSON 是处理副本，要保留来源关系。格式转换不会自动提高原文的可信度，也可能丢掉内容。
+
+#### CSV 和 JSON 为什么适合程序处理
+
+下面只用一条虚构记录说明格式：
+
+```csv
+资料编号,报告期,收入_万元
+0007,2026H1,123.40
+```
+
+CSV 第一行是列名，后面一行是一条记录。它不保存 Excel 的公式、颜色或多个工作表。编号 `0007` 要按文字保存，否则 Excel 的自动转换可能把它变成 `7`。
+
+JSON 把字段名和对应内容写在一起：
+
+```json
+{
+  "record_id": "0007",
+  "period": "2026H1",
+  "revenue": 123.40,
+  "unit": "万元",
+  "source_page": null
+}
+```
+
+这里的 `record_id` 是字段名，`"0007"` 是文字，`123.40` 是数值，`null` 表示此处没有填写页码。空值不能当成0。程序按这些字段读取，比从一句话中再猜哪些数字表示什么更直接。
+
+### 反复遇到的词，在这里查 {#glossary}
+
+不需要一次记住整张表。后面遇到陌生词时，再回来看。
+
+| 词 | 在本讲义中的意思 |
+| --- | --- |
+| 模型 | 根据收到的任务和上下文生成判断、文字或工具请求的部分 |
+| Harness | 组织模型调用、工具执行、权限和后续轮次的软件层 |
+| Agent | 模型与 Harness 结合后，按任务使用工具推进工作的系统 |
+| 工具 | 读取文件、运行计算、查询数据、保存结果等具体能力 |
+| Prompt，提示词 | 发给模型或 Agent 的任务说明，普通中文也可以 |
+| 模型 API | 程序把输入交给模型、接收模型结果的入口 |
+| 数据 API | 程序提交查询条件、取得数据源记录的入口 |
+| API Key | 服务方给账号签发的调用凭据，使用时交给对应程序的授权配置 |
+| 模型 ID | 请求中填写的准确模型名称，与软件界面的宣传名称可能不同 |
+| 上下文 | 模型这一轮能参考的任务、对话和工具返回，不等于电脑上的全部文件 |
+| Token | 服务计算模型文字处理量时使用的单位，不是固定一个汉字 |
+| 工作流，workflow | 程序安排的一组处理步骤，可包含模型请求与固定工具 |
+| 工作目录 | 当前任务的资料和程序所在文件夹 |
+| 终端 | 电脑上执行命令的窗口，Mac 可用 Terminal，Windows 可用 PowerShell |
+| Node.js、Python | 在本机运行相应程序的环境，安装 Agent 不代表它们都已安装 |
+| CLI | 通过命令使用工具的方式，例如同花顺 hithink-finance 工具 |
+| MCP | 让 Agent 连接外部工具的一种协议，不是另一份模型或金融数据库 |
+| 环境变量 | 程序启动时可以读取的一项设置，例如用来提供服务授权 |
+| UTF-8 | 常用文字编码，保存中文文本时会用到。乱码时要核对编码与读取方法 |
+
+## 第二部分：按需要准备自己的工具 {#practice}
+
+下面每一项都说明为什么做、怎样操作、操作后会出现什么。已有可用工具或服务的部分可以跳过，实际应用的运行与验收随各讲完成。
+
+### 先选择你正在用的 Agent 或 Harness {#practice-tools}
+
+先选已有工具，是为了沿用你熟悉的软件、模型和授权。请选择你已经能用来操作项目的工具；普通聊天网页不一定具备读取本机目录和运行程序的能力。
+
+<fieldset class="tool-picker" id="tool-picker">
+<legend>你现在常用哪一种工具？可以多选。</legend>
+<div class="tool-options">
+<label><input type="checkbox" name="existing-tool" value="codex">Codex</label>
+<label><input type="checkbox" name="existing-tool" value="claude-code">Claude Code</label>
+<label><input type="checkbox" name="existing-tool" value="cursor">Cursor</label>
+<label><input type="checkbox" name="existing-tool" value="kimi-code">Kimi Code</label>
+<label><input type="checkbox" name="existing-tool" value="qoder">Qoder</label>
+<label><input type="checkbox" name="existing-tool" value="trae">Trae</label>
+<label><input type="checkbox" name="existing-tool" value="zcode">ZCode</label>
+<label><input type="checkbox" name="existing-tool" value="workbuddy">WorkBuddy</label>
+<label><input type="checkbox" name="existing-tool" value="opencode">OpenCode</label>
+<label><input type="checkbox" name="existing-tool" value="other">其他可读写项目、运行程序的工具</label>
+</div>
+<label class="no-tool"><input type="checkbox" id="no-existing-tool">我还没有使用过这类工具</label>
+</fieldset>
+
+<p id="tool-route" class="route-message" role="status" aria-live="polite">如果已有可用工具，请在上面选择。尚未使用过的老师，请先展开下面的安装说明，安装 OpenCode 并配置 DeepSeek API Key，然后再建立工作目录。</p>
+
+<details id="opencode-install" class="install-guide" markdown="1">
+<summary>还没有可用工具：先安装 OpenCode，获取并配置 DeepSeek API Key</summary>
+
+这里推荐一条共同起步路线：OpenCode Desktop 提供 Harness，DeepSeek 提供编码模型。先完成下面的软件安装、Key 申请和配置，再进入下一节建立工作目录。
+
+#### 下载 OpenCode 桌面版
+
+1. 打开 [OpenCode 官方下载页](https://opencode.ai/download)，找到 **OpenCode Desktop**。
+2. Windows 通常选 x64；系统信息注明 ARM 的电脑选 ARM64。Mac 在“苹果菜单 → 关于本机”查看，Apple M 系列芯片选 Apple Silicon，Intel 处理器选 Intel。
+3. 打开安装文件，按系统提示完成。Mac 的 `.dmg` 通常需要把图标拖进“应用程序”，然后从那里启动；Windows 从安装完成后的开始菜单启动。
+
+本段使用桌面版，不需要先复制下载页上方 OpenCode Terminal 的安装命令。单位电脑限制安装时，按本单位的软件安装流程处理。
+
+#### 准备 DeepSeek 的模型授权
+
+1. 打开 [DeepSeek 开放平台](https://platform.deepseek.com/)，注册或登录。
+2. 查看 API 的计费和可用余额，按实际需要准备。日常聊天应用与开放平台调用的额度分开看。
+3. 在 **API keys / API 密钥** 中创建自己的 Key，或沿用已有可用 Key。
+4. 复制完整 Key，接下来只粘贴到软件的提供商授权框，不发进聊天。
+
+#### 在 OpenCode 中连接 DeepSeek
+
+下面的中文按钮按本机 OpenCode Desktop 1.19.4 核对，不同版本名称可能略有变化。
+
+1. 打开 OpenCode，点 **主页 → 设置 → 提供商**。
+2. 点 **查看更多提供商**，搜索 `DeepSeek`，选中它。
+3. 在 **DeepSeek API 密钥** 输入框粘贴本人 Key，点 **继续**。
+
+这处 DeepSeek 授权只供 OpenCode 帮你写程序使用。稍后做出的程序连接硅基流动时，仍使用对应平台自己的授权。
+
+完成后，确认 OpenCode 能启动、提供商设置中已保存 DeepSeek，再到下一节建立工作目录。如果设置提示 Key 或账户问题，先返回 DeepSeek 开放平台核对所用 Key 和可用余额，处理提示后再继续。模型能否实际回答，会在后面的项目对话中确认。
+
+</details>
+
+<noscript><p>当前阅读方式不支持自动切换内容。已有可用工具的老师直接跳过后面的折叠安装说明，沿用自己的工具。</p></noscript>
+
+接下来按自己的需要选择入口：
+
+| 你现在需要做什么 | 从哪一项开始 |
+| --- | --- |
+| 还没有可用 Agent | 先按[上方折叠说明](#opencode-install)安装 OpenCode、获取并配置 DeepSeek API Key，再建立工作目录 |
+| 已有可用 Agent，要开始一个新任务 | [建立工作目录](#practice-workspace)，再在自己的工具中打开 |
+| 不知道 Node.js、Python 能否运行 | 到[检查本机运行环境](#practice-runtime) |
+| 要让做出的程序处理财报或公告 | 到[让程序连接硅基流动](#practice-model-api) |
+| 第二讲要取外部财务数据 | 到[连接同花顺](#practice-data-api) |
+| Word、PPT、PDF 没有读全 | 到[处理一次文档读取问题](#practice-documents) |
+| 要做第三讲的公告任务 | 到[打开巨潮原公告](#practice-cninfo) |
+
+### 工具准备好后，建立工作目录 {#practice-workspace}
+
+一个任务有原始资料、程序和输出结果。把它们放在同一个工作目录里，Agent 才有明确的工作范围，你也能在电脑上找到它写出的文件。
+
+1. 在自己的电脑上打开“文档”。Windows 用文件资源管理器，Mac 用 Finder，也叫“访达”。
+2. 新建一个文件夹，例如 `finance-agent-start`。Windows 可按 Ctrl+Shift+N，Mac 可按 Command+Shift+N。
+3. 双击进入，记住这个位置。之后要在 Agent 中打开的，就是这个文件夹。
+
+以后每讲做新的任务时，按该讲要求再建相应目录。先在本机可写的位置操作；邮件附件预览和压缩包内部不适合作为程序工作目录。
+
+如果需要区分文件类型，可以显示扩展名。Windows 11 通常在“查看 → 显示 → 文件扩展名”；Mac 在“访达 → 设置 → 高级”中勾选“显示所有文件扩展名”。旧版系统的菜单名称可能略有不同。
+
+本节操作后，电脑上会有一个可以重新找到并打开的真实文件夹。下一节用已经准备好的 Agent，选择它作为项目。
+
+### 打开自己的 Agent，进入这个项目 {#practice-agent}
+
+这一项把已安装的软件、已配置的模型授权和刚建的工作目录接到一起。用自己 Agent 的“打开文件夹”或“打开项目”功能选择上面的目录，进入一个会话。
+
+如果你使用 OpenCode：
+
+1. 返回主页，点 **添加项目**，选中刚才创建的 `finance-agent-start` 文件夹。
+2. 在这个项目中新建会话，点击输入框附近的模型名称，选择 DeepSeek 提供商下的 Flash 模型。看不到时，可先在“设置 → 模型”中搜索并启用，再回会话中选择。
+
+当前参考 API 名为 `deepseek-flash`，OpenCode 中的 ID 为 `deepseek/deepseek-flash`；本机核对时显示为 `DeepSeek V4.1 Flash 1017`。若有推理强度选择，第二讲参考配置用 High。以当前官方目录和各讲实际要求为准。参见 [DeepSeek 的 OpenCode 接入说明](https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/)。
+
+#### 在项目里开始一段对话
+
+先看当前项目名是否是刚选的文件夹。然后在自己 Agent 的输入框中发送：
+
+```prompt
+我准备在当前项目中做金融智能体课程。请先告诉我实际工作目录在哪里，再在这个目录创建 note.md，写入“这是我的项目工作笔记”。保存后实际读取一次，告诉我文件位置和读到的内容。先只完成这一件事。
+```
+
+这个小操作的目的，是知道工具能否在本项目读写文件。收到回复以后，在电脑文件夹中打开 `note.md`，应该看到那一句话。`.md` 可以用文本编辑器打开；现在不必另装一个 Markdown 编辑器。
+
+只给了方案而没有写文件时，让 Agent 实际保存。若工具处于只规划的模式，按该工具的入口切到允许编辑和执行的模式，OpenCode 中称 Build。弹出权限请求时，看清是不是本项目的读取、写入或执行动作，再决定是否允许。
+
+后续操作继续用同一项目的会话，一次发送一条，等本条结束再继续。遇到不理解的请求，可以直接说：
+
+```prompt
+请说明这一步要做什么、为什么需要、会改哪些位置。给我一个适合当前系统的下一步，并说明完成后会看到什么。
+```
+
+### 需要运行程序时，检查 Node.js 和 Python {#practice-runtime}
+
+编程工具安装好了，不代表它写出的程序已经有运行环境。第一讲和同花顺命令工具会用到 Node.js，后续的 PDF 处理也会用到 Python。这里仅检查它们能不能执行，不生成网页。
+
+```prompt
+请实际检查当前电脑的 Node.js、npm 和 Python 3，告诉我实际版本和可执行路径。Node.js 需满足同花顺 CLI 的最低要求 22.12.0。
+
+再分别用本机 Node.js 和 Python 执行一次 1+1，给我各自的真实输出。不要只在回答里心算，不搭建网页，不请求课堂财报模型。
+
+已有可用环境就沿用。缺少时，只针对缺少的一项给我适合当前系统的官方安装方法，说明安装后怎样重新执行。不要同时安装多套环境，也不修改其他项目。
+```
+
+两个程序实际执行后都应返回 `2`。这表示相应的本机运行环境可以执行最小程序，后面的课堂再检查具体依赖。
+
+缺少 Node.js 时，打开 [Node.js 下载页](https://nodejs.org/en/download)，选择满足要求的 LTS 版本。Windows 找 **Windows Installer / `.msi`**，Mac 找 **macOS Installer / `.pkg`**，按图形安装步骤完成。这里不用先学 nvm、Docker 等安装路线。
+
+缺少 Python 时，让 Agent 根据已有系统给出一条安装或使用现有环境的路线，官方入口是 [Python 下载页](https://www.python.org/downloads/)。PDF 专用工具在对应讲次的项目里再准备。
+
+安装完成后，完全退出再打开 Agent，重新进入项目，请它再次执行版本检查和最小计算。新安装的软件可能要等新进程启动后才找得到。
+
+### 要让自己的程序调用模型时，连接硅基流动 {#practice-model-api}
+
+这项操作让你做出的工作流能够发送模型请求。操作对象是项目中的程序；你原来编程 Agent 的模型可以继续沿用。
+
+#### 先在平台准备授权
+
+1. 登录 [硅基流动控制台](https://cloud.siliconflow.cn/)，按本人账号当前要求完成认证。
+2. 查看模型目录、价格和可用额度。是否有代金券、适用于哪些模型，以本人控制台为准。
+3. 在 **API 密钥 / API Keys** 创建本人 Key，已有可用 Key 就沿用。
+
+接下来需要把 Key 配置给项目程序使用。第二、三讲当前约定是优先读取 `SILICONFLOW_API_KEY` 环境变量；没有时，Mac 使用 `~/.config/siliconflow/credentials.env`，Windows 使用 `%APPDATA%\siliconflow\credentials.env`。
+
+这些位置供 Agent 找准本人用户级配置，不要求老师手工猜路径。用户级配置保存在自己的电脑账户下，项目分享给别人时不会一起带走。
+
+```prompt
+我需要让当前项目的程序使用硅基流动模型。请先检查是否已有本人配置，只报告是否存在，不显示密钥。
+
+先检查 SILICONFLOW_API_KEY；没有时，Mac 检查 ~/.config/siliconflow/credentials.env，Windows 检查 %APPDATA%/siliconflow/credentials.env。不读取编程 Agent 的私有登录文件来替代这项授权。
+
+缺失时，请给我适合当前系统的隐藏输入方法，说明应打开哪个窗口、执行哪一条命令、何时由我本人粘贴 Key。真实 Key 不进入聊天、命令参数或项目文件，凭据只允许本人读写。配置后让新启动的程序实际读取，只报告状态，先不发模型请求。
+```
+
+需要本人开终端时，Mac 用 Command+空格搜索 `Terminal` 或“终端”；Windows 在开始菜单搜索 `PowerShell`，打开普通用户窗口。先执行 Agent 给出的配置命令，等密钥输入提示出现，再粘贴 Key 并回车。隐藏输入时看不到字符可能正常。
+
+#### 让项目程序发出一个短请求
+
+这一步的目的，是把“配置过 Key”推进到“程序实际收到模型响应”。真实调用可能计费，确认自己的模型价格和可用额度后，再发送：
+
+```prompt
+请在当前项目中写一个最小模型连接脚本，使用刚才配置的硅基流动授权。先核对当前账号是否支持 Qwen/Qwen3.5-4B；不可用时先告诉我原因，不静默换模型。
+
+若可用，让这个脚本实际发出一次短请求，要求模型回复“模型连接成功”，按当前模型规则设置合理的短输出预算。不读取财报，不搭网页，不自动反复重试。
+
+给我这次脚本的实际执行结果、请求的模型 ID、服务实际回复和用量是否可知。不显示密钥或请求头。失败时说明发生在配置读取、认证、额度、模型或网络的哪一步。
+```
+
+操作后会有一个实际执行过的连接脚本和服务回复。后续搭建工作流时，就可以把这处调用替换成具体的财报或公告任务。连接成功只说明请求通了，文字提取、视觉读取和业务规则再在各讲中完善。
+
+第一讲另采用本机产品页面的隐藏 Key 输入框，按该讲要求由本人填写。上面的用户级配置不会自动替页面填入 Key。
+
+### 需要外部财务数据时，连接同花顺 {#practice-data-api}
+
+第二讲要把财报提取值与独立数据源核对，因此需要准备同花顺的数据连接。这里取得数据，不要求模型凭记忆提供财务数字。
+
+#### 取得数据服务的 Key
+
+1. 打开 [同花顺 API Key 管理页](https://fuyao.aicubes.cn/admin/)。
+2. 未登录时，按页面要求完成本人注册或登录。
+3. 在 **API Key 管理** 查看已有 Key，或创建自己的具名 Key。
+4. 查看本人账号的数据权限与使用规则。日常行情软件的登录与这项程序授权分别确认。
+
+#### 准备查询工具
+
+本课使用 `hithink-finance` 命令工具。它负责把程序的查询条件发给同花顺，再返回数据。让自己的 Agent 处理安装和连接：
+
+```prompt
+请先检查当前电脑的 hithink-finance、Node.js 和 npm。已有可用工具就沿用；缺少时，按官方说明安装 @hithink-tech/hithink-finance-cli，不初始化或下载全市场数据库。
+
+检查当前认证状态，只报告状态。已有本人用户级凭据时复用并同步，不显示 Key。需要官方配套 Skills 时，确认当前 Agent 实际可以发现它们。
+
+没有认证时，给我本人在本机隐藏输入的步骤，先不要请求财务数据。
+```
+
+CLI 支持交互登录。没有配置且 Agent 已确认可用这种方式时，在本机系统终端执行这一行：
+
+```terminal
+hithink-finance auth login
+```
+
+等工具出现密钥输入提示，再粘贴本人同花顺 Key 并回车。Key 不接在命令后面。已有可用认证的老师跳过这段输入。
+
+#### 按一个明确问题取一次数据
+
+这里先用小范围请求看清返回结构，后续再用于第二讲的逐项核对。确认本人数据权限后，发送：
+
+```prompt
+请用本人同花顺授权实际查询伊利股份600887的证券身份，再取2026年半年报合并利润表，使用当前 financials.income 能力及实际 schema，不猜参数。
+
+把原始响应保存到当前项目，告诉我公司、报告期、累计或单季口径、币种、单位，以及营业收入的原始字段和数值分别在哪里。不要用示例或模型记忆替代。
+
+检查进程和业务状态都成功。使用 CLI 时，核对实际成功且结构化结果 ok=true；使用 REST/MCP 时按业务成功标志判断，不能只看 HTTP 200。失败、空结果和无权限分别说明，先不扩大查询范围。
+```
+
+操作后应能打开一份真实数据响应，并找到所问公司的身份、2026H1 期间和相应字段。H1 指上半年累计，不能直接当成第二季度单季。原始记录保留下来，是为了后续发现差异时能够回查。
+
+World Bank、IMF 等公共数据的接入也遵循“选数据源、确定条件、取回原始结果、解释字段”的思路。需要使用哪一类数据时，再让 Agent 对照该机构官方 API 处理，无需在此逐个配置。
+
+### 文件没有读全时，处理一次文档读取问题 {#practice-documents}
+
+这一项用来把“读出来了”具体到“哪些部分读到了”。选自己已有的一份非敏感文档，先处理一页或一张幻灯片；不必现在把所有格式都操作一遍。
+
+#### Word 或 PPT
+
+把文档副本放入工作目录。打开原件，先记住一段正文，再留意一个文本框、图表、箭头关系或备注。然后发送：
+
+```prompt
+请列出当前项目中的 Word 和 PPT，让我选一份。选定后实际读取，说明采用了什么方法。
+
+引用一段正文，并说明文本框、图表、图片、箭头关系和备注中哪些已读、哪些还未读。需要页面或幻灯片图像时，按实际工具能力处理；读不到的明确说出来。保留原文件，不因为提取到正文就宣布整份文档已完整读取。
+```
+
+把它引用的文字与原文件对照。若你注意到的图表或备注没有读到，就指出具体位置，让它换一种合适方法继续，而不是直接根据不完整结果写分析。
+
+#### PDF
+
+打开一份已有的非敏感 PDF，选一句正文复制到纯文本编辑器，看看是否与页面一致。这一步帮助判断文字层是否可用；再看表格复制后有没有错位。
+
+也可以把自己的一页 Word 文字通过“文件 → 另存为”或“导出”保存为 PDF，用来认识两种格式的差别。保留原 Word 文件。
+
+```prompt
+请实际检查我选定的 PDF，选一页判断文字层是否可用。引用这一页的一句原文；有表格时，再引用表头和对应的一行数值，保留年份、单位、负号和空白，不计算。
+
+告诉我采用的是文字提取、OCR 还是页面图像读取，并注明 PDF 物理页号。工具或模型不能处理图片时，说明还缺哪种能力，不把空提取结果当成“原文没有内容”。保留原文件。
+```
+
+操作的结果是一小段可以回原 PDF 找到的原文，外加明确的读取方法。能选字但读错表格时，需要修正行列对应；扫描图片没有文字时，则需要 OCR 或视觉读取。
+
+遇到具体错误，可以继续这样说：
+
+```prompt
+我在第__页或第__张幻灯片的__位置看到了__，与你的读取结果不同。请只处理这一处，说明原因并实际换一种合适方法读取，再给我一小段能回原件核对的结果。不要猜测缺失内容。
+```
+
+### 要做公告任务时，先打开巨潮原公告 {#practice-cninfo}
+
+第三讲的程序需要实际取回公告和 PDF。这里先熟悉资料在哪里、原文怎样打开，课堂再从业务需求开始搭建查询和后续流程。
+
+1. 打开 [巨潮资讯](https://www.cninfo.com.cn/)。
+2. 搜索 `600887`，确认公司是伊利股份，再找一份业绩说明会通知或相关公告。第三讲也使用嘉和美康 `688246`。
+3. 打开公告详情，再打开或下载原始 PDF。
+4. 在 PDF 中看公司名称、标题和日期，确认它对应列表中选的公告。
+
+这项操作让你认识原始资料入口。手工打开原文之后，课堂仍要让自己的 Agent 实际查询、下载、读取，并逐步加入事件管理和定时执行。
+
+## 官方入口与延伸阅读 {#sources}
+
+模型、数据和软件入口于2026年10月31日核对。账号权限、模型目录、价格及调用限制以操作时的官方说明为准。
+
+- 模型与 Harness：[Ollama API](https://docs.ollama.com/api/introduction)、[Anthropic 的 Agent Harness 说明](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)。
+- 编程工具起步：[OpenCode 下载](https://opencode.ai/download)、[提供商连接](https://opencode.ai/docs/providers/)、[DeepSeek 接入 OpenCode](https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/)。
+- 模型服务：[硅基流动平台说明](https://docs.siliconflow.cn/docs/userguide/introduction)、[快速上手](https://docs.siliconflow.cn/docs/userguide/quickstart)。
+- 财务数据：[同花顺快速开始](https://fuyao.aicubes.cn/docs/quickstart/)、[财务报表接口](https://fuyao.aicubes.cn/docs/api-reference/financials/)。
+- 数据接口目录：[Tushare HTTP](https://tushare.pro/document/1?doc_id=130)与[权限说明](https://tushare.pro/document/2?doc_id=290)、[AKShare](https://akshare.akfamily.xyz/introduction.html)、[World Bank](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)、[IMF](https://data.imf.org/en/Resource-Pages/IMF-API)、[OECD](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html)、[ECB](https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0)、[FRED](https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html)、[SEC EDGAR](https://www.sec.gov/search-filings/edgar-application-programming-interfaces)。
+- 运行环境：[Node.js 下载](https://nodejs.org/en/download)、[Python 下载](https://www.python.org/downloads/)。

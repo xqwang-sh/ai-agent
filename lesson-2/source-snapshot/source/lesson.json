@@ -66,59 +66,20 @@
   ],
   "preparation": [
     {
-      "title": "准备一个新项目",
-      "body": "下载并解压实操材料包，用包内 earnings-review 文件夹作为新项目。确认根目录有 AGENTS.md、TASKBOOK.md、contracts、acceptance，以及 reports 下的六份 PDF。AGENTS.md 已写好共同规则，不用另发一条提示词创建它。"
+      "title": "编程 Agent 已就绪",
+      "body": "已连接编码模型，能在本机项目里读写文件和执行程序。"
     },
     {
-      "title": "让你的编程 Agent 打开这个文件夹",
-      "body": "用你选好的编程 Agent 打开 earnings-review（OpenCode、Codex、Claude Code、Cursor、Kimi Code 等任意一种都可以）。在它的输入框中发送下面第 0 步的 Prompt。后续始终在同一个项目里操作。若它只给方案不写文件，检查是否处于允许编辑、写入文件的模式（OpenCode 里叫 Build 模式，其他工具请查各自文档）。"
+      "title": "本机运行环境已检查",
+      "body": "已按入门讲义运行 Python、Node.js 与 npm 的最小检查；PDF 专用依赖由第 0 步核对。"
     },
     {
-      "title": "确认编码模型可以工作",
-      "body": "按你所用编程 Agent 的官方文档连接好编码模型，连接后直接从第 0 步开始，不额外发送测试对话。用 OpenCode 时，CLI 的 run 方式使用 --model deepseek/deepseek-flash --variant high；交互界面按本机模型选项切到 High 推理档。若 High 出现无进展、输出上限耗尽、以 length 结束或效果不足，保留该次结果并在全新空项目中改用 Max（CLI 使用 --variant max）重跑，不把两档结果合并为同一次。编码模型和财报运行模型不是同一个配置，财报默认仍是 Qwen27B。"
+      "title": "硅基流动授权已准备",
+      "body": "已取得本人 API Key，供程序进行文字提取与独立视觉核验，与编码模型授权分开。"
     },
     {
-      "title": "准备程序运行所需的服务",
-      "body": "财报模型的服务端 API 凭据，以及同花顺金融数据服务凭据，需要单独确认。编程 Agent 能聊天写代码，不代表生成的程序能读取同一项授权。课前对照下表逐项确认；第 0 步会再检查缺什么，并给出适合你电脑的配置方法。暂无服务凭据时，可以先搭建离线模块；第 8 步真实运行前必须补齐，不能把未完成写成通过。",
-      "services": [
-        {
-          "name": "编程 Agent（任选其一）",
-          "role": "读提示词、写程序、运行检查",
-          "confirm": "已安装任意一种 Coding Agent。只有选择 OpenCode＋DeepSeek 方案时，才需要在 DeepSeek 开放平台注册并充值；使用其他工具不需要。",
-          "url": "https://platform.deepseek.com/",
-          "url_label": "DeepSeek 开放平台（仅 OpenCode 方案需要）"
-        },
-        {
-          "name": "硅基流动",
-          "role": "财报模型的服务端 API Key，文字抄录与视觉复读都走这里",
-          "confirm": "已注册、完成实名认证，并创建自己的 API Key。按下方步骤领取 16 元代金券，可以先用赠送额度，不必先充值。",
-          "url": "https://cloud.siliconflow.cn/",
-          "url_label": "硅基流动控制台"
-        },
-        {
-          "name": "同花顺金融数据服务",
-          "role": "外部核验用的独立财务数据",
-          "confirm": "已注册，并取得自己账号的 API Key。",
-          "url": "https://fuyao.aicubes.cn/admin",
-          "url_label": "同花顺金融数据 API 入口"
-        }
-      ]
-    },
-    {
-      "title": "注册硅基流动账号",
-      "body": "打开上表的「硅基流动控制台」，按页面提示完成注册并登录。已有账号直接登录，后续步骤使用同一个账号。"
-    },
-    {
-      "title": "完成硅基流动实名认证",
-      "body": "进入「用户中心 → 实名认证」。个人账号选择「个人实名认证」，按页面要求填写本人信息。用手机支付宝扫描网页二维码，按手机提示完成人脸验证，再回到网页确认「已完成刷脸认证」。看到认证成功后继续；已认证账号可跳过这一步。"
-    },
-    {
-      "title": "手动领取 16 元代金券",
-      "body": "进入「活动中心 → 认证专享礼」，点击领取 16 元通用代金券。完成实名认证后仍需手动领券。领取后到「账户管理 → 余额充值 → 代金券」确认可用金额和到期时间；这里只查看代金券，不需要先充值。"
-    },
-    {
-      "title": "确认可用额度并创建 API Key",
-      "body": "本讲可以先使用赠送额度，不必先充值；可用额度不足时再按实际需要充值。接着在控制台「API 密钥」创建自己的 Key，按第 0 步配置给程序使用。当前官方活动持续至 2026 年 12 月 31 日，代金券自获得之日起 180 天有效；实际可用金额、使用范围和到期时间以账号中的代金券详情及官方活动规则为准。活动与认证说明见文末官方链接，核对日期为 2026 年 10 月 24 日。"
+      "title": "同花顺授权已准备",
+      "body": "已取得本人数据服务 Key，供程序做外部财务核验。"
     }
   ],
   "materials": "材料包有项目共同规则 AGENTS.md、六份完整 2026 半年报、任务书、数据约定、合成案例和可执行公共验收。验收代码不是成品应用，不含真实公司答案、预选页码或 API Key。 运行时提示词由编程 Agent 在第5–7步生成。",
@@ -587,16 +548,6 @@
       "note": "服务端 API 配置。"
     },
     {
-      "title": "硅基流动实名认证说明",
-      "url": "https://docs.siliconflow.cn/docs/userguide/faqs/authentication",
-      "note": "个人账号的实名认证入口与支付宝人脸验证流程。"
-    },
-    {
-      "title": "硅基流动 16 元代金券活动说明",
-      "url": "https://www.siliconflow.cn/developer-talk/od7wj9rr23p95uhihmhrombp",
-      "note": "实名认证后手动领券、180 天有效期及当前活动期限；具体权益以账号和官方规则为准。"
-    },
-    {
       "title": "硅基流动 Chat Completions 契约",
       "url": "https://api-docs.siliconflow.cn/docs/api/chat-completions-post",
       "note": "请求、图像消息与实际 usage。"
@@ -856,5 +807,7 @@
       "第 0–8 步主提示词在本讲义里，逐条发给编程 Agent。第5步生成定位与抄录、第6步生成视觉、第7步生成反馈提示词，保存到 prompts/runtime/，再由程序读取。",
       "搭建后会陆续出现 app/、web/、tests/、prompts/runtime/ 和 runtime/，分别保存程序、网页、测试、运行时提示词和运行记录。"
     ]
-  }
+  },
+  "coding_profile_note": "按你所用编程 Agent 的官方文档连接好编码模型，连接后直接从第 0 步开始，不额外发送测试对话。用 OpenCode 时，CLI 的 run 方式使用 --model deepseek/deepseek-flash --variant high；交互界面按本机模型选项切到 High 推理档。若 High 出现无进展、输出上限耗尽、以 length 结束或效果不足，保留该次结果并在全新空项目中改用 Max（CLI 使用 --variant max）重跑，不把两档结果合并为同一次。编码模型和财报运行模型不是同一个配置，财报默认仍是 Qwen27B。",
+  "project_setup": "下载并解压本讲实操材料包，用编程 Agent 打开 earnings-review。确认根目录有 AGENTS.md、TASKBOOK.md、MATERIALS.json、contracts、acceptance，以及 reports 下的六份 PDF。后续九步在同一项目里进行。"
 }

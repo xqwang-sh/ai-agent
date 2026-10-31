@@ -51,6 +51,7 @@ def export_handout(lesson, target):
         if asset.is_file():
             transfer(asset, target / "assets" / asset.name)
     html = (target / "index.html").read_text()
+    html = html.replace('href="https://suibe-ai-agent.netlify.app/start-here/"', 'href="../start-here/index.html"')
     html = html.replace('<div class="downloads">', '<div class="downloads"><a href="../">← 讲座主页</a><a href="earnings-review/">查看 Earnings Review 成品 ↗</a>', 1)
     html = html.replace('<a href="PROMPTS.md" download>', '<a href="EarningsReview-第二讲讲义包.zip" download>下载完整讲义包</a><a href="PROMPTS.md" download>', 1)
     write(target / "index.html", html)

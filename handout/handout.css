@@ -17,7 +17,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .shell{max-width:1120px;margin:auto;padding:42px 24px 80px;display:grid;grid-template-columns:190px minmax(0,760px);gap:52px}
 .sidebar{position:sticky;inset:auto;top:76px;height:max-content;width:auto;background:transparent;border:0;padding:0;overflow:visible}
 .sidebar nav{display:flex;flex-direction:column;gap:3px;margin:0}
-.sidebar a{padding:7px 0 7px 11px;border:0;border-left:2px solid transparent;background:transparent;color:var(--muted);font-size:12px;text-decoration:none;line-height:1.4}
+.sidebar a{padding:7px 0 7px 11px;border:0;border-left:2px solid transparent;background:transparent;color:var(--muted);font-size:12px;text-decoration:none}
 .sidebar a[aria-current=true]{color:var(--red);border-color:var(--red);font-weight:700}
 .sidebar-label{color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:18px 0 4px;padding-left:11px}
 .side-note{color:var(--muted);font-size:12px;line-height:1.55;margin:26px 11px 0}

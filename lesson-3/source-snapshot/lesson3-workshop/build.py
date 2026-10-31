@@ -88,7 +88,10 @@ def archive(directory, target):
     with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as z:
         for file in sorted(directory.rglob("*")):
             if file.is_file():
-                z.write(file, str(Path(directory.name) / file.relative_to(directory)))
+                entry = zipfile.ZipInfo(str(Path(directory.name) / file.relative_to(directory)), date_time=(2026, 1, 1, 0, 0, 0))
+                entry.compress_type = zipfile.ZIP_DEFLATED
+                entry.external_attr = 0o100644 << 16
+                z.writestr(entry, file.read_bytes())
 
 
 def source_files():
@@ -106,10 +109,10 @@ def materials(output, staging):
     write_json(starter / "sources.json", {"source": "https://www.cninfo.com.cn/", "query_page": "https://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search", "companies": [{"code": "600887", "name": "伊利股份"}, {"code": "688246", "name": "嘉和美康"}]})
     (starter / "README.md").write_text("# 第三讲起步\n\n在自己的英文空目录打开编程Agent，先表达业务需求：我们投研团队要跟踪伊利和嘉和美康的业绩说明会，安排参会和准备问题。想要一个会定时查巨潮、更新事件日历、查看摘要和设置提醒的助手。先和我聊清楚需求。\n\n先明确只看2026年三季度说明会，再核对公司、会议日期窗口、时间与结果位置，再从真实查询做第一小步。这里没有成品程序、PDF或标准答案。密钥保存在自己的用户级配置中，不粘进代码、网页或共享记录。\n", encoding="utf-8")
     archive(starter, output / "lesson3-starter.zip")
-    validation = staging / "lesson3-validation"
+    validation = staging / "validation-support"
     (validation / "pdfs").mkdir(parents=True)
-    inputs = jsonl(EVIDENCE / "model-pilot/input.jsonl")
-    gold = jsonl(EVIDENCE / "teacher-gold.jsonl")
+    inputs = [row for row in jsonl(EVIDENCE / "model-pilot/input.jsonl") if row["id"] == "1225615375"]
+    gold = [row for row in jsonl(EVIDENCE / "teacher-gold.jsonl") if row["id"] == "1225615375"]
     new = json.loads((EVIDENCE / "live-source-probe/new-notice.json").read_text())
     inputs.append({key: new[key] for key in ["id", "stock_code", "publication_date", "title", "pdf_sha256"]} | {"text": "\n".join(f"[PAGE {i}]\n{text}" for i, text in enumerate(new["pages"], 1))})
     gold.append(json.loads((EVIDENCE / "new-source-gold.json").read_text()))
@@ -148,9 +151,6 @@ def materials(output, staging):
     (validation / "evidence.py").write_text(code, encoding="utf-8")
     shutil.copy2(ROOT / "check_gold.py", validation / "check_gold.py")
     (validation / "requirements.txt").write_text("jsonschema>=4.20,<5\n")
-    (validation / "README.md").write_text("# 独立验证包\n\n在第一次提取后再使用。12份历史公告、35物理页，用于测试，不代表实时查询。原始模型输入只用原PDF或input.jsonl中的全文，不能将teacher-gold.jsonl或评分差异送给提取模型。候选标准由独立读源和交叉核验形成，待任课教师签字确认，先抽查后冻结自己的确认版本。11份用于原模型比较，第12份为2026-10-30新取得的嘉和三季度通知。\n\n将原始输出整理为每行{\"id\":\"公告ID\",\"result\":{...}}的actual.jsonl，字段遵循output.schema.json。不要人工改答案后称模型通过。\n\n```sh\npython3 -m pip install -r requirements.txt\npython3 check_gold.py --actual /path/to/actual.jsonl --report /path/to/report.json\n```\n\n12条关键字段和证据全部通过才返回pass，缺记录或重复ID失败。评分程序不调用模型，验证包指纹改变则拒绝评分。program checks不能替代人工看原文。sources.json保存每份公告的原链接、物理页数和PDF指纹。修改候选标准前保留原版本，说明原因并重建指纹。\n", encoding="utf-8")
-    write_json(validation / "manifest.json", {"gold_status": "candidate; source reviewed by independent agents and cross-checked; teacher sign-off pending", "records": len(sources), "physical_pages": sum(row["physical_pages"] for row in sources), "files": {str(file.relative_to(validation)): sha(file) for file in sorted(validation.rglob("*")) if file.is_file()}})
-    archive(validation, output / "lesson3-validation.zip")
     reference = staging / "lesson3-teacher-reference" / "disclosure-agent"
     for source in source_files():
         target = reference / source.relative_to(APP)
@@ -187,10 +187,9 @@ def main():
         _, _, market_manifest = frozen_market()
         table = LESSON / market_manifest['workspace'] / 'runs' / market_manifest['run_id'] / 'source/company-table.json'
         display_directory = company_directory(table, run_id=market_manifest['run_id'])
-    historical_validation = materials(output, staging)
-    from q3_validation import create as create_q3_validation, create_formats
-    create_q3_validation(output, staging, historical_validation, APP, LESSON, archive)
-    create_formats(output, staging, historical_validation, LESSON, archive)
+    validation_support = materials(output, staging)
+    from q3_validation import create as create_q3_validation
+    validation_packages = create_q3_validation(output, staging, validation_support, APP, LESSON, archive)
     activity = json.loads((ROOT / "frozen-activity.json").read_text())
     reference = APP / "runtime/live/runs" / activity["reference_run_id"]
     for name in ["state.json", "summary.json"]:
@@ -288,6 +287,12 @@ def main():
         source = current / source_name
         if source.is_file():
             write_json(evidence / target_name, public(json.loads(source.read_text())))
+    materials_checks = LESSON / '04-tests/materials-unification-2026-10-31'
+    for source_name, target_name in [('final-stage-verification.json','validation-bundle-checks.json'),
+                                     ('browser-checks.json','materials-browser-checks.json')]:
+        source = materials_checks / source_name
+        if source.is_file():
+            write_json(evidence / target_name, public(json.loads(source.read_text())))
     report = (ROOT / "report.md").read_text()
     (evidence / "report.md").write_text(report, encoding="utf-8")
     page(report, evidence / "report.html", "../assets/", "../index.html")
@@ -303,7 +308,7 @@ def main():
         shutil.copy2(source, target)
     (snapshot / "README.md").write_text("# 第三讲来源快照\n\n仅供审阅与来源核对，维护源在本地课程03-disclosure-calendar/03-source。参考Agent可独立安装，使用说明见disclosure-agent/README.md。讲义构建还需要本地04-tests中的原始证据与06-preparation中的来源PDF，发布库快照不包含私人运行日志。先修改维护源再单向生成，不在快照上形成第二套编辑源。\n", encoding="utf-8")
     write_json(output / "publication.json", {"status": "review candidate; production deployment unchanged", "created_at": datetime.now(timezone.utc).isoformat(), "source_owner": "finance-agent-course/03-disclosure-calendar/03-source", "reference_run_id": summary["run_id"], "scope": "lesson-3 only; static projection; no credentials or online model execution", "files": {str(file.relative_to(output)): sha(file) for file in sorted(output.rglob("*")) if file.is_file()}, "source_files": {**{"lesson3-workshop/" + str(file.relative_to(ROOT)): sha(file) for file in workshop_sources}, **{"disclosure-agent/" + str(file.relative_to(APP)): sha(file) for file in source_files()}}})
-    print(json.dumps({"output": str(output), "validation": str(staging / "lesson3-validation"), "reference_run": summary["run_id"], "files": len(list(output.rglob("*")))}, ensure_ascii=False))
+    print(json.dumps({"output": str(output), "validation": {key:str(path) for key,path in validation_packages.items()}, "reference_run": summary["run_id"], "files": len(list(output.rglob("*")))}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

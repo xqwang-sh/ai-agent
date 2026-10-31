@@ -23,30 +23,21 @@
 <tr>
 <td><a href="lesson3-starter.zip">起步包</a></td>
 <td>短需求、两家公司身份、巨潮入口</td>
-<td>现在使用，从自己的需求和代码开始</td>
+<td>从自己的需求和代码开始</td>
 </tr>
 <tr>
-<td><a href="lesson3-q3-validation.zip">本期三季度验证包</a></td>
-<td>18份PDF、40页，分2份起步和16份扩围，含候选标准与评分工具</td>
-<td>每批第一次提取后评分，不提前给模型答案</td>
+<td><a href="lesson3-initial-check.zip">首次核验包</a></td>
+<td>伊利、嘉和美康2份公告，附候选标准与评分工具</td>
+<td>两家公司完成取数和第一次提取后检查</td>
 </tr>
 <tr>
-<td><a href="lesson3-expansion-checks.zip">扩围后追加检查</a></td>
-<td>7份PDF、15页，覆盖集体业绩说明会、特殊编号、图片封面等实际问题</td>
-<td>扩围后做回归检查，不并入原18份的首次成绩</td>
-</tr>
-<tr>
-<td><a href="lesson3-validation.zip">历史回归包</a></td>
-<td>原12份、35页，含半年报及范围外类型</td>
-<td>仅隔离测试组件与排除逻辑，不作为当前产品输入</td>
-</tr>
-<tr>
-<td>教师参考实现</td>
-<td>可运行Agent、测试与使用说明</td>
-<td>教师核对或明确说明原因后的恢复，入口在讲义末尾</td>
+<td><a href="lesson3-expanded-check.zip">扩围核验包</a></td>
+<td>23份公告，覆盖不同模板、原通知与延期、图片封面等疑难样例，附候选标准与评分工具</td>
+<td>扩至全A股、会议日期10至11月的三季度说明会并完成处理后检查</td>
 </tr>
 </tbody>
-</table></div></section><h3 class="prepare-title">打开自己的新项目</h3><ol class="preparation"><li><h3>打开本讲空项目</h3><p>用编程Agent打开一个新的英文空目录，例如<code>announcement-agent</code>。可选下载<a href="lesson3-starter.zip">起步材料包</a>，把包内两份小文件放入项目；里面只有短业务说明、公司身份和来源网址。原公告由你的Agent实际查询和下载，课堂从第0步的需求对话开始。</p></li></ol><div class="cadence"><strong>跟做方式</strong><p>先用一两家公司完成PDF下载、逐页文字、提取、核验和事件更新。通过后扩大到全A股、会议日期在2026年10—11月的三季度说明会。扩围数据通过后制作日历，再接定时任务。先看每步目标，再发送适合自己进度的短需求。等Agent实际做完，打开文件，对照“应该看到”和“确认后再继续”。如果有问题，指出具体记录、原文或运行结果，再用折叠的反馈例子继续。</p>
+</table></div>
+<p>两次检查各用对应的核验包，独立解压、直接评分，无需选择范围参数。先保存原始提取结果，再核对标准，不能把答案给提取模型。教师参考实现入口放在末尾，供教师对照或恢复。</p></section><h3 class="prepare-title">打开自己的新项目</h3><ol class="preparation"><li><h3>打开本讲空项目</h3><p>用编程Agent打开一个新的英文空目录，例如<code>announcement-agent</code>。可选下载<a href="lesson3-starter.zip">起步材料包</a>，把包内两份小文件放入项目；里面只有短业务说明、公司身份和来源网址。原公告由你的Agent实际查询和下载，课堂从第0步的需求对话开始。</p></li></ol><div class="cadence"><strong>跟做方式</strong><p>先用一两家公司完成PDF下载、逐页文字、提取、核验和事件更新。通过后扩大到全A股、会议日期在2026年10—11月的三季度说明会。扩围数据通过后制作日历，再接定时任务。先看每步目标，再发送适合自己进度的短需求。等Agent实际做完，打开文件，对照“应该看到”和“确认后再继续”。如果有问题，指出具体记录、原文或运行结果，再用折叠的反馈例子继续。</p>
 <p>首节按约90分钟安排，优先完成两家公司的真实取数、提取和人工核验。去重、变更、两个月扩围核验与真实定时触发可以续讲，全部验收后才算完成这一主题。当前已做过独立Agent从零搭建模拟，还没有真人教师在90分钟内完成全程的试讲证据。</p></div></section><section class="step" id="step-0"><div class="step-title"><span class="step-number">0</span><div><span class="eyebrow">搭建步骤 0</span><h2>从需求出发，确定第一小步</h2></div></div><div class="goal"><p>先让Agent理解业务用途和完成标准，再开始写程序。</p></div><div class="actions"><h3>现在怎么做</h3><ol>
 <li>在自己的新项目中描述投研团队的日常工作。</li>
 <li>回答Agent对公司、范围、频率、时区和结果入口的追问。</li>
@@ -114,17 +105,17 @@
 <li>抽查召开通知、改期、无时刻与排除样本，确认候选标准。</li>
 <li>先定位错字段或错证据，再修改要求、比较9B和27B。</li>
 </ol></div><div class="prompt-box"><div class="prompt-toolbar"><span>按自己的进度调整，再发给编程Agent</span><button type="button" class="copy" data-copy="prompt-10" aria-label="复制第10句需求">复制这句</button></div><pre id="prompt-10">加一组独立核验的公告，检查刚才的提取。先别把答案给提取模型。逐条比较原始输出，列出错字段、错引文和没返回的记录，再决定怎么改。</pre></div>
-<p>本期验证包有18份三季度原件、40物理页。先用<code>--suite small</code>核对伊利和嘉和的2份，再在扩围时用<code>templates</code>的8份新模板、<code>changes</code>的8份原通知与延期材料；<code>all</code>才要求18份齐全。候选标准经独立读源与逐页核对，仍需任课教师签认。<code>check_gold.py</code>接受每行<code>{id,result}</code>的原始输出，比较12个关键字段，并检查来源与连续引文。有预先冻结备选的参与网址还会单独核验用途，不能用提问或重播入口替代参会。字段名不同可以做保留原值的格式转换，缺字段仍算失败。原12份历史回归包单独保留，半年报不得进入当前产品。</p><div class="checkpoint"><div><h3>应该看到</h3><ul>
+<p>先使用<a href="lesson3-initial-check.zip">首次核验包</a>，只含伊利和嘉和的2份原件、候选标准与评分工具。保存第一次原答后，按包内说明直接运行评分，不用指定范围。候选标准经独立读源与逐页核对，仍需任课教师签认。<code>check_gold.py</code>接受每行<code>{id,result}</code>的原始输出，比较12个关键字段及其证据；字段结构可做保留原值的转换，缺值与错值不补成正确答案后计为模型通过。完整征集区间、报名事项和全部参与路径仍要对照PDF。扩大样本后再用单独的扩围核验包检查23份。</p><div class="checkpoint"><div><h3>应该看到</h3><ul>
 <li>逐条差异报告、失败原答和本次修改。</li>
 <li>模型、提示词与用量分别记录，人工修订另存。</li>
 <li>保持同一标准比较后的选择，而不是只说“大模型更好”。</li>
 </ul></div><div><h3>确认后再继续</h3><ul>
 <li>候选标准已由老师抽查，答案没有进入提取请求。</li>
 <li>没有把手工改答案计为模型通过，也没有放宽标准消除失败。</li>
-<li>当前小样本2份关键字段与证据通过，并抽查原PDF；扩围还要通过另外16份，不能用2份代替全部新模板。</li>
+<li>当前小样本2份关键字段与证据通过，并抽查原PDF；扩围后另用扩围核验包检查23份，包含变更与疑难样例，不能用2份代替。</li>
 <li>在独立目录解压核验包，实际运行评分工具；工具报错与模型字段错误分别处理。</li>
 </ul>
-<p>以下是备课扩大来源后的模型比较。课堂此处先验2份，另外16份在第6步使用。8份新模板中，4B、9B、27B首轮分别有6、5、7份同时通过字段与证据检查。27B有1份引文太短，按程序指出的问题仅重做该份后通过，原始7/8保留。随后另做8份独立读源留出，27B关键字段8/8；首次证据7/8，发现程序漏识别中芯“说明会将于……举行”的正确句式，修程序后原回答重评8/8，没有增加模型调用。两轮属于不同阶段，不能合成未经调试的普遍准确率。参考实现据这些结果选27B，你仍须依据自己版本的实测选择。</p>
+<p>以下是备课扩大来源后的模型比较。课堂此处先验2份，其余23份在第6步使用；后追加7份仍按回归样例记录，重新整理材料不改写下述首轮成绩。8份新模板中，4B、9B、27B首轮分别有6、5、7份同时通过字段与证据检查。27B有1份引文太短，按程序指出的问题仅重做该份后通过，原始7/8保留。随后另做8份独立读源留出，27B关键字段8/8；首次证据7/8，发现程序漏识别中芯“说明会将于……举行”的正确句式，修程序后原回答重评8/8，没有增加模型调用。两轮属于不同阶段，不能合成未经调试的普遍准确率。参考实现据这些结果选27B，你仍须依据自己版本的实测选择。</p>
 <p>验证包同时含原文和答案，隔离依赖分目录与操作约定，不是权限隔离。检查实际送入模型的内容。单份公告提取全对，合并多份公告时仍可能出现冲突。</p></div></div><div class="files"><span>本步产物</span><p>独立测试报告、各轮原始输出、实际模型与用量，以及采用当前配置的理由。</p></div><details class="repair"><summary>本步没做好？看反馈例子</summary><div class="prompt-box"><div class="prompt-toolbar"><span>按自己的进度调整，再发给编程Agent</span><button type="button" class="copy" data-copy="prompt-11" aria-label="复制第11句反馈">复制这句</button></div><pre id="prompt-11">4B这批还有错误。保持同一批原文和验收要求，先比较9B；仍不过再试27B。保留每轮原答、错误和用量，不靠改答案或放宽标准算通过。
 
 你说这条引文不成立，但原文“说明会将于……举行”确实说明了会议日期。先检查是模型取错，还是你的核验程序漏了这种句式。保留原回答和首次报告，只修有原文支持的判断，再重新评分。</pre></div></details><label class="completion"><input type="checkbox" data-complete="step-4">我已打开结果并核对这一步</label></section><section class="step" id="step-5"><div class="step-title"><span class="step-number">5</span><div><span class="eyebrow">搭建步骤 5</span><h2>在两家公司上跑完整条数据流程</h2></div></div><div class="goal"><p>把下载、逐页文字、提取、核验与事件记录接成一个可重复运行的入口。</p></div><div class="actions"><h3>现在怎么做</h3><ol>
@@ -162,6 +153,7 @@
 <li>不同参与方式完整保留，记录中的网址来自可见原文，原公告能打开。</li>
 <li>新模板关键字段逐项核验，模型不够用时先指出失败，再比较更大模型。</li>
 </ul>
+<p>扩大样本处理完成后，下载<a href="lesson3-expanded-check.zip">扩围核验包</a>检查23份。这个包已含8份不同模板、8份原通知与延期及普通通知对照、7份疑难样例。评分默认检查本包全部23份，不用选择范围；从自己的原始提取中选出对应记录，逐项定位错误，保留首次结果与修复后报告。</p>
 <p>本次扩围实际发现，部分“本公司三季报集体业绩说明会”被当成一般集体接待日排除。它们有本公司的报告期、参会时段和提问安排，应当收录。同一批还发现括号公告编号、图片封面和“计划于……参加说明会”等写法。先核对原件，再区分模型分类错和程序误拒；不能看到报错就一律换大模型。</p>
 <p>本期两组真实改期用于检验事件合并：健之佳由10月29日10:00—11:00改到11月2日09:00—10:00；尚太科技由10月26日15:30—16:30改到11月10日同一时段。核对原公告号、前后值和两份原件，更正后事件表只保留一条当前安排，历史与来源另存。新日期不是新事件身份。</p></div><div><h3>确认后再继续</h3><ul>
 <li>去重后的ID数与来源稳定总数对齐；不能以下载行数相同宣称分页完整。</li>
@@ -264,7 +256,7 @@
 </tr>
 <tr>
 <td>模型质量</td>
-<td>2份起步与16份扩围独立候选标准分别核验，原始字段与证据通过，教师抽查</td>
+<td>首次核验包2份通过，扩围完成后再用扩围核验包检查23份；原始字段与证据通过，完整参与信息另对PDF抽查</td>
 </tr>
 <tr>
 <td>事件更新</td>
@@ -304,7 +296,7 @@
 </tr>
 </tbody>
 </table></div>
-<p>业务需要人判断时，Agent可以执行完成并返回待复核，但必须指出具体字段和证据。历史回归中保留的范围外冲突不混进当前产品；自己的本期记录有未决字段时，要保留原值、候选和原文。</p></div><div class="files"><span>本步产物</span><p>自己的日历产品入口、代码、需求记录、提醒文件及核对记录、验收证据和使用说明。</p></div><details class="repair"><summary>本步没做好？看反馈例子</summary><div class="prompt-box"><div class="prompt-toolbar"><span>按自己的进度调整，再发给编程Agent</span><button type="button" class="copy" data-copy="prompt-23" aria-label="复制第23句反馈">复制这句</button></div><pre id="prompt-23">请按验收表检查我的实际版本，先修会影响日期、来源和自主运行的问题。没有证据的项继续标未完成，别为了交付把状态改成通过。</pre></div></details><label class="completion"><input type="checkbox" data-complete="step-9">我已打开结果并核对这一步</label></section><section class="section" id="extensions"><h2>完成主线后，再比较流程和模型</h2><p>开放任务可能需要模型自主找补充证据。可以在自己的稳定版本上比较固定与灵活流程：</p>
+<p>业务需要人判断时，Agent可以执行完成并返回待复核，但必须指出具体字段和证据。明确属于其他报告期的记录不混进当前产品；自己的本期记录有未决字段时，要保留原值、候选和原文。</p></div><div class="files"><span>本步产物</span><p>自己的日历产品入口、代码、需求记录、提醒文件及核对记录、验收证据和使用说明。</p></div><details class="repair"><summary>本步没做好？看反馈例子</summary><div class="prompt-box"><div class="prompt-toolbar"><span>按自己的进度调整，再发给编程Agent</span><button type="button" class="copy" data-copy="prompt-23" aria-label="复制第23句反馈">复制这句</button></div><pre id="prompt-23">请按验收表检查我的实际版本，先修会影响日期、来源和自主运行的问题。没有证据的项继续标未完成，别为了交付把状态改成通过。</pre></div></details><label class="completion"><input type="checkbox" data-complete="step-9">我已打开结果并核对这一步</label></section><section class="section" id="extensions"><h2>完成主线后，再比较流程和模型</h2><p>开放任务可能需要模型自主找补充证据。可以在自己的稳定版本上比较固定与灵活流程：</p>
 <div class="prompt-box"><div class="prompt-toolbar"><span>按自己的进度调整，再发给编程Agent</span><button type="button" class="copy" data-copy="prompt-24" aria-label="复制第24句需求或反馈">复制这句</button></div><pre id="prompt-24">这件事适合固定步骤，还是需要模型自己规划？请用同一批来源做小比较，说明多了哪些调用、解决了什么问题，再给建议。</pre></div>
 <p>本次规划器首版曾在仍有5份公告时要求结束，程序拒绝。补上明确可选动作和失败反馈后，它完成了相同4场会议，用5次提取和额外8次规划调用，仍有同一项截止冲突。固定流程因此成为主线。各轮缓存与服务延迟不同，不能把耗时差直接归因于流程。</p>
 <p>模型也可以继续测试，但每次保留输入、版本、原始输出和成本。独立从零模拟中，第一次换27B后仍有两份省略号引文失败，针对具体问题再反馈，才通过原文检查。更大的模型也需要被检查。</p>
@@ -313,8 +305,8 @@
 <p>需要恢复教师参考时，先保存自己的项目、说明为什么恢复及从哪里继续。不要把恢复后的成品说成自己从空目录完成的过程。</p></section><section class="section" id="references"><h2>教师参考、实测与来源</h2><ul>
 <li><a href="evidence/report.html">完整实测报告</a>：来源、模型评分、固定与灵活流程、从零模拟、真实调度及限制。</li>
 <li><a href="lesson3-teacher-reference.zip">教师参考实现</a>：本地Agent、产品生成、测试和配置，无密钥或私人运行日志。</li>
-<li><a href="lesson3-q3-validation.zip">本期三季度验证包</a>：18份、40页，先验2份再验16份扩围，包含两组真实延期。每批首次提取后评分。</li>
-<li><a href="lesson3-validation.zip">历史回归包</a>：原12份、35页，保留原成绩，范围外案例仅在隔离环境使用。</li>
+<li><a href="lesson3-initial-check.zip">首次核验包</a>：2份公告，完成两家公司取数与提取后检查。</li>
+<li><a href="lesson3-expanded-check.zip">扩围核验包</a>：23份公告，扩大数据范围后检查，已含两组真实延期和7份疑难样例。</li>
 <li><a href="https://www.cninfo.com.cn/">巨潮资讯</a>：公告来源，具体原文入口随产品和验证材料保存。</li>
 <li><a href="https://docs.siliconflow.cn/docs/api/chat-completions-post">硅基流动接口说明</a>：模型请求与返回用量；可用模型以自己账号当时目录为准。</li>
 </ul>

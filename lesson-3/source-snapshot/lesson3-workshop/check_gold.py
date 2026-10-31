@@ -31,7 +31,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--actual", type=Path, required=True, help="Original output JSONL, one {id,result} per notice")
     parser.add_argument("--report", type=Path, required=True)
-    parser.add_argument("--suite", default="all", help="Current-quarter suite: small, templates, changes, expanded or all")
+    parser.add_argument("--suite", default="all", help="Optional subgroup from manifest; default all grades this package")
     args = parser.parse_args()
     if args.report.resolve() == args.actual.resolve() or args.report.resolve().is_relative_to(ROOT):
         raise ValueError("Save the report outside this package and do not overwrite original output")

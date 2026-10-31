@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "run_id": "20261031T013632-d828b0bd",
+  "program_sha256": "5f88981b338ddc7d57ea9ed9f1d7215d4fce124f34aa5a94af5e651346f48547",
+  "changed_program_files": [
+    "disclosure_agent/calendar.css"
+  ],
+  "scheduled_for": "2026-10-31T09:36:00.285291+08:00",
+  "actual_start": "2026-10-31T09:36:32.409237+08:00",
+  "actual_end": "2026-10-31T09:40:23.473122+08:00",
+  "trigger": "scheduler",
+  "model_calls": 0,
+  "all_ledger_events_identical": true,
+  "ledger_event_count": 1078,
+  "source_as_of": "2026-10-31T09:38:13.029339+08:00",
+  "artifacts": {
+    "state.json": {
+      "path": "runs/20261031T013632-d828b0bd/state.json",
+      "sha256": "5bf519ba6494d3b58297c594d7dfcb454a0ddffe07823db3c60aebb5359ee47d"
+    },
+    "summary.json": {
+      "path": "runs/20261031T013632-d828b0bd/summary.json",
+      "sha256": "f904daab9e3af5a6ee68ce382fa1149678c78aa9870353abd6609b4528ede05e"
+    },
+    "calendar.html": {
+      "path": "runs/20261031T013632-d828b0bd/calendar.html",
+      "sha256": "137f37fdd2b8d59363b8a44c0189741c16c7651b88497ce017e40e2f32455e26"
+    }
+  },
+  "persistent_schedule": {
+    "enabled": true,
+    "time": "08:30",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "timezone": "Asia/Shanghai"
+  },
+  "acceptance_file": "full-market-acceptance-v14.json"
+}

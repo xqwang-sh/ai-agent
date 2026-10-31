@@ -251,7 +251,10 @@ def main():
                              ('stable-repeat-check.json', 'stable-repeat-check.json'),
                              ('product-artifact-checks.json', 'product-artifact-checks.json'),
                              ('market-pause-resume.json', 'market-pause-resume.json'),
-                             ('browser-qa-final/checks.json', 'product-browser-checks.json')]:
+                             ('browser-qa-final/checks.json', 'product-browser-checks.json'),
+                             ('daily-run-v13-actual.json', 'daily-schedule-run.json'),
+                             ('native-layout-v14-verification.json', 'layout-system-run-check.json'),
+                             ('full-market-acceptance-v14.json', 'full-market-acceptance-v14.json')]:
         source = expansion / original
         if source.is_file():
             write_json(evidence / target, public(json.loads(source.read_text())))

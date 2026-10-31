@@ -72,7 +72,7 @@ footer p{font-size:12px}
 </style></head><body>
 <a class="skip" href="#content">跳到讲义</a>
 <aside class="sidebar"><a class="brand" href="#top"><span class="brand-mark">0</span><span>零基础必看入门<small>金融智能体系列 · 课前必做</small></span></a>
-<nav aria-label="讲义目录"><a class="nav-part" href="#concepts">第一部分：先把概念理清</a><a class="nav-topic" href="#concept-models">大模型怎样被调用</a><a class="nav-topic" href="#concept-harness">Harness 怎样把模型变成能办事的 Agent</a><a class="nav-topic" href="#concept-data">数据 API：让程序直接取得数据</a><a class="nav-topic" href="#concept-files">Agent 怎样读取文件和文档</a><a class="nav-topic" href="#glossary">反复遇到的词，在这里查</a><a class="nav-part" href="#practice">第二部分：按需要准备自己的工具</a><a class="nav-topic" href="#practice-tools">先选择你正在用的 Agent 或 Harness</a><a class="nav-topic" href="#practice-workspace">先建工作目录，再打开工具</a><a class="nav-topic" href="#practice-agent">打开自己的 Agent，进入这个项目</a><a class="nav-topic" href="#practice-runtime">需要运行程序时，检查 Node.js 和 Python</a><a class="nav-topic" href="#practice-model-api">要让自己的程序调用模型时，连接硅基流动</a><a class="nav-topic" href="#practice-data-api">需要外部财务数据时，连接同花顺</a><a class="nav-topic" href="#practice-documents">文件没有读全时，处理一次文档读取问题</a><a class="nav-topic" href="#practice-cninfo">要做公告任务时，先打开巨潮原公告</a><a class="nav-part" href="#sources">官方入口与延伸阅读</a></nav>
+<nav aria-label="讲义目录"><a class="nav-part" href="#concepts">第一部分：先把概念理清</a><a class="nav-topic" href="#concept-models">大模型怎样被调用</a><a class="nav-topic" href="#concept-harness">Harness 怎样把模型变成能办事的 Agent</a><a class="nav-topic" href="#concept-data">数据 API：让程序直接取得数据</a><a class="nav-topic" href="#concept-files">Agent 怎样读取文件和文档</a><a class="nav-topic" href="#glossary">反复遇到的词，在这里查</a><a class="nav-part" href="#practice">第二部分：按需要准备自己的工具</a><a class="nav-topic" href="#practice-tools">先选择你正在用的 Agent 或 Harness</a><a class="nav-topic" href="#practice-workspace">工具准备好后，建立工作目录</a><a class="nav-topic" href="#practice-agent">打开自己的 Agent，进入这个项目</a><a class="nav-topic" href="#practice-runtime">需要运行程序时，检查 Node.js 和 Python</a><a class="nav-topic" href="#practice-model-api">要让自己的程序调用模型时，连接硅基流动</a><a class="nav-topic" href="#practice-data-api">需要外部财务数据时，连接同花顺</a><a class="nav-topic" href="#practice-documents">文件没有读全时，处理一次文档读取问题</a><a class="nav-topic" href="#practice-cninfo">要做公告任务时，先打开巨潮原公告</a><a class="nav-part" href="#sources">官方入口与延伸阅读</a></nav>
 <p class="sidebar-note">先读概念，再按需操作。<br>已有工具可以继续沿用。</p></aside>
 <main id="content"><header id="top"><p class="eyebrow">课前必做 · 先理解，再动手</p><h1 id="page-title">零基础必看入门</h1>
 <p>金融智能体系列讲座 · 课前必做 · 更新于 2026 年 10 月 31 日</p>
@@ -517,7 +517,34 @@ footer p{font-size:12px}
 </div>
 <label class="no-tool"><input id="no-existing-tool" type="checkbox"/>我还没有使用过这类工具</label>
 </fieldset>
-<p aria-live="polite" class="route-message" id="tool-route" role="status">如果已有可用工具，请在上面选择。尚未使用过的老师，先建立工作目录，再展开后面的 OpenCode＋DeepSeek 安装说明。</p>
+<p aria-live="polite" class="route-message" id="tool-route" role="status">如果已有可用工具，请在上面选择。尚未使用过的老师，请先展开下面的安装说明，安装 OpenCode 并配置 DeepSeek API Key，然后再建立工作目录。</p>
+<details class="install-guide" id="opencode-install">
+<summary>还没有可用工具：先安装 OpenCode，获取并配置 DeepSeek API Key</summary>
+<p>这里推荐一条共同起步路线：OpenCode Desktop 提供 Harness，DeepSeek 提供编码模型。先完成下面的软件安装、Key 申请和配置，再进入下一节建立工作目录。</p>
+<h4>下载 OpenCode 桌面版</h4>
+<ol>
+<li>打开 <a href="https://opencode.ai/download">OpenCode 官方下载页</a>，找到 <strong>OpenCode Desktop</strong>。</li>
+<li>Windows 通常选 x64；系统信息注明 ARM 的电脑选 ARM64。Mac 在“苹果菜单 → 关于本机”查看，Apple M 系列芯片选 Apple Silicon，Intel 处理器选 Intel。</li>
+<li>打开安装文件，按系统提示完成。Mac 的 <code>.dmg</code> 通常需要把图标拖进“应用程序”，然后从那里启动；Windows 从安装完成后的开始菜单启动。</li>
+</ol>
+<p>本段使用桌面版，不需要先复制下载页上方 OpenCode Terminal 的安装命令。单位电脑限制安装时，按本单位的软件安装流程处理。</p>
+<h4>准备 DeepSeek 的模型授权</h4>
+<ol>
+<li>打开 <a href="https://platform.deepseek.com/">DeepSeek 开放平台</a>，注册或登录。</li>
+<li>查看 API 的计费和可用余额，按实际需要准备。日常聊天应用与开放平台调用的额度分开看。</li>
+<li>在 <strong>API keys / API 密钥</strong> 中创建自己的 Key，或沿用已有可用 Key。</li>
+<li>复制完整 Key，接下来只粘贴到软件的提供商授权框，不发进聊天。</li>
+</ol>
+<h4>在 OpenCode 中连接 DeepSeek</h4>
+<p>下面的中文按钮按本机 OpenCode Desktop 1.19.4 核对，不同版本名称可能略有变化。</p>
+<ol>
+<li>打开 OpenCode，点 <strong>主页 → 设置 → 提供商</strong>。</li>
+<li>点 <strong>查看更多提供商</strong>，搜索 <code>DeepSeek</code>，选中它。</li>
+<li>在 <strong>DeepSeek API 密钥</strong> 输入框粘贴本人 Key，点 <strong>继续</strong>。</li>
+</ol>
+<p>这处 DeepSeek 授权只供 OpenCode 帮你写程序使用。稍后做出的程序连接硅基流动时，仍使用对应平台自己的授权。</p>
+<p>完成后，确认 OpenCode 能启动、提供商设置中已保存 DeepSeek，再到下一节建立工作目录。如果设置提示 Key 或账户问题，先返回 DeepSeek 开放平台核对所用 Key 和可用余额，处理提示后再继续。模型能否实际回答，会在后面的项目对话中确认。</p>
+</details>
 <noscript><p>当前阅读方式不支持自动切换内容。已有可用工具的老师直接跳过后面的折叠安装说明，沿用自己的工具。</p></noscript>
 <p>接下来按自己的需要选择入口：</p>
 <div aria-label="对照表，可左右滚动" class="table-scroll" role="region" tabindex="0"><table>
@@ -529,12 +556,12 @@ footer p{font-size:12px}
 </thead>
 <tbody>
 <tr>
-<td>给一个新任务准备位置</td>
-<td><a href="#practice-workspace">先建工作目录</a>，再在自己的工具中打开</td>
+<td>还没有可用 Agent</td>
+<td>先按<a href="#opencode-install">上方折叠说明</a>安装 OpenCode、获取并配置 DeepSeek API Key，再建立工作目录</td>
 </tr>
 <tr>
-<td>还没有可用 Agent</td>
-<td>建好目录后，到<a href="#practice-agent">打开自己的 Agent</a>展开安装说明</td>
+<td>已有可用 Agent，要开始一个新任务</td>
+<td><a href="#practice-workspace">建立工作目录</a>，再在自己的工具中打开</td>
 </tr>
 <tr>
 <td>不知道 Node.js、Python 能否运行</td>
@@ -558,7 +585,7 @@ footer p{font-size:12px}
 </tr>
 </tbody>
 </table></div>
-</section><section class="section topic" id="practice-workspace"><h3>先建工作目录，再打开工具</h3>
+</section><section class="section topic" id="practice-workspace"><h3>工具准备好后，建立工作目录</h3>
 <p class="goal">一个任务有原始资料、程序和输出结果。把它们放在同一个工作目录里，Agent 才有明确的工作范围，你也能在电脑上找到它写出的文件。</p>
 <ol>
 <li>在自己的电脑上打开“文档”。Windows 用文件资源管理器，Mac 用 Finder，也叫“访达”。</li>
@@ -567,38 +594,15 @@ footer p{font-size:12px}
 </ol>
 <p>以后每讲做新的任务时，按该讲要求再建相应目录。先在本机可写的位置操作；邮件附件预览和压缩包内部不适合作为程序工作目录。</p>
 <p>如果需要区分文件类型，可以显示扩展名。Windows 11 通常在“查看 → 显示 → 文件扩展名”；Mac 在“访达 → 设置 → 高级”中勾选“显示所有文件扩展名”。旧版系统的菜单名称可能略有不同。</p>
-<p>本节操作后，电脑上会有一个可以重新找到并打开的真实文件夹。下一节再启动自己的 Agent，选择它作为项目。</p>
+<p>本节操作后，电脑上会有一个可以重新找到并打开的真实文件夹。下一节用已经准备好的 Agent，选择它作为项目。</p>
 </section><section class="section topic" id="practice-agent"><h3>打开自己的 Agent，进入这个项目</h3>
-<p class="goal">这一项把已有软件、已连接的模型和刚建的工作目录接到一起。已有可用 Agent 的老师，直接用它的“打开文件夹”或“打开项目”功能选择上面的目录，进入一个会话。</p>
-<details class="install-guide" id="opencode-install">
-<summary>还没有可用工具？展开安装 OpenCode＋DeepSeek</summary>
-<p>这里推荐一条共同起步路线：OpenCode Desktop 提供 Harness，DeepSeek 提供编码模型。先建好上一节的工作目录，再按下面步骤安装和打开软件。</p>
-<h4>下载 OpenCode 桌面版</h4>
+<p class="goal">这一项把已安装的软件、已配置的模型授权和刚建的工作目录接到一起。用自己 Agent 的“打开文件夹”或“打开项目”功能选择上面的目录，进入一个会话。</p>
+<p>如果你使用 OpenCode：</p>
 <ol>
-<li>打开 <a href="https://opencode.ai/download">OpenCode 官方下载页</a>，找到 <strong>OpenCode Desktop</strong>。</li>
-<li>Windows 通常选 x64；系统信息注明 ARM 的电脑选 ARM64。Mac 在“苹果菜单 → 关于本机”查看，Apple M 系列芯片选 Apple Silicon，Intel 处理器选 Intel。</li>
-<li>打开安装文件，按系统提示完成。Mac 的 <code>.dmg</code> 通常需要把图标拖进“应用程序”，然后从那里启动；Windows 从安装完成后的开始菜单启动。</li>
-</ol>
-<p>本段使用桌面版，不需要先复制下载页上方 OpenCode Terminal 的安装命令。单位电脑限制安装时，按本单位的软件安装流程处理。</p>
-<h4>准备 DeepSeek 的模型授权</h4>
-<ol>
-<li>打开 <a href="https://platform.deepseek.com/">DeepSeek 开放平台</a>，注册或登录。</li>
-<li>查看 API 的计费和可用余额，按实际需要准备。日常聊天应用与开放平台调用的额度分开看。</li>
-<li>在 <strong>API keys / API 密钥</strong> 中创建自己的 Key，或沿用已有可用 Key。</li>
-<li>复制完整 Key，接下来只粘贴到软件的提供商授权框，不发进聊天。</li>
-</ol>
-<h4>连接模型并打开工作目录</h4>
-<p>下面的中文按钮按本机 OpenCode Desktop 1.19.4 核对，不同版本名称可能略有变化。</p>
-<ol>
-<li>打开 OpenCode，点 <strong>主页 → 设置 → 提供商</strong>。</li>
-<li>点 <strong>查看更多提供商</strong>，搜索 <code>DeepSeek</code>，选中它。</li>
-<li>在 <strong>DeepSeek API 密钥</strong> 输入框粘贴本人 Key，点 <strong>继续</strong>。</li>
 <li>返回主页，点 <strong>添加项目</strong>，选中刚才创建的 <code>finance-agent-start</code> 文件夹。</li>
 <li>在这个项目中新建会话，点击输入框附近的模型名称，选择 DeepSeek 提供商下的 Flash 模型。看不到时，可先在“设置 → 模型”中搜索并启用，再回会话中选择。</li>
 </ol>
 <p>当前参考 API 名为 <code>deepseek-flash</code>，OpenCode 中的 ID 为 <code>deepseek/deepseek-flash</code>；本机核对时显示为 <code>DeepSeek V4.1 Flash 1017</code>。若有推理强度选择，第二讲参考配置用 High。以当前官方目录和各讲实际要求为准。参见 <a href="https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/">DeepSeek 的 OpenCode 接入说明</a>。</p>
-<p>这处 DeepSeek 授权只供 OpenCode 帮你写程序使用。稍后做出的程序连接硅基流动时，仍使用对应平台自己的授权。</p>
-</details>
 <h4>在项目里开始一段对话</h4>
 <p>先看当前项目名是否是刚选的文件夹。然后在自己 Agent 的输入框中发送：</p>
 <div class="prompt-box"><div class="prompt-toolbar"><span>复制后发给你自己的 Agent</span><button aria-label="复制第3段文字：复制后发给你自己的 Agent" class="copy" data-copy="copy-3" type="button">复制文字</button></div><pre id="copy-3"><code class="language-prompt">我准备在当前项目中做金融智能体课程。请先告诉我实际工作目录在哪里，再在这个目录创建 note.md，写入“这是我的项目工作笔记”。保存后实际读取一次，告诉我文件位置和读到的内容。先只完成这一件事。
@@ -760,10 +764,10 @@ function updateRoute() {
   guide.hidden = selected.length > 0;
   if (guide.hidden) guide.open = false;
   route.textContent = selected.length
-    ? '已选择：' + selected.map(tool => tool.parentElement.textContent.trim()).join('、') + '。OpenCode＋DeepSeek 安装说明已隐藏，继续用自己的工具打开工作目录即可。'
+    ? '已选择：' + selected.map(tool => tool.parentElement.textContent.trim()).join('、') + '。OpenCode＋DeepSeek 安装说明已隐藏，可直接到下一节建立工作目录，再用自己的工具打开。'
     : noTool.checked
-      ? '建议从 OpenCode＋DeepSeek 起步。先建立下面的工作目录，再展开“打开自己的 Agent”中的安装说明。'
-      : '如果已有可用工具，请在上面选择。尚未使用过的老师，先建立工作目录，再展开后面的 OpenCode＋DeepSeek 安装说明。';
+      ? '建议使用 OpenCode＋DeepSeek。请先展开下面的安装说明，完成软件安装和 DeepSeek API Key 配置，再到下一节建立工作目录。'
+      : '如果已有可用工具，请在上面选择。尚未使用过的老师，请先展开下面的安装说明，安装 OpenCode 并配置 DeepSeek API Key，然后再建立工作目录。';
   try {
     localStorage.setItem(selectionKey, JSON.stringify({ tools: selected.map(tool => tool.value), noTool: noTool.checked }));
   } catch {}

@@ -279,44 +279,12 @@ JSON 把字段名和对应内容写在一起：
 <label class="no-tool"><input type="checkbox" id="no-existing-tool">我还没有使用过这类工具</label>
 </fieldset>
 
-<p id="tool-route" class="route-message" role="status" aria-live="polite">如果已有可用工具，请在上面选择。尚未使用过的老师，先建立工作目录，再展开后面的 OpenCode＋DeepSeek 安装说明。</p>
-
-<noscript><p>当前阅读方式不支持自动切换内容。已有可用工具的老师直接跳过后面的折叠安装说明，沿用自己的工具。</p></noscript>
-
-接下来按自己的需要选择入口：
-
-| 你现在需要做什么 | 从哪一项开始 |
-| --- | --- |
-| 给一个新任务准备位置 | [先建工作目录](#practice-workspace)，再在自己的工具中打开 |
-| 还没有可用 Agent | 建好目录后，到[打开自己的 Agent](#practice-agent)展开安装说明 |
-| 不知道 Node.js、Python 能否运行 | 到[检查本机运行环境](#practice-runtime) |
-| 要让做出的程序处理财报或公告 | 到[让程序连接硅基流动](#practice-model-api) |
-| 第二讲要取外部财务数据 | 到[连接同花顺](#practice-data-api) |
-| Word、PPT、PDF 没有读全 | 到[处理一次文档读取问题](#practice-documents) |
-| 要做第三讲的公告任务 | 到[打开巨潮原公告](#practice-cninfo) |
-
-### 先建工作目录，再打开工具 {#practice-workspace}
-
-一个任务有原始资料、程序和输出结果。把它们放在同一个工作目录里，Agent 才有明确的工作范围，你也能在电脑上找到它写出的文件。
-
-1. 在自己的电脑上打开“文档”。Windows 用文件资源管理器，Mac 用 Finder，也叫“访达”。
-2. 新建一个文件夹，例如 `finance-agent-start`。Windows 可按 Ctrl+Shift+N，Mac 可按 Command+Shift+N。
-3. 双击进入，记住这个位置。之后要在 Agent 中打开的，就是这个文件夹。
-
-以后每讲做新的任务时，按该讲要求再建相应目录。先在本机可写的位置操作；邮件附件预览和压缩包内部不适合作为程序工作目录。
-
-如果需要区分文件类型，可以显示扩展名。Windows 11 通常在“查看 → 显示 → 文件扩展名”；Mac 在“访达 → 设置 → 高级”中勾选“显示所有文件扩展名”。旧版系统的菜单名称可能略有不同。
-
-本节操作后，电脑上会有一个可以重新找到并打开的真实文件夹。下一节再启动自己的 Agent，选择它作为项目。
-
-### 打开自己的 Agent，进入这个项目 {#practice-agent}
-
-这一项把已有软件、已连接的模型和刚建的工作目录接到一起。已有可用 Agent 的老师，直接用它的“打开文件夹”或“打开项目”功能选择上面的目录，进入一个会话。
+<p id="tool-route" class="route-message" role="status" aria-live="polite">如果已有可用工具，请在上面选择。尚未使用过的老师，请先展开下面的安装说明，安装 OpenCode 并配置 DeepSeek API Key，然后再建立工作目录。</p>
 
 <details id="opencode-install" class="install-guide" markdown="1">
-<summary>还没有可用工具？展开安装 OpenCode＋DeepSeek</summary>
+<summary>还没有可用工具：先安装 OpenCode，获取并配置 DeepSeek API Key</summary>
 
-这里推荐一条共同起步路线：OpenCode Desktop 提供 Harness，DeepSeek 提供编码模型。先建好上一节的工作目录，再按下面步骤安装和打开软件。
+这里推荐一条共同起步路线：OpenCode Desktop 提供 Harness，DeepSeek 提供编码模型。先完成下面的软件安装、Key 申请和配置，再进入下一节建立工作目录。
 
 #### 下载 OpenCode 桌面版
 
@@ -333,21 +301,58 @@ JSON 把字段名和对应内容写在一起：
 3. 在 **API keys / API 密钥** 中创建自己的 Key，或沿用已有可用 Key。
 4. 复制完整 Key，接下来只粘贴到软件的提供商授权框，不发进聊天。
 
-#### 连接模型并打开工作目录
+#### 在 OpenCode 中连接 DeepSeek
 
 下面的中文按钮按本机 OpenCode Desktop 1.19.4 核对，不同版本名称可能略有变化。
 
 1. 打开 OpenCode，点 **主页 → 设置 → 提供商**。
 2. 点 **查看更多提供商**，搜索 `DeepSeek`，选中它。
 3. 在 **DeepSeek API 密钥** 输入框粘贴本人 Key，点 **继续**。
-4. 返回主页，点 **添加项目**，选中刚才创建的 `finance-agent-start` 文件夹。
-5. 在这个项目中新建会话，点击输入框附近的模型名称，选择 DeepSeek 提供商下的 Flash 模型。看不到时，可先在“设置 → 模型”中搜索并启用，再回会话中选择。
-
-当前参考 API 名为 `deepseek-flash`，OpenCode 中的 ID 为 `deepseek/deepseek-flash`；本机核对时显示为 `DeepSeek V4.1 Flash 1017`。若有推理强度选择，第二讲参考配置用 High。以当前官方目录和各讲实际要求为准。参见 [DeepSeek 的 OpenCode 接入说明](https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/)。
 
 这处 DeepSeek 授权只供 OpenCode 帮你写程序使用。稍后做出的程序连接硅基流动时，仍使用对应平台自己的授权。
 
+完成后，确认 OpenCode 能启动、提供商设置中已保存 DeepSeek，再到下一节建立工作目录。如果设置提示 Key 或账户问题，先返回 DeepSeek 开放平台核对所用 Key 和可用余额，处理提示后再继续。模型能否实际回答，会在后面的项目对话中确认。
+
 </details>
+
+<noscript><p>当前阅读方式不支持自动切换内容。已有可用工具的老师直接跳过后面的折叠安装说明，沿用自己的工具。</p></noscript>
+
+接下来按自己的需要选择入口：
+
+| 你现在需要做什么 | 从哪一项开始 |
+| --- | --- |
+| 还没有可用 Agent | 先按[上方折叠说明](#opencode-install)安装 OpenCode、获取并配置 DeepSeek API Key，再建立工作目录 |
+| 已有可用 Agent，要开始一个新任务 | [建立工作目录](#practice-workspace)，再在自己的工具中打开 |
+| 不知道 Node.js、Python 能否运行 | 到[检查本机运行环境](#practice-runtime) |
+| 要让做出的程序处理财报或公告 | 到[让程序连接硅基流动](#practice-model-api) |
+| 第二讲要取外部财务数据 | 到[连接同花顺](#practice-data-api) |
+| Word、PPT、PDF 没有读全 | 到[处理一次文档读取问题](#practice-documents) |
+| 要做第三讲的公告任务 | 到[打开巨潮原公告](#practice-cninfo) |
+
+### 工具准备好后，建立工作目录 {#practice-workspace}
+
+一个任务有原始资料、程序和输出结果。把它们放在同一个工作目录里，Agent 才有明确的工作范围，你也能在电脑上找到它写出的文件。
+
+1. 在自己的电脑上打开“文档”。Windows 用文件资源管理器，Mac 用 Finder，也叫“访达”。
+2. 新建一个文件夹，例如 `finance-agent-start`。Windows 可按 Ctrl+Shift+N，Mac 可按 Command+Shift+N。
+3. 双击进入，记住这个位置。之后要在 Agent 中打开的，就是这个文件夹。
+
+以后每讲做新的任务时，按该讲要求再建相应目录。先在本机可写的位置操作；邮件附件预览和压缩包内部不适合作为程序工作目录。
+
+如果需要区分文件类型，可以显示扩展名。Windows 11 通常在“查看 → 显示 → 文件扩展名”；Mac 在“访达 → 设置 → 高级”中勾选“显示所有文件扩展名”。旧版系统的菜单名称可能略有不同。
+
+本节操作后，电脑上会有一个可以重新找到并打开的真实文件夹。下一节用已经准备好的 Agent，选择它作为项目。
+
+### 打开自己的 Agent，进入这个项目 {#practice-agent}
+
+这一项把已安装的软件、已配置的模型授权和刚建的工作目录接到一起。用自己 Agent 的“打开文件夹”或“打开项目”功能选择上面的目录，进入一个会话。
+
+如果你使用 OpenCode：
+
+1. 返回主页，点 **添加项目**，选中刚才创建的 `finance-agent-start` 文件夹。
+2. 在这个项目中新建会话，点击输入框附近的模型名称，选择 DeepSeek 提供商下的 Flash 模型。看不到时，可先在“设置 → 模型”中搜索并启用，再回会话中选择。
+
+当前参考 API 名为 `deepseek-flash`，OpenCode 中的 ID 为 `deepseek/deepseek-flash`；本机核对时显示为 `DeepSeek V4.1 Flash 1017`。若有推理强度选择，第二讲参考配置用 High。以当前官方目录和各讲实际要求为准。参见 [DeepSeek 的 OpenCode 接入说明](https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/)。
 
 #### 在项目里开始一段对话
 

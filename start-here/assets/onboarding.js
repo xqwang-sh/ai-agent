@@ -40,10 +40,10 @@ function updateRoute() {
   guide.hidden = selected.length > 0;
   if (guide.hidden) guide.open = false;
   route.textContent = selected.length
-    ? '已选择：' + selected.map(tool => tool.parentElement.textContent.trim()).join('、') + '。OpenCode＋DeepSeek 安装说明已隐藏，继续用自己的工具打开工作目录即可。'
+    ? '已选择：' + selected.map(tool => tool.parentElement.textContent.trim()).join('、') + '。OpenCode＋DeepSeek 安装说明已隐藏，可直接到下一节建立工作目录，再用自己的工具打开。'
     : noTool.checked
-      ? '建议从 OpenCode＋DeepSeek 起步。先建立下面的工作目录，再展开“打开自己的 Agent”中的安装说明。'
-      : '如果已有可用工具，请在上面选择。尚未使用过的老师，先建立工作目录，再展开后面的 OpenCode＋DeepSeek 安装说明。';
+      ? '建议使用 OpenCode＋DeepSeek。请先展开下面的安装说明，完成软件安装和 DeepSeek API Key 配置，再到下一节建立工作目录。'
+      : '如果已有可用工具，请在上面选择。尚未使用过的老师，请先展开下面的安装说明，安装 OpenCode 并配置 DeepSeek API Key，然后再建立工作目录。';
   try {
     localStorage.setItem(selectionKey, JSON.stringify({ tools: selected.map(tool => tool.value), noTool: noTool.checked }));
   } catch {}

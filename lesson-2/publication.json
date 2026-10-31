@@ -12,10 +12,10 @@
     "app.js": "80bc082e3805922aa286edf80fa6d64e9ddde0b959f123145ae44f885efd620d"
   },
   "files": {
-    "EarningsReview-第二讲讲义包.zip": "c6f928dfd789b735153fad6f57d49ebdd75fd90e9570fb3d9fb3fa83406694c7",
+    "EarningsReview-第二讲讲义包.zip": "ce1cd781e69d9763a8783b223dfaa9f8fed86667386cdb117013a8c4ebe3e065",
     "PROMPTS.md": "05280029157a401fc9eb3f244448a2a776a84aad8072eabdcacedea509b7e2ff",
     "assets/earnings-review-example.jpg": "1effd55aee70658939f7f6c303bb281bfca13eac5b56bd1449720cf3dc56e861",
-    "assets/handout.css": "2adf51c2b36f6a04c2b6a8cfa1f74e232dc0a50dc17b086a6463214a04d7d4e3",
+    "assets/handout.css": "ad6927f25ec028b8b93379a6d5b8c3f44a8744b6bafbd8f9c3fb0eabc0f1b503",
     "assets/handout.js": "255560e53e1572ec4563521138343e7b7ac82055f8ab68e0270a2a074d28c0a9",
     "earnings-review/app.js": "0ef4d1b1f2ec49844cd2ec83d31b38533395148e4fb656ca332007aedc3f2f31",
     "earnings-review/data/external.json": "8e779e9cf96e284d7d99f1a15bf28d541ed8f75ee4c62416a6638e7366f514ca",
@@ -29,11 +29,11 @@
     "earnings-review/index.html": "9f04263da4dc85b3f7aaecbd30bfe7b5acfe19b6de97697be65006a7249567db",
     "earnings-review/style.css": "14b59e16e93a368747260b25316e5bce88c24d433c823574f55fcf2f733afeae",
     "earnings-review-materials.zip": "bed951391a9cce3b8188011f592c7fac619f3ea5996b2ee76295f1df3d41514c",
-    "index.html": "881f3122a02174ce00f3028162debc69cc65ca613a5b11737ea8da3beff938ee",
-    "source-snapshot/AGENTS.md": "ad959f0643511523f337c4ebf37a663a47fde98eb4ba0ff42e3b0c3989ad2959",
+    "index.html": "e26b72b3b4675ff594fad067f448d3dd12ffec6912a5f69448fc2599fb2f0c51",
+    "source-snapshot/AGENTS.md": "b6b8bc02511646ac96c1d23424ba1f1a381b6ad95eba28af4d25b523e94f4243",
     "source-snapshot/README.md": "bfa164d739edd003bbf5f8b64d7391773c4a1f4e0a07e98079c24fe5be694853",
-    "source-snapshot/SOURCE-SNAPSHOT.json": "917872d811fdc6c117f606136e20ba1088cf980d4cf065c43b7e5b14551e6abd",
-    "source-snapshot/qa/check_handout.py": "19bc7253d7254c004b465a9c6e4c17c999d975e0b0fc56e58b6d74b37309813a",
+    "source-snapshot/SOURCE-SNAPSHOT.json": "cb706aeaef76a92ecaf164db727865b1ac402ad26c13fa97f3d3ded36a5be6d8",
+    "source-snapshot/qa/check_handout.py": "8ebfee5a8d54d58197da6108baa4d97e9a2e17f8402287293671a5cc9ad835be",
     "source-snapshot/qa/check_runtime_prompts.py": "14cfc8b4de9875c451d98eb6cf821a04e960eb298be379373f2d6a478563b5a4",
     "source-snapshot/source/acceptance/README.md": "909308d5cde3cc119481b0222c987a6d6a89c7d166d81e55575339eb9fabb054",
     "source-snapshot/source/acceptance/__init__.py": "e3859b6681ac35aeba4603fa14ddf1294daa063d2af448f3c69ad854ff3292c1",
@@ -49,16 +49,16 @@
     "source-snapshot/source/acceptance/services.py": "3e28e61d370fd8e4e94ee6d80b0cb582b7ca990ed63f4c75cb5a813e00d9ddcd",
     "source-snapshot/source/acceptance/source_binding_checks.py": "fa70d6054a13ed71eef48bdff81b2e7961d04dd833f34e2fab2f23b1f5d3baf8",
     "source-snapshot/source/acceptance/structured_fixtures.py": "2e4c40d5ca988eb8e60924c277562ceb902c52f64b01a2bab737e21aaad2cd95",
-    "source-snapshot/source/build.py": "45a5eb2376ad11cddd37ff39a0ddb8e40ab212e38b777402482c60bb880c5fd4",
-    "source-snapshot/source/lesson.json": "47316d534184dfd3c72cd54779accffa07f461808a37473f3241f52ae0fcf849",
+    "source-snapshot/source/build.py": "2323d73d0ea2b4c28596a8c58ec0c9b700055490002c2b84d4fe03d217e52533",
+    "source-snapshot/source/lesson.json": "ed1fb4d0b89e03560825f64264df7b50e0124429e5ba168e1ad608d769289c69",
     "source-snapshot/source/prepare_materials.py": "4cf459c1fcecc73b16cba2e50458a2014205bda87f05e18f2dd74fe6d31042ae",
     "source-snapshot/source/project-agents.md": "efa549f9b28a974138450293ad31a917f005a03eee64044f1a3bee60843e630f",
-    "source-snapshot/source/publish.py": "f695111c213badbd55e88132fd0a385e77a062fcccd5afa8083fb617cadac7c2",
+    "source-snapshot/source/publish.py": "1c1ff39a0bf39f45001e484a5c5fd9b5572335116b15a8b1f7a9b3accfe4ee54",
     "source-snapshot/source/repair-coverage.json": "63e482ace9083689b514cc077d886869a8608f6b8a3704d4fa0e8c3fe31576eb",
     "source-snapshot/source/verified-example.json": "7def6ede281b71b54170b9b037d296a30a32c7de3d311f8422f1b71c52917825",
     "source-snapshot/source/verified-rebuild.json": "dcbb495d36e4a088a185881a7fab4d0a975fadc06d06fa3f15923ffd205d1844",
-    "讲义.md": "49f6fc3841ce59fa0da047cdec032945e2524c75bdd3812f72acf140e3263536"
+    "讲义.md": "716ff5dd2a9b0e1aed61fb73175d98aa8bf3faf75d1930e047460173be9bca82"
   },
   "handout_updated": "2026-10-26",
-  "source_snapshot_digest": "a9cf7f4f0f1dfb9f15a32dc2c76272e84469b7c963b898e5812490ccb50def67"
+  "source_snapshot_digest": "b7da1d93db77a62694a403ce0342d7d6f216ead088add9ca68866c5ccd643f35"
 }

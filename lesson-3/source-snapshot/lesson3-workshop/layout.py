@@ -30,7 +30,7 @@ def split_sections(source, level=2):
     return chunks[0].strip(), [(chunks[i].strip(), chunks[i + 1].strip()) for i in range(1, len(chunks), 2)]
 
 
-def render(source, *, asset_prefix="assets/", back="../index.html"):
+def render(source, *, asset_prefix="assets/", back="../index.html", prerequisite="../start-here/index.html"):
     lead, sections = split_sections(source)
     title = re.search(r"^# (.+)$", lead, re.M).group(1)
     intro = re.sub(r"^# .+\n", "", lead, count=1).strip()
@@ -59,7 +59,7 @@ def render(source, *, asset_prefix="assets/", back="../index.html"):
     else:
         body.append('<header id="top"><p class="eyebrow">第三讲 · 教师备课参考</p><h1>' + escape(title) + '</h1>' + md(intro) + '<div class="downloads"><a href="' + back + '">← 返回讲义</a></div></header>')
 
-    intro_ids = ["workflow-map", "start"]
+    intro_ids = ["readiness", "workflow-map", "start"]
     for index, (heading, content) in enumerate(sections):
         step = re.match(r"第(\d+)步[：:]\s*(.+)", heading)
         if step:
@@ -79,9 +79,15 @@ def render(source, *, asset_prefix="assets/", back="../index.html"):
             body.append('<div class="files"><span>本步产物</span>' + md(parts.get("本步产物", "")) + '</div><details class="repair"><summary>本步没做好？看反馈例子</summary>' + prompts(parts.get("卡住时", ""), "反馈") + '</details><label class="completion"><input type="checkbox" data-complete="' + identity + '">我已打开结果并核对这一步</label></section>')
         elif is_lesson and index < len(intro_ids):
             identity = intro_ids[index]
-            nav.append('<a href="#' + identity + '">' + ("整体步骤" if index == 0 else "课前准备与材料") + '</a>')
+            nav_label = {"readiness": "开始前，确认准备", "workflow-map": "整体步骤", "start": "本讲项目与材料"}[identity]
+            nav.append('<a href="#' + identity + '">' + nav_label + '</a>')
             if identity != "start":
-                body.append('<section class="' + ("overview" if identity == "workflow-map" else "intro") + '" id="' + identity + '"><h2>' + escape(heading) + '</h2>' + md(content) + '</section>')
+                content_html = md(content)
+                if identity == "readiness":
+                    content_html = content_html.replace('href="https://suibe-ai-agent.netlify.app/start-here/"', 'href="' + escape(prerequisite, quote=True) + '"')
+                    content_html = re.sub(r'<li>\[ \] (.*?)</li>', r'<li><label><input type="checkbox"><span>\1</span></label></li>', content_html, flags=re.S)
+                    content_html = content_html.replace('<ul>', '<ul class="readiness-checks">')
+                body.append('<section class="' + ("overview" if identity == "workflow-map" else "intro") + '" id="' + identity + '"><h2>' + escape(heading) + '</h2>' + content_html + '</section>')
             else:
                 opening, blocks = split_sections(content, 3)
                 parts = dict(blocks)

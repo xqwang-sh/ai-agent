@@ -2,6 +2,8 @@
 
 - Write for teachers who have only used Office and have no programming background. Explain necessary terms before using them.
 - Separate concepts from optional practical work. Explain model access, cloud versus local deployment, Harness and the tool loop, data APIs, and document formats before asking learners to operate a computer.
+- Explain SiliconFlow in model access, alongside model size and local compute requirements. Do not place a standalone provider-introduction section under Harness/Agent.
+- Organize the data-source table by data type, mixing relevant domestic and international options. Distinguish hosted HTTP services from local libraries, free access from account/Key/points requirements, and company records from survey microdata.
 - Begin practice with an existing-tool selector. Selecting any existing Agent/Harness hides the entire OpenCode/DeepSeek installation detail. Without an existing selection, show the collapsed recommended route. All shared prompts address the learner's own Agent.
 - Do not add completion checkboxes, a readiness counter, a final self-check, or a completion report. Each optional action explains its purpose and visible result; application acceptance belongs to the individual lectures.
 - Test Node.js/Python with a minimal calculation. Do not generate a webpage solely for environment checking.

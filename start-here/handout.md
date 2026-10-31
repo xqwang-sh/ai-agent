@@ -32,6 +32,16 @@ API 可以理解为**给程序使用的通信入口**。它规定请求发到哪
 
 本系列讲座主要用云端托管模型。老师不需要先下载大模型，也不需要为此购买显卡。已经有可用本地模型的老师，可以继续使用自己的方案，留意该模型是否支持课堂需要的文字、图片和工具调用能力。
 
+#### 模型有大小，怎样选择调用方式 {#model-size}
+
+模型常用 4B、27B 等参数规模区分大小。参数规模较大的模型，通常需要更多内存、显存和计算资源，个人电脑未必能部署。有些较小的模型可以在本机运行，但仍要看电脑配置、模型的实际运行要求和任务长度。小模型也不意味着每台电脑都能顺畅运行。
+
+如果自己的电脑资源足够，可以本地部署合适的模型，让软件连接本机的模型 API。如果资源不够，也可以调用托管在服务方服务器上的模型，把计算交给对方完成。这同样适用于小模型。
+
+例如，[硅基流动](https://docs.siliconflow.cn/docs/userguide/introduction)提供多种大小模型的托管 API。你可以通过它调用需要的小模型，也可以选用平台提供的较大模型，本机负责发送请求和接收结果。它为多种模型提供较统一的调用格式，基础程序可以沿用相近的请求写法；更换模型时，仍需核对准确的模型 ID、支持的功能、价格和额度。
+
+因此，模型较小但本机算力不足时，可以选择“通过硅基流动等平台调用云端小模型”这条路线。后面的“让程序连接硅基流动”会介绍具体操作。
+
 #### 同样是调用模型，授权方式可能不同
 
 有些软件通过订阅或账号登录，已经替你安排了模型访问；有些软件需要你自己填写 API Key。是否要另外申请 Key，要看你正在使用的软件和服务。
@@ -83,19 +93,11 @@ API Key 是程序调用服务时使用的授权凭据。它与登录密码、手
 | 场景 | 谁在组织这次工作 | 模型做什么 | 示例 |
 | --- | --- | --- | --- |
 | 帮你搭建程序 | 你选用的编程工具及其 Harness | 理解需求、写文件、修改程序 | OpenCode 连接 DeepSeek；已有其他工具的老师沿用自己的工具 |
-| 处理财报或公告 | 你搭出的工作流或应用 | 按程序交来的任务提取、分类或读图 | 你的程序通过硅基流动调用 Qwen |
+| 处理财报或公告 | 你搭出的工作流或应用 | 按程序交来的任务提取、分类或读图 | 你的程序调用任务需要的文本或视觉模型 |
 
 编程 Agent 能聊天，只说明第一处已经能用。你写出的程序能否调用模型，还要看第二处的授权和连接。
 
 工作流，workflow，是程序安排的一组处理步骤。第一讲先用固定步骤组织提取、换算和计算，程序负责顺序与检查。后续搭建 Agent 时，再根据业务需要安排模型判断、工具执行和持续运行。
-
-#### 硅基流动在这里提供什么
-
-硅基流动，SiliconFlow，是提供托管模型调用的平台。它上面有 Qwen 等模型，可以通过 API 使用一些较小规模的模型。4B、27B 这样的字样描述模型的参数规模，不是要求老师准备的电脑内存容量。
-
-第一讲当前使用 `Qwen/Qwen3.5-4B`。第二讲需要文字与视觉能力，当前材料包含 `Qwen/Qwen3.8-27B`。第三讲从小模型开始，再根据实际任务比较模型。准确可用名称与价格，以本人账号当时的模型目录和各讲材料为准。参见 [硅基流动快速上手](https://docs.siliconflow.cn/docs/userguide/quickstart)。
-
-这里先认识它的用途。需要让自己搭出的程序使用模型时，再到第二部分的“连接硅基流动”操作。
 
 ### 数据 API：让程序直接取得数据 {#concept-data}
 
@@ -117,19 +119,32 @@ API Key 是程序调用服务时使用的授权凭据。它与登录密码、手
 
 程序取得数据并不总需要模型参与。是否把结果交给模型，要看接下来准备完成什么任务。模型的回答也不能替代一次真实取数。
 
-#### 国际上有哪些免费的公开数据 API
+#### 按数据类型选择接口 {#data-source-types}
 
-下面这些入口可以用于教学和研究中的公共数据获取。“免费”与“是否需要账号或 Key”分开看；具体数据的使用条件、覆盖范围和调用频率，以各机构当前说明为准。
+先看自己要研究的对象。GDP、物价、地区就业等属于宏观或地区统计；某一家公司的报表、行情和公告，则是公司层面的记录。下面按数据类型，把不同来源与工具放在同一张表里。
 
-| 数据源 | 适合查什么 | 接入要求与官方说明 |
-| --- | --- | --- |
-| 世界银行，World Bank | 各国 GDP、人口、发展指标 | [Indicators API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) 可直接访问，不需要 API Key |
-| IMF | 宏观、国际收支、财政和金融统计 | 公开统计数据可免费获取；[当前 API](https://data.imf.org/en/Resource-Pages/IMF-API) 提供 SDMX 接口，API 探索门户按当前要求登录。另见 [免费数据说明](https://www.imf.org/en/news/articles/2015/09/28/04/53/sonew012615a) |
-| OECD | 国民经济核算、就业、教育等跨国统计 | [官方 API](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) 免费提供，需遵守使用条件和请求频率限制 |
-| 欧洲央行，ECB | 欧元区统计、汇率和利率等 | [ECB Data Portal API](https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0) 提供公开统计数据及元数据的程序访问入口 |
-| FRED，圣路易斯联储 | 美国及其他来源的宏观与金融时间序列 | 使用免费账号申请个人 API Key，参见 [账号说明](https://fred.stlouisfed.org/help/account/fred-account-features/register/) 和 [API Key 说明](https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html) |
+<div class="data-source-table" markdown="1">
 
-这些是可供选择的数据来源，不需要现在逐个注册。做跨国宏观研究时再按问题选择；查询 A 股公司财务数据时，则用相应的金融数据服务。
+| 数据类型 | 来源或工具 | 可以取得什么 | 怎样接入、费用与权限 |
+| --- | --- | --- | --- |
+| 宏观与地区统计 | Tushare Pro | 中国 GDP、CPI、货币供应量等 | 注册并取得 Token，通过 [HTTP 或 Python 接口](https://tushare.pro/document/1?doc_id=130)查询；按具体接口核对积分和权限，参见 [GDP 接口](https://tushare.pro/document/2?doc_id=227) |
+| 宏观与地区统计 | AKShare | 中国宏观指标及其他公开财经数据 | [开源 Python 接口库](https://akshare.akfamily.xyz/introduction.html)，由 Agent 在本机运行；数据从上游公开来源取得，参见 [中国宏观目录](https://akshare.akfamily.xyz/data/macro/macro_china.html)，使用条件和可用性要看具体接口与上游 |
+| 宏观与地区统计 | 世界银行，World Bank | 各国 GDP、人口、发展指标 | [Indicators API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) 可直接访问，不需要 API Key |
+| 宏观与地区统计 | IMF | 宏观、国际收支、财政和金融统计 | 公开统计数据可免费获取；[API 探索门户](https://data.imf.org/en/Resource-Pages/IMF-API)按当前要求登录，参见 [免费数据说明](https://www.imf.org/en/news/articles/2015/09/28/04/53/sonew012615a) |
+| 宏观与地区统计 | OECD | 国民经济核算、就业、教育等统计 | [官方 API](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) 免费提供，需遵守使用条件和请求频率限制 |
+| 利率、汇率时间序列 | 欧洲央行，ECB | 汇率、利率及相关金融统计 | 通过 [ECB Data Portal API](https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0)请求公开统计数据，按其规则使用 |
+| 利率、汇率时间序列 | FRED，圣路易斯联储 | 利率、汇率及其他宏观金融序列 | 使用 [免费账号](https://fred.stlouisfed.org/help/account/fred-account-features/register/)申请个人 [API Key](https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html)，具体数据遵守各自使用条件 |
+| 公司层面数据 | 同花顺金融数据服务 | A 股公司财务报表、行情等结构化记录 | 通过 [数据服务](https://fuyao.aicubes.cn/docs/quickstart/)取得本人 Key，按账号实际权限调用；本系列第二讲用它核对财务数据 |
+| 公司层面数据 | Tushare Pro | 上市公司财务报表、行情和基础资料 | HTTP 或 Python 接口，需本人 Token；[财务接口](https://tushare.pro/document/2?doc_id=33)有积分门槛，部分能力需单独开通，查看 [权限说明](https://tushare.pro/document/2?doc_id=290) |
+| 公司层面数据 | SEC EDGAR | 公司披露记录、财务报表中的结构化指标 | [公开查询 API](https://www.sec.gov/search-filings/edgar-application-programming-interfaces)无需 API Key；自动访问需按 [开发者要求](https://www.sec.gov/about/webmaster-frequently-asked-questions)标明程序身份、控制频率 |
+
+</div>
+
+表中按举例的用途归类，同一平台可能覆盖多种数据。AKShare 是本机运行的接口库；其他一些来源提供远程 HTTP 数据服务。接入方式已分别标明，选定后可以让自己的 Agent 按官方文档处理。
+
+公司层面的记录是微观数据的一种。若研究需要住户调查、企业调查的原始样本，还要另行确认能否通过 API 获取，还是需要申请数据包。宏观指标接口不能替代这些样本。
+
+这些入口供按问题选择，不需要现在逐个注册。“免费”“需要 Key”“需要积分或付费权限”分别看，具体条件以各来源当前说明为准。
 
 #### 看一个不需要 Key 的请求
 
@@ -137,7 +152,7 @@ API Key 是程序调用服务时使用的授权凭据。它与登录密码、手
 
 这个网址已经把查询条件写在请求中。打开后看到的会是数据，而不是排好版的介绍文章。返回里可以找到国家、年份、指标名称和数值。程序也可以请求同一个入口，把结果保存下来。后面讲 JSON 时，会解释这种格式为什么便于程序处理。
 
-#### 同花顺在本系列讲座中做什么
+#### 本系列讲座用到的数据来源
 
 [同花顺金融数据服务](https://fuyao.aicubes.cn/docs/quickstart/)是第二讲的外部财务数据来源。你搭出的程序从它取得结构化报表，再与财报提取值核对。它的 API Key 与模型服务的 Key 分开。
 
@@ -512,7 +527,7 @@ World Bank、IMF 等公共数据的接入也遵循“选数据源、确定条件
 
 - 模型与 Harness：[Ollama API](https://docs.ollama.com/api/introduction)、[Anthropic 的 Agent Harness 说明](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)。
 - 编程工具起步：[OpenCode 下载](https://opencode.ai/download)、[提供商连接](https://opencode.ai/docs/providers/)、[DeepSeek 接入 OpenCode](https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/)。
-- 模型服务：[硅基流动快速上手](https://docs.siliconflow.cn/docs/userguide/quickstart)。
+- 模型服务：[硅基流动平台说明](https://docs.siliconflow.cn/docs/userguide/introduction)、[快速上手](https://docs.siliconflow.cn/docs/userguide/quickstart)。
 - 财务数据：[同花顺快速开始](https://fuyao.aicubes.cn/docs/quickstart/)、[财务报表接口](https://fuyao.aicubes.cn/docs/api-reference/financials/)。
-- 公共数据：[World Bank](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)、[IMF](https://data.imf.org/en/Resource-Pages/IMF-API)、[OECD](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html)、[ECB](https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0)、[FRED](https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html)。
+- 数据接口目录：[Tushare HTTP](https://tushare.pro/document/1?doc_id=130)与[权限说明](https://tushare.pro/document/2?doc_id=290)、[AKShare](https://akshare.akfamily.xyz/introduction.html)、[World Bank](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)、[IMF](https://data.imf.org/en/Resource-Pages/IMF-API)、[OECD](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html)、[ECB](https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0)、[FRED](https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html)、[SEC EDGAR](https://www.sec.gov/search-filings/edgar-application-programming-interfaces)。
 - 运行环境：[Node.js 下载](https://nodejs.org/en/download)、[Python 下载](https://www.python.org/downloads/)。

@@ -24,6 +24,11 @@ table{min-width:650px;table-layout:fixed;font-size:14px}
 th,td{white-space:normal;overflow-wrap:anywhere;vertical-align:top;font-size:14px;line-height:1.9;padding:13px}
 th{font-size:13px;color:#4d5948;font-weight:600}
 th:first-child,td:first-child{width:24%}
+.data-source-table table{min-width:800px}
+.data-source-table th:first-child,.data-source-table td:first-child{width:16%}
+.data-source-table th:nth-child(2),.data-source-table td:nth-child(2){width:16%}
+.data-source-table th:nth-child(3),.data-source-table td:nth-child(3){width:24%}
+.data-source-table th:nth-child(4),.data-source-table td:nth-child(4){width:44%}
 .prompt-box pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;font-size:15px;line-height:1.95;tab-size:2}
 .prompt-toolbar{font-size:12px;gap:15px}
 .prompt-toolbar span{max-width:72%}
@@ -62,6 +67,7 @@ footer p{font-size:12px}
 @media(max-width:760px){main{padding:30px 22px;max-width:none}.step h2{font-size:25px}.step h3,.section h3{font-size:17px}header>p,.step>p,.section>p,.step li,.section li,.intro li,.intro>p{font-size:16px}.prompt-box pre{font-size:14px}.completion{font-size:13px}.step-number{font-size:38px}.sidebar nav a{font-size:12px}.sidebar{padding-bottom:17px}.route-map>div{padding:15px}.brand small{font-size:11px}.eyebrow{font-size:11px}.table-scroll::before{content:'表格可左右滑动查看';display:block;padding:7px 12px;background:#e6e9dd;color:#5f6b57;font-size:12px}table{min-width:650px}th,td{font-size:14px}.downloads{font-size:13px;gap:12px}.section h2,.intro>h2{font-size:25px}}
 @media(max-width:359px){main{padding:25px 16px}.step-title{gap:9px}.step h2{font-size:23px}.prompt-toolbar{font-size:11px}.prompt-toolbar span{max-width:65%}.copy{font-size:11px}}
 @media(max-width:760px){.part>h2{font-size:29px;padding-top:30px}.topic>h3{font-size:25px}.topic h4{font-size:18px}.tool-picker{padding:16px 13px}.tool-options{grid-template-columns:1fr}.tool-picker label{font-size:16px}.sidebar-note{display:none}.sidebar .nav-part{border:1px solid #b8cbb0;margin:0;padding:7px 9px;font-size:12px}.sidebar .nav-topic{padding:7px 9px}.agent-formula{font-size:23px!important}.install-guide{padding:15px}.install-guide>summary{font-size:16px}}
+@media print{.data-source-table table{min-width:0}}
 @media print{main{padding:0;max-width:none}.step{break-before:auto;padding:18pt 0}.step h2,.section h2{break-after:avoid;font-size:18pt}.step h3,.section h3{break-after:avoid;font-size:12pt}header>p,.step>p,.section>p,.intro>p,.step li,.section li{font-size:10pt}.prompt-box{break-inside:auto}.prompt-box pre{font-size:9pt;padding:11pt;white-space:pre-wrap}table{min-width:0;font-size:9pt;table-layout:auto}th,td{font-size:9pt;padding:7pt}.table-scroll{overflow:visible}.table-scroll::before{display:none}.manual-record,.print-button{display:none}.answer{break-inside:avoid}.answer>p,.answer li{font-size:10pt}.answer>:not(summary){display:block}.route-map>div{break-inside:avoid}header{padding-bottom:15pt}a{overflow-wrap:anywhere}}
 </style></head><body>
 <a class="skip" href="#content">跳到讲义</a>
@@ -110,6 +116,11 @@ footer p{font-size:12px}
 <div><strong>使用本地模型</strong><p>你的软件 → 本机或单位服务器上的模型 API → 已部署的模型 → 返回结果</p></div>
 </div>
 <p>本系列讲座主要用云端托管模型。老师不需要先下载大模型，也不需要为此购买显卡。已经有可用本地模型的老师，可以继续使用自己的方案，留意该模型是否支持课堂需要的文字、图片和工具调用能力。</p>
+<h4 id="model-size">模型有大小，怎样选择调用方式</h4>
+<p>模型常用 4B、27B 等参数规模区分大小。参数规模较大的模型，通常需要更多内存、显存和计算资源，个人电脑未必能部署。有些较小的模型可以在本机运行，但仍要看电脑配置、模型的实际运行要求和任务长度。小模型也不意味着每台电脑都能顺畅运行。</p>
+<p>如果自己的电脑资源足够，可以本地部署合适的模型，让软件连接本机的模型 API。如果资源不够，也可以调用托管在服务方服务器上的模型，把计算交给对方完成。这同样适用于小模型。</p>
+<p>例如，<a href="https://docs.siliconflow.cn/docs/userguide/introduction">硅基流动</a>提供多种大小模型的托管 API。你可以通过它调用需要的小模型，也可以选用平台提供的较大模型，本机负责发送请求和接收结果。它为多种模型提供较统一的调用格式，基础程序可以沿用相近的请求写法；更换模型时，仍需核对准确的模型 ID、支持的功能、价格和额度。</p>
+<p>因此，模型较小但本机算力不足时，可以选择“通过硅基流动等平台调用云端小模型”这条路线。后面的“让程序连接硅基流动”会介绍具体操作。</p>
 <h4>同样是调用模型，授权方式可能不同</h4>
 <p>有些软件通过订阅或账号登录，已经替你安排了模型访问；有些软件需要你自己填写 API Key。是否要另外申请 Key，要看你正在使用的软件和服务。</p>
 <p>API Key 是程序调用服务时使用的授权凭据。它与登录密码、手机验证码不同。账号已经注册、Key 已经创建、账户还有额度，也是不同的状态。</p>
@@ -185,16 +196,12 @@ footer p{font-size:12px}
 <td>处理财报或公告</td>
 <td>你搭出的工作流或应用</td>
 <td>按程序交来的任务提取、分类或读图</td>
-<td>你的程序通过硅基流动调用 Qwen</td>
+<td>你的程序调用任务需要的文本或视觉模型</td>
 </tr>
 </tbody>
 </table></div>
 <p>编程 Agent 能聊天，只说明第一处已经能用。你写出的程序能否调用模型，还要看第二处的授权和连接。</p>
 <p>工作流，workflow，是程序安排的一组处理步骤。第一讲先用固定步骤组织提取、换算和计算，程序负责顺序与检查。后续搭建 Agent 时，再根据业务需要安排模型判断、工具执行和持续运行。</p>
-<h4>硅基流动在这里提供什么</h4>
-<p>硅基流动，SiliconFlow，是提供托管模型调用的平台。它上面有 Qwen 等模型，可以通过 API 使用一些较小规模的模型。4B、27B 这样的字样描述模型的参数规模，不是要求老师准备的电脑内存容量。</p>
-<p>第一讲当前使用 <code>Qwen/Qwen3.5-4B</code>。第二讲需要文字与视觉能力，当前材料包含 <code>Qwen/Qwen3.8-27B</code>。第三讲从小模型开始，再根据实际任务比较模型。准确可用名称与价格，以本人账号当时的模型目录和各讲材料为准。参见 <a href="https://docs.siliconflow.cn/docs/userguide/quickstart">硅基流动快速上手</a>。</p>
-<p>这里先认识它的用途。需要让自己搭出的程序使用模型时，再到第二部分的“连接硅基流动”操作。</p>
 </section><section class="section topic" id="concept-data"><h3>数据 API：让程序直接取得数据</h3>
 <p class="goal">过去我们常在网站上搜索、下载 Excel，再打开文件处理。Agent 也可以这样取数，但如果数据源提供 API，程序就能直接提交查询条件，取回结构明确的结果。</p>
 <p>例如，程序向数据服务发送“查询某家公司2026年半年报的合并利润表”，服务返回公司、报告期、字段和数值。你不必先手工下载一张表，再告诉模型去哪里找。</p>
@@ -225,49 +232,89 @@ footer p{font-size:12px}
 <div><strong>需要理解或分析时，再使用模型</strong><p>你的程序 → 把取得的资料交给模型 → 形成待核对的整理或分析结果</p></div>
 </div>
 <p>程序取得数据并不总需要模型参与。是否把结果交给模型，要看接下来准备完成什么任务。模型的回答也不能替代一次真实取数。</p>
-<h4>国际上有哪些免费的公开数据 API</h4>
-<p>下面这些入口可以用于教学和研究中的公共数据获取。“免费”与“是否需要账号或 Key”分开看；具体数据的使用条件、覆盖范围和调用频率，以各机构当前说明为准。</p>
+<h4 id="data-source-types">按数据类型选择接口</h4>
+<p>先看自己要研究的对象。GDP、物价、地区就业等属于宏观或地区统计；某一家公司的报表、行情和公告，则是公司层面的记录。下面按数据类型，把不同来源与工具放在同一张表里。</p>
+<div class="data-source-table">
 <div aria-label="对照表，可左右滚动" class="table-scroll" role="region" tabindex="0"><table>
 <thead>
 <tr>
-<th scope="col">数据源</th>
-<th scope="col">适合查什么</th>
-<th scope="col">接入要求与官方说明</th>
+<th scope="col">数据类型</th>
+<th scope="col">来源或工具</th>
+<th scope="col">可以取得什么</th>
+<th scope="col">怎样接入、费用与权限</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>宏观与地区统计</td>
+<td>Tushare Pro</td>
+<td>中国 GDP、CPI、货币供应量等</td>
+<td>注册并取得 Token，通过 <a href="https://tushare.pro/document/1?doc_id=130">HTTP 或 Python 接口</a>查询；按具体接口核对积分和权限，参见 <a href="https://tushare.pro/document/2?doc_id=227">GDP 接口</a></td>
+</tr>
+<tr>
+<td>宏观与地区统计</td>
+<td>AKShare</td>
+<td>中国宏观指标及其他公开财经数据</td>
+<td><a href="https://akshare.akfamily.xyz/introduction.html">开源 Python 接口库</a>，由 Agent 在本机运行；数据从上游公开来源取得，参见 <a href="https://akshare.akfamily.xyz/data/macro/macro_china.html">中国宏观目录</a>，使用条件和可用性要看具体接口与上游</td>
+</tr>
+<tr>
+<td>宏观与地区统计</td>
 <td>世界银行，World Bank</td>
 <td>各国 GDP、人口、发展指标</td>
 <td><a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392">Indicators API</a> 可直接访问，不需要 API Key</td>
 </tr>
 <tr>
+<td>宏观与地区统计</td>
 <td>IMF</td>
 <td>宏观、国际收支、财政和金融统计</td>
-<td>公开统计数据可免费获取；<a href="https://data.imf.org/en/Resource-Pages/IMF-API">当前 API</a> 提供 SDMX 接口，API 探索门户按当前要求登录。另见 <a href="https://www.imf.org/en/news/articles/2015/09/28/04/53/sonew012615a">免费数据说明</a></td>
+<td>公开统计数据可免费获取；<a href="https://data.imf.org/en/Resource-Pages/IMF-API">API 探索门户</a>按当前要求登录，参见 <a href="https://www.imf.org/en/news/articles/2015/09/28/04/53/sonew012615a">免费数据说明</a></td>
 </tr>
 <tr>
+<td>宏观与地区统计</td>
 <td>OECD</td>
-<td>国民经济核算、就业、教育等跨国统计</td>
+<td>国民经济核算、就业、教育等统计</td>
 <td><a href="https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html">官方 API</a> 免费提供，需遵守使用条件和请求频率限制</td>
 </tr>
 <tr>
+<td>利率、汇率时间序列</td>
 <td>欧洲央行，ECB</td>
-<td>欧元区统计、汇率和利率等</td>
-<td><a href="https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0">ECB Data Portal API</a> 提供公开统计数据及元数据的程序访问入口</td>
+<td>汇率、利率及相关金融统计</td>
+<td>通过 <a href="https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0">ECB Data Portal API</a>请求公开统计数据，按其规则使用</td>
 </tr>
 <tr>
+<td>利率、汇率时间序列</td>
 <td>FRED，圣路易斯联储</td>
-<td>美国及其他来源的宏观与金融时间序列</td>
-<td>使用免费账号申请个人 API Key，参见 <a href="https://fred.stlouisfed.org/help/account/fred-account-features/register/">账号说明</a> 和 <a href="https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html">API Key 说明</a></td>
+<td>利率、汇率及其他宏观金融序列</td>
+<td>使用 <a href="https://fred.stlouisfed.org/help/account/fred-account-features/register/">免费账号</a>申请个人 <a href="https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html">API Key</a>，具体数据遵守各自使用条件</td>
+</tr>
+<tr>
+<td>公司层面数据</td>
+<td>同花顺金融数据服务</td>
+<td>A 股公司财务报表、行情等结构化记录</td>
+<td>通过 <a href="https://fuyao.aicubes.cn/docs/quickstart/">数据服务</a>取得本人 Key，按账号实际权限调用；本系列第二讲用它核对财务数据</td>
+</tr>
+<tr>
+<td>公司层面数据</td>
+<td>Tushare Pro</td>
+<td>上市公司财务报表、行情和基础资料</td>
+<td>HTTP 或 Python 接口，需本人 Token；<a href="https://tushare.pro/document/2?doc_id=33">财务接口</a>有积分门槛，部分能力需单独开通，查看 <a href="https://tushare.pro/document/2?doc_id=290">权限说明</a></td>
+</tr>
+<tr>
+<td>公司层面数据</td>
+<td>SEC EDGAR</td>
+<td>公司披露记录、财务报表中的结构化指标</td>
+<td><a href="https://www.sec.gov/search-filings/edgar-application-programming-interfaces">公开查询 API</a>无需 API Key；自动访问需按 <a href="https://www.sec.gov/about/webmaster-frequently-asked-questions">开发者要求</a>标明程序身份、控制频率</td>
 </tr>
 </tbody>
 </table></div>
-<p>这些是可供选择的数据来源，不需要现在逐个注册。做跨国宏观研究时再按问题选择；查询 A 股公司财务数据时，则用相应的金融数据服务。</p>
+</div>
+<p>表中按举例的用途归类，同一平台可能覆盖多种数据。AKShare 是本机运行的接口库；其他一些来源提供远程 HTTP 数据服务。接入方式已分别标明，选定后可以让自己的 Agent 按官方文档处理。</p>
+<p>公司层面的记录是微观数据的一种。若研究需要住户调查、企业调查的原始样本，还要另行确认能否通过 API 获取，还是需要申请数据包。宏观指标接口不能替代这些样本。</p>
+<p>这些入口供按问题选择，不需要现在逐个注册。“免费”“需要 Key”“需要积分或付费权限”分别看，具体条件以各来源当前说明为准。</p>
 <h4>看一个不需要 Key 的请求</h4>
 <p>这是一个 <a href="https://api.worldbank.org/v2/country/CHN/indicator/NY.GDP.MKTP.CD?format=json&amp;date=2023">世界银行数据 API 请求</a>，条件是中国、2023年、以现价美元计价的 GDP，返回格式为 JSON。</p>
 <p>这个网址已经把查询条件写在请求中。打开后看到的会是数据，而不是排好版的介绍文章。返回里可以找到国家、年份、指标名称和数值。程序也可以请求同一个入口，把结果保存下来。后面讲 JSON 时，会解释这种格式为什么便于程序处理。</p>
-<h4>同花顺在本系列讲座中做什么</h4>
+<h4>本系列讲座用到的数据来源</h4>
 <p><a href="https://fuyao.aicubes.cn/docs/quickstart/">同花顺金融数据服务</a>是第二讲的外部财务数据来源。你搭出的程序从它取得结构化报表，再与财报提取值核对。它的 API Key 与模型服务的 Key 分开。</p>
 <p>数据源返回了记录，也还要核对公司、报告期、累计或单季、合并口径、币种和单位。两处结果不一致时，应回到原文和数据定义查原因。</p>
 <p>第三讲的原始资料主要来自<a href="https://www.cninfo.com.cn/">巨潮资讯</a>的公开公告与 PDF。当前课堂路线使用网站实际提供的查询与下载方式，不要求老师先购买另一个“巨潮 API Key”。</p>
@@ -665,9 +712,9 @@ footer p{font-size:12px}
 <ul>
 <li>模型与 Harness：<a href="https://docs.ollama.com/api/introduction">Ollama API</a>、<a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Anthropic 的 Agent Harness 说明</a>。</li>
 <li>编程工具起步：<a href="https://opencode.ai/download">OpenCode 下载</a>、<a href="https://opencode.ai/docs/providers/">提供商连接</a>、<a href="https://api-docs.deepseek.com/quick_start/agent_integrations/opencode/">DeepSeek 接入 OpenCode</a>。</li>
-<li>模型服务：<a href="https://docs.siliconflow.cn/docs/userguide/quickstart">硅基流动快速上手</a>。</li>
+<li>模型服务：<a href="https://docs.siliconflow.cn/docs/userguide/introduction">硅基流动平台说明</a>、<a href="https://docs.siliconflow.cn/docs/userguide/quickstart">快速上手</a>。</li>
 <li>财务数据：<a href="https://fuyao.aicubes.cn/docs/quickstart/">同花顺快速开始</a>、<a href="https://fuyao.aicubes.cn/docs/api-reference/financials/">财务报表接口</a>。</li>
-<li>公共数据：<a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392">World Bank</a>、<a href="https://data.imf.org/en/Resource-Pages/IMF-API">IMF</a>、<a href="https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html">OECD</a>、<a href="https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0">ECB</a>、<a href="https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html">FRED</a>。</li>
+<li>数据接口目录：<a href="https://tushare.pro/document/1?doc_id=130">Tushare HTTP</a>与<a href="https://tushare.pro/document/2?doc_id=290">权限说明</a>、<a href="https://akshare.akfamily.xyz/introduction.html">AKShare</a>、<a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392">World Bank</a>、<a href="https://data.imf.org/en/Resource-Pages/IMF-API">IMF</a>、<a href="https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html">OECD</a>、<a href="https://data.ecb.europa.eu/help/getting-data-web-services-sdmx-0">ECB</a>、<a href="https://fred.stlouisfed.org/docs/api/fred/v2/api_key.html">FRED</a>、<a href="https://www.sec.gov/search-filings/edgar-application-programming-interfaces">SEC EDGAR</a>。</li>
 <li>运行环境：<a href="https://nodejs.org/en/download">Node.js 下载</a>、<a href="https://www.python.org/downloads/">Python 下载</a>。</li>
 </ul></section>
 <footer><p>工具选择仅保存在当前浏览器，用于显示相应说明。本页不接收 API Key，不发起模型或金融数据请求。</p><p><a href="https://suibe-ai-agent.netlify.app/">返回系列讲座主页</a></p></footer>

@@ -18,6 +18,11 @@ table{min-width:650px;table-layout:fixed;font-size:14px}
 th,td{white-space:normal;overflow-wrap:anywhere;vertical-align:top;font-size:14px;line-height:1.9;padding:13px}
 th{font-size:13px;color:#4d5948;font-weight:600}
 th:first-child,td:first-child{width:24%}
+.data-source-table table{min-width:800px}
+.data-source-table th:first-child,.data-source-table td:first-child{width:16%}
+.data-source-table th:nth-child(2),.data-source-table td:nth-child(2){width:16%}
+.data-source-table th:nth-child(3),.data-source-table td:nth-child(3){width:24%}
+.data-source-table th:nth-child(4),.data-source-table td:nth-child(4){width:44%}
 .prompt-box pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;font-size:15px;line-height:1.95;tab-size:2}
 .prompt-toolbar{font-size:12px;gap:15px}
 .prompt-toolbar span{max-width:72%}
@@ -56,4 +61,5 @@ footer p{font-size:12px}
 @media(max-width:760px){main{padding:30px 22px;max-width:none}.step h2{font-size:25px}.step h3,.section h3{font-size:17px}header>p,.step>p,.section>p,.step li,.section li,.intro li,.intro>p{font-size:16px}.prompt-box pre{font-size:14px}.completion{font-size:13px}.step-number{font-size:38px}.sidebar nav a{font-size:12px}.sidebar{padding-bottom:17px}.route-map>div{padding:15px}.brand small{font-size:11px}.eyebrow{font-size:11px}.table-scroll::before{content:'表格可左右滑动查看';display:block;padding:7px 12px;background:#e6e9dd;color:#5f6b57;font-size:12px}table{min-width:650px}th,td{font-size:14px}.downloads{font-size:13px;gap:12px}.section h2,.intro>h2{font-size:25px}}
 @media(max-width:359px){main{padding:25px 16px}.step-title{gap:9px}.step h2{font-size:23px}.prompt-toolbar{font-size:11px}.prompt-toolbar span{max-width:65%}.copy{font-size:11px}}
 @media(max-width:760px){.part>h2{font-size:29px;padding-top:30px}.topic>h3{font-size:25px}.topic h4{font-size:18px}.tool-picker{padding:16px 13px}.tool-options{grid-template-columns:1fr}.tool-picker label{font-size:16px}.sidebar-note{display:none}.sidebar .nav-part{border:1px solid #b8cbb0;margin:0;padding:7px 9px;font-size:12px}.sidebar .nav-topic{padding:7px 9px}.agent-formula{font-size:23px!important}.install-guide{padding:15px}.install-guide>summary{font-size:16px}}
+@media print{.data-source-table table{min-width:0}}
 @media print{main{padding:0;max-width:none}.step{break-before:auto;padding:18pt 0}.step h2,.section h2{break-after:avoid;font-size:18pt}.step h3,.section h3{break-after:avoid;font-size:12pt}header>p,.step>p,.section>p,.intro>p,.step li,.section li{font-size:10pt}.prompt-box{break-inside:auto}.prompt-box pre{font-size:9pt;padding:11pt;white-space:pre-wrap}table{min-width:0;font-size:9pt;table-layout:auto}th,td{font-size:9pt;padding:7pt}.table-scroll{overflow:visible}.table-scroll::before{display:none}.manual-record,.print-button{display:none}.answer{break-inside:avoid}.answer>p,.answer li{font-size:10pt}.answer>:not(summary){display:block}.route-map>div{break-inside:avoid}header{padding-bottom:15pt}a{overflow-wrap:anywhere}}

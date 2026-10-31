@@ -1,17 +1,23 @@
 # 产教融合背景下AI金融智能体赋能教师教学能力提升计划
 
-系列讲座主页、第一讲公开材料与第二讲 Earnings Review。
+系列讲座主页、零基础课前入门，以及第一至第三讲的讲义、材料与产品示例。
 
 主讲：汪小圈｜上海对外经贸大学 金融管理学院
 
 - 线上主页：[suibe-ai-agent.netlify.app](https://suibe-ai-agent.netlify.app)
 - 主页源码：`index.html`
+- 课前必读：`start-here/`，面向没有编程经验的教师，不附练习包
 - 第一讲现场演示：`demo.html`
 - 第一讲学习讲义：`handout.html`
 - 第二讲成品示例：`lesson-2/earnings-review/`
 - 第二讲分步 Prompt 讲义：`lesson-2/`
 - 第二讲实操材料：`lesson-2/earnings-review-materials.zip`
 - 第二讲完整离线讲义：`lesson-2/EarningsReview-第二讲讲义包.zip`
+- 第三讲公告事件智能体讲义：`lesson-3/`
+- 第三讲事件日历产品示例：`lesson-3/example/`
+- 第三讲起步材料：`lesson-3/lesson3-starter.zip`
+- 第三讲首次核验包：`lesson-3/lesson3-initial-check.zip`，2份原公告
+- 第三讲扩围核验包：`lesson-3/lesson3-expanded-check.zip`，23份原公告
 - 第一讲实操材料：`lesson-one-materials.zip`
 - 原 PPT 模板附件：`byd_earnings.zip`
 - 数据与安全指南：`PUBLIC_DATA_GUIDE.md`
@@ -23,6 +29,8 @@
 第一讲新运行使用完整 207 页 `report-full-text.txt`，五个提示词文件处理同一份财报。旧历史定位当时使用第 60–75 页窗口，原输出、提示词、评分和指纹保持只读，以 02 → 04 → 06 为主线，比较三个阶段的不同做法。它是程序规定依赖与检查的 workflow。历史只读，在线 03/04 必须读取本轮通过的 02，05/06 必须读取本轮通过的 04。材料包含只读历史与评分参考，后两者不得作为本轮模型输入。
 
 第一讲讲义源为 `handout/lesson.json`，运行 `python3 handout/build.py` 同步生成网页、提示词附录、Markdown 讲义和材料包。模型、工具定义与运行提示词直接从产品的共享模块导出。验证使用 `python3 handout/check.py`、`npm test`，并在浏览器检查桌面和窄屏页面。
+
+第三讲按需求、真实取数、逐页文字、提取核验、扩围数据、产品和定时的顺序搭建。公开事件日历是有来源与时点的静态示例；实时更新与定时任务在学习者自己的电脑上运行。首次和扩围核验包各自独立评分，候选标准仍需教师抽查确认。
 
 ## 发布
 

@@ -1,30 +1,31 @@
-
+@import url("../lesson-2/assets/handout.css");
 :root{--screen:#59595f;--deck:#eff0e4;--paper:#fafaf2;--ink:#202328;--muted:#777a73;--line:#d8d9cd;--red:#bb5b4e;--red-soft:#f0d1ca;--blue:#7899c4;--blue-soft:#dce8f2;--green:#668f6c;--green-soft:#d8e4d2;--yellow:#d7af65;--accent:var(--yellow);--panel:#f4f5ec;--soft:var(--deck);--charcoal:#31343a;--stone:var(--muted);--near-black:var(--ink);--tag-bg:var(--green);--dark-warm:#3b3d38;--border-soft:var(--line);--brand:var(--red);--ui:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 
 *{box-sizing:border-box}
 html{scroll-behavior:auto;scroll-padding-top:74px}
-body{margin:0;background:var(--deck);color:var(--ink);font:17px/1.72 var(--ui)}
+body{margin:0;background:var(--deck);color:var(--ink)}
 a{color:var(--blue);text-underline-offset:3px}
 button{font:inherit}
 button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-.topbar{position:sticky;top:0;z-index:5;border-bottom:1px solid rgba(250,250,242,.16);background:var(--screen);backdrop-filter:blur(8px)}
+.topbar{position:sticky;top:0;z-index:5;padding:0;border-bottom:1px solid rgba(250,250,242,.16);background:var(--screen);backdrop-filter:blur(8px)}
 .topbar-inner{max-width:1120px;margin:auto;padding:13px 24px;display:flex;justify-content:space-between;align-items:center;gap:18px;font-size:13px}
 .brand{color:var(--paper);font-weight:800;text-decoration:none}
-.toplinks{display:flex;gap:15px;align-items:center}
-.toplinks a{text-decoration:none;color:#e5e6dc}
+.toplinks{display:flex;gap:15px;align-items:center;margin:0;padding:0}
+.toplinks a{text-decoration:none;color:#e5e6dc;background:transparent;border:0;padding:0;font-size:13px;line-height:inherit}
+.toplinks a:hover{color:var(--paper);background:transparent}
 .toplinks a:last-child{color:var(--yellow);font-weight:700}
 .shell{max-width:1120px;margin:auto;padding:42px 24px 80px;display:grid;grid-template-columns:190px minmax(0,760px);gap:52px}
-.sidebar{position:sticky;top:76px;height:max-content}
-.sidebar nav{display:flex;flex-direction:column;gap:3px}
-.sidebar a{padding:7px 0 7px 11px;border-left:2px solid transparent;color:var(--muted);font-size:13px;text-decoration:none;line-height:1.4}
+.sidebar{position:sticky;inset:auto;top:76px;height:max-content;width:auto;background:transparent;border:0;padding:0;overflow:visible}
+.sidebar nav{display:flex;flex-direction:column;gap:3px;margin:0}
+.sidebar a{padding:7px 0 7px 11px;border:0;border-left:2px solid transparent;background:transparent;color:var(--muted);font-size:12px;text-decoration:none}
 .sidebar a[aria-current=true]{color:var(--red);border-color:var(--red);font-weight:700}
 .sidebar-label{color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:18px 0 4px;padding-left:11px}
 .side-note{color:var(--muted);font-size:12px;line-height:1.55;margin:26px 11px 0}
 .side-note a{color:var(--blue)}
-main{min-width:0}
+main{min-width:0;max-width:none;margin:0;padding:0;transform:none}
 .hero{background:var(--screen);color:var(--paper);padding:30px 28px 34px;border-radius:18px;margin-bottom:34px}
 .eyebrow{color:var(--yellow);letter-spacing:.1em;text-transform:uppercase;font-size:12px;font-weight:700}
-.hero h1{font-size:clamp(38px,6vw,62px);line-height:1.08;letter-spacing:-.045em;margin:14px 0 18px}
+.hero h1{margin:14px 0 18px}
 .hero .subtitle{font-size:23px;line-height:1.42;color:#f0f1e8;margin:0 0 18px}
 .hero p{margin:0}
 .hero .byline{color:var(--yellow);font-size:14px;margin:0 0 18px}
@@ -33,21 +34,22 @@ main{min-width:0}
 .hero-actions a,.hero-actions button{border:1px solid rgba(250,250,242,.3);border-radius:999px;padding:9px 14px;background:transparent;color:var(--paper);text-decoration:none;font-size:13px;cursor:pointer}
 .hero-actions a:first-child{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
 .intro{border-top:1px solid var(--line);padding:30px 0 8px}
-.intro h2,.chapter h2,.advanced>h2,.finish h2{font-size:31px;line-height:1.2;letter-spacing:-.025em;margin:0 0 15px}
+.intro,.chapter,.finish{font-size:13px}
+.intro h2,.chapter h2,.advanced>h2,.finish h2{margin:0 0 15px}
 .intro p{margin:0 0 14px}
 .goal-box{background:var(--green-soft);color:var(--near-black);border-radius:16px;padding:22px 24px;margin:22px 0 26px}
 .goal-box b{display:block;color:var(--green);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
-.goal-box p{margin:0;font-size:20px;line-height:1.45}
+.goal-box p{margin:0}
 .product-grid,.triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px}
-.card h3{font-size:18px;margin:0 0 7px}
-.card p{font-size:15px;color:var(--muted);margin:0}
+.card h3{margin:0 0 7px}
+.card p{font-size:13px;color:var(--muted);margin:0}
 .concepts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0 26px}
 .concept{background:var(--paper);border-left:3px solid var(--yellow);padding:17px 19px;border-radius:0 12px 12px 0}
 .concept:nth-child(2){border-color:var(--blue)}
 .concept:nth-child(3){border-color:var(--green)}
-.concept h3{margin:0 0 5px;font-size:18px}
-.concept p{margin:0;color:var(--muted);font-size:15px}
+.concept h3{margin:0 0 5px}
+.concept p{margin:0;color:var(--muted);font-size:13px}
 .table-wrap{overflow-x:auto;margin:18px 0}
 .eval-table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px}
 .eval-table th,.eval-table td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
@@ -55,15 +57,15 @@ main{min-width:0}
 .callout{background:var(--red-soft);border-left:4px solid var(--red);border-radius:0 11px 11px 0;padding:15px 17px;color:var(--dark-warm);margin:19px 0}
 .chapter{border-top:1px solid var(--line);padding:39px 0 34px}
 .chapter-head{display:flex;gap:18px;align-items:flex-start}
-.chapter-num{color:var(--muted);font-size:30px;line-height:1.2;font-variant-numeric:tabular-nums;min-width:40px}
+.chapter-num{color:var(--muted);font-variant-numeric:tabular-nums;min-width:40px}
 .chapter h2{margin-top:1px}
-.chapter-question{font-size:21px;line-height:1.42;margin:6px 0 19px;color:var(--charcoal)}
+.chapter-question{margin:6px 0 19px;color:var(--charcoal)}
 .chapter-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:16px}
 .learner-card{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:18px}
-.learner-card h3{margin:0 0 8px;font-size:14px;color:var(--green);letter-spacing:.03em}
-.learner-card p{margin:0;color:var(--charcoal);font-size:16px}
+.learner-card h3{margin:0 0 8px;font-size:12px;color:var(--green);letter-spacing:.03em}
+.learner-card p{margin:0;color:var(--charcoal);font-size:13px}
 .self-check{border:1px dashed var(--line);background:transparent;border-radius:13px;padding:16px 18px;margin-top:14px}
-.self-check label{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--charcoal)}
+.self-check label{display:flex;gap:10px;align-items:flex-start;font-size:11px;color:var(--charcoal)}
 .self-check input{margin-top:6px;accent-color:var(--red)}
 .optional-prompt{margin-top:14px;border-top:1px solid var(--line);padding-top:13px}
 .optional-prompt summary{cursor:pointer;color:var(--blue);font-size:14px}
@@ -89,21 +91,17 @@ main{min-width:0}
 .sidebar a[aria-current=true]{border-color:var(--red)}
 .sidebar-label,.side-note{display:none}
 }
-@media(max-width:600px){body{font-size:16px}
+@media(max-width:600px){
 .topbar-inner{padding:11px 16px}
 .toplinks a:first-child{display:none}
 .shell{padding:18px 16px 50px}
 .hero{padding:24px 20px 27px;border-radius:15px}
-.hero h1{font-size:39px}
 .hero .subtitle{font-size:20px}
 .product-grid,.triptych,.concepts,.chapter-grid,.takeaway{grid-template-columns:1fr}
-.intro h2,.chapter h2,.advanced>h2,.finish h2{font-size:27px}
 .goal-box{padding:18px}
-.goal-box p{font-size:18px}
 .chapter{padding:31px 0}
 .chapter-head{gap:11px}
-.chapter-num{font-size:25px;min-width:30px}
-.chapter-question{font-size:19px}
+.chapter-num{min-width:30px}
 .hero-actions a,.hero-actions button{padding:8px 12px}
 .optional-prompt pre{font-size:12px}
 }
@@ -139,48 +137,48 @@ main{min-width:0}
 .implementation pre{font-size:11px}
 }
 
-.intro h3,.chapter>h3,.finish h3{font-size:19px;margin:25px 0 10px;line-height:1.4}
+.intro h3,.chapter>h3,.finish h3{margin:25px 0 10px}
 .intro li,.chapter li,.finish li{margin-bottom:10px}
-code{font-size:.9em;overflow-wrap:anywhere}
+code{overflow-wrap:anywhere}
 main p,main li{overflow-wrap:anywhere}
 .actors{display:grid;gap:12px;margin:18px 0 24px}
-.actors .card h3{color:var(--green);font-size:17px}
-.actors .card p{color:var(--charcoal);font-size:16px}
+.actors .card h3{color:var(--green)}
+.actors .card p{color:var(--charcoal);font-size:13px}
 .workflow-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0 14px}
 .workflow-stage{padding:20px 17px;border:1px solid var(--line);border-radius:14px;background:var(--paper);min-width:0}
-.workflow-stage h3{font-size:21px;margin:9px 0 7px}
-.workflow-stage p{font-size:14px;line-height:1.65;margin:12px 0}
+.workflow-stage h3{margin:9px 0 7px}
+.workflow-stage p{font-size:13px;line-height:1.85;margin:12px 0}
 .workflow-stage b{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
 .stage-index{display:inline-grid;place-items:center;width:26px;height:26px;background:var(--blue-soft);color:var(--ink);border-radius:50%;font-size:13px}
 .workflow-stage .stage-rows{color:var(--red);font-size:13px;min-height:44px}
 .workflow-stage .stage-output{margin-bottom:0;padding-top:13px;border-top:1px solid var(--line);color:var(--green)}
-.mainline{border-radius:12px;padding:17px 20px;background:var(--blue-soft);font-size:16px}
+.mainline{border-radius:12px;padding:17px 20px;background:var(--blue-soft);font-size:14px}
 .mainline b{padding-left:12px}
 .mainline span{display:block;font-size:14px;margin-top:4px}
-.dependency-table{width:100%;min-width:560px;border-collapse:collapse;font-size:14px;line-height:1.6}
+.dependency-table{width:100%;min-width:560px;border-collapse:collapse;font-size:12px;line-height:1.9}
 .dependency-table th,.dependency-table td{padding:13px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
-.dependency-table th{background:var(--paper);font-size:13px;color:var(--muted)}
+.dependency-table th{background:var(--paper);color:var(--muted)}
 .dependency-table td:first-child{white-space:nowrap;font-weight:700;color:var(--red)}
 .dependency-table caption{text-align:left;font-size:13px;color:var(--muted);margin-bottom:10px}
 .eval-list{list-style:none;padding:0;display:grid;gap:10px}
-.eval-list li{margin:0;padding:14px 17px;background:var(--paper);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;font-size:15px}
-.eval-list b{display:block;margin-bottom:4px;font-size:16px}
+.eval-list li{margin:0;padding:14px 17px;background:var(--paper);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;font-size:13px}
+.eval-list b{display:block;margin-bottom:4px;font-size:14px}
 .eval-list span{color:var(--charcoal)}
 .file-tree{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:18px;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace}
 .download-link{font-weight:700}
 .prompt-block{margin:22px 0 18px;border:1px solid var(--line);border-radius:13px;overflow:hidden;min-width:0}
 .prompt-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--blue-soft);padding:13px 17px}
-.prompt-heading h3{margin:0;font-size:15px;font-weight:600}
-.prompt-heading button{flex-shrink:0;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:12px;cursor:pointer;color:var(--ink)}
-.prompt-block pre{margin:0;background:var(--paper);padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:14px/1.85 ui-monospace,SFMono-Regular,Menlo,"PingFang SC",monospace;color:var(--charcoal)}
+.prompt-heading h3{margin:0;font-size:inherit;font-weight:600}
+.prompt-heading button{flex-shrink:0;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:6px 10px;cursor:pointer;color:var(--ink)}
+.prompt-block pre{margin:0;background:var(--paper);padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;color:var(--charcoal)}
 .expected{margin-top:18px}
-.expected ul{padding-left:20px;margin:9px 0 0;font-size:16px}
+.expected ul{padding-left:20px;margin:9px 0 0;font-size:12px}
 .expected li:last-child{margin-bottom:0}
-.files{font-size:14px;color:var(--muted);margin:16px 0}
+.files{color:var(--muted);margin:16px 0}
 .files b{font-weight:500}
-.self-check h3{font-size:15px;color:var(--green);margin:0 0 10px}
+.self-check h3{font-size:12px;color:var(--green);margin:0 0 10px}
 .self-check label+label{margin-top:12px}
-.repair{margin-top:18px;color:var(--muted);font-size:14px}
+.repair{margin-top:18px;color:var(--muted);font-size:12px}
 .repair summary{cursor:pointer;padding:6px 0}
 .repair .prompt-block{margin-top:12px}
 .toast{max-width:calc(100vw - 32px);width:max-content;text-align:center}
@@ -189,22 +187,25 @@ main p,main li{overflow-wrap:anywhere}
   .workflow-stage .stage-rows{min-height:0}
   .workflow-stage{padding:18px}
   .prompt-heading{padding:12px;gap:8px}
-  .prompt-heading h3{font-size:14px}
-  .prompt-block pre{font-size:13px;padding:16px;line-height:1.8}
+  .prompt-block pre{padding:16px}
   .file-tree{font-size:12px}
   .intro ol,.chapter>ol{padding-left:24px}
 }
+@media(max-width:760px){
+  .intro,.chapter,.finish,.card p,.learner-card p,.actors .card p,.workflow-stage p{font-size:12px}
+  .self-check label{font-size:12px}
+  .sidebar a{font-size:10px}
+}
 @media print{
-  body{background:white;font-size:11pt;color:black}
+  body{background:white;color:black}
   .topbar,.sidebar,.hero-actions,.prompt-heading button,.toast{display:none!important}
   .shell{display:block;padding:0;max-width:none}
   .hero{background:white;color:black;padding:0;margin-bottom:20px}
-  .hero h1{font-size:30pt}
   .hero .byline,.hero .doc-meta{color:black}
   .workflow-map{display:block}
   .workflow-stage{margin-bottom:10px}
   .prompt-block,.learner-card,.self-check{break-inside:avoid-page}
-  .prompt-block pre{font-size:9pt;line-height:1.5;padding:12px}
+  .prompt-block pre{padding:12px}
   .chapter{padding:20px 0}
   .chapter-image{max-width:450px}
   .table-wrap{overflow:visible}

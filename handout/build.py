@@ -25,8 +25,8 @@ def listing(items, ordered=False):
 
 
 def prompt_block(text, ident, title):
-    return (f'<div class="prompt-block"><div class="prompt-heading"><h3>{e(title)}</h3>'
-            f'<button type="button" data-copy="{ident}">复制 Prompt</button></div>'
+    return (f'<div class="prompt-block prompt-box"><div class="prompt-heading prompt-toolbar"><h3>{e(title)}</h3>'
+            f'<button class="copy" type="button" data-copy="{ident}">复制 Prompt</button></div>'
             f'<pre id="{ident}">{e(text)}</pre></div>')
 
 
@@ -48,9 +48,9 @@ def chapter(step, index):
         run_guide = (f'<div class="learner-card"><h3>{e(step["run_title"])}</h3>'
                      '<p>程序定稿后再执行这些操作，搭建期间先完成离线检查。</p>'
                      f'{listing(step["run_steps"], True)}</div>')
-    return f'''<section class="chapter" id="{step['id']}">
-<div class="chapter-head"><span class="chapter-num">{index}</span><h2>{e(step['title'])}</h2></div>
-<p class="chapter-question">{e(step['aim'])}</p>
+    return f'''<section class="chapter step" id="{step['id']}">
+<div class="chapter-head"><span class="chapter-num step-number">{index}</span><h2>{e(step['title'])}</h2></div>
+<p class="chapter-question goal">{e(step['aim'])}</p>
 <h3>现在怎么做</h3>{listing(step['actions'], True)}{picture}
 {prompt_block(step['prompt'], 'prompt-'+step['id'], '发给 OpenCode')}
 <div class="learner-card expected"><h3>你应看到</h3>{listing(step['expected'])}</div>
@@ -65,6 +65,9 @@ def chapter(step, index):
 
 def render_html():
     l = LESSON
+    readiness = '<ul class="readiness-checks">' + ''.join(
+        f'<li><label><input type="checkbox" data-check="preparation-{i}"><span>{inline(x)}</span></label></li>'
+        for i, x in enumerate(l['prepare'])) + '</ul>'
     nav = ''.join(f'<a href="#{s["id"]}" data-nav="{s["id"]}">{i}　{e(s["short"])}</a>' for i, s in enumerate(l['steps']))
     actors = ''.join(f'<div class="card"><h3>{e(x["title"])}</h3><p>{e(x["body"])}</p></div>' for x in l['actors'])
     stages = ''.join(f'<div class="workflow-stage"><span class="stage-index">{i+1}</span><h3>{e(s["title"])}</h3>'
@@ -79,18 +82,22 @@ def render_html():
 <meta name="theme-color" content="#59595f"><title>{e(l['title'])} · 教师实操讲义</title>
 <link rel="stylesheet" href="handout/handout.css"><script src="handout/handout.js" defer></script></head>
 <body><header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html">AI 金融智能体 · 第一讲</a>
-<nav class="toplinks" aria-label="材料导航"><a href="demo.html">现场产品 ↗</a><a href="lesson-one-materials.zip" download>下载实操材料 ↗</a></nav></div></header>
+<nav class="toplinks" aria-label="材料导航"><a href="start-here/index.html">零基础必看入门</a><a href="demo.html">现场产品 ↗</a><a href="lesson-one-materials.zip" download>下载实操材料 ↗</a></nav></div></header>
 <div class="shell"><aside class="sidebar" aria-label="讲义目录"><nav>
-<a href="#start" data-nav="start" aria-current="true">这次做出什么</a><a href="#workflow" data-nav="workflow">先看 workflow</a>
+<a href="#readiness" data-nav="readiness" aria-current="true">开始前，确认准备</a><a href="#start" data-nav="start">这次做出什么</a><a href="#workflow" data-nav="workflow">先看 workflow</a>
 <a href="#dependencies" data-nav="dependencies">前后数据依赖</a><a href="#tour" data-nav="tour">先在成品里走一遍</a>
-<a href="#prepare" data-nav="prepare">准备项目</a><span class="sidebar-label">跟着做 · 第 0–7 步</span>{nav}
+<a href="#prepare" data-nav="prepare">本讲材料与跟做方式</a><span class="sidebar-label">跟着做 · 第 0–7 步</span>{nav}
 <a href="#finish" data-nav="finish">完成标准</a></nav><p class="side-note">逐条发 Prompt，等 Agent 写文件、运行检查，再由你核对页面。先搭通主线，再加入对照。</p></aside>
 <main><header class="hero" id="start"><h1>把一份半年报，<br>做成可复核的简报。</h1>
 <p class="byline">{e(l['presenter'])} · {e(l['affiliation'])}</p>
 <p class="doc-meta">第一讲教师实操讲义 · 更新 {l['updated']}</p>
 <div class="hero-actions"><a href="#tour">先看成品怎么用</a><a href="lesson-one-materials.zip" download>下载实操材料</a><button type="button" id="print">打印讲义</button></div></header>
+<section class="intro" id="readiness"><h2>开始前，确认这几项</h2>
+<p>第一次跟做，先读<a href="start-here/index.html">零基础必看入门</a>，完成工具、工作目录、运行环境和模型授权的相关准备。做过的不用重做，逐项确认后继续读下面的讲义。</p>
+<p><a href="lesson-one-materials.zip" download>下载本讲实操材料</a>，用于下面的项目检查。</p>{readiness}
+<p>暂时没有硅基流动 Key，可以先完成离线搭建，第 7 步真实 Run 前补齐。本讲的 Key 只填在自己网页 Evals 的隐藏输入框。准备已确认，就从<a href="#purpose">本讲要做出的产品</a>继续。</p></section>
 <section class="intro" id="purpose"><h2>跟着做出一个能运行的产品</h2><p>{e(l['lead'])}</p>
-<div class="goal-box"><b>完成后你会得到</b><p>{e(l['goal'])}</p></div><p>{e(l['scope'])}</p></section>
+<div class="goal-box goal"><b>完成后你会得到</b><p>{e(l['goal'])}</p></div><p>{e(l['scope'])}</p></section>
 <section class="intro" id="workflow"><h2>这是一个 workflow</h2><p>{e(l['workflow_intro'])}</p>
 <div class="workflow-map" aria-label="三个阶段，主线 02 到 04 到 06">{stages}</div>
 <p class="mainline">主线 <b>02 → 04 → 06</b><span>原值 → 换算结果 → 同比与候选简报</span></p>
@@ -102,10 +109,10 @@ def render_html():
 <section class="intro" id="tour"><h2>先看线上参考成品</h2><p>先打开<a href="demo.html#evals">现场产品的 Evals</a>。这段在已经发布的成品网站操作；从第 0 步开始，才在你自己的电脑搭建新项目。只完成前两条历史查看，就可以进入准备部分。有 Key 时可选做下面的线上 Run；它的结果不会成为新建本地项目的本轮输入。</p>
 {listing(l['tour'], True)}<p class="callout">{e(l['history_note'])}</p>
 <p>个人运行 Key 在<a href="https://cloud.siliconflow.cn/" target="_blank" rel="noopener noreferrer">硅基流动控制台</a>管理。只填在网页的隐藏输入框，不发给编程 Agent。网页刷新会清空 Key 和本轮可用前序。</p></section>
-<section class="intro" id="prepare"><h2>准备自己的项目</h2>
+<section class="intro" id="prepare"><h2>本讲材料与跟做方式</h2>
 <p><a class="download-link" href="lesson-one-materials.zip" download>下载第一讲实操材料 · lesson-one-materials.zip</a></p>
 <p class="callout">{e(l['build_run_note'])}</p><p>{e(l['word_help'])}</p>
-{listing(l['prepare'], True)}<p>{e(l['kit_note'])}</p>
+<p>{e(l['kit_note'])}</p>
 <pre class="file-tree">earnings-workflow/
   TASKBOOK.md
   AGENTS.md
@@ -117,7 +124,7 @@ def render_html():
 <p>正文中的主 Prompt 都发给 OpenCode。材料包中 prompts/runtime 的文本由做出来的程序发给财报模型，两类提示词用途不同。这里的“第 0–7 步”是搭建步骤，产品中的“01–06”是运行行号。</p>
 <h3>每一步都按这个顺序操作</h3>{listing(l['send_flow'], True)}
 <p><a href="#environment">准备好后，从第 0 步开始</a>。没有看到文件列表时，让 Agent 列出文件即可；这份讲义不要求你先学会读代码。</p>
-<p>准备细节见<a href="handout/SETUP.md">准备工作</a>；所有主 Prompt 和修复 Prompt 也可从<a href="PROMPTS.md">提示词附录</a>复制。</p></section>
+<p>准备有缺项时回到<a href="start-here/index.html">入门讲义</a>补齐；本讲材料说明见<a href="handout/SETUP.md">第一讲准备清单</a>，所有主 Prompt 和修复 Prompt 也可从<a href="PROMPTS.md">提示词附录</a>复制。</p></section>
 {chapters}
 <section class="finish" id="finish"><h2>完成标准</h2>{listing(l['finish'])}
 <h3>还有问题时，先找第一处失败</h3>{prompt_block(l['rescue'], 'prompt-rescue', '通用排查 Prompt')}
@@ -138,7 +145,12 @@ def render_markdown(prompts_only=False):
         lines += ['主 Prompt 发给 OpenCode；prompts/runtime 中的任务由应用发给财报模型。先读 [教师实操讲义](handout.html)。搭建步骤 0–7 与产品运行行号 01–06 分开。', '',
                   '运行主线为 02 → 04 → 06。在线与本地 Run 都只使用本轮通过的前序，历史只读。', '']
     else:
-        lines += [l['lead'], '', '## 完成后得到什么', '', l['goal'], '', l['scope'], '', '## 这是一个 workflow', '', l['workflow_intro'], '']
+        lines += ['## 开始前，确认这几项', '',
+                  '先读[零基础必看入门](https://suibe-ai-agent.netlify.app/start-here/)，完成相关准备。做过的不用重做，逐项确认后继续读下面的讲义。', '',
+                  '下载[第一讲实操材料](https://suibe-ai-agent.netlify.app/lesson-one-materials.zip)，用于项目检查。', '']
+        lines += ['- [ ] ' + x for x in l['prepare']]
+        lines += ['', '暂时没有硅基流动 Key，可以先完成离线搭建，第 7 步真实 Run 前补齐。本讲的 Key 只填在自己网页 Evals 的隐藏输入框。', '',
+                  l['lead'], '', '## 完成后得到什么', '', l['goal'], '', l['scope'], '', '## 这是一个 workflow', '', l['workflow_intro'], '']
         for s in l['stages']:
             lines += ['### ' + s['title'], '', s['rows'], '', '输入：' + s['input'], '', s['work'], '', '输出：' + s['output'], '']
         lines += ['### 分清三个角色', '']
@@ -150,9 +162,8 @@ def render_markdown(prompts_only=False):
         lines += ['- ' + title + '。' + body for title, body in l['evals']]
         lines += ['', l['eval_note'], '', '## 先在成品中走一遍', '', '打开 https://suibe-ai-agent.netlify.app/demo#evals。', '']
         lines += [f'{i+1}. {x}' for i, x in enumerate(l['tour'])]
-        lines += ['', l['history_note'], '', '## 准备自己的项目', '', '下载 https://suibe-ai-agent.netlify.app/lesson-one-materials.zip。', '']
+        lines += ['', l['history_note'], '', '## 本讲材料与跟做方式', '', '下载 https://suibe-ai-agent.netlify.app/lesson-one-materials.zip。', '']
         lines += [l['build_run_note'], '', l['word_help'], '']
-        lines += [f'{i+1}. {x}' for i, x in enumerate(l['prepare'])]
         lines += ['', l['kit_note'], '', '主 Prompt 发给 OpenCode，prompts/runtime 发给财报运行模型。第 0–7 步是搭建步骤，01–06 是产品运行行号。', '']
         lines += ['### 每一步都按这个顺序操作', '']
         lines += [f'{i+1}. {x}' for i,x in enumerate(l['send_flow'])]

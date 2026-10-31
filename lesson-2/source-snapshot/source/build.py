@@ -54,16 +54,10 @@ def material_guide_html(guide):
 
 def render_html():
     d = DATA
-    nav = '<a href="#workflow-map">先看程序与模型流程</a><a href="#start">开始前</a><a href="#materials-guide">认识材料包</a>' + ''.join(f'<a href="#{s["id"]}"><span>{s["number"]}</span>{e(s["title"])}</a>' for s in d['steps']) + '<a href="#extensions">扩展验证</a><a href="#help">卡住时</a><a href="#finish">交付检查</a><a href="#runtime-prompts">运行时提示词</a>'
+    nav = '<a href="#readiness">开始前，确认准备</a><a href="#workflow-map">先看程序与模型流程</a><a href="#start">本讲项目与材料</a><a href="#materials-guide">认识材料包</a>' + ''.join(f'<a href="#{s["id"]}"><span>{s["number"]}</span>{e(s["title"])}</a>' for s in d['steps']) + '<a href="#extensions">扩展验证</a><a href="#help">卡住时</a><a href="#finish">交付检查</a><a href="#runtime-prompts">运行时提示词</a>'
     roles = ''.join(f'<div><h3>{e(r["who"])}</h3><p>{e(r["task"])}</p></div>' for r in d['roles'])
     flow = '<ol class="flow">' + ''.join(f'<li><span class="owner">{e(s["owner"])}</span><strong>{e(s["label"])}</strong><p>{e(s["work"])}</p></li>' for s in d['flow']) + '</ol>'
-    def prep_item(p):
-        out = f'<li><h3>{e(p["title"])}</h3><p>{e(p["body"])}</p>'
-        if p.get('services'):
-            rows = ''.join('<tr><td class="confirm">☐</td><th scope="row">{}</th><td>{}</td><td>{}</td><td><a href="{}" target="_blank" rel="noopener">{} ↗</a></td></tr>'.format(e(s['name']), e(s['role']), e(s['confirm']), e(s['url']), e(s['url_label'])) for s in p['services'])
-            out += '<div class="table-scroll" tabindex="0" aria-label="课前服务确认清单，可横向滚动"><table class="process-table"><thead><tr><th>确认</th><th>服务</th><th>它负责什么</th><th>课前要确认</th><th>官方入口</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
-        return out + '</li>'
-    preparation = ''.join(prep_item(p) for p in d['preparation'])
+    preparation = ''.join(f'<li><label><input type="checkbox"><span>{e(p["title"])}。{e(p["body"])}</span></label></li>' for p in d['preparation'])
     trouble = ''.join(f'<details><summary>{e(t["symptom"])}</summary><p>{e(t["action"])}</p>{prompt("prompt-help-"+str(i),t["prompt"])}</details>' for i,t in enumerate(d['troubleshooting']))
     runtime = '<ul>' + ''.join(f'<li>第 {step} 步生成 <code>prompts/runtime/{e(name)}</code></li>' for name, step in d['mainline_protocol']['runtime_prompt_generation'].items()) + '</ul>'
     example = json.loads((ROOT / 'source/verified-example.json').read_text())
@@ -72,9 +66,10 @@ def render_html():
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{e(d['subtitle'])}"><title>{e(d['title'])} · 第二讲</title><link rel="stylesheet" href="assets/handout.css"><script src="assets/handout.js" defer></script></head><body>
 <a class="skip" href="#content">跳到讲义</a><aside class="sidebar"><a class="brand" href="#top"><span class="brand-mark">er</span><span>Earnings Review<small>第二讲 · 实操讲义</small></span></a><nav aria-label="讲义目录">{nav}</nav><div class="reading-status"><span>我的搭建记录</span><strong id="completion-count">0 / 9 步</strong><p>勾选只记录学习进度，<br>不代表财务核验通过。</p></div></aside>
-<main id="content"><header id="top"><p class="eyebrow">从本地 PDF 到可核验的复盘网页</p><h1>{e(d['title'])}</h1><p class="subtitle">{e(d['subtitle'])}</p><p>{e(d['lead'])}</p><div class="downloads"><a class="primary" href="earnings-review-materials.zip" download>下载实操材料包</a><a href="#step-0">从第 0 步开始 ↘</a><a href="PROMPTS.md" download>全部 Prompt</a><a href="讲义.md" download>Markdown 讲义</a></div><p class="small">{e(d['materials'])}</p></header>
+<main id="content"><header id="top"><p class="eyebrow">从本地 PDF 到可核验的复盘网页</p><h1>{e(d['title'])}</h1><p class="subtitle">{e(d['subtitle'])}</p><p>{e(d['lead'])}</p><div class="downloads"><a href="https://suibe-ai-agent.netlify.app/start-here/">零基础必看入门</a><a class="primary" href="earnings-review-materials.zip" download>下载实操材料包</a><a href="#step-0">从第 0 步开始 ↘</a><a href="PROMPTS.md" download>全部 Prompt</a><a href="讲义.md" download>Markdown 讲义</a></div><p class="small">{e(d['materials'])}</p></header>
+<section class="intro" id="readiness"><h2>开始前，确认这几项</h2><p>先读<a href="https://suibe-ai-agent.netlify.app/start-here/">零基础必看入门</a>，完成工具、工作目录、运行环境和服务授权的相关准备。做过的不用重做，逐项确认后继续读下面的讲义。</p><ul class="readiness-checks">{preparation}</ul><p>暂缺服务授权时，可以先搭建离线模块，第 8 步真实运行前补齐。第 0 步会分别核对离线开发和真实运行条件。准备已确认，就从<a href="#workflow-map">程序与模型怎样配合</a>继续。</p></section>
 {overview_html(d['overview'])}
-<section class="intro" id="start"><h2>先分清谁在搭建，谁在运行</h2><div class="roles">{roles}</div><p>{e(d['fixed'])}</p><h3 class="flow-heading">同一流程在网页中的六个运行步骤</h3>{flow}<details class="success"><summary>做到什么程度算完成</summary>{items(d['success'])}</details>{material_guide_html(d['material_guide'])}<h2 class="prepare-title">打开一个新项目</h2><ol class="preparation">{preparation}</ol><p class="small">OpenCode 用户可参考 <a href="https://opencode.ai/docs/" target="_blank" rel="noopener">官方使用文档</a>、<a href="https://opencode.ai/docs/models/" target="_blank" rel="noopener">模型配置</a>；使用其他编程 Agent 请查阅各自官方文档。这些入口可能随版本调整；本讲不依赖某个固定快捷键。</p><div class="cadence"><strong>跟做方式</strong><p>{e(d['cadence'])}</p></div></section>
+<section class="intro" id="start"><h2>先分清谁在搭建，谁在运行</h2><div class="roles">{roles}</div><p>{e(d['fixed'])}</p><h3 class="flow-heading">同一流程在网页中的六个运行步骤</h3>{flow}<details class="success"><summary>做到什么程度算完成</summary>{items(d['success'])}</details>{material_guide_html(d['material_guide'])}<h2 class="prepare-title">打开本讲项目</h2><p>{e(d['project_setup'])}</p><details class="success"><summary>使用 OpenCode 时，本讲的参考模型档位</summary><p>{e(d['coding_profile_note'])}</p></details><div class="cadence"><strong>跟做方式</strong><p>{e(d['cadence'])}</p></div></section>
 {''.join(step_html(s) for s in d['steps'])}
 <section class="section" id="extensions"><p class="eyebrow">核心程序完成后</p><h2>继续验证，而不是急着扩大功能</h2><p>下面按需要选做。先保留已完成的程序和真实回执，再扩展样本、模型或失败路径。</p>{''.join(extension_html(x,i) for i,x in enumerate(d['extensions']))}</section>
 <section class="section" id="help"><h2>卡住时，把这一条发给 Agent</h2><p>不用先猜技术原因。让 Agent 读取当前项目和真实日志，明确问题后再修改。</p><div class="help">{trouble}</div></section>
@@ -86,7 +81,11 @@ def render_html():
 def markdown():
     d=DATA
     overview=d['overview']
-    out=['# '+d['title'],d['edition'],d['lead'],'## '+overview['title'],overview['lead']]
+    out=['# '+d['title'],d['edition'],d['lead'],'## 开始前，确认这几项',
+         '先读[零基础必看入门](https://suibe-ai-agent.netlify.app/start-here/)，完成相关准备。做过的不用重做，逐项确认后继续读下面的讲义。',
+         '\n'.join('- [ ] '+p['title']+'。'+p['body'] for p in d['preparation']),
+         '暂缺服务授权时，可以先搭建离线模块，第 8 步真实运行前补齐。第 0 步会分别核对离线开发和真实运行条件。',
+         '## '+overview['title'],overview['lead']]
     diagram=['flowchart TD']
     for p in overview['nodes']:
         label=p['owner']+'：'+p['label']
@@ -103,13 +102,8 @@ def markdown():
     out += ['- '+s['label']+' · '+s['owner']+'：'+s['work'] for s in d['flow']]
     guide=d['material_guide']
     out += ['## '+guide['title'],guide['lead'],'| 文件或文件夹 | 里面是什么 | 这次怎么用 |\n| --- | --- | --- |\n'+'\n'.join('| `'+item['path']+'` | '+item['contents']+' | '+item['use']+' |' for item in guide['items']),'\n'.join('- '+note for note in guide['notes'])]
-    out += ['## 准备项目',d['materials']]
-    for i,p in enumerate(d['preparation']):
-        out += [str(i+1)+'. '+p['title']+'。'+p['body']]
-        if p.get('services'):
-            table_lines = ['| 确认 | 服务 | 它负责什么 | 课前要确认 | 官方入口 |','| --- | --- | --- | --- | --- |']
-            table_lines += ['| ☐ | '+s['name']+' | '+s['role']+' | '+s['confirm']+' | ['+s['url_label']+']('+s['url']+') |' for s in p['services']]
-            out += ['\n'.join(table_lines)]
+    out += ['## 打开本讲项目',d['project_setup'],
+            '<details><summary>使用 OpenCode 时，本讲的参考模型档位</summary>\n\n'+d['coding_profile_note']+'\n\n</details>']
     out += [d['cadence']]
     for s in d['steps']:
         out += ['## 第'+s['number']+'步：'+s['title'],s['goal'],'### 现在怎么做','\n'.join('- '+x for x in s['actions']),'### 发给你的编程 Agent','```text\n'+s['prompt']+'\n```']

@@ -12,4 +12,5 @@
 - Cover Word, PPT and PDF. Explain usable text layers, OCR and visual reading without claiming one extension guarantees readability.
 - Each action needs a result the learner can personally inspect and a concrete recovery path. Keep registration, configuration, successful API calls and correct business output distinct.
 - handout.md is the sole prose source. build.py generates the standalone HTML using lesson two's base design. Browser scripts may handle only reading conveniences, never credentials or service requests.
+- Keep typography aligned with lessons two and three: inherit base body, table, prompt and copy-control sizes. Map nested topic headings to the lecture step-title scale and smaller headings to the lecture subheading scale, including mobile layouts. Do not add a separate enlarged reading scale.
 - Rebuild and export via build.py after edits. Do not edit generated index.html or the course module's exported copies independently.

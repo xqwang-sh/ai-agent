@@ -25,8 +25,8 @@ def listing(items, ordered=False):
 
 
 def prompt_block(text, ident, title):
-    return (f'<div class="prompt-block"><div class="prompt-heading"><h3>{e(title)}</h3>'
-            f'<button type="button" data-copy="{ident}">复制 Prompt</button></div>'
+    return (f'<div class="prompt-block prompt-box"><div class="prompt-heading prompt-toolbar"><h3>{e(title)}</h3>'
+            f'<button class="copy" type="button" data-copy="{ident}">复制 Prompt</button></div>'
             f'<pre id="{ident}">{e(text)}</pre></div>')
 
 
@@ -48,9 +48,9 @@ def chapter(step, index):
         run_guide = (f'<div class="learner-card"><h3>{e(step["run_title"])}</h3>'
                      '<p>程序定稿后再执行这些操作，搭建期间先完成离线检查。</p>'
                      f'{listing(step["run_steps"], True)}</div>')
-    return f'''<section class="chapter" id="{step['id']}">
-<div class="chapter-head"><span class="chapter-num">{index}</span><h2>{e(step['title'])}</h2></div>
-<p class="chapter-question">{e(step['aim'])}</p>
+    return f'''<section class="chapter step" id="{step['id']}">
+<div class="chapter-head"><span class="chapter-num step-number">{index}</span><h2>{e(step['title'])}</h2></div>
+<p class="chapter-question goal">{e(step['aim'])}</p>
 <h3>现在怎么做</h3>{listing(step['actions'], True)}{picture}
 {prompt_block(step['prompt'], 'prompt-'+step['id'], '发给 OpenCode')}
 <div class="learner-card expected"><h3>你应看到</h3>{listing(step['expected'])}</div>
@@ -90,7 +90,7 @@ def render_html():
 <p class="doc-meta">第一讲教师实操讲义 · 更新 {l['updated']}</p>
 <div class="hero-actions"><a href="#tour">先看成品怎么用</a><a href="lesson-one-materials.zip" download>下载实操材料</a><button type="button" id="print">打印讲义</button></div></header>
 <section class="intro" id="purpose"><h2>跟着做出一个能运行的产品</h2><p>{e(l['lead'])}</p>
-<div class="goal-box"><b>完成后你会得到</b><p>{e(l['goal'])}</p></div><p>{e(l['scope'])}</p></section>
+<div class="goal-box goal"><b>完成后你会得到</b><p>{e(l['goal'])}</p></div><p>{e(l['scope'])}</p></section>
 <section class="intro" id="workflow"><h2>这是一个 workflow</h2><p>{e(l['workflow_intro'])}</p>
 <div class="workflow-map" aria-label="三个阶段，主线 02 到 04 到 06">{stages}</div>
 <p class="mainline">主线 <b>02 → 04 → 06</b><span>原值 → 换算结果 → 同比与候选简报</span></p>

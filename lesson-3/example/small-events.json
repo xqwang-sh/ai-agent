@@ -12,6 +12,7 @@
     "status": "scheduled",
     "validity": null,
     "period": "2026年第三季度",
+    "question_collection": null,
     "participation_url": "https://s.comein.cn/ytuzwbqe",
     "deadline_label": "预报名截止",
     "sources": [
@@ -101,6 +102,12 @@
     "status": "scheduled",
     "validity": null,
     "period": "2026年第三季度",
+    "question_collection": {
+      "text": "11月18日至11月24日16:00",
+      "source_id": "1225639820",
+      "page": 2,
+      "quote": "2026 年 11 月 18 日（星期三）至 11 月 24 日（星期二）\n16:00"
+    },
     "participation_url": "http://roadshow.sseinfo.com/",
     "deadline_label": "提问截止",
     "sources": [

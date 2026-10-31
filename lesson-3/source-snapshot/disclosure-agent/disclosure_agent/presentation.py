@@ -1,5 +1,6 @@
 """A self-contained calendar shared by live runs and the lesson."""
 from datetime import datetime
+import base64
 from html import escape
 import json
 from pathlib import Path
@@ -8,6 +9,8 @@ from .reminders import reminder_items, render_ics, safe_url
 from .source_text import participation_excerpts, participation_html, deadline_label, event_deadline_label
 from .ledger import event_review_reasons
 from .scope import period_matches, scoped_issues, meeting_window
+from .question_collection import question_collection_range
+from .watchlist import company_directory
 
 ROOT = Path(__file__).resolve().parent
 PERIODS = {"H1": "半年度", "Q1": "第一季度", "Q2": "第二季度", "Q3": "第三季度", "Q4": "第四季度", "FY": "年度"}
@@ -39,7 +42,7 @@ def period_label(value):
     return year + "年" + PERIODS.get(period, period) if year else "报告期待确认"
 
 
-def product_data(state, summary, *, frozen=False):
+def product_data(state, summary, *, frozen=False, directory=None):
     scope = summary.get("scope") or state.get("scope", {})
     target = scope.get("report_period")
     notices = {identity: notice for identity, notice in state.get("notices", {}).items()
@@ -83,6 +86,7 @@ def product_data(state, summary, *, frozen=False):
         if target and "+" in (event.get("report_period") or ""):
             display_period += "（合并召开）"
         projected.update(period=display_period,
+                         question_collection=question_collection_range(event, notices, sources),
                          participation_url=safe_url(event.get("participation_url")),
                          deadline_label=event_deadline_label(event, notices),
                          sources=sources, pending=event.get("pending_fields", {}), history=event.get("history", []),
@@ -105,6 +109,7 @@ def product_data(state, summary, *, frozen=False):
     return {"as_of": summary["as_of"], "frozen": frozen, "run_id": summary.get("run_id"), "scope": scope,
             "scope_label": period_label(target) if target else "",
             "market": summary.get("market"),
+            "company_directory": directory if directory is not None else company_directory(events=events, run_id=summary.get('run_id')),
             "review_candidates": review_candidates,
             "status": summary.get("status"), "trigger": summary.get("trigger"),
             "model_calls": summary.get("model_calls", 0), "cache_count": len(summary.get("cached_notice_ids", [])),
@@ -117,11 +122,12 @@ def product_data(state, summary, *, frozen=False):
             "source_count": len(sources), "events": events}
 
 
-def render_product(state, summary, *, frozen=False, back_url=None):
+def render_product(state, summary, *, frozen=False, back_url=None, directory=None):
     datetime.fromisoformat(summary["as_of"])
-    data = json.dumps(product_data(state, summary, frozen=frozen), ensure_ascii=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+    data = json.dumps(product_data(state, summary, frozen=frozen, directory=directory), ensure_ascii=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
     css = (ROOT / "calendar.css").read_text(encoding="utf-8")
-    js = (ROOT / "calendar.js").read_text(encoding="utf-8")
+    js = '\n'.join((ROOT / name).read_text(encoding='utf-8') for name in ['xlsx.mini.min.js', 'watchlist.js', 'calendar.js']).replace('</script', '<\\/script')
+    template = base64.b64encode((ROOT / 'watchlist-example.xlsx').read_bytes()).decode('ascii')
     back = '<a class="back-link" href="' + escape(back_url, quote=True) + '">返回讲义 ↗</a>' if back_url else ""
     return '''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -131,7 +137,8 @@ def render_product(state, summary, *, frozen=False, back_url=None):
 <main id="calendar-main"><div class="page-heading"><div><p class="eyebrow">CNINFO · 业绩说明会通知及变更</p><h1>公告事件日历</h1><p id="data-context" class="muted"></p></div><p class="timezone">日期与时刻<br><strong>北京时间 UTC+8</strong></p></div>
 <div id="freshness-note" class="context-note"></div>
 <div class="workspace-tools"><nav class="view-tabs" aria-label="事件视图"><button data-view="calendar" aria-pressed="true">日历</button><button data-view="updates" aria-pressed="false" id="updates-tab">今日更新</button><button data-view="all" aria-pressed="false">全部事件</button><button data-view="review" aria-pressed="false" id="review-tab">待复核</button></nav><div class="search-tools"><label class="sr-only" for="company-filter">跟踪公司</label><select id="company-filter"><option value="">全部公司</option></select><label class="sr-only" for="event-search">搜索公司、代码或报告期</label><input type="search" id="event-search" placeholder="搜索公司、代码或报告期"></div></div>
-<section id="calendar-view"><div class="calendar-layout"><section class="calendar-card" aria-label="月历"><div class="month-toolbar"><div class="month-title"><h2 id="month-label"></h2><span id="month-count"></span></div><div class="month-actions"><button id="previous-month" aria-label="上个月">‹</button><button id="go-today">今天</button><button id="next-month" aria-label="下个月">›</button><button id="next-meeting" class="next-meeting">下次会议 ↗</button></div></div><div class="legend"><span><i class="key existing"></i>已有会议</span><span id="fresh-legend"><i class="key fresh"></i>今日收录/更新</span><span><i class="key deadline"></i>截止日</span><span><i class="key review"></i>待复核</span></div><div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="month-grid" class="month-grid" aria-label="按日期查看公司事件"></div><p class="calendar-help">选择有标记的日期，再点公司查看摘要、参与方式和公告原文。历史安排继续保留。</p></section><aside class="agenda-column"><section class="day-card"><div class="section-caption">当天安排</div><h2 id="selected-date"></h2><div id="day-events" aria-live="polite"></div></section></aside></div></section>
+<section class="watchlist-tools" aria-label="关注公司名单"><div class="watchlist-actions"><strong>关注公司</strong><a id="watchlist-template" download="watchlist-example.xlsx" href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,''' + template + '''">下载 Excel 模板</a><button id="import-watchlist">导入关注名单</button><input id="watchlist-file" type="file" accept=".xlsx" class="sr-only" aria-label="上传公司关注名单"><button id="clear-watchlist" hidden>清除名单</button></div><p id="watchlist-summary" class="small" aria-live="polite"></p><p id="watchlist-warning" class="watchlist-message" role="status"></p><p id="watchlist-message" class="watchlist-message" role="status"></p></section>
+<section id="calendar-view"><div class="calendar-layout"><section class="calendar-card" aria-label="月历"><div class="month-toolbar"><div class="month-title"><h2 id="month-label"></h2><span id="month-count"></span></div><div class="month-actions"><button id="previous-month" aria-label="上个月">‹</button><button id="go-today">今天</button><button id="next-month" aria-label="下个月">›</button><button id="next-meeting" class="next-meeting">下次会议 ↗</button></div></div><div class="legend"><span><i class="key existing"></i>已有会议</span><span id="fresh-legend"><i class="key fresh"></i>今日收录/更新</span><span><i class="key review"></i>待复核</span></div><div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="month-grid" class="month-grid" aria-label="按日期查看公司事件"></div><p class="calendar-help">选择有标记的日期，再点公司查看摘要、参与方式和公告原文。每场会议只显示最新安排；提问征集时间见会议卡片。</p></section><aside class="agenda-column"><section class="day-card"><div class="section-caption">当天安排</div><h2 id="selected-date"></h2><div id="day-events" aria-live="polite"></div></section></aside></div></section>
 <section id="list-view" class="list-view" hidden><div class="list-heading"><h2 id="list-title"></h2><p id="list-description" class="muted"></p></div><div id="event-list" class="record-list" aria-live="polite"></div></section>
 <details class="data-details"><summary id="data-status">数据状态与原公告</summary><div id="data-details-content"></div></details>
 <footer>公告来源为巨潮资讯。会议日期已过不代表已核实召开；有冲突的字段保留原值和候选，复核前不生成该字段提醒。</footer></main>

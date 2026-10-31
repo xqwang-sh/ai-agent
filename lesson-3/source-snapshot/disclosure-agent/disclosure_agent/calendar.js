@@ -2,6 +2,7 @@
 const data = JSON.parse(document.getElementById('calendar-data').textContent);
 const byId = new Map(data.events.map(event => [event.id, event]));
 const candidates = data.review_candidates || [];
+const watchlist = DisclosureWatchlist.createWatchlist(data.company_directory);
 const candidateById = new Map(candidates.map(item => [item.id, item]));
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -42,22 +43,21 @@ function tags(event) {
 }
 function filteredEvents() {
   const company=$('company-filter').value, query=$('event-search').value.trim().toLowerCase();
-  return data.events.filter(event => (!company || event.stock_code===company) && (!query || `${event.company} ${event.stock_code} ${event.period} ${event.report_period}`.toLowerCase().includes(query)));
+  return data.events.filter(event => watchlist.includes(event.stock_code) && (!company || event.stock_code===company) && (!query || `${event.company} ${event.stock_code} ${event.period} ${event.report_period}`.toLowerCase().includes(query)));
 }
 function filteredCandidates() {
   const company=$('company-filter').value, query=$('event-search').value.trim().toLowerCase();
-  return candidates.filter(item=>(!company || item.stock_code===company) && (!query || `${item.company} ${item.stock_code} ${item.title}`.toLowerCase().includes(query)));
+  return candidates.filter(item=>watchlist.includes(item.stock_code) && (!company || item.stock_code===company) && (!query || `${item.company} ${item.stock_code} ${item.title}`.toLowerCase().includes(query)));
 }
 function entries(events) {
-  return events.flatMap(event => {
-    if (event.status!=='scheduled') return [];
-    const rows=[];
-    if (validDay(event.meeting_date)) rows.push({day:event.meeting_date,kind:'meeting',event,time:event.start_time || '时刻未注明',review:isReview(event)||event.reminder_blocked});
-    if (validDay(event.question_deadline_date) && !Object.keys(event.pending).some(field=>field.startsWith('question_deadline')) && event.validity!=='needs_review') {
-      rows.push({day:event.question_deadline_date,kind:'deadline',event,time:event.question_deadline_time || '时刻未注明',review:false});
-    }
-    return rows;
-  }).sort((a,b)=>(a.day+' '+a.time).localeCompare(b.day+' '+b.time));
+  return events.filter(event=>event.status==='scheduled' && validDay(event.meeting_date)).map(event=>({day:event.meeting_date,kind:'meeting',event,time:event.start_time || '时刻未注明',review:isReview(event)||event.reminder_blocked}))
+    .sort((a,b)=>a.day.localeCompare(b.day) || Number(updatedToday(b.event))-Number(updatedToday(a.event)) || (a.event.start_time||'99:99').localeCompare(b.event.start_time||'99:99') || a.event.id.localeCompare(b.event.id));
+}
+function collectionText(event) {
+  if(event.pending.question_deadline_date || event.pending.question_deadline_time) return `${event.deadline_label}：有冲突，需复核`;
+  if(event.question_collection) return `提问预征集：${event.question_collection.text}`;
+  if(event.question_deadline_date) return `${event.deadline_label}：${dayLabel(event.question_deadline_date)}${event.question_deadline_time?' '+event.question_deadline_time:''}`;
+  return '';
 }
 function futureItems(events=data.events) {
   return events.flatMap(event=>event.reminders.map(item=>({...item,event}))).filter(item=>new Date(item.start)>now()).sort((a,b)=>new Date(a.start)-new Date(b.start));
@@ -77,28 +77,28 @@ function selectDay(day) { selectedDay=day; month=day.slice(0,7); showView('calen
 function drawCalendar(events) {
   const all=entries(events), visible=all.filter(item=>item.day.startsWith(month));
   $('month-label').textContent=`${month.slice(0,4)}年${Number(month.slice(5))}月`;
-  $('month-count').textContent=`${visible.filter(item=>item.kind==='meeting').length}场会议 · ${visible.filter(item=>item.kind==='deadline').length}项截止`;
+  $('month-count').textContent=`${visible.length}场会议`;
   const first=new Date(month+'-01T00:00:00Z'), offset=(first.getUTCDay()+6)%7;
   first.setUTCDate(1-offset);
   let html='';
   for(let i=0;i<42;i++) {
     const at=new Date(first); at.setUTCDate(first.getUTCDate()+i); const day=at.toISOString().slice(0,10);
     const items=all.filter(item=>item.day===day), fresh=items.some(item=>updatedToday(item.event));
-    const classes=['day',day.startsWith(month)?'':'outside',day===selectedDay?'selected':'',day===today()?'today':'',items.some(item=>item.kind==='meeting')?'has-meeting':items.some(item=>item.kind==='deadline')?'has-deadline':'',fresh?'is-fresh':'',items.some(item=>item.review)?'has-review':''].filter(Boolean).join(' ');
-    const label=`${fullDay(day)}，${items.length?items.map(item=>`${item.event.company}${item.kind==='meeting'?'会议':item.event.deadline_label}`).join('，'):'暂无安排'}${fresh?'，'+words+'收录或更新':''}`;
-    html+=`<button class="${classes}" data-day="${day}" aria-label="${esc(label)}" aria-pressed="${day===selectedDay}"><span class="day-top"><span class="day-number">${Number(day.slice(8))}</span>${fresh?'<i class="fresh-dot" aria-hidden="true"></i>':''}</span>${items.slice(0,2).map(item=>`<span class="calendar-chip ${item.kind==='deadline'?'deadline':updatedToday(item.event)?'fresh':''} ${item.review?'review':''}">${esc(item.event.company)}${item.kind==='deadline'?' · '+esc(item.event.deadline_label):''}</span>`).join('')}${items.length>2?`<span class="more-events">另${items.length-2}项</span>`:''}</button>`;
+    const classes=['day',day.startsWith(month)?'':'outside',day===selectedDay?'selected':'',day===today()?'today':'',items.length?'has-meeting':'',fresh?'is-fresh':'',items.some(item=>item.review)?'has-review':''].filter(Boolean).join(' ');
+    const label=`${fullDay(day)}，${items.length?items.map(item=>`${item.event.company}会议`).join('，'):'暂无安排'}${fresh?'，'+words+'收录或更新':''}`;
+    html+=`<button class="${classes}" data-day="${day}" aria-label="${esc(label)}" aria-pressed="${day===selectedDay}"><span class="day-top"><span class="day-number">${Number(day.slice(8))}</span>${fresh?'<i class="fresh-dot" aria-hidden="true"></i>':''}</span>${items.slice(0,2).map(item=>`<span class="calendar-chip ${updatedToday(item.event)?'fresh':''} ${item.review?'review':''}">${esc(item.event.company)}</span>`).join('')}${items.length>2?`<span class="more-events">另${items.length-2}项</span>`:''}</button>`;
   }
   $('month-grid').innerHTML=html;
-  $('selected-date').textContent=dayLabel(selectedDay)+' · '+['日','一','二','三','四','五','六'][new Date(selectedDay+'T00:00:00Z').getUTCDay()];
+  $('selected-date').textContent=dayLabel(selectedDay);
   const selected=all.filter(item=>item.day===selectedDay);
-  $('day-events').innerHTML=selected.length?selected.map(item=>`<button class="event-button" data-open="${esc(item.event.id)}"><strong>${esc(item.event.company)} <span class="small">${esc(item.event.stock_code)}</span></strong><span class="period">${esc(item.event.period)}业绩说明会</span><span class="when">${esc(item.time)}${item.kind==='meeting'&&item.event.end_time?'–'+esc(item.event.end_time):''}</span><span class="entry-kind">${item.kind==='deadline'?esc(item.event.deadline_label):'会议安排'}</span><div>${tags(item.event)}</div><span class="open-detail">查看摘要与参与方式 ↗</span></button>`).join(''):'<p class="empty">这一天暂无匹配的会议或截止安排。可选择其他标记日期，或跳到下次会议。</p>';
+  $('day-events').innerHTML=selected.length?selected.map(item=>`<button class="event-button" data-open="${esc(item.event.id)}"><strong>${esc(item.event.company)} <span class="small">${esc(item.event.stock_code)}</span></strong><span class="period">${esc(item.event.period)}业绩说明会</span><span class="when">${esc(item.time)}${item.event.end_time?'–'+esc(item.event.end_time):''}</span>${collectionText(item.event)?`<span class="collection-period">${esc(collectionText(item.event))}</span>`:''}<div>${tags(item.event)}</div><span class="open-detail">查看摘要与参与方式 ↗</span></button>`).join(''):'<p class="empty">这一天暂无匹配的会议安排。可选择其他标记日期，或跳到下次会议。</p>';
   $('next-meeting').disabled=!futureItems(events).some(item=>item.kind==='meeting');
 }
 function drawList(events) {
   const config={updates:[`${words}收录与更新`,'首次回看的旧公告标为历史建档；模型提取校正单独标明，不当作公司新改期。'],all:['全部事件','按会议日期从新到旧排列。改期沿用同一事件，取消或待定安排仍可回看原公告。'],review:['需要复核的事件与公告','先核对原值、候选和公告原文。未通过核验的公告不作为确定安排，也不生成提醒。']};
   $('list-title').textContent=(config[view]||config.all)[0]; $('list-description').textContent=(config[view]||config.all)[1];
   const rows=events.filter(event=>view==='updates'?updatedToday(event):view==='review'?isReview(event):true).sort((a,b)=>String(b.meeting_date||'').localeCompare(a.meeting_date||'') || String(b.start_time||'').localeCompare(a.start_time||'') || a.id.localeCompare(b.id));
-  $('event-list').innerHTML=rows.length?rows.map(event=>`<button class="record-card" data-open="${esc(event.id)}"><h3>${esc(event.company)} <span class="small">${esc(event.stock_code)}</span></h3><p>${esc(event.period)}业绩说明会</p><p class="record-date">${esc(meetingText(event))}</p><p>${esc(event.deadline_label)} · ${event.pending.question_deadline_date||event.pending.question_deadline_time?'有冲突，需复核':`${esc(event.question_deadline_date||'未注明')} ${esc(event.question_deadline_time||'')}`}</p>${tags(event)}<p class="muted">查看摘要、参与方式与${event.sources.length}份原公告 ↗</p></button>`).join(''):'<p class="empty">当前没有匹配的事件。可以调整公司或搜索条件。</p>';
+  $('event-list').innerHTML=rows.length?rows.map(event=>`<button class="record-card" data-open="${esc(event.id)}"><h3>${esc(event.company)} <span class="small">${esc(event.stock_code)}</span></h3><p>${esc(event.period)}业绩说明会</p><p class="record-date">${esc(meetingText(event))}</p>${collectionText(event)?`<p class="collection-period">${esc(collectionText(event))}</p>`:''}${tags(event)}<p class="muted">查看摘要、参与方式与${event.sources.length}份原公告 ↗</p></button>`).join(''):'<p class="empty">当前没有匹配的事件。可以调整公司或搜索条件。</p>';
   if (view==='review') {
     const pending=filteredCandidates().sort((a,b)=>String(b.date||'').localeCompare(a.date||'') || a.id.localeCompare(b.id));
     if (pending.length && !rows.length) $('event-list').innerHTML='';
@@ -111,11 +111,29 @@ function render() {
     const market=data.market;
     $('freshness-note').textContent+=` 来源回执最晚抓取时间：${checkedTime(market.source_as_of)}（北京时间）。${market.source_mode==='frozen_resume'?'正在继续处理该批来源。':''}${market.pending===null?'来源查询尚未闭合。':market.pending?`尚有${market.pending}份候选待处理。`:''}${candidates.length?`有${candidates.length}份公告待核验。`:''}`;
   }
-  const events=filteredEvents(), updates=data.events.filter(updatedToday).length, reviews=data.events.filter(isReview).length+candidates.length;
+  const events=filteredEvents(), updates=events.filter(updatedToday).length, reviews=events.filter(isReview).length+filteredCandidates().length;
   $('updates-tab').textContent=`${words}更新 ${updates}`; $('review-tab').textContent=`待复核 ${reviews}`;
   $('go-today').textContent=data.frozen?'示例当天':'今天';
   $('fresh-legend').innerHTML=`<i class="key fresh"></i>${words}收录/更新`;
-  drawCalendar(events); if(view!=='calendar') drawList(events);
+  drawWatchlist(events); drawCalendar(events); if(view!=='calendar') drawList(events);
+}
+function drawWatchlist(events) {
+  const selection=watchlist.snapshot();
+  $('clear-watchlist').hidden=!selection.active;
+  const names=selection.companies.map(item=>item.name).join('、');
+  $('watchlist-summary').textContent=selection.active
+    ? `关注 ${selection.companies.length} 家${names?'：'+names:''} · 当前筛选 ${events.length} 场会议${selection.remembered?' · 已在本机记住':''}`
+    : '简称或六位代码均可，一次筛选多家公司；名单只在本机读取和保存。';
+  $('watchlist-summary').title=names;
+  $('watchlist-warning').textContent=selection.warning;
+}
+function applyWatchlistResult(result) {
+  $('watchlist-message').textContent=result.ok?'':result.error;
+  if(!result.ok) return;
+  $('company-filter').value='';$('event-search').value='';
+  const meeting=entries(filteredEvents()).find(item=>item.day>=today()) || entries(filteredEvents())[0];
+  if(meeting){selectedDay=meeting.day;month=meeting.day.slice(0,7);}
+  render();
 }
 function openCandidate(id) {
   const item=candidateById.get(id);if(!item)return;
@@ -140,7 +158,7 @@ function openEvent(id) {
   const joiningSource=event.sources.filter(source=>source.participation_html).at(-1);
   const participation=joiningSource?.participation_html || '<p class="muted">原公告未识别到可展示的参与说明。</p>';
   const activity=event.activity, updated=activity.updated_at?`${activity.updated_at.slice(0,10)} ${activity.updated_at.slice(11,16)} · ${activityLabel(event)}`:'历史记录，原收录时间未记录';
-  $('event-dialog-content').innerHTML=`<p class="eyebrow">业绩说明会 · 事件摘要</p><h2 id="event-dialog-title">${esc(event.company)}</h2><p class="detail-code">${esc(event.stock_code)} · ${esc(event.period)}</p><div>${tags(event)}</div><p class="detail-summary">${esc(summary)}</p><dl class="detail-fields"><dt>会议时间</dt><dd>${esc(meetingText(event))}<br><span class="small">北京时间</span></dd><dt>${esc(event.deadline_label)}</dt><dd>${esc(deadline)}</dd><dt>最新公告</dt><dd>${esc(latest?.date||'未记录')}</dd><dt>智能体更新</dt><dd>${esc(updated)}</dd></dl><div class="detail-actions">${future.length?`<button class="primary" data-download-event="${esc(id)}">添加到我的日历</button>`:'<span class="small muted">当前无可添加的未来提醒</span>'}</div>${future.length?'<p class="small muted reminder-note">导入个人日历后，默认提前1天、30分钟提醒。文件是当前快照，改期后需核对旧提醒。</p><p id="event-download-status" class="small" role="status"></p>':''}${reviewWarning}${event.reminder_blocked&&!reviewWarning?'<p class="detail-warning">会议时刻缺失、来源未完整核验或安排已失效，暂不生成会议提醒。</p>':''}<h3>${event.status==='scheduled'?'如何参与':'原参与方式'}</h3><div class="participation-content">${participation}</div>${pending}${history?`<h3>安排变更</h3>${history}`:''}<h3>公告原文</h3><div class="original-links">${sources}</div>`;
+  $('event-dialog-content').innerHTML=`<p class="eyebrow">业绩说明会 · 事件摘要</p><h2 id="event-dialog-title">${esc(event.company)}</h2><p class="detail-code">${esc(event.stock_code)} · ${esc(event.period)}</p><div>${tags(event)}</div><p class="detail-summary">${esc(summary)}</p><dl class="detail-fields"><dt>会议时间</dt><dd>${esc(meetingText(event))}<br><span class="small">北京时间</span></dd><dt>${event.question_collection&&!pendingDeadline?'提问预征集':esc(event.deadline_label)}</dt><dd>${esc(event.question_collection&&!pendingDeadline?event.question_collection.text:deadline)}</dd><dt>最新公告</dt><dd>${esc(latest?.date||'未记录')}</dd><dt>智能体更新</dt><dd>${esc(updated)}</dd></dl><div class="detail-actions">${future.length?`<button class="primary" data-download-event="${esc(id)}">添加到我的日历</button>`:'<span class="small muted">当前无可添加的未来提醒</span>'}</div>${future.length?'<p class="small muted reminder-note">导入个人日历后，默认提前1天、30分钟提醒。文件是当前快照，改期后需核对旧提醒。</p><p id="event-download-status" class="small" role="status"></p>':''}${reviewWarning}${event.reminder_blocked&&!reviewWarning?'<p class="detail-warning">会议时刻缺失、来源未完整核验或安排已失效，暂不生成会议提醒。</p>':''}<h3>${event.status==='scheduled'?'如何参与':'原参与方式'}</h3><div class="participation-content">${participation}</div>${pending}${history?`<h3>安排变更</h3>${history}`:''}<h3>公告原文</h3><div class="original-links">${sources}</div>`;
   $('event-dialog').showModal();
 }
 function download(items, filename) {
@@ -161,6 +179,14 @@ function drawDataStatus() {
 for(const event of [...new Map([...data.events,...candidates].filter(item=>item.stock_code).map(event=>[event.stock_code,event])).values()].sort((a,b)=>a.stock_code.localeCompare(b.stock_code))) {
   const option=document.createElement('option');option.value=event.stock_code;option.textContent=event.company; $('company-filter').append(option);
 }
+$('import-watchlist').addEventListener('click',()=>$('watchlist-file').click());
+$('watchlist-file').addEventListener('change',async()=>{
+  const file=$('watchlist-file').files[0];if(!file)return;
+  $('import-watchlist').disabled=true;
+  try {applyWatchlistResult(await watchlist.replaceWorkbook(file,XLSX));}
+  finally {$('watchlist-file').value='';$('import-watchlist').disabled=false;}
+});
+$('clear-watchlist').addEventListener('click',()=>applyWatchlistResult(watchlist.clear()));
 $('data-context').textContent=`${data.scope_label?data.scope_label+' · ':''}${data.scope?.universe==='a_share'?'全A股 · 已收录':'跟踪'}${new Set(data.events.map(event=>event.stock_code)).size}家公司 · ${data.events.length}场会议 · ${data.source_count}份原公告`;
 
 document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>showView(button.dataset.view)));

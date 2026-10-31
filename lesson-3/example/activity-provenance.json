@@ -6,12 +6,13 @@
   "source_as_of": "2026-10-31T06:52:02.989744+08:00",
   "files": {
     "state.json": "747c5ba8561c7d5a1f47d508e7a7037f74a8289b8f565b4e277cd170cb18a575",
-    "summary.json": "3517829be42ac3819758babca1329f3308480e8528a9952f6b65805dbd56d981"
+    "summary.json": "3517829be42ac3819758babca1329f3308480e8528a9952f6b65805dbd56d981",
+    "source/company-table.json": "59454a3e572f46159c6c741e7f3b34c43fc4a4c5be00ef26a47738bd359e0960"
   },
   "acceptance_sha256": "39d880e18d6f1d248f72f60158ddd78a4cd24d58b989fd4bc505e914cc060404",
   "schedule_verification_sha256": "076c790bdd54032972447a608cb5675e7ae639fe42b4c32c0103208a52dab725",
   "basis": "Immutable actual OS-run projection; source queries have the documented keyword and overlap boundaries.",
-  "render_program_sha256": "5f88981b338ddc7d57ea9ed9f1d7215d4fce124f34aa5a94af5e651346f48547",
-  "browser_checks_sha256": "ea82c407b31498dd2f12896baf846ef3fd3cdfa40ff49490251cd78a7cc52ae4",
-  "presentation_revision_basis": "v14 changes calendar.css only; data stays bound to the immutable v13 OS run."
+  "render_program_sha256": "6471b0c3f53321cef3cfcdb4d69748957e368108b55477a765da549df2af7efb",
+  "browser_checks_sha256": "e85d77c16f8e800283ea57577b281a04454d4b6623454915d7bdc1529b34d2c3",
+  "presentation_revision_basis": "v15 adds meeting-only cards, source-bound optional question ranges and local multi-company XLSX watchlists. Event data stays bound to the immutable v13 OS run; company table bytes are hash-bound to that same run."
 }

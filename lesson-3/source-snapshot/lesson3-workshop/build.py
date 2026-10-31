@@ -21,6 +21,7 @@ EVIDENCE = LESSON / "04-tests/implementation-2026-10-30"
 OLD = LESSON / "06-preparation/cninfo-exploration-2026-10-28"
 sys.path.insert(0, str(APP))
 from disclosure_agent.presentation import render_product, product_data, participation_excerpts
+from disclosure_agent.watchlist import company_directory
 from disclosure_agent.scope import period_matches, scoped_issues
 
 
@@ -57,7 +58,7 @@ def frozen_market():
     if not workspace.is_relative_to(LESSON):
         raise ValueError('Frozen workspace must be inside this lesson')
     reference = workspace / 'runs' / manifest['run_id']
-    for name in ('state.json', 'summary.json'):
+    for name in ('state.json', 'summary.json', 'source/company-table.json'):
         if sha(reference / name) != manifest['files'][name]:
             raise ValueError('Frozen market input changed: ' + name)
     state = json.loads((reference / 'state.json').read_text())
@@ -95,7 +96,7 @@ def source_files():
     for file in sorted(APP.rglob("*")):
         relative = file.relative_to(APP)
         included = relative.as_posix() in root_files or relative.parts[0] in {"disclosure_agent", "prompts", "tests"}
-        if included and file.is_file() and (file.suffix in {".py", ".json", ".md", ".txt", ".js", ".css"} or file.name == ".gitignore") and not any(part in {"runtime", "__pycache__", ".pytest_cache", ".git"} for part in relative.parts):
+        if included and file.is_file() and (file.suffix in {".py", ".json", ".md", ".txt", ".js", ".css", ".xlsx"} or file.name == ".gitignore") and not any(part in {"runtime", "__pycache__", ".pytest_cache", ".git"} for part in relative.parts):
             yield file
 
 
@@ -179,6 +180,12 @@ def main():
     prompts = re.findall(r"^> (.+)$", lesson, re.MULTILINE)
     (output / "PROMPTS.md").write_text("# 课堂短需求与反馈\n\n按自己的实际进度选择和修改，不要一次性全部发送。\n\n" + "\n\n".join(f"{i}. {text}" for i, text in enumerate(prompts, 1)) + "\n", encoding="utf-8")
     page(lesson, output / "index.html")
+    shutil.copy2(APP / 'disclosure_agent/watchlist-example.xlsx', output / 'watchlist-example.xlsx')
+    display_directory = None
+    if (ROOT / 'frozen-market.json').is_file():
+        _, _, market_manifest = frozen_market()
+        table = LESSON / market_manifest['workspace'] / 'runs' / market_manifest['run_id'] / 'source/company-table.json'
+        display_directory = company_directory(table, run_id=market_manifest['run_id'])
     historical_validation = materials(output, staging)
     from q3_validation import create as create_q3_validation, create_formats
     create_q3_validation(output, staging, historical_validation, APP, LESSON, archive)
@@ -207,7 +214,7 @@ def main():
         summary["status"] = "needs_review" if summary["issues"] else "complete"
     prepare_participation(state)
     public_summary = public(summary)
-    html = render_product(state, public_summary, frozen=True, back_url="../index.html")
+    html = render_product(state, public_summary, frozen=True, back_url="../index.html", directory=display_directory)
     (output / "example").mkdir()
     (output / "example/index.html").write_text(html, encoding="utf-8")
     write_json(output / "example/summary.json", public_summary)
@@ -221,7 +228,7 @@ def main():
         state, summary, manifest = frozen_market()
         prepare_participation(state)
         public_summary = public(summary)
-        (output / 'example/index.html').write_text(render_product(state, public_summary, frozen=True, back_url='../index.html'), encoding='utf-8')
+        (output / 'example/index.html').write_text(render_product(state, public_summary, frozen=True, back_url='../index.html', directory=display_directory), encoding='utf-8')
         write_json(output / 'example/summary.json', public_summary)
         write_json(output / 'example/events.json', public(product_data(state, public_summary, frozen=True)['events']))
         write_json(output / 'example/activity-provenance.json', public(manifest))
@@ -262,6 +269,14 @@ def main():
         source = expansion / 'new-template-pilot/model-runs' / (model + '-v1') / 'actual.jsonl'
         if source.is_file():
             write_jsonl(evidence / ('q3-template-' + model + '-original-answers.jsonl'), public(jsonl(source)))
+    feature = LESSON / '04-tests/agenda-watchlist-2026-10-31'
+    for source_name, target_name in [('browser-checks.json','product-browser-checks.json'),
+                                     ('native-verification-v15.json','product-watchlist-schedule.json'),
+                                     ('presentation-checks.json','product-watchlist-checks.json'),
+                                     ('software-checks.json','product-watchlist-software.json')]:
+        source = feature / source_name
+        if source.is_file():
+            write_json(evidence / target_name, public(json.loads(source.read_text())))
     report = (ROOT / "report.md").read_text()
     (evidence / "report.md").write_text(report, encoding="utf-8")
     page(report, evidence / "report.html", "../assets/", "../index.html")

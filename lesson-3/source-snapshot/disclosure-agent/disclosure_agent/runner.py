@@ -146,7 +146,7 @@ def run_lock(workspace: Path):
 
 
 def _program_hash() -> str:
-    paths = [ROOT / "run_agent.py"] + sorted(p for p in (ROOT / "disclosure_agent").iterdir() if p.suffix in {".py", ".js", ".css"}) + sorted((ROOT / "prompts").glob("*"))
+    paths = [ROOT / "run_agent.py"] + sorted(p for p in (ROOT / "disclosure_agent").iterdir() if p.suffix in {".py", ".js", ".css", ".xlsx"}) + sorted((ROOT / "prompts").glob("*"))
     values = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths if p.is_file()}
     return hashlib.sha256(json.dumps(values, sort_keys=True).encode()).hexdigest()
 
@@ -181,7 +181,9 @@ def _fixture_sources(path: Path, config: dict, workspace: Path) -> tuple[dict, s
 
 def render_calendar(state: dict, summary: dict, workspace: Path) -> str:
     from .presentation import render_product
-    return render_product(state, summary)
+    from .watchlist import directory_for_run
+    directory = directory_for_run(workspace, summary, state)
+    return render_product(state, summary, directory=directory)
 
 
 def run(config_path: Path, workspace: Path, trigger: str = "manual", fixture: Path | None = None, claim_id: str | None = None, *, refresh=False) -> dict:

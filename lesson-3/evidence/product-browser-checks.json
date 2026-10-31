@@ -1,140 +1,170 @@
 {
   "status": "pass",
-  "scope": "Full-market frozen product browser interaction and responsive layout; four company details sampled, not manual precision scoring of all1040 PDFs",
-  "browser": "ego-browser 0.6.1.11",
   "source_run_id": "20261030T224845-71330806",
-  "source_program_sha256": "a07a3f3205a453fb20ceb6f2f23015e0c4bc679ec058e7b5ead8ec3bf5ffb0b1",
-  "render_program_sha256": "5f88981b338ddc7d57ea9ed9f1d7215d4fce124f34aa5a94af5e651346f48547",
-  "render_change": "calendar.css only; minimum cell heights and nonshrinking text",
-  "calendar_html_sha256": "a0f0908509c16622cc480232fad26b33a890a91d032b57765ca40c11d1c18a17",
-  "all_events": {
-    "count": 1040,
-    "date_and_time_descending": true,
-    "first": "2026年11月30日 13:00–14:00",
-    "last": "2026年10月16日 09:00–10:00",
-    "standalone_other_periods": 0,
-    "combined_H1_Q3_marked": true
-  },
-  "updates": {
-    "title": "当日收录与更新",
-    "count": 198,
-    "labels": [
-      "当日收录",
-      "当日提取校正"
-    ]
-  },
-  "review_count": 0,
-  "responsive_layouts": [
-    {
-      "width": 1416,
-      "height": 756,
-      "scrollWidth": 1416,
-      "clipped": 0
-    },
-    {
-      "width": 768,
-      "height": 1024,
-      "scrollWidth": 768,
-      "clipped": 0
-    },
-    {
-      "width": 390,
-      "height": 844,
-      "scrollWidth": 390,
-      "clipped": 0
-    }
-  ],
-  "company_details_checked": [
-    "嘉和美康",
-    "伊利股份",
-    "健之佳",
-    "尚太科技"
-  ],
-  "yili": {
-    "telephone_paths": 3,
-    "clickable_participation_urls": 4,
-    "sse_audio_and_web_participation": true,
-    "original_links": 1
-  },
-  "real_amendments_checked": 2,
-  "jia": {
-    "meeting": "2026-11-25 14:00–15:00",
-    "question_deadline": "2026-11-24 16:00",
-    "original_pdf_opened": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225639820.PDF",
-    "original_links": 1,
-    "ics_events": 2,
-    "ics_alarms": 4,
-    "desktop_and_mobile_download_bytes_match": true
-  },
-  "live_runtime_browser": {
-    "run_id": "20261031T013632-d828b0bd",
-    "frozen": false,
-    "status": "complete",
-    "model_calls": 0,
-    "event_count": 1040,
-    "width": 1416,
-    "height": 756,
-    "scrollWidth": 1416,
-    "clipped": 0,
-    "source_as_of": "2026-10-31T09:38:13.029339+08:00"
-  },
-  "layout_system_run": "20261031T013632-d828b0bd",
+  "calendar_html_sha256": "2d31caa664c241860cda2d34c80f7a8e7b47f493904122d26cdc52814737d87f",
+  "program_sha256": "6471b0c3f53321cef3cfcdb4d69748957e368108b55477a765da549df2af7efb",
   "screenshots": [
     {
-      "file": "assets/product-preview.png",
-      "sha256": "4ba72776aaaba04974fcd5305adf4709ccb306e452542fcadeb335f181691d51",
-      "width": 1416,
-      "height": 1328
-    },
-    {
       "file": "assets/event-detail-preview.png",
-      "sha256": "4de13977e8cf670e827e52a3c74ea635892cfd6d070541a7a7df87113dfdc18f",
+      "sha256": "362a4ed2114560d1341a7649c8ef63268d134588684de51ec607e469aec812f4",
       "width": 1416,
       "height": 1050
     },
     {
       "file": "assets/mobile-calendar-preview.png",
-      "sha256": "efea3ccbfc91e01eba73a8b3365fdaf68a8b233d3e9160ae13609555c5cb0401",
+      "sha256": "ff9f630f570545b98303349cda109ca604275bd4bef39bf8ccf0a85283e005b4",
       "width": 390,
-      "height": 1532
+      "height": 1709
     },
     {
       "file": "assets/mobile-event-detail-preview.png",
-      "sha256": "5a4635e5a76050dea3fe1241edf23471c1be2b8a4a9a07c58f92db0bc2d870e9",
+      "sha256": "b9dde7ac1fe59bc37488371718379171f7d8f4acb79413326215933e9032e4ac",
       "width": 390,
       "height": 844
     },
     {
       "file": "assets/mobile-participation-preview.png",
-      "sha256": "534db114cf27b1674bdc8ead1b88f2e2640794a35787be25e72a208f550c0ce7",
+      "sha256": "cd2f491c1c729203f7d15b61f58bf3e28035b7a02aa80156c19cbc1f4cc405e2",
       "width": 390,
       "height": 844
     },
     {
       "file": "assets/participation-preview.png",
-      "sha256": "bcc04a3f19bb3213cc4e307432020a3b3be3a78b60863dcf25807e1b61d21f62",
+      "sha256": "c00e6d1442ed7243e320caee55b2be0056fb6c4cef9b8dbfeba5008cebabbaed",
       "width": 1416,
       "height": 1050
+    },
+    {
+      "file": "assets/product-preview.png",
+      "sha256": "1a375d60b1bf4a93f06a0d42c50322e5a9445fa6e345997f7e2a9b64b6117005",
+      "width": 1416,
+      "height": 1422
+    },
+    {
+      "file": "assets/watchlist-preview.png",
+      "sha256": "726a4808ada03a9bdc5b106acccd6f63fad91a2403263f81fc04d2147176cecc",
+      "width": 1416,
+      "height": 1422
     }
   ],
-  "evidence_files_sha256": {
-    "all-events-order.json": "66a248ca59cca2df164604fa7a17b44ab6384891f1b17d428998c7ae3de7f075",
-    "tabs-desktop.json": "a2fff8b5e0f4280770ac5213bd23c76a58f83193c58bf11a87747dea42cd452c",
-    "responsive-layouts.json": "ba9a2079c812b909e93600c6834ba89ab5a6e9387ddb6f24a619fa8c5c484897",
-    "jia-detail.json": "8507a9b944ae9356f61a0df8352bc78b377b31b0ab6542447363ffadfd3310b9",
-    "yili-participation.json": "328565c585b88820f6bf1609017f176e338fc81d83c14491c518bb59fda5b44f",
-    "amendments-ui.json": "4d4a7786eab8c43d38c9466388b26f46351ce6c7bc7d374b8cc5199aff34054c",
-    "jia-ics-checked.json": "103dab6c4127632d14e2a6fb8161f264c00408f8d91be67318615b1b68dbfeff",
-    "mobile-flow.json": "eb83850d143a27041dc8a4a0f0b95397c7395eb61963edff02bdcc1e63fdb949",
-    "live-current-browser.json": "9ad959537c6a272d8e2a124c4d46c09a331ebb7def005fcb7ddb25a8349d0721"
+  "checks": {
+    "day": {
+      "date": "11月2日",
+      "rows": 57,
+      "fresh_first": true,
+      "meeting_only": true,
+      "weekday_suffix_removed": true
+    },
+    "all_events": {
+      "count": 1040,
+      "descending": true
+    },
+    "updates": {
+      "label": "当日更新 198",
+      "rows": 198
+    },
+    "watchlist": {
+      "upload": {
+        "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
+        "codes": [
+          "001301",
+          "600887",
+          "605266",
+          "688246"
+        ],
+        "updates": "当日更新 0"
+      },
+      "reload": {
+        "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
+        "warning": ""
+      },
+      "badFile": {
+        "summary": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
+        "error": "未导入：文件不是有效的.xlsx工作簿。\n现有名单和筛选保持不变。"
+      },
+      "clear": {
+        "count": 1040,
+        "summary": "简称或六位代码均可，一次筛选多家公司；名单只在本机读取和保存。"
+      }
+    },
+    "amendments": [
+      {
+        "name": "健之佳",
+        "old": "2026-10-29",
+        "latest": "2026-11-02",
+        "oldCards": 0,
+        "latestCards": 1,
+        "sources": 2
+      },
+      {
+        "name": "尚太科技",
+        "old": "2026-10-26",
+        "latest": "2026-11-10",
+        "oldCards": 0,
+        "latestCards": 1,
+        "sources": 2
+      }
+    ],
+    "mobile": {
+      "viewport": 390,
+      "pageWidth": 390,
+      "dialogWidth": 356,
+      "dialogScroll": 354
+    },
+    "jia_detail_fields": "会议时间\n2026年11月25日 14:00–15:00\n北京时间\n提问预征集\n11月18日至11月24日16:00\n最新公告\n2026-10-30\n智能体更新\n2026-10-31 02:42 · 历史建档",
+    "yili_participation_urls": [
+      "https://s.comein.cn/ytuzwbqe",
+      "https://www.yili.com/",
+      "https://roadshow.sseinfo.com/",
+      "https://roadshow.sseinfo.com/preCallQa"
+    ],
+    "template_http_download": {
+      "status": "pass",
+      "bytes": 5192,
+      "sha256": "4fffed00a3aed60fb80f7448051215084cff92059e4cac9e331ef8263f203fdf",
+      "identicalToOwnedTemplate": true,
+      "transport": "HTTP local candidate",
+      "method": "Native pointer click at observed template link; metadata checked before saving"
+    },
+    "template_file_download": {
+      "status": "pass",
+      "bytes": 5192,
+      "sha256": "4fffed00a3aed60fb80f7448051215084cff92059e4cac9e331ef8263f203fdf",
+      "identicalToOwnedTemplate": true,
+      "transport": "file:// self-contained candidate",
+      "method": "Native pointer at DOM-observed link, metadata checked before saving"
+    },
+    "live_directory": {
+      "runId": "20261031T032530-f77ce228",
+      "scope": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
+      "directory": {
+        "complete": true,
+        "run_id": "20261031T032530-f77ce228",
+        "url": "https://www.cninfo.com.cn/new/data/szse_stock.json",
+        "sha256": "59454a3e572f46159c6c741e7f3b34c43fc4a4c5be00ef26a47738bd359e0960"
+      },
+      "directoryRows": 6184,
+      "businessStatus": "incomplete",
+      "basis": "Actual live file checked after the second OS run; ordinary refresh persistence was tested separately. This is not a cross-regeneration timing claim."
+    },
+    "live_refresh": {
+      "status": "pass",
+      "before": {
+        "scope": "关注 4 家：伊利股份、嘉和美康、尚太科技、健之佳 · 当前筛选 4 场会议 · 已在本机记住",
+        "runId": "20261031T032530-f77ce228"
+      },
+      "after": "Test watchlist cleared through product control; no global browser storage clear."
+    }
   },
-  "check_setup_corrections": [
-    "Exact-Q3 equality initially rejected documented combined H1+Q3; corrected checker only, with required 合并召开 label",
-    "Default Python lacked icalendar; used existing isolated QA environment"
+  "limitations": [
+    "Browser width checks do not substitute for physical phone testing.",
+    "The candidate uses a frozen verified source run.",
+    "The current live OS run has 33 source PDF transport failures and remains incomplete; the main teaching example keeps the accepted frozen source snapshot."
   ],
-  "limits": [
-    "Candidate gold needs teacher review",
-    "Responsive desktop browser emulation is not mobile-device or personal-calendar notification-delivery testing",
-    "Browser samples do not estimate full-market manual extraction accuracy"
+  "basis": "Actual candidate browser checks at desktop/mobile widths; source HTML SHA binds the displayed product. Source range coverage is separate from model accuracy.",
+  "related_public_evidence": [
+    "product-watchlist-checks.json",
+    "product-watchlist-software.json",
+    "product-watchlist-schedule.json"
   ]
 }

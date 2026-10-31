@@ -1,10 +1,9 @@
-"""Build a standalone handout from the single Markdown source."""
+"""Build the concept-first handout and export identical distribution copies."""
 from hashlib import sha256
 from html import escape
 import argparse
 import json
 from pathlib import Path
-import re
 import shutil
 
 from bs4 import BeautifulSoup
@@ -17,47 +16,48 @@ SITE = ROOT.parent
 def render():
     document = BeautifulSoup(markdown.markdown(
         (ROOT / 'handout.md').read_text(encoding='utf-8'),
-        extensions=['tables', 'fenced_code'],
+        extensions=['tables', 'fenced_code', 'attr_list', 'md_in_html'],
         output_format='html5',
     ), 'html.parser')
     title = document.h1.extract()
     title['id'] = 'page-title'
-    sections = []
-    current = None
-    intro = []
+    body = BeautifulSoup('', 'html.parser')
+    intro, nav = [], []
+    part = topic = None
     for node in list(document.contents):
-        if node.name == 'h2':
-            heading = node.get_text()
-            match = re.match(r'第(\d+)步：', heading)
-            identifier = 'step-' + match.group(1) if match else {
-                '先知道怎样才算准备好了': 'before',
-                '卡住时，先看是哪一层出了问题': 'help',
-                '官方入口与核对说明': 'sources',
-            }[heading]
-            current = {'id': identifier, 'heading': heading, 'number': match.group(1) if match else None, 'nodes': []}
-            sections.append(current)
-            node.extract()
-        elif current is None:
+        if node.name in ('h2', 'h3'):
+            identifier = node['id']
+            del node['id']
+            is_part = node.name == 'h2'
+            nav.append('<a class="' + ('nav-part' if is_part else 'nav-topic') + '" href="#' + identifier + '">' + escape(node.get_text()) + '</a>')
+            section = body.new_tag('section', attrs={
+                'id': identifier,
+                'class': 'part' if is_part else 'section topic',
+            })
+            section.append(node)
+            if is_part:
+                body.append(section)
+                part, topic = section, None
+            else:
+                part.append(section)
+                topic = section
+        elif part is None:
             intro.append(str(node))
         else:
-            current['nodes'].append(str(node))
-    rendered = []
-    nav = []
-    for section in sections:
-        number, heading, identifier = section['number'], section['heading'], section['id']
-        nav.append('<a href="#' + identifier + '">' + ('<span>' + number + '</span>' if number else '') + escape(heading if not number else heading.split('：', 1)[1]) + '</a>')
-        if number:
-            heading_html = '<div class="step-title"><span class="step-number">' + number + '</span><div><span class="eyebrow">课前操作 ' + number + '</span><h2>' + escape(heading.split('：', 1)[1]) + '</h2></div></div>'
-            completion = '<label class="completion"><input type="checkbox" data-complete="' + identifier + '" data-title="' + escape(heading, quote=True) + '">我已按本步方法亲自核对。没有做到的仍记为待完成。</label>'
-        else:
-            heading_html = '<h2>' + escape(heading) + '</h2>'
-            completion = ''
-        rendered.append('<section class="' + ('step' if number else 'section') + '" id="' + identifier + '">' + heading_html + ''.join(section['nodes']) + completion + '</section>')
-    body = BeautifulSoup(''.join(rendered), 'html.parser')
+            (topic if topic is not None else part).append(node)
+    for section in body.select('.topic'):
+        first_paragraph = section.find('p', recursive=False)
+        if first_paragraph:
+            first_paragraph['class'] = ['goal']
     for index, pre in enumerate(body.find_all('pre'), 1):
         code = pre.code
-        language = next(iter(code.get('class', ['language-text'])), 'language-text').removeprefix('language-')
-        label = {'prompt': '复制后发给 OpenCode', 'terminal': '复制这一行到系统终端', 'text': '自己创建文件时参考的文字', 'csv': 'CSV 格式示例，虚构记录', 'json': 'JSON 格式示例，虚构记录'}.get(language, '示例文字')
+        language = code.get('class', ['language-text'])[0].removeprefix('language-')
+        label = {
+            'prompt': '复制后发给你自己的 Agent',
+            'terminal': '复制这一行到本机系统终端',
+            'csv': 'CSV 格式说明，虚构记录',
+            'json': 'JSON 格式说明，虚构记录',
+        }.get(language, '示例文字')
         wrapper = body.new_tag('div', attrs={'class': 'prompt-box'})
         toolbar = body.new_tag('div', attrs={'class': 'prompt-toolbar'})
         span = body.new_tag('span')
@@ -76,17 +76,16 @@ def render():
     script = (ROOT / 'assets/onboarding.js').read_text()
     return '''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="面向只用过 Office、没有编程经验的教师。安装工具、连接模型与数据服务，逐步亲自检查文件、PDF 和网页。无需练习包。">
+<meta name="description" content="先理解模型调用、Harness、Agent、数据 API 与文档格式，再选择已有工具，按需准备工作目录、环境和服务。">
 <title>零基础必看入门 · 金融智能体系列讲座</title><style>''' + css + '''</style></head><body>
 <a class="skip" href="#content">跳到讲义</a>
 <aside class="sidebar"><a class="brand" href="#top"><span class="brand-mark">0</span><span>零基础必看入门<small>金融智能体系列 · 课前必做</small></span></a>
 <nav aria-label="讲义目录">''' + ''.join(nav) + '''</nav>
-<div class="reading-status"><span>本人已核对的步骤</span><strong id="completion-count">0 / 10 步</strong><p>勾选仅记进度。<br>按每步方法检查实际结果。</p></div></aside>
-<main id="content"><header id="top"><p class="eyebrow">第一至三讲之前，从自己的电脑开始</p>''' + str(title) + ''.join(intro) + '''
-<div class="downloads"><a href="https://suibe-ai-agent.netlify.app/">返回系列讲座主页</a><a class="primary" href="#step-1">从第1步开始</a><a href="handout.md" download>下载 Markdown 讲义</a><button id="print-handout" class="print-button" type="button">打印或保存为 PDF</button></div></header>
+<p class="sidebar-note">先读概念，再按需操作。<br>已有工具可以继续沿用。</p></aside>
+<main id="content"><header id="top"><p class="eyebrow">课前必做 · 先理解，再动手</p>''' + str(title) + ''.join(intro) + '''
+<div class="downloads"><a class="primary" href="#concepts">先读概念</a><a href="#practice-tools">选择我的工具</a><a href="handout.md" download>下载 Markdown 讲义</a><button id="print-handout" class="print-button" type="button">打印或保存为 PDF</button></div></header>
 ''' + str(body) + '''
-<div class="manual-record"><p>正式课前记录与未完成项按第10步保存在自己的电脑上。网页勾选仅记本人阅读进度，不替代实际文件和连接记录。</p></div>
-<footer><p>讲义中的操作由老师用本人电脑与账号完成。本站不接收或保存密钥，不发送模型或数据请求，不收集自查结果。</p></footer>
+<footer><p>工具选择仅保存在当前浏览器，用于显示相应说明。本页不接收 API Key，不发起模型或金融数据请求。</p><p><a href="https://suibe-ai-agent.netlify.app/">返回系列讲座主页</a></p></footer>
 </main><div id="copy-status" role="status" aria-live="polite"></div><script>''' + script + '</script></body></html>\n'
 
 
@@ -96,8 +95,7 @@ def export(destination):
     records = []
     for name in ['index.html', 'handout.md']:
         source = ROOT / name
-        output = target / name
-        shutil.copyfile(source, output)
+        shutil.copyfile(source, target / name)
         records.append({'source': f'publication/ai-agent/start-here/{name}', 'destination': f'00-getting-started/01-handouts/{name}', 'sha256': sha256(source.read_bytes()).hexdigest()})
     (destination / '06-preparation').mkdir(parents=True, exist_ok=True)
     (destination / '06-preparation/export-manifest.json').write_text(json.dumps({'source_branch': 'docs/zero-basics-intro', 'files': records}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "report_period": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notice_number": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "related_notice_number": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "meeting_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "start_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "end_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "previous_meeting_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "previous_start_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "previous_end_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "question_deadline_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "question_deadline_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "participation_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notice_kind": {
+      "type": "string",
+      "enum": [
+        "initial",
+        "change",
+        "postponed",
+        "cancelled",
+        "completed",
+        "collective",
+        "other"
+      ]
+    },
+    "meeting_evidence": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 380
+            }
+          },
+          "required": [
+            "page",
+            "quote"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "previous_meeting_evidence": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 380
+            }
+          },
+          "required": [
+            "page",
+            "quote"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "deadline_evidence": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 380
+            }
+          },
+          "required": [
+            "page",
+            "quote"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "parts": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "quote": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 380
+                  }
+                },
+                "required": [
+                  "page",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "parts"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "relation_evidence": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 380
+            }
+          },
+          "required": [
+            "page",
+            "quote"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "review_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 6
+    }
+  },
+  "required": [
+    "report_period",
+    "notice_number",
+    "related_notice_number",
+    "meeting_date",
+    "start_time",
+    "end_time",
+    "previous_meeting_date",
+    "previous_start_time",
+    "previous_end_time",
+    "question_deadline_date",
+    "question_deadline_time",
+    "participation_url",
+    "notice_kind",
+    "meeting_evidence",
+    "previous_meeting_evidence",
+    "deadline_evidence",
+    "relation_evidence",
+    "review_notes"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "program_sha256": "3ddc520eb7bc032a4bc8aa2cc4638a4177e5d7b6c2ee711d3fbfcdfdb8c6ac76",
+  "python_passed": 391,
+  "node_passed": 7,
+  "basis": "Includes fail-before source transport/cache guards, semantic question-period counterexamples, and real saved-render identity integration.",
+  "workshop_render_passed": 2,
+  "workshop_regression": "Main showcase images and participation links render in step7; unknown step sections raise instead of silently disappearing."
+}

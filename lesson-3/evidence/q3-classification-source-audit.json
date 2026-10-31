@@ -1,0 +1,2041 @@
+{
+  "status": "independent source-based classification candidate; teacher sign-off pending",
+  "reviewed_at": "2026-10-31T04:57:33.502769+09:00",
+  "input": {
+    "path": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/all-items.json",
+    "sha256": "97c420f26ba82280ce21eff9d2d54101b5757c66e0e4d6ae9d6ac43143e1ddb9",
+    "records": 33,
+    "physical_pages": 84
+  },
+  "population_boundary": "All 33 source records supplied from the accepted-but-ignored subset. This is a source audit of that selected subset, not a random sample or an estimate of overall classification accuracy.",
+  "method": {
+    "source_only": true,
+    "model_outputs_read": false,
+    "queue_or_state_read": false,
+    "application_classifier_used_as_truth": false,
+    "network_requests": 0,
+    "new_model_calls": 0,
+    "labeling": "Manual reading of each source current-purpose and timing passages; exact excerpts and hashes checked by script.",
+    "full_source_integrity": "All33 PDFs and page archives hash-verified; all84 physical pages freshly extracted and matched page by page.",
+    "visual_review": {
+      "pdfs": 6,
+      "physical_pages": 7,
+      "selection": {
+        "1225618457": [
+          1
+        ],
+        "1225623423": [
+          1
+        ],
+        "1225629249": [
+          2
+        ],
+        "1225646571": [
+          1,
+          2
+        ],
+        "1225648923": [
+          1
+        ],
+        "1225650102": [
+          1
+        ]
+      }
+    },
+    "scope": "Company-specific current2026-Q3 earnings-briefing notices are included, including company notices for a shared collective briefing; generic reception days and completed records are excluded."
+  },
+  "counts": {
+    "records": 33,
+    "include_current_company_q3_notice": 32,
+    "exclude_completed_activity_record": 1,
+    "generic_collective_reception": 0,
+    "needs_source_review": 0
+  },
+  "results": [
+    {
+      "id": "1225618457",
+      "stock_code": "603956",
+      "source_stock_code": "603956",
+      "company": "威派格",
+      "title": "威派格关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225618457.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225618457-eaffd67fde353fca61b7a187f60efd2caa761732e21b0031c701d5d2c8d625a3.pdf",
+      "pdf_sha256": "eaffd67fde353fca61b7a187f60efd2caa761732e21b0031c701d5d2c8d625a3",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225618457-eaffd67fde353fca61b7a187f60efd2caa761732e21b0031c701d5d2c8d625a3.pages.json",
+      "pages_sha256": "8b516df5c70d2933ad54aa2339667934e9bd418fa08982c2650e7a229878d1a1",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225618457",
+        "pdf_sha256": "eaffd67fde353fca61b7a187f60efd2caa761732e21b0031c701d5d2c8d625a3",
+        "pages_sha256": "8b516df5c70d2933ad54aa2339667934e9bd418fa08982c2650e7a229878d1a1",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "ca2f6b6bc381d248e750b1d0f4c9ef8b7bf372876ed8706ab01e038a3419c850",
+          "8767082f65a392fcaf87a0b8af9695c787b518199ad565669536cc9e7e6dbcd1"
+        ]
+      },
+      "visual_checks": [
+        {
+          "physical_page": 1,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225618457-p1.png",
+          "image_sha256": "b3b8545e996d286a999331dad377f91049ffc104e6bc1dbac3eedd26e26e05d8",
+          "inspected": true
+        }
+      ],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于       2026年11月12日 （周\n四） 15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，就\n投资者关心的问题进行交流",
+          "page_text_sha256": "ca2f6b6bc381d248e750b1d0f4c9ef8b7bf372876ed8706ab01e038a3419c850"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026  年 11月12日（周四）  15:00-16:30",
+          "page_text_sha256": "ca2f6b6bc381d248e750b1d0f4c9ef8b7bf372876ed8706ab01e038a3419c850"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225621897",
+      "stock_code": "688548",
+      "source_stock_code": "688548",
+      "company": "广钢气体",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-26",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-26/1225621897.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225621897-116b07d6ca057090acb4098c15845b4cfcd129435749e1af4a5a56777bfcfcfd.pdf",
+      "pdf_sha256": "116b07d6ca057090acb4098c15845b4cfcd129435749e1af4a5a56777bfcfcfd",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225621897-116b07d6ca057090acb4098c15845b4cfcd129435749e1af4a5a56777bfcfcfd.pages.json",
+      "pages_sha256": "23d3a13eeeaaf3cfe26a748c937957c73e2ed1f3192f05fc32b536b2e59163f9",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225621897",
+        "pdf_sha256": "116b07d6ca057090acb4098c15845b4cfcd129435749e1af4a5a56777bfcfcfd",
+        "pages_sha256": "23d3a13eeeaaf3cfe26a748c937957c73e2ed1f3192f05fc32b536b2e59163f9",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "6197aaf7dd9fe716cef80d362e5e7e800ba7f636b4fe08e11cae8536761b0e66",
+          "7d2562750d279f57eed28dc0083ad0c4ed33b85bda32ca62b8330b9f65613eb2"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于     2026年11月12日（星期四）\n15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，就投资者\n\n关心的问题进行交流",
+          "page_text_sha256": "6197aaf7dd9fe716cef80d362e5e7e800ba7f636b4fe08e11cae8536761b0e66"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026    年 11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "7d2562750d279f57eed28dc0083ad0c4ed33b85bda32ca62b8330b9f65613eb2"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225623423",
+      "stock_code": "300180",
+      "source_stock_code": "300180",
+      "company": "华峰超纤",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-27",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-27/1225623423.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225623423-dc4513f8ee24bba874549170fdc99286cff7793c2db8477db354a6ef7dfdbc8a.pdf",
+      "pdf_sha256": "dc4513f8ee24bba874549170fdc99286cff7793c2db8477db354a6ef7dfdbc8a",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225623423-dc4513f8ee24bba874549170fdc99286cff7793c2db8477db354a6ef7dfdbc8a.pages.json",
+      "pages_sha256": "ab22b436cf961ee91caf48328bca0f315be85808cc43e29561c1f857c6fad63a",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225623423",
+        "pdf_sha256": "dc4513f8ee24bba874549170fdc99286cff7793c2db8477db354a6ef7dfdbc8a",
+        "pages_sha256": "ab22b436cf961ee91caf48328bca0f315be85808cc43e29561c1f857c6fad63a",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "8fe2feafcdba4855a361b4201f2ddfaaab0f655420b0554a4f750402b1a3e208",
+          "e0660645b2345f37969d70b744c890e0722afad8e8a5f720229f14e404826443"
+        ]
+      },
+      "visual_checks": [
+        {
+          "physical_page": 1,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225623423-p1.png",
+          "image_sha256": "2638e7cdd59417842c52551d8f941ce9c3b29deb17bc8db0f23f348b960468f3",
+          "inspected": true
+        }
+      ],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于2026年11月12日（周四）15:00-16:30参加“2026年上海辖区上\n市公司三季报集体业绩说明会”，就投资者关心的问题进行交流",
+          "page_text_sha256": "8fe2feafcdba4855a361b4201f2ddfaaab0f655420b0554a4f750402b1a3e208"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026年11月12日（周四）15:00-16:30",
+          "page_text_sha256": "8fe2feafcdba4855a361b4201f2ddfaaab0f655420b0554a4f750402b1a3e208"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225626324",
+      "stock_code": "688110",
+      "source_stock_code": "688110",
+      "company": "东芯股份",
+      "title": "关于召开2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-27",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-27/1225626324.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225626324-216270b0527f99133b6d961b45a402df652f92bbea4e919f88bc0fabc59b93ff.pdf",
+      "pdf_sha256": "216270b0527f99133b6d961b45a402df652f92bbea4e919f88bc0fabc59b93ff",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225626324-216270b0527f99133b6d961b45a402df652f92bbea4e919f88bc0fabc59b93ff.pages.json",
+      "pages_sha256": "c9bf6f27e5e1e3bcdb311643df490ece9117539e16c6852019c8c6d796688973",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225626324",
+        "pdf_sha256": "216270b0527f99133b6d961b45a402df652f92bbea4e919f88bc0fabc59b93ff",
+        "pages_sha256": "c9bf6f27e5e1e3bcdb311643df490ece9117539e16c6852019c8c6d796688973",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "70f2f003c2a6e5fdf3b6dfea438e515069bd375a46e17ce77ad6a79abbc07259",
+          "2e313d02ac5dd5f3644ded83eb217785cba134b4e83b6abd89677b249902b99b"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于     2026年11月12日（星期四）15:00-16:30\n举行 2026年上海辖区上市公司三季报集体业绩说明会，就投资者关心的问题进行\n\n交流",
+          "page_text_sha256": "70f2f003c2a6e5fdf3b6dfea438e515069bd375a46e17ce77ad6a79abbc07259"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026   年 11月12日 （星期四）  15:00-16:30",
+          "page_text_sha256": "70f2f003c2a6e5fdf3b6dfea438e515069bd375a46e17ce77ad6a79abbc07259"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225629140",
+      "stock_code": "603690",
+      "source_stock_code": "603690",
+      "company": "至纯科技",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225629140.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225629140-5aa354f3de4863d14f73439e6eb8c1e3bf948f51fef95a63417cc84f353a4399.pdf",
+      "pdf_sha256": "5aa354f3de4863d14f73439e6eb8c1e3bf948f51fef95a63417cc84f353a4399",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225629140-5aa354f3de4863d14f73439e6eb8c1e3bf948f51fef95a63417cc84f353a4399.pages.json",
+      "pages_sha256": "961a49cd9f985f49f404d7e5a5b371771448ad16e536bef271d06a14246788eb",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225629140",
+        "pdf_sha256": "5aa354f3de4863d14f73439e6eb8c1e3bf948f51fef95a63417cc84f353a4399",
+        "pages_sha256": "961a49cd9f985f49f404d7e5a5b371771448ad16e536bef271d06a14246788eb",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "b5befc39063d2efda77cc31df883033c6fbbbb566e85e3a41e26f36c6b9735d8",
+          "45fb9868dcc71d128b0db661ff646c3a38ceaf628cfbd79414b2ee7ca214a624",
+          "61e299153823d139319bbdf3aa33459d69fe2a80dd66aeeec73ea2b15f1007bd"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于  2026年11月 12日 （周四）  15:00-16:30参加“2026\n年上海辖区上市公司三季报集体业绩说明会”，就投资者关心的问题\n进行交流",
+          "page_text_sha256": "b5befc39063d2efda77cc31df883033c6fbbbb566e85e3a41e26f36c6b9735d8"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026    年 11月12日（周四）   15:00-16:30",
+          "page_text_sha256": "45fb9868dcc71d128b0db661ff646c3a38ceaf628cfbd79414b2ee7ca214a624"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225629249",
+      "stock_code": "603122",
+      "source_stock_code": "603122",
+      "company": "合富中国",
+      "title": "合富中国关于召开2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225629249.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225629249-b38b6662671824c91e6fe671b771969d2266313a31d502e2db11cbeb046e4e90.pdf",
+      "pdf_sha256": "b38b6662671824c91e6fe671b771969d2266313a31d502e2db11cbeb046e4e90",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225629249-b38b6662671824c91e6fe671b771969d2266313a31d502e2db11cbeb046e4e90.pages.json",
+      "pages_sha256": "a305d70fb6b02d30efc7e125df45a8d27c6cefb47f80f469ace0348ccfcaab82",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225629249",
+        "pdf_sha256": "b38b6662671824c91e6fe671b771969d2266313a31d502e2db11cbeb046e4e90",
+        "pages_sha256": "a305d70fb6b02d30efc7e125df45a8d27c6cefb47f80f469ace0348ccfcaab82",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "755127398220f24843990111bbb3cf083b27ba1bc031735bd31cafeaa7f2c773",
+          "6be38803518915d65ccc6fae21602dc0d2235942751470a16df85a93d5cdad42",
+          "64379deec2a9fccdac8a3997ae37bca79da24b5d5b7fe788e1abd89e892f5348"
+        ]
+      },
+      "visual_checks": [
+        {
+          "physical_page": 2,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225629249-p2.png",
+          "image_sha256": "bc1fc5b8cbbe67b861fbbd841c7e7f7a1e61894049aaede79c553f511edf63ea",
+          "inspected": true
+        }
+      ],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于   2026年11月 12日 （星期四）   15:00-16:30举行\n2026年上海辖区上市公司三季报集体业绩说明会，就投资者关心的\n问题进行交流",
+          "page_text_sha256": "755127398220f24843990111bbb3cf083b27ba1bc031735bd31cafeaa7f2c773"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026  年 11月12日 （星期四）\n15:00-16:30",
+          "page_text_sha256": "6be38803518915d65ccc6fae21602dc0d2235942751470a16df85a93d5cdad42"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225630069",
+      "stock_code": "001396",
+      "source_stock_code": "001396",
+      "company": "誉帆科技",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225630069.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225630069-aaa2c85c3da142236c83b7e0e50f78435de94f86e9c3e644b9c8bf5851beed93.pdf",
+      "pdf_sha256": "aaa2c85c3da142236c83b7e0e50f78435de94f86e9c3e644b9c8bf5851beed93",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225630069-aaa2c85c3da142236c83b7e0e50f78435de94f86e9c3e644b9c8bf5851beed93.pages.json",
+      "pages_sha256": "f0c785612c8f71a33a8162db7013294dcb7e77485761d718312325b23a7e3a00",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225630069",
+        "pdf_sha256": "aaa2c85c3da142236c83b7e0e50f78435de94f86e9c3e644b9c8bf5851beed93",
+        "pages_sha256": "f0c785612c8f71a33a8162db7013294dcb7e77485761d718312325b23a7e3a00",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "db7cbef8db59a74c5cd9f363b31fdb4759c2c9c9028a1120374e709c11acdd07",
+          "6e2071c5c836902e3461bbf6d75a56331410b2183dfc62cc321702ed52432a1c",
+          "ec0f0e617dba10eb54136b58145be23f9cded5767ca4fa5352e17d7da50ddc3c"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于     2026年11月12日（周四）15:00-16:30参加\n“2026年上海辖区上市公司三季报集体业绩说明会”，就投资者关心的问题进\n行交流",
+          "page_text_sha256": "db7cbef8db59a74c5cd9f363b31fdb4759c2c9c9028a1120374e709c11acdd07"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026     年11月 12日（周四）15:00-16:30",
+          "page_text_sha256": "6e2071c5c836902e3461bbf6d75a56331410b2183dfc62cc321702ed52432a1c"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225631781",
+      "stock_code": "605208",
+      "source_stock_code": "605208",
+      "company": "永茂泰",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225631781.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225631781-3d99de2a910e9b562f5a1236a446bb50c7eabcb3c2c1acfc0027ee93ea469e1a.pdf",
+      "pdf_sha256": "3d99de2a910e9b562f5a1236a446bb50c7eabcb3c2c1acfc0027ee93ea469e1a",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225631781-3d99de2a910e9b562f5a1236a446bb50c7eabcb3c2c1acfc0027ee93ea469e1a.pages.json",
+      "pages_sha256": "ffdef928a292237612654823b0bbf7b2504bdfc84fde59cbde8bdc65bede7842",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225631781",
+        "pdf_sha256": "3d99de2a910e9b562f5a1236a446bb50c7eabcb3c2c1acfc0027ee93ea469e1a",
+        "pages_sha256": "ffdef928a292237612654823b0bbf7b2504bdfc84fde59cbde8bdc65bede7842",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "64dfc9a063ef64d714367fcd917e135736d3141d3cd6fe325a0d7d3dbd38348e",
+          "d9078de2d785347d52f99f568ab7085fe22aafd185fa2b7cd4b4f47839ee9b89",
+          "78d87387f76b4370b38cc25c54a5c7944031758862275b6134d8644438c51733"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于2026年11月12日（星期四）15:00-16:30参加\n2026年上海辖区上市公司三季报集体业绩说明会，就投资者关心的问题进行交流",
+          "page_text_sha256": "64dfc9a063ef64d714367fcd917e135736d3141d3cd6fe325a0d7d3dbd38348e"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026年11月12日（星期四）15:00-16:30",
+          "page_text_sha256": "d9078de2d785347d52f99f568ab7085fe22aafd185fa2b7cd4b4f47839ee9b89"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225632161",
+      "stock_code": "688372",
+      "source_stock_code": "688372",
+      "company": "伟测科技",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632161.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225632161-a5e8d7114a7b8f3b9cbb22853e087ba6cef0041ee9b2843f0df81c8e603790b4.pdf",
+      "pdf_sha256": "a5e8d7114a7b8f3b9cbb22853e087ba6cef0041ee9b2843f0df81c8e603790b4",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225632161-a5e8d7114a7b8f3b9cbb22853e087ba6cef0041ee9b2843f0df81c8e603790b4.pages.json",
+      "pages_sha256": "6490791644a2d16b52cbe109fd76064a13d328ece8b5cf90837280e9dc967c88",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225632161",
+        "pdf_sha256": "a5e8d7114a7b8f3b9cbb22853e087ba6cef0041ee9b2843f0df81c8e603790b4",
+        "pages_sha256": "6490791644a2d16b52cbe109fd76064a13d328ece8b5cf90837280e9dc967c88",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "a4d0f33e234e628a183c5828382d0df42752eed92f119070e70ab5a700c5a219",
+          "7b0e057d1ca2dc41240843d3350aa919baa3b6a77fc282177d3386d8f59ed171",
+          "37ad8ba28949a01c0d69381771bd3d529519f6ae6eded1a27d51f64ba1ded9b6"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于        2026年11月12日（星\n期四）15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，就投\n资者关心的问题进行交流",
+          "page_text_sha256": "a4d0f33e234e628a183c5828382d0df42752eed92f119070e70ab5a700c5a219"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026    年 11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "7b0e057d1ca2dc41240843d3350aa919baa3b6a77fc282177d3386d8f59ed171"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225632644",
+      "stock_code": "688591",
+      "source_stock_code": "688591",
+      "company": "泰凌微",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632644.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225632644-2972ecd9d528f944fd69a43cbe59b7401a6f60f1ec700b6effcbd9e82c1ebb7c.pdf",
+      "pdf_sha256": "2972ecd9d528f944fd69a43cbe59b7401a6f60f1ec700b6effcbd9e82c1ebb7c",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225632644-2972ecd9d528f944fd69a43cbe59b7401a6f60f1ec700b6effcbd9e82c1ebb7c.pages.json",
+      "pages_sha256": "37f72f3d0fddb5842960ae8e072d57d69eccc790c8f062a6a78314bb9bf592da",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225632644",
+        "pdf_sha256": "2972ecd9d528f944fd69a43cbe59b7401a6f60f1ec700b6effcbd9e82c1ebb7c",
+        "pages_sha256": "37f72f3d0fddb5842960ae8e072d57d69eccc790c8f062a6a78314bb9bf592da",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "d9e78582cbe6d6c6eea5635dfc981375002f1f33bf8cb9da8d7f0eafdf216f2f",
+          "7c5ea3d71a76d7be0f6cce70812b6ec7e23ac45f49229f818cfe0ba87613fdbe"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于         2026年11月12日（周\n\n四）15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，就\n投资者关心的问题进行交流",
+          "page_text_sha256": "d9e78582cbe6d6c6eea5635dfc981375002f1f33bf8cb9da8d7f0eafdf216f2f"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026    年11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "d9e78582cbe6d6c6eea5635dfc981375002f1f33bf8cb9da8d7f0eafdf216f2f"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225634006",
+      "stock_code": "688247",
+      "source_stock_code": "688247",
+      "company": "宣泰医药",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225634006.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225634006-af672638fa1a6a086fab1f72e02d1810326dbd48d443046cd177defd977f74d4.pdf",
+      "pdf_sha256": "af672638fa1a6a086fab1f72e02d1810326dbd48d443046cd177defd977f74d4",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225634006-af672638fa1a6a086fab1f72e02d1810326dbd48d443046cd177defd977f74d4.pages.json",
+      "pages_sha256": "b4fc94b108fbded8ece35bc1edc010422688b6282f49bab51fdf8ac281a964d2",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225634006",
+        "pdf_sha256": "af672638fa1a6a086fab1f72e02d1810326dbd48d443046cd177defd977f74d4",
+        "pages_sha256": "b4fc94b108fbded8ece35bc1edc010422688b6282f49bab51fdf8ac281a964d2",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "8c967bbb7cf473f767da5778e5157e6714a8eb5b8734618783483ada18545156",
+          "4b3fe23e3aa7b74f5c07952588569e5008bd0a6a40937bdd2f59bf1ec1a1a2cc",
+          "c958dab0d8b368916c564d9ea1a4fa8e4671b7bc880a33b136c0fda9ebe8cc46"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划\n\n于2026年11月12日 （周四）  15:00-16:30参加“2026年上海辖区上市公司三\n季报集体业绩说明会”，就投资者关心的问题进行交流",
+          "page_text_sha256": "8c967bbb7cf473f767da5778e5157e6714a8eb5b8734618783483ada18545156"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026   年 11月12日  （周四）  15:00-16:30",
+          "page_text_sha256": "4b3fe23e3aa7b74f5c07952588569e5008bd0a6a40937bdd2f59bf1ec1a1a2cc"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225634742",
+      "stock_code": "688179",
+      "source_stock_code": "688179",
+      "company": "阿拉丁",
+      "title": "阿拉丁关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225634742.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225634742-f6e778d192665f49abedbfa9d813887a3c2c5aebe466179174faa77edd36e8f1.pdf",
+      "pdf_sha256": "f6e778d192665f49abedbfa9d813887a3c2c5aebe466179174faa77edd36e8f1",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225634742-f6e778d192665f49abedbfa9d813887a3c2c5aebe466179174faa77edd36e8f1.pages.json",
+      "pages_sha256": "3ea5d28970202b2d283e3bd434cee7214017a73087d46bb537661fd80eac7f5c",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225634742",
+        "pdf_sha256": "f6e778d192665f49abedbfa9d813887a3c2c5aebe466179174faa77edd36e8f1",
+        "pages_sha256": "3ea5d28970202b2d283e3bd434cee7214017a73087d46bb537661fd80eac7f5c",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "c07b0a7c58d2aac388a69ba1ae00a0a1b021c21ac7879667be5d78e2957276ec",
+          "23615335e27fd25f2310a57e7174ed25d3dcdb13b4045d01f0835c108e18c21e",
+          "54aaf0e4b7e9212e211f01bbae588e98c54dbfd242a737fc7a8e9ff13dca6606"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于     2026年11月12日（星期四）\n15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，就投资者\n\n关心的问题进行交流",
+          "page_text_sha256": "c07b0a7c58d2aac388a69ba1ae00a0a1b021c21ac7879667be5d78e2957276ec"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026     年11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "23615335e27fd25f2310a57e7174ed25d3dcdb13b4045d01f0835c108e18c21e"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225636143",
+      "stock_code": "600094",
+      "source_stock_code": "600094",
+      "company": "大名城",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636143.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225636143-b18eadc8c3dcb45b483a67898f96573dd4a37d2c5a54f96b4513c1a9c278b0ef.pdf",
+      "pdf_sha256": "b18eadc8c3dcb45b483a67898f96573dd4a37d2c5a54f96b4513c1a9c278b0ef",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225636143-b18eadc8c3dcb45b483a67898f96573dd4a37d2c5a54f96b4513c1a9c278b0ef.pages.json",
+      "pages_sha256": "70d4a6aeb52f98972993df29725c8edfc19ca561ce2d6ace1186ea5603e2e1fe",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225636143",
+        "pdf_sha256": "b18eadc8c3dcb45b483a67898f96573dd4a37d2c5a54f96b4513c1a9c278b0ef",
+        "pages_sha256": "70d4a6aeb52f98972993df29725c8edfc19ca561ce2d6ace1186ea5603e2e1fe",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "a8ba15624d54a02c79b8e976025352a736e8159517e4c35a61b7d57ba1572c2d",
+          "cf4813623bca2f4bf7120689dc0b74f338bad875f26cf2cc3736e4146bcc2936",
+          "ca5c8b44218da946db1b0feea745605a4b18c49b8df857eeaa27d6223352bdd0"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划\n  于2026年 11月12日 （周四）   15:00-16:30参加“2026年上海辖\n  区上市公司三季报集体业绩说明会”，就投资者关心的问题进行交流",
+          "page_text_sha256": "a8ba15624d54a02c79b8e976025352a736e8159517e4c35a61b7d57ba1572c2d"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026  年 11月 12日 （周四）  15:00-\n16:30",
+          "page_text_sha256": "cf4813623bca2f4bf7120689dc0b74f338bad875f26cf2cc3736e4146bcc2936"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225636362",
+      "stock_code": "603855",
+      "source_stock_code": "603855",
+      "company": "华荣股份",
+      "title": "关于召开2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636362.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225636362-3a993cba9fa0e0f31f093065340aae83946b8b53d6bd806adfc8c0b81507171b.pdf",
+      "pdf_sha256": "3a993cba9fa0e0f31f093065340aae83946b8b53d6bd806adfc8c0b81507171b",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225636362-3a993cba9fa0e0f31f093065340aae83946b8b53d6bd806adfc8c0b81507171b.pages.json",
+      "pages_sha256": "54d713f71eb9669904c2ee4008c2c59d8e0694ed6f21e24f20d8358e0b3f1417",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225636362",
+        "pdf_sha256": "3a993cba9fa0e0f31f093065340aae83946b8b53d6bd806adfc8c0b81507171b",
+        "pages_sha256": "54d713f71eb9669904c2ee4008c2c59d8e0694ed6f21e24f20d8358e0b3f1417",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "881b9afd42fc03e22548870e28247df40527890ea1576a4c2fb03bb1b010f50c",
+          "b8a07fdc02c19a5c7c6cf4a10ae52cdf84a88af4ae4e44815fef38c53ad4f23d"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于       2026年11月12日 （星期四）\n15:00-16:30举行2026年上海辖区上市公司三季报集体业绩说明会，就投资者\n关心的问题进行交流",
+          "page_text_sha256": "881b9afd42fc03e22548870e28247df40527890ea1576a4c2fb03bb1b010f50c"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026  年11月 12日 （星期四）  15:00-16:30",
+          "page_text_sha256": "881b9afd42fc03e22548870e28247df40527890ea1576a4c2fb03bb1b010f50c"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225636793",
+      "stock_code": "688155",
+      "source_stock_code": "688155",
+      "company": "先惠技术",
+      "title": "上海先惠自动化技术股份有限公司关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636793.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225636793-89e75273712db726c853f0023660227d62a867ce29a0460d476f7719b21f2891.pdf",
+      "pdf_sha256": "89e75273712db726c853f0023660227d62a867ce29a0460d476f7719b21f2891",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225636793-89e75273712db726c853f0023660227d62a867ce29a0460d476f7719b21f2891.pages.json",
+      "pages_sha256": "be8624edffa6c6b948345135da9a22ac6bc30489ebdc91ba05fbf5b3f5b0189c",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225636793",
+        "pdf_sha256": "89e75273712db726c853f0023660227d62a867ce29a0460d476f7719b21f2891",
+        "pages_sha256": "be8624edffa6c6b948345135da9a22ac6bc30489ebdc91ba05fbf5b3f5b0189c",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "5ee91e6493e0f16289b4b75441871825a514fb04eec0d5af0eb42a549afab539",
+          "3fa56be6a0d1dd4045b3e03017f8349a6c3f139204286a9710587582b50be34f",
+          "4ab0142c988dc476ecda377c3cffcb72390a343fd680d5639696a4c7e14ef412"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于     2026\n年11月 12日（星期四）15:00-16:30参加“2026年上海辖区上市公司三季报集体\n\n业绩说明会”，就投资者关心的问题进行交流",
+          "page_text_sha256": "5ee91e6493e0f16289b4b75441871825a514fb04eec0d5af0eb42a549afab539"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026    年 11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "3fa56be6a0d1dd4045b3e03017f8349a6c3f139204286a9710587582b50be34f"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225640021",
+      "stock_code": "688193",
+      "source_stock_code": "688193",
+      "company": "仁度生物",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225640021.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225640021-ab86677edccadfd7a5d431b46350d5eb8967c2989c4ddb659bf16a6348bff716.pdf",
+      "pdf_sha256": "ab86677edccadfd7a5d431b46350d5eb8967c2989c4ddb659bf16a6348bff716",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225640021-ab86677edccadfd7a5d431b46350d5eb8967c2989c4ddb659bf16a6348bff716.pages.json",
+      "pages_sha256": "405e808de6b7a41f5abcc81a88e58c9a74fcf6de920ac375b2f9795d793cb353",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225640021",
+        "pdf_sha256": "ab86677edccadfd7a5d431b46350d5eb8967c2989c4ddb659bf16a6348bff716",
+        "pages_sha256": "405e808de6b7a41f5abcc81a88e58c9a74fcf6de920ac375b2f9795d793cb353",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "2bcfa5ab4811a6f44705d7c0d18ff31bb22fe0a2d93afecdddd4cb15df84c753",
+          "ea500053dd118eb73359fe5816d90925a39ca8898b9d90e43c30266048c830ba"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于\n2026年11月12日（星期四）15:00-16:30参加2026年上海辖区上市公司三季报\n\n集体业绩说明会，就投资者关心的问题进行交流",
+          "page_text_sha256": "2bcfa5ab4811a6f44705d7c0d18ff31bb22fe0a2d93afecdddd4cb15df84c753"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026   年 11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "2bcfa5ab4811a6f44705d7c0d18ff31bb22fe0a2d93afecdddd4cb15df84c753"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225641058",
+      "stock_code": "688202",
+      "source_stock_code": "688202",
+      "company": "美迪西",
+      "title": "美迪西：关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225641058.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225641058-996f365a58e9c36c5e08abeb14985d78fc46b31d3d6b810888c251fc7307defe.pdf",
+      "pdf_sha256": "996f365a58e9c36c5e08abeb14985d78fc46b31d3d6b810888c251fc7307defe",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225641058-996f365a58e9c36c5e08abeb14985d78fc46b31d3d6b810888c251fc7307defe.pages.json",
+      "pages_sha256": "d90a4b4e0527264d5dbf3e6a604dffe812c996ae8d0660c66242e4414efc9e7f",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225641058",
+        "pdf_sha256": "996f365a58e9c36c5e08abeb14985d78fc46b31d3d6b810888c251fc7307defe",
+        "pages_sha256": "d90a4b4e0527264d5dbf3e6a604dffe812c996ae8d0660c66242e4414efc9e7f",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "25c88b4e25116d81f8febe377d59842748a81cdbcbbd72113869bb6c07a009b0",
+          "c2f11101a6b02fc71e20093713d5069acc347495a77398093e7c56e2983f9cba",
+          "8267fb8bcd5395c9856deb7935862265b8b0bb3cc974a991fdd6e3703209c09a"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于\n2026年11月12日（星期四）15:00-16:30参加2026年上海辖区上市公司三季报\n集体业绩说明会，就投资者关心的问题进行交流",
+          "page_text_sha256": "25c88b4e25116d81f8febe377d59842748a81cdbcbbd72113869bb6c07a009b0"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026   年11月 12日（星期四）    15:00-16:30",
+          "page_text_sha256": "c2f11101a6b02fc71e20093713d5069acc347495a77398093e7c56e2983f9cba"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225642066",
+      "stock_code": "301525",
+      "source_stock_code": "301525",
+      "company": "儒竞科技",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225642066.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642066-806c2392ab7ca1c359b9c2a698268da15196dd6f458b05fa2dc0da778852d26b.pdf",
+      "pdf_sha256": "806c2392ab7ca1c359b9c2a698268da15196dd6f458b05fa2dc0da778852d26b",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642066-806c2392ab7ca1c359b9c2a698268da15196dd6f458b05fa2dc0da778852d26b.pages.json",
+      "pages_sha256": "577368353efe4fab081df0c29eb7a786dec5b96189233eae0db9127d2af5a698",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225642066",
+        "pdf_sha256": "806c2392ab7ca1c359b9c2a698268da15196dd6f458b05fa2dc0da778852d26b",
+        "pages_sha256": "577368353efe4fab081df0c29eb7a786dec5b96189233eae0db9127d2af5a698",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "7cc46baaf6223c5f3bce7553d21650efd012a4c6e7c7a388130139056bb1a7e5",
+          "1ae79ab84813aa7d2ffe738c6a36d6722db0e1b57fbbfba45ae9265857101945"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于       2026年11月12日 （周四）\n\n15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，就投资\n者关心的问题进行交流",
+          "page_text_sha256": "7cc46baaf6223c5f3bce7553d21650efd012a4c6e7c7a388130139056bb1a7e5"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026  年 11月12日 （周四）  15:00-16:30",
+          "page_text_sha256": "7cc46baaf6223c5f3bce7553d21650efd012a4c6e7c7a388130139056bb1a7e5"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225642779",
+      "stock_code": "688301",
+      "source_stock_code": "688301",
+      "company": "奕瑞科技",
+      "title": "奕瑞科技关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225642779.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642779-c75bfa7545c3aaab3d6f2203eb4832ab9cf2b4d4c376bbb1a59840e615f8f12c.pdf",
+      "pdf_sha256": "c75bfa7545c3aaab3d6f2203eb4832ab9cf2b4d4c376bbb1a59840e615f8f12c",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642779-c75bfa7545c3aaab3d6f2203eb4832ab9cf2b4d4c376bbb1a59840e615f8f12c.pages.json",
+      "pages_sha256": "aaec142e8ad493d1f0f01ca0a41c4b94d9b7892d8e0ad11b76ea1f79968143cf",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225642779",
+        "pdf_sha256": "c75bfa7545c3aaab3d6f2203eb4832ab9cf2b4d4c376bbb1a59840e615f8f12c",
+        "pages_sha256": "aaec142e8ad493d1f0f01ca0a41c4b94d9b7892d8e0ad11b76ea1f79968143cf",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "30917f9eb3bd29a00806db6b6559a691e742eb98b65b6bf456673749f939ce60",
+          "e94199fd92ff577d035bd6ad3b77b21e509b20b87bfe9de3d92dd6c0e5452fb4",
+          "8905c3482a22c78354487dcab63192f94a0329ae88ef0c207bb7bf3e486a0640"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于  2026年11月12日（星期四）15:00-16:30参加2026年上海辖区上\n市公司三季报集体业绩说明会，就投资者关心的问题进行交流",
+          "page_text_sha256": "30917f9eb3bd29a00806db6b6559a691e742eb98b65b6bf456673749f939ce60"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026    年 11月 12日（星期四）15:00-16:30",
+          "page_text_sha256": "e94199fd92ff577d035bd6ad3b77b21e509b20b87bfe9de3d92dd6c0e5452fb4"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225642845",
+      "stock_code": "688335",
+      "source_stock_code": "688335",
+      "company": "复洁科技",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225642845.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642845-f8f75bc45823db3d5cd471c601f6f43476d11a780084388ad0ca97d0393bedcc.pdf",
+      "pdf_sha256": "f8f75bc45823db3d5cd471c601f6f43476d11a780084388ad0ca97d0393bedcc",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642845-f8f75bc45823db3d5cd471c601f6f43476d11a780084388ad0ca97d0393bedcc.pages.json",
+      "pages_sha256": "a74e4cf932b6ac22800a234a569eb86f9170ed01e9cf9a519f4a10785affd97a",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225642845",
+        "pdf_sha256": "f8f75bc45823db3d5cd471c601f6f43476d11a780084388ad0ca97d0393bedcc",
+        "pages_sha256": "a74e4cf932b6ac22800a234a569eb86f9170ed01e9cf9a519f4a10785affd97a",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "a6ff652bfc7e1006f8c48b504dae4e7fe3a7a635540a5892774b1ffbdc8abb92",
+          "c88cf2a3662efe9b550b7527901ef9ee48899f1eece020e0fb7956a03eba2f0f",
+          "57d9dd3f96d9b2dd7e9c74728e002c9e8d0434220a63361ed38a356ced50d53e"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划\n\n于2026年11月12日（星期四）15:00-16:30参加2026年上海辖区上市公司三季报集\n体业绩说明会，就投资者关心的问题进行交流",
+          "page_text_sha256": "a6ff652bfc7e1006f8c48b504dae4e7fe3a7a635540a5892774b1ffbdc8abb92"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026年11月12日（星期四）15:00-16:30",
+          "page_text_sha256": "c88cf2a3662efe9b550b7527901ef9ee48899f1eece020e0fb7956a03eba2f0f"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225642968",
+      "stock_code": "688718",
+      "source_stock_code": "688718",
+      "company": "唯赛勃",
+      "title": "唯赛勃关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225642968.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642968-d939774a8e627eb0082b9d9f27d31c77af22cfb4bc4ab607467a62f8b952016c.pdf",
+      "pdf_sha256": "d939774a8e627eb0082b9d9f27d31c77af22cfb4bc4ab607467a62f8b952016c",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225642968-d939774a8e627eb0082b9d9f27d31c77af22cfb4bc4ab607467a62f8b952016c.pages.json",
+      "pages_sha256": "cb8ea595fe05a1c722abd200cf2dcd58c4bf4c5aeb0ba1c61a596d71bcb36fae",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225642968",
+        "pdf_sha256": "d939774a8e627eb0082b9d9f27d31c77af22cfb4bc4ab607467a62f8b952016c",
+        "pages_sha256": "cb8ea595fe05a1c722abd200cf2dcd58c4bf4c5aeb0ba1c61a596d71bcb36fae",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "adc07054a81daf0576f74ebe299c67341a771a8edcdb482d73b84ca66a3eadbe",
+          "232646a5532252696418888fbbb1767c4ee74eabf2834932201e99aa0c4f1a87",
+          "e439d77da14a3252dc6b77903a2abeeac9f9e0a3049d50262b99af779a05ff56"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于      2026年11月 12日（星\n期四） 15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，\n\n就投资者关心的问题进行交流",
+          "page_text_sha256": "adc07054a81daf0576f74ebe299c67341a771a8edcdb482d73b84ca66a3eadbe"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026   年11月 12日 （星期四）    15:00-16:30",
+          "page_text_sha256": "232646a5532252696418888fbbb1767c4ee74eabf2834932201e99aa0c4f1a87"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225643205",
+      "stock_code": "603682",
+      "source_stock_code": "603682",
+      "company": "锦和商管",
+      "title": "上海锦和商业经营管理（集团）股份有限公司关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225643205.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225643205-94ffbccd8cb0f6fa16e69269bf51a4379e728f4587cb2040db2b290f06c650e5.pdf",
+      "pdf_sha256": "94ffbccd8cb0f6fa16e69269bf51a4379e728f4587cb2040db2b290f06c650e5",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225643205-94ffbccd8cb0f6fa16e69269bf51a4379e728f4587cb2040db2b290f06c650e5.pages.json",
+      "pages_sha256": "5c13a25a30009db722d61d179ee4e42b9c37df3fdcf9e8a2bd3baef26c111243",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225643205",
+        "pdf_sha256": "94ffbccd8cb0f6fa16e69269bf51a4379e728f4587cb2040db2b290f06c650e5",
+        "pages_sha256": "5c13a25a30009db722d61d179ee4e42b9c37df3fdcf9e8a2bd3baef26c111243",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "045b312a2db898e60b7afdc9c563210e1b160b8d6639ab79b77785bc51c0eb07",
+          "628b9fb174ff0b92cf5b6599f81c3912d0f79b9d54275a02dfa80698f574cd60"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于      2026年11月12日（周\n四） 15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，就投\n\n资者关心的问题进行交流",
+          "page_text_sha256": "045b312a2db898e60b7afdc9c563210e1b160b8d6639ab79b77785bc51c0eb07"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026   年 11月 12日（周四）   15:00-16:30",
+          "page_text_sha256": "628b9fb174ff0b92cf5b6599f81c3912d0f79b9d54275a02dfa80698f574cd60"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225643688",
+      "stock_code": "603189",
+      "source_stock_code": "603189",
+      "company": "*ST网达",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225643688.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225643688-3329640a59b923be9c616830acd7a91aea2a815abdcb606eff4aa63785b16f98.pdf",
+      "pdf_sha256": "3329640a59b923be9c616830acd7a91aea2a815abdcb606eff4aa63785b16f98",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225643688-3329640a59b923be9c616830acd7a91aea2a815abdcb606eff4aa63785b16f98.pages.json",
+      "pages_sha256": "7e1220ed8e6405dd7f6bbcc1fdc5e850d7f30118753c9de60be3438db72fc2ba",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225643688",
+        "pdf_sha256": "3329640a59b923be9c616830acd7a91aea2a815abdcb606eff4aa63785b16f98",
+        "pages_sha256": "7e1220ed8e6405dd7f6bbcc1fdc5e850d7f30118753c9de60be3438db72fc2ba",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "5e4655e6302610b349535d86f2ba5e33eb56c4f70fcc6c48d93005fb07e47d8d",
+          "fd82a02a2fed944754f24c10660e4a0c1605a81513169429db89b85493a23c78",
+          "d6c80c5e2e1c985b6fe40cd212f4204496932f2642c8f2d319e723093ac0b2c9"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于      2026年11月12日（星期四）\n15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，就投资者\n关心的问题进行交流",
+          "page_text_sha256": "5e4655e6302610b349535d86f2ba5e33eb56c4f70fcc6c48d93005fb07e47d8d"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026   年11月 12日 （星期四）   15:00-16:30",
+          "page_text_sha256": "fd82a02a2fed944754f24c10660e4a0c1605a81513169429db89b85493a23c78"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225645294",
+      "stock_code": "688016",
+      "source_stock_code": "688016",
+      "company": "心脉医疗",
+      "title": "心脉医疗：关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225645294.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225645294-9e4669fb6d4c8c5f6e16d7b855b43d236bb5e43f63c657b20c6a2af0a2147705.pdf",
+      "pdf_sha256": "9e4669fb6d4c8c5f6e16d7b855b43d236bb5e43f63c657b20c6a2af0a2147705",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225645294-9e4669fb6d4c8c5f6e16d7b855b43d236bb5e43f63c657b20c6a2af0a2147705.pages.json",
+      "pages_sha256": "184f9f68d1d43904b8bb6dd48ec494d0b508c3cb709d41a266ca41bedc4c16df",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225645294",
+        "pdf_sha256": "9e4669fb6d4c8c5f6e16d7b855b43d236bb5e43f63c657b20c6a2af0a2147705",
+        "pages_sha256": "184f9f68d1d43904b8bb6dd48ec494d0b508c3cb709d41a266ca41bedc4c16df",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "75a93e76c97fca64ae1f2c47fc00b82678fc5b31a0e79276ab09258be5f554bf",
+          "3cf25a246d83f7d7724b12bdc97d61f23d145bb1c9b4172d7c5ff808c8fd7fdd"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于      2026年11月12日\n\n（周四）15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，\n就投资者关心的问题进行交流",
+          "page_text_sha256": "75a93e76c97fca64ae1f2c47fc00b82678fc5b31a0e79276ab09258be5f554bf"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026  年 11月 12日 （周四）  15:00-16:30",
+          "page_text_sha256": "3cf25a246d83f7d7724b12bdc97d61f23d145bb1c9b4172d7c5ff808c8fd7fdd"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225645303",
+      "stock_code": "688351",
+      "source_stock_code": "688351",
+      "company": "微电生理",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225645303.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225645303-a85b9a6b8a035616e5574d55f9c5e642cad1b3767154148b93f47307c616235a.pdf",
+      "pdf_sha256": "a85b9a6b8a035616e5574d55f9c5e642cad1b3767154148b93f47307c616235a",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225645303-a85b9a6b8a035616e5574d55f9c5e642cad1b3767154148b93f47307c616235a.pages.json",
+      "pages_sha256": "a2d31ae6e2857337d627f4ca6b2d0056496cd0ad4171aa61daa6a7f9dc3dbaec",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225645303",
+        "pdf_sha256": "a85b9a6b8a035616e5574d55f9c5e642cad1b3767154148b93f47307c616235a",
+        "pages_sha256": "a2d31ae6e2857337d627f4ca6b2d0056496cd0ad4171aa61daa6a7f9dc3dbaec",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "a754ffc4179b7ac1c4dc02d813770307d359c23643e9b11f2774e5e73901d9ea",
+          "931390212e6c4421227e634a87060ee2319f9c4248ca577ef1e411ed53202f48",
+          "14542eda540ae7ab4e91eb760165931f203a0fe05b213f30df0813c6338bc98b"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司将于     2026年11月12日（星\n期四） 15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，就投\n资者关心的问题进行交流",
+          "page_text_sha256": "a754ffc4179b7ac1c4dc02d813770307d359c23643e9b11f2774e5e73901d9ea"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026     年 11月12日 （星期四）   15:00-16:30",
+          "page_text_sha256": "931390212e6c4421227e634a87060ee2319f9c4248ca577ef1e411ed53202f48"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225646571",
+      "stock_code": "603370",
+      "source_stock_code": "603370",
+      "company": "华新精科",
+      "title": "2026年第三季度业绩说明会投资者关系活动记录表",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225646571.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225646571-86b14dcd841ecf59a5987dca773ab96f7819046dab347a015a29ed5dc6c6a212.pdf",
+      "pdf_sha256": "86b14dcd841ecf59a5987dca773ab96f7819046dab347a015a29ed5dc6c6a212",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225646571-86b14dcd841ecf59a5987dca773ab96f7819046dab347a015a29ed5dc6c6a212.pages.json",
+      "pages_sha256": "7e01778c4c486c06be88210a4daca66efea46a46b5d416e1c8085f46c188dc1a",
+      "physical_pages": 4,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225646571",
+        "pdf_sha256": "86b14dcd841ecf59a5987dca773ab96f7819046dab347a015a29ed5dc6c6a212",
+        "pages_sha256": "7e01778c4c486c06be88210a4daca66efea46a46b5d416e1c8085f46c188dc1a",
+        "physical_pages": 4,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "b24a2332baf35d0658e0cea473aba049e74a926c8d388940010fd156f536e32e",
+          "b6036762ab66fa21749c58729e8211682987bc2395063561f140934044776a11",
+          "6d1c6fa6c5a3bae0c185ebbef00b16726f00c2990e2bc3de5602da8cd5dc9b20",
+          "bfbf9f888a88d3c0915971baa18dfee97b21b4a5414e80c0ea31c5306f163746"
+        ]
+      },
+      "visual_checks": [
+        {
+          "physical_page": 1,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225646571-p1.png",
+          "image_sha256": "a8aa1ee2dd6151a3d0f178ae44c6595d5939ab83ec7d0cf7417e4acf83f35eef",
+          "inspected": true
+        },
+        {
+          "physical_page": 2,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225646571-p2.png",
+          "image_sha256": "f4ef93b6ba139a10e54eab922b9c90b418ef2e5a020b551579f669a409011639",
+          "inspected": true
+        }
+      ],
+      "decision": "exclude_completed_activity_record",
+      "notice_kind": "completed",
+      "is_current_company_2026_q3_notice": false,
+      "is_completed_record": true,
+      "is_generic_collective_reception": false,
+      "meeting_date": null,
+      "start_time": null,
+      "end_time": null,
+      "timezone": "Asia/Shanghai",
+      "time_role": "historical_completed_activity",
+      "observed_completed_activity": {
+        "date": "2026-10-30",
+        "start_time": "14:00",
+        "end_time": "15:00"
+      },
+      "evidence": [
+        {
+          "role": "completed_activity_record_header_and_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "投资者关系活动记录表\n\n                                       编号：2026-038\n\n        □特定对象调研          □分析师会议\n投资者关系活  □媒体采访            业绩说明会\n  动类别   □新闻发布会           □路演活动\n\n        □现场参观            □其他\n\n\n参与单位名称  线上参与公司2026年第三季度业绩说明会的投资者\n及人员姓名\n\n  时间    2026年10月30日14:00-15:00",
+          "page_text_sha256": "b24a2332baf35d0658e0cea473aba049e74a926c8d388940010fd156f536e32e"
+        },
+        {
+          "role": "recorded_question_and_answer",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "1.今年业绩为什么这么差？百亿订单呢？能否介绍机器人\n         定点转化情况？\n\n             答：尊敬的投资者，您好！",
+          "page_text_sha256": "b24a2332baf35d0658e0cea473aba049e74a926c8d388940010fd156f536e32e"
+        }
+      ],
+      "rationale": "文件为已发生的本公司2026年第三季度业绩说明会活动记录表，列有实际活动时段与多轮答复，不是新的召开通知。",
+      "notes": [
+        "已发生时段仅保留在observed_completed_activity，不转成未来日历安排；排除依据是文件及问答性质，不是简单因为日期已过。"
+      ]
+    },
+    {
+      "id": "1225646579",
+      "stock_code": "688293",
+      "source_stock_code": "688293",
+      "company": "奥浦迈",
+      "title": "奥浦迈：关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225646579.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225646579-d9bda1b4d907e2a1fe9aa53687dff1f5e19acd0a521a86a5488ecca2d3d9a8fc.pdf",
+      "pdf_sha256": "d9bda1b4d907e2a1fe9aa53687dff1f5e19acd0a521a86a5488ecca2d3d9a8fc",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225646579-d9bda1b4d907e2a1fe9aa53687dff1f5e19acd0a521a86a5488ecca2d3d9a8fc.pages.json",
+      "pages_sha256": "16609c632f343ca52ef0da928210bb2a1218c689478cf9875766e9005968b2c9",
+      "physical_pages": 3,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225646579",
+        "pdf_sha256": "d9bda1b4d907e2a1fe9aa53687dff1f5e19acd0a521a86a5488ecca2d3d9a8fc",
+        "pages_sha256": "16609c632f343ca52ef0da928210bb2a1218c689478cf9875766e9005968b2c9",
+        "physical_pages": 3,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "662d064278148b7144631673a758ac6ad0646f9dee320114d0a3e0d45b47a0ca",
+          "b83a2ffa0760559e36cc9a873581d21075cb33052ec255b539c3fd4baa276aed",
+          "01f8382441151019aa68d03fd607bcbcc2f6fdba3f8aa84a3a754142ffa5e845"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于      2026年11月12日（星期\n\n四）下午 15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，\n\n就投资者关心的问题进行交流",
+          "page_text_sha256": "662d064278148b7144631673a758ac6ad0646f9dee320114d0a3e0d45b47a0ca"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026    年 11月12日（星期四）下午    15:00-16:30",
+          "page_text_sha256": "b83a2ffa0760559e36cc9a873581d21075cb33052ec255b539c3fd4baa276aed"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225646735",
+      "stock_code": "600597",
+      "source_stock_code": "600597",
+      "company": "光明乳业",
+      "title": "光明乳业关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225646735.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225646735-68647a0dfd8581b15e693abf8b4369cf63056f43fdf0a68b1a4e216714f004af.pdf",
+      "pdf_sha256": "68647a0dfd8581b15e693abf8b4369cf63056f43fdf0a68b1a4e216714f004af",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225646735-68647a0dfd8581b15e693abf8b4369cf63056f43fdf0a68b1a4e216714f004af.pages.json",
+      "pages_sha256": "029b16e7a324d0879d6f52ec17796aed80d57bbd1c5ff7ec9df4d3638ca28dbf",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225646735",
+        "pdf_sha256": "68647a0dfd8581b15e693abf8b4369cf63056f43fdf0a68b1a4e216714f004af",
+        "pages_sha256": "029b16e7a324d0879d6f52ec17796aed80d57bbd1c5ff7ec9df4d3638ca28dbf",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "fb8b9c67bf1436b7965a795d2210ca32a53206cc182ffce7fd58526b01945bd2",
+          "2f2c9cf582459b0212c47324cade7702f28c8b5400337732af76c03cbb52ee6c"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司”）将于  2026年11月12日 （周四）  15:00-16:30参加“2026年上海辖\n区上市公司三季报集体业绩说明会”，就投资者关心的问题进行交流",
+          "page_text_sha256": "fb8b9c67bf1436b7965a795d2210ca32a53206cc182ffce7fd58526b01945bd2"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026  年 11月12日 （周四）  15:00-16:30",
+          "page_text_sha256": "fb8b9c67bf1436b7965a795d2210ca32a53206cc182ffce7fd58526b01945bd2"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225647475",
+      "stock_code": "688392",
+      "source_stock_code": "688392",
+      "company": "骄成超声",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647475.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225647475-c8a416accdc35d36f5303116a5fc67d36689dd9c0e7ee2e1189e9a066ba1d0d5.pdf",
+      "pdf_sha256": "c8a416accdc35d36f5303116a5fc67d36689dd9c0e7ee2e1189e9a066ba1d0d5",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225647475-c8a416accdc35d36f5303116a5fc67d36689dd9c0e7ee2e1189e9a066ba1d0d5.pages.json",
+      "pages_sha256": "8a3a3f141ef7aefaa3339c5ca5cb237f8ecf9bf07ba2c12371548932e5d99175",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225647475",
+        "pdf_sha256": "c8a416accdc35d36f5303116a5fc67d36689dd9c0e7ee2e1189e9a066ba1d0d5",
+        "pages_sha256": "8a3a3f141ef7aefaa3339c5ca5cb237f8ecf9bf07ba2c12371548932e5d99175",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "cbfb7c3d6f1dbcb4d1850f9fc4b2ebe4e7809bf0af1e8847c8645d9961bd7a73",
+          "4e456d7ee209b4593eb0948fe1be9aa611f3e3f18283f61e1cd98665a1662c59"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于      2026年11月12日（星期四）\n15:00-16:30参加2026年上海辖区上市公司三季报集体业绩说明会，就投资者关\n\n心的问题进行交流",
+          "page_text_sha256": "cbfb7c3d6f1dbcb4d1850f9fc4b2ebe4e7809bf0af1e8847c8645d9961bd7a73"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026 年 11月12日(星期四)15:00-16:30",
+          "page_text_sha256": "cbfb7c3d6f1dbcb4d1850f9fc4b2ebe4e7809bf0af1e8847c8645d9961bd7a73"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225648923",
+      "stock_code": "601229",
+      "source_stock_code": "601229",
+      "company": "上海银行",
+      "title": "上海银行关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225648923.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225648923-2da221339ea85729f29159af1ede91fa15fa04331cda91d1bea880d03c07df8d.pdf",
+      "pdf_sha256": "2da221339ea85729f29159af1ede91fa15fa04331cda91d1bea880d03c07df8d",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225648923-2da221339ea85729f29159af1ede91fa15fa04331cda91d1bea880d03c07df8d.pages.json",
+      "pages_sha256": "382a591859f070f0fff17700b8b9d03077d5a9f5063bdb0cda45d36a1fdf7009",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225648923",
+        "pdf_sha256": "2da221339ea85729f29159af1ede91fa15fa04331cda91d1bea880d03c07df8d",
+        "pages_sha256": "382a591859f070f0fff17700b8b9d03077d5a9f5063bdb0cda45d36a1fdf7009",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "7607d607e85433b8eeb2db5038ba9ef38a02eb88d576983d72d6eb78ef3b1d4d",
+          "62785176f71e84122cf6f6e91154dbc053193d557c5d370d7893e3cdbe452d0b"
+        ]
+      },
+      "visual_checks": [
+        {
+          "physical_page": 1,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225648923-p1.png",
+          "image_sha256": "4747dbd2bad62123ff96a4431863990c48dfbb4dd4a0a8eda35330714b234003",
+          "inspected": true
+        }
+      ],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于       2026年11月\n12日（周四）15:00-16:30参加“2026年上海辖区上市公司三季报集体业绩说\n明会”（以下简称“业绩说明会”），就投资者普遍关注的问题进行交流",
+          "page_text_sha256": "7607d607e85433b8eeb2db5038ba9ef38a02eb88d576983d72d6eb78ef3b1d4d"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026     年11月 12日（周四）15:00-16:30",
+          "page_text_sha256": "62785176f71e84122cf6f6e91154dbc053193d557c5d370d7893e3cdbe452d0b"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225649190",
+      "stock_code": "600601",
+      "source_stock_code": "600601",
+      "company": "方正科技",
+      "title": "方正科技关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649190.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225649190-32147d922a16d22dc180972b3a4d02cd3244a4e9dfd419f2a585e8567c85218a.pdf",
+      "pdf_sha256": "32147d922a16d22dc180972b3a4d02cd3244a4e9dfd419f2a585e8567c85218a",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225649190-32147d922a16d22dc180972b3a4d02cd3244a4e9dfd419f2a585e8567c85218a.pages.json",
+      "pages_sha256": "f23db9f5b8493de05db2ba001de4485c1ec83d47d891ba563f81dec4f580a688",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225649190",
+        "pdf_sha256": "32147d922a16d22dc180972b3a4d02cd3244a4e9dfd419f2a585e8567c85218a",
+        "pages_sha256": "f23db9f5b8493de05db2ba001de4485c1ec83d47d891ba563f81dec4f580a688",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "b22acac11b946b6c408b3b9e59540fe15ff676e582b43a475e377058999e1f4a",
+          "636c6188934f84311f31b0fd701b7bd62f9f5a3357618053b818d32dce1922e1"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于     2026年11月12日（周四）15:00-\n16:30参加“2026年上海辖区上市公司三季报集体业绩说明会”，就投资者关心的\n\n问题进行交流",
+          "page_text_sha256": "b22acac11b946b6c408b3b9e59540fe15ff676e582b43a475e377058999e1f4a"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 2,
+          "physical_page": 2,
+          "quote": "会议召开时间：2026  年 11月 12日 （周四）  15:00-16:30",
+          "page_text_sha256": "636c6188934f84311f31b0fd701b7bd62f9f5a3357618053b818d32dce1922e1"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    },
+    {
+      "id": "1225650102",
+      "stock_code": "600000",
+      "source_stock_code": "600000",
+      "company": "浦发银行",
+      "title": "上海浦东发展银行股份有限公司关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650102.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225650102-f2ad9cfcfb43ef2231972e6e2769c4d204975a9d6308d73c21fabf713600bc9e.pdf",
+      "pdf_sha256": "f2ad9cfcfb43ef2231972e6e2769c4d204975a9d6308d73c21fabf713600bc9e",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225650102-f2ad9cfcfb43ef2231972e6e2769c4d204975a9d6308d73c21fabf713600bc9e.pages.json",
+      "pages_sha256": "fef2b4c28578ffa8b7915634af2ecc8e7ddc0af7cc34d80d2341f4dc62535fc4",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225650102",
+        "pdf_sha256": "f2ad9cfcfb43ef2231972e6e2769c4d204975a9d6308d73c21fabf713600bc9e",
+        "pages_sha256": "fef2b4c28578ffa8b7915634af2ecc8e7ddc0af7cc34d80d2341f4dc62535fc4",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "c670586243ac827b4dcda6aa7de7b1ffb97ce9caeabc255aca3b8e4e2b00f42f",
+          "acd519bdc80144e512b8fed660a0d14f98367f766d2673f800a3a299b0ce9921"
+        ]
+      },
+      "visual_checks": [
+        {
+          "physical_page": 1,
+          "image": "[local lesson]/04-tests/market-expansion-2026-10-31/ignored-class-source-audit/visuals/1225650102-p1.png",
+          "image_sha256": "ba98124bbcee29cacd1e6dcdb94b39e348d559994178b4df786d2a0bb08b9017",
+          "inspected": true
+        }
+      ],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司拟参加“2026年上海辖区上市公司三季\n报集体业绩说明会”，就投资者普遍关注的问题进行交流",
+          "page_text_sha256": "c670586243ac827b4dcda6aa7de7b1ffb97ce9caeabc255aca3b8e4e2b00f42f"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026年11月12日（星期四）15:00-16:30",
+          "page_text_sha256": "c670586243ac827b4dcda6aa7de7b1ffb97ce9caeabc255aca3b8e4e2b00f42f"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。",
+        "视觉核对页1提问预征集为11月11日17:00前，不能把其他公司的16:00套入本公司；该截止字段未纳入本次分类标签。"
+      ]
+    },
+    {
+      "id": "1225650266",
+      "stock_code": "688098",
+      "source_stock_code": "688098",
+      "company": "申联生物",
+      "title": "关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+      "publication_date": "2026-10-31",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650266.PDF",
+      "pdf_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225650266-c6211bbb712229b62ead7b9696ded684b8f85f010d67382f1621df9e238febc8.pdf",
+      "pdf_sha256": "c6211bbb712229b62ead7b9696ded684b8f85f010d67382f1621df9e238febc8",
+      "pages_path": "[local lesson]/03-source/disclosure-agent/runtime/market-2026-q3-oct-nov/raw/1225650266-c6211bbb712229b62ead7b9696ded684b8f85f010d67382f1621df9e238febc8.pages.json",
+      "pages_sha256": "2186a248b321e91e1199d3047acc0f672ff6711affb33e63c405642bf528d4d9",
+      "physical_pages": 2,
+      "report_period": "2026-Q3",
+      "source_verification": {
+        "id": "1225650266",
+        "pdf_sha256": "c6211bbb712229b62ead7b9696ded684b8f85f010d67382f1621df9e238febc8",
+        "pages_sha256": "2186a248b321e91e1199d3047acc0f672ff6711affb33e63c405642bf528d4d9",
+        "physical_pages": 2,
+        "fresh_text_matches_frozen": true,
+        "page_text_sha256": [
+          "425903be73fdfc139d9e87ba34a3471203968f72972bcbad4e46fd37a604e656",
+          "63e96139cbcc33317ffa125046a985db075f3edd465e781244db2148b91bb476"
+        ]
+      },
+      "visual_checks": [],
+      "decision": "include_current_company_q3_notice",
+      "notice_kind": "initial",
+      "is_current_company_2026_q3_notice": true,
+      "is_completed_record": false,
+      "is_generic_collective_reception": false,
+      "meeting_date": "2026-11-12",
+      "start_time": "15:00",
+      "end_time": "16:30",
+      "timezone": "Asia/Shanghai",
+      "time_role": "planned_current_briefing",
+      "observed_completed_activity": null,
+      "evidence": [
+        {
+          "role": "current_company_reporting_purpose",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "公司计划于    2026年11月12日（星期四）15:00-16:30参加2026\n年上海辖区上市公司三季报集体业绩说明会，就投资者关心的问题进行交流",
+          "page_text_sha256": "425903be73fdfc139d9e87ba34a3471203968f72972bcbad4e46fd37a604e656"
+        },
+        {
+          "role": "planned_meeting_time",
+          "page": 1,
+          "physical_page": 1,
+          "quote": "会议召开时间：2026   年 11月12日（星期四）15:00-16:30",
+          "page_text_sha256": "425903be73fdfc139d9e87ba34a3471203968f72972bcbad4e46fd37a604e656"
+        }
+      ],
+      "rationale": "本公司计划参加或召开本次2026年三季报业绩说明会，原文明示本公司用途和会议时段；集体活动名称不改变这份公司专属通知的当前用途。",
+      "notes": [
+        "本次结论仅判定通知范围及会议安排，不冻结提问截止、参与网址或其他完整字段。"
+      ]
+    }
+  ]
+}

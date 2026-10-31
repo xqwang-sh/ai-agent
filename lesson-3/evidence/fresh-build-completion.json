@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-10-30T09:16:47.750814+00:00",
+  "execution_status": "complete",
+  "business_status": "needs_review",
+  "first_os_run": {
+    "run_id": "20261030T090051832498Z-52866",
+    "planned_at_utc": "2026-10-30T09:00:50.176054+00:00",
+    "actual_started_at_utc": "2026-10-30T09:00:51.832498+00:00",
+    "actual_finished_at_utc": "2026-10-30T09:00:54.437708+00:00",
+    "execution_status": "complete",
+    "business_status": "complete",
+    "paid_model_calls": 0,
+    "companies": [
+      {
+        "code": "600887",
+        "name": "伊利股份",
+        "query_complete": true,
+        "announcement_count": 39,
+        "query_page_count": 2,
+        "pdf_count": 2
+      },
+      {
+        "code": "688246",
+        "name": "嘉和美康",
+        "query_complete": true,
+        "announcement_count": 8,
+        "query_page_count": 1,
+        "pdf_count": 3
+      }
+    ],
+    "source_hash_matched_pdf_count": 5,
+    "event_count": 4,
+    "exported_event_count": 4,
+    "source_announcement_count": 5,
+    "conflict_count_as_reported": 0,
+    "unverified_new_source_count": 0,
+    "system_parent_pid": 1,
+    "system_parent_command": "/sbin/launchd",
+    "system_label": "org.codex.cninfo.fresh-20261030-7c56b674a4",
+    "result": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/runs/20261030T090051832498Z-52866/result.json",
+      "sha256": "7881df5cdabd8442943212f0d487f9d73a430aa7eb3a7de8870590fca7ccf54b"
+    },
+    "query_report": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/runs/20261030-170051-878190/results.json",
+      "sha256": "48eb39c66dd973bf24efecd737ef566b3b4684b2c8dadeee04aa23e48de01299"
+    },
+    "source_hash_checks": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/runs/20261030T090051832498Z-52866/source_hash_checks.json",
+      "sha256": "9e52ba61796d142424b3c2fe40671a520ef61fed4171a529df1eb9e8659401f9"
+    },
+    "calendar_receipt": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/runs/20261030-090054-365312-system-live-query/receipt.json",
+      "sha256": "f956f08cbef6ff4e4abec5d146483f562019db96c7f68f43ffdd1f009da2e74a"
+    },
+    "calendar_state_snapshot": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/runs/20261030-090054-365312-system-live-query/state_snapshot.json",
+      "sha256": "834575912a6ac016fb3f6798cbd6ae873d4c73343c55bcda11009e8f856a3dd9"
+    },
+    "calendar_ics_snapshot": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/runs/20261030-090054-365312-system-live-query/calendar.ics",
+      "sha256": "28c1293c26a86fb07d12e7efd1bf76ef3d3f7103d1d48dd6290dd6bfe339336c"
+    }
+  },
+  "second_os_run": {
+    "run_id": "20261030T091110288506Z-54297",
+    "planned_at_utc": "2026-10-30T09:11:08.966996+00:00",
+    "actual_started_at_utc": "2026-10-30T09:11:10.288506+00:00",
+    "actual_finished_at_utc": "2026-10-30T09:11:13.253666+00:00",
+    "execution_status": "complete",
+    "business_status": "needs_review",
+    "paid_model_calls": 0,
+    "companies": [
+      {
+        "code": "600887",
+        "name": "伊利股份",
+        "query_complete": true,
+        "announcement_count": 39,
+        "query_page_count": 2,
+        "pdf_count": 2
+      },
+      {
+        "code": "688246",
+        "name": "嘉和美康",
+        "query_complete": true,
+        "announcement_count": 8,
+        "query_page_count": 1,
+        "pdf_count": 3
+      }
+    ],
+    "source_hash_matched_pdf_count": 5,
+    "event_count": 4,
+    "exported_event_count": 4,
+    "source_announcement_count": 5,
+    "conflict_count_as_reported": 1,
+    "unverified_new_source_count": 0,
+    "system_parent_pid": 1,
+    "system_parent_command": "/sbin/launchd",
+    "system_label": "org.codex.cninfo.fresh-20261030-7c56b674a4",
+    "result": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/runs/20261030T091110288506Z-54297/result.json",
+      "sha256": "c2d25b0e029e3d88be93b34645afc3979a646df14f88fff67a79a06057cf237b"
+    },
+    "query_report": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/runs/20261030-171110-312429/results.json",
+      "sha256": "aef749678a7d5ef7ff0a23cf913805e0ccb86ccc0c7edf5f75ad967187e49dcf"
+    },
+    "source_hash_checks": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/runs/20261030T091110288506Z-54297/source_hash_checks.json",
+      "sha256": "9e52ba61796d142424b3c2fe40671a520ef61fed4171a529df1eb9e8659401f9"
+    },
+    "calendar_receipt": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/runs/20261030-091113-225955-system-live-query/receipt.json",
+      "sha256": "52fd30ea5ef3f136e214fdfc9766c1a4c69b76b21e1a2e89d15ee27a86f9d774"
+    },
+    "calendar_state_snapshot": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/runs/20261030-091113-225955-system-live-query/state_snapshot.json",
+      "sha256": "b14835cb66370bfab8c580b2f156578b40962b72cef7d5f325b6c5482e73faa1"
+    },
+    "calendar_ics_snapshot": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/runs/20261030-091113-225955-system-live-query/calendar.ics",
+      "sha256": "431e17f9cb81d876a898644a26e09874e05ecc32cc73770f03d9522ea74c861d"
+    }
+  },
+  "conflict_strategy": {
+    "field": "question_deadline",
+    "calendar_value": null,
+    "status": "pending_review",
+    "raw_source_values": [
+      {
+        "source_id": "688246_1225526162",
+        "value": "2026-09-15T16:00:00+08:00"
+      },
+      {
+        "source_id": "688246_1225540076",
+        "value": "2026-09-16T16:00:00+08:00"
+      }
+    ],
+    "raw_model_outputs_unchanged": true,
+    "explicit_meeting_date_change_retained": true,
+    "explanation": "日历提问截止暂置空，原通知与变更段落两个原始值保留待复核；不是手工改写模型答案。",
+    "teacher_reference_read": false,
+    "strategy_note": "这是独立实现的策略；教师参考策略可能不同，本Agent未读取它。"
+  },
+  "original_receipt_preserved": {
+    "original_result": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/runs/20261030T090051832498Z-52866/result.json",
+      "sha256": "7881df5cdabd8442943212f0d487f9d73a430aa7eb3a7de8870590fca7ccf54b"
+    },
+    "recorded_original_sha256": "7881df5cdabd8442943212f0d487f9d73a430aa7eb3a7de8870590fca7ccf54b",
+    "unchanged": true,
+    "first_reported_conflict_count_remains": 0,
+    "frozen_archive_manifest": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/history/first-success/frozen-manifest.json",
+      "sha256": "dd4264011cdbab20ffff60bc71c5f33b21b58a62538c62e85f051f7ef1c38581"
+    }
+  },
+  "final_system_task": {
+    "label": "org.codex.cninfo.fresh-20261030-7c56b674a4",
+    "status": "PAUSED",
+    "disabled": true,
+    "loaded": false,
+    "business_timezone": "Asia/Shanghai",
+    "weekdays": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "business_time": "08:30",
+    "host_timezone": "Asia/Tokyo",
+    "native_intervals": [
+      {
+        "Weekday": 1,
+        "Hour": 9,
+        "Minute": 30
+      },
+      {
+        "Weekday": 2,
+        "Hour": 9,
+        "Minute": 30
+      },
+      {
+        "Weekday": 3,
+        "Hour": 9,
+        "Minute": 30
+      },
+      {
+        "Weekday": 4,
+        "Hour": 9,
+        "Minute": 30
+      },
+      {
+        "Weekday": 5,
+        "Hour": 9,
+        "Minute": 30
+      }
+    ],
+    "test_interval_removed": true,
+    "paused_at_utc": "2026-10-30T09:11:25.662242+00:00",
+    "plist": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/org.codex.cninfo.fresh-20261030-7c56b674a4.plist",
+      "sha256": "202d7c6049d5d7db5b1f43c5424f5cc6789e60d9ea05fe1abe09f53dc3344ed7"
+    },
+    "schedule_config": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/schedule.json",
+      "sha256": "c488c100b24dc6059ce2749667bf378686195d77f4fd5f544b7a265201d9bc3f"
+    },
+    "status_evidence": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/evidence/paused-status.json",
+      "sha256": "58f1758fa31fafbac98ccbb948dba48567a556eaccc7261fafb0d4e362c3c22d"
+    },
+    "resume_instructions": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/scheduler/README.md"
+  },
+  "paid_model_statistics": {
+    "total_calls": 12,
+    "total_prompt_tokens": 20844,
+    "total_completion_tokens": 7866,
+    "total_tokens": 28710,
+    "calls_in_calendar_and_os_phase": 0,
+    "runs": [
+      {
+        "phase": "extraction",
+        "model": "Qwen/Qwen3.5-4B",
+        "actual_model_ids": [
+          "Qwen/Qwen3.5-4B"
+        ],
+        "request_count": 5,
+        "response_count": 5,
+        "prompt_tokens": 8482,
+        "completion_tokens": 3485,
+        "total_tokens": 11967,
+        "manual_corrected_records_at_phase": 4,
+        "request_ledger": {
+          "path": "[local lesson]/04-tests/fresh-build-2026-10-30/extraction/requests.jsonl",
+          "sha256": "88c3940371fe6fbcbdc2f4e728735bf4ab6df1aa63d8677b729a28c2669baa0d"
+        }
+      },
+      {
+        "phase": "extraction-27b",
+        "model": "Qwen/Qwen3.8-27B",
+        "actual_model_ids": [
+          "Qwen/Qwen3.8-27B"
+        ],
+        "request_count": 5,
+        "response_count": 5,
+        "prompt_tokens": 8482,
+        "completion_tokens": 2960,
+        "total_tokens": 11442,
+        "manual_corrected_records_at_phase": 0,
+        "request_ledger": {
+          "path": "[local lesson]/04-tests/fresh-build-2026-10-30/extraction-27b/requests.jsonl",
+          "sha256": "3adc278e1567a9a2d0bb576d1d5db3635f0f389aff22ba45061585eda03e2122"
+        }
+      },
+      {
+        "phase": "extraction-27b-retry",
+        "model": "Qwen/Qwen3.8-27B",
+        "actual_model_ids": [
+          "Qwen/Qwen3.8-27B"
+        ],
+        "request_count": 2,
+        "response_count": 2,
+        "prompt_tokens": 3880,
+        "completion_tokens": 1421,
+        "total_tokens": 5301,
+        "manual_corrected_records_at_phase": 0,
+        "request_ledger": {
+          "path": "[local lesson]/04-tests/fresh-build-2026-10-30/extraction-27b-retry/requests.jsonl",
+          "sha256": "ecc51f623052bedc3bd1eef01ebc0f3776b8e370d268df7ed9e2b5c2b6db0201"
+        }
+      }
+    ]
+  },
+  "artifacts": {
+    "current_calendar": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/calendar.ics",
+      "sha256": "431e17f9cb81d876a898644a26e09874e05ecc32cc73770f03d9522ea74c861d"
+    },
+    "current_state": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/state/confirmed/state.json",
+      "sha256": "b14835cb66370bfab8c580b2f156578b40962b72cef7d5f325b6c5482e73faa1"
+    },
+    "source_comparison": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/conflict_review/source_comparison.json",
+      "sha256": "c06e06609fbdbdcb5b6e3c60fdb8b5e831bfb594c85270f8fb9751e726c3c96b"
+    },
+    "source_review": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/conflict_review/SOURCE_REVIEW.md",
+      "sha256": "7a755511e6b2cdeef1d328fd3bc1e570e1a42bba9973e8c8d3726eebe0216dba"
+    },
+    "manual_event_dedup_conflict_verification": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/conflict_review/manual_verification.json",
+      "sha256": "10acd0de192fb03c0cd2c215063e70c0d42b992b5b54fd84274c0018a304d388"
+    },
+    "initial_event_fault_demonstrations": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/calendar/demo_results.json",
+      "sha256": "f970c5b282cf7daa796d8c767194166e985b1fc7fa2375be3c8f3ec215e10d87"
+    },
+    "conversation": {
+      "path": "[local lesson]/04-tests/fresh-build-2026-10-30/conversation.jsonl",
+      "sha256": "a6d8323bf557c1d9f6178c66575034fbc46e749f131608152ebfc9097d1887df"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "status": "pass",
+  "run_id": "20261031T003012-1bdfac3d",
+  "scheduled_for": "2026-10-31T08:30:00+08:00",
+  "actual_start": "2026-10-31T08:30:12.202945+08:00",
+  "actual_end": "2026-10-31T08:35:56.195804+08:00",
+  "program_sha256": "a07a3f3205a453fb20ceb6f2f23015e0c4bc679ec058e7b5ead8ec3bf5ffb0b1",
+  "model_calls": 0,
+  "issues": [],
+  "event_count": 1078,
+  "market": {
+    "source_rows": 10329,
+    "a_share_rows": 10311,
+    "metadata_excluded": 8876,
+    "non_a_share": 18,
+    "identity_review": 0,
+    "universe_orgs": 5925,
+    "accepted": 1080,
+    "excluded_source": 1588,
+    "needs_review": 0,
+    "fetch_pending": 0,
+    "model_pending": 0,
+    "retry_pending": 0,
+    "candidate_queue": 2668,
+    "pending": 0,
+    "discovery_complete": true,
+    "source_as_of": "2026-10-31T08:33:40.766686+08:00",
+    "publication_start": "2026-01-01",
+    "publication_end": "2026-10-31",
+    "source_checked_at": "2026-10-31T08:33:42.150624+08:00",
+    "source_retrieval_start": "2026-10-30T23:08:21.498062+08:00",
+    "source_retrieval_end": "2026-10-31T08:33:40.766686+08:00",
+    "source_mode": "live_refresh",
+    "outside_window": 38,
+    "unknown_provider_outcomes": 0,
+    "calendar_event_count": 1040
+  },
+  "artifacts": {
+    "state.json": {
+      "path": "runs/20261031T003012-1bdfac3d/state.json",
+      "sha256": "f82ede5c2f3ca13d310a824e8ad2bacef80dfebf5c8e353a91aa6fb083264c22"
+    },
+    "summary.json": {
+      "path": "runs/20261031T003012-1bdfac3d/summary.json",
+      "sha256": "9683fa836786cf0f563af5aa76fdb99e5226e13ee47b58626f7f708dd90f88d3"
+    },
+    "calendar.html": {
+      "path": "runs/20261031T003012-1bdfac3d/calendar.html",
+      "sha256": "0cc23a43db59ce740322f550b7a565e2b0d61a0008b7edaa47ceea773fd17331"
+    }
+  }
+}

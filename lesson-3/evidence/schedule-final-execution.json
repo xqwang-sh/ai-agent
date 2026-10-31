@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "execution_status": "complete",
+  "business_status": "needs_review",
+  "trigger": "scheduler",
+  "kind": "test",
+  "scheduled_for": "2026-10-30T16:41:20.706329+08:00",
+  "schedule_claim_id": "test:2026-10-30T16:41:20.706329+08:00",
+  "actual_start": "2026-10-30T16:42:19.554782+08:00",
+  "label": "local.disclosure-agent.9e4dce7714e4",
+  "run_id": "20261030T084219-8cebe624",
+  "outputs": [
+    "[local lesson]/03-source/disclosure-agent/runtime/live/summary.json",
+    "[local lesson]/03-source/disclosure-agent/runtime/live/state.json",
+    "[local lesson]/03-source/disclosure-agent/runtime/live/calendar.html",
+    "[local lesson]/03-source/disclosure-agent/runtime/live/current.json"
+  ],
+  "evidence_path": "[local lesson]/03-source/disclosure-agent/runtime/live/schedule/executions/ba265ade4be1bf225b93f002/result.json",
+  "attempt_path": "[local lesson]/03-source/disclosure-agent/runtime/live/schedule/executions/ba265ade4be1bf225b93f002/attempt-c9254c855077",
+  "exit_code": 2,
+  "run_dir": "[local lesson]/03-source/disclosure-agent/runtime/live/runs/20261030T084219-8cebe624",
+  "actual_end": "2026-10-30T16:42:21.046004+08:00"
+}

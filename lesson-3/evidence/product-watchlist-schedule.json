@@ -1,0 +1,74 @@
+{
+  "status": "partial",
+  "checked_at": "2026-10-31T03:42:34.605864+00:00",
+  "run_id": "20261031T032530-f77ce228",
+  "program_sha256": "6471b0c3f53321cef3cfcdb4d69748957e368108b55477a765da549df2af7efb",
+  "schedule_claim_id": "test:2026-10-31T11:25:06.091532+08:00",
+  "scheduled_for": "2026-10-31T11:25:06.091532+08:00",
+  "actual_start": "2026-10-31T11:25:29.826283+08:00",
+  "actual_end": "2026-10-31T11:39:38.173009+08:00",
+  "execution_status": "complete",
+  "exit_code": 2,
+  "business_status": "incomplete",
+  "model_calls": 0,
+  "pending_sources": 0,
+  "source_review_count": 33,
+  "issue_count": 66,
+  "market_task_label": "local.disclosure-agent.45fed9978123",
+  "market_os_installed": true,
+  "market_business_enabled": true,
+  "daily_plan": {
+    "timezone": "Asia/Shanghai",
+    "time": "08:30",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "tick_seconds": 60
+  },
+  "source_as_of": "2026-10-31T11:29:03.721177+08:00",
+  "events": 1040,
+  "company_directory": {
+    "complete": true,
+    "run_id": "20261031T032530-f77ce228",
+    "url": "https://www.cninfo.com.cn/new/data/szse_stock.json",
+    "sha256": "59454a3e572f46159c6c741e7f3b34c43fc4a4c5be00ef26a47738bd359e0960"
+  },
+  "directory_rows": 6184,
+  "retained_events_during_failed_source_check": true,
+  "events_identical_to_v14": true,
+  "first_attempt": {
+    "run_id": "20261031T032134-2d7a042a",
+    "business_status": "incomplete",
+    "model_calls": 0,
+    "cause": "CNINFO connection reset; old events and verified identity directory retained; not reported as no changes"
+  },
+  "artifacts": {
+    "state.json": {
+      "filename": "state.json",
+      "sha256": "c027fd259af1f9288cad650a0dd88043a7db98faf657f435bf3e1e7bee82df68"
+    },
+    "summary.json": {
+      "filename": "summary.json",
+      "sha256": "f9eed486bea41d4c2232f013e23016ca5b73c8817ea014f5f97efea3cabdaa50"
+    },
+    "calendar.html": {
+      "filename": "calendar.html",
+      "sha256": "0a2586f3e04fbdce0ac9f651256f5b12d4c44be05b1ec1d7ce7d612d9cebba86"
+    }
+  },
+  "basis": "Two actual persistent OS test claims; first query connection reset, second completed discovery and preserved events with PDF transport failures explicitly unresolved. Artifact integrity and persistent daily schedule verified. This is not a complete live business check. No manual tick or kickstart.",
+  "limitations": [
+    "This macOS run does not establish long-term reliability.",
+    "Windows and delivery of personal calendar notifications were not tested."
+  ],
+  "source_transport_failures": {
+    "SSLError_unexpected_EOF": 32,
+    "ConnectionError": 1
+  }
+}

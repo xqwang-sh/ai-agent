@@ -1,0 +1,131 @@
+{
+  "run_id": "20261030T082057-af8ccacf",
+  "status": "needs_review",
+  "mode": "live",
+  "strategy": "fixed",
+  "trigger": "scheduler",
+  "as_of": "2026-10-30T16:20:57.557478+08:00",
+  "started_at": "2026-10-30T08:20:57.551587+00:00",
+  "finished_at": "2026-10-30T08:22:06.231892+00:00",
+  "elapsed_seconds": 68.68,
+  "program_sha256": "f0787c1e595eeabc7a77eb3a00e233da07576fde5fcdf9daa4a79518d1299854",
+  "prompt_sha256": "0e4d3e030489b49dfacac361024cd071f48057bdb53368f9a61f4e0b510bd5bd",
+  "model_calls": 5,
+  "planner_calls": 0,
+  "cached_notice_ids": [],
+  "usage": {
+    "known_total_tokens": 14194,
+    "calls_with_unknown_usage": 0
+  },
+  "coverage": {
+    "600887": {
+      "status": "complete",
+      "query_complete": true,
+      "processing_complete": true,
+      "query": {
+        "start_date": "2026-10-23",
+        "end_date": "2026-10-30",
+        "keyword": "业绩说明会",
+        "pages": [
+          {
+            "page": 1,
+            "count": 1,
+            "has_more": false,
+            "total": 1
+          }
+        ]
+      },
+      "error": null,
+      "failed_items": [],
+      "announcement_count": 1
+    },
+    "688246": {
+      "status": "complete",
+      "query_complete": true,
+      "processing_complete": true,
+      "query": {
+        "start_date": "2026-08-01",
+        "end_date": "2026-10-30",
+        "keyword": "业绩说明会",
+        "pages": [
+          {
+            "page": 1,
+            "count": 3,
+            "has_more": false,
+            "total": 3
+          }
+        ]
+      },
+      "error": null,
+      "failed_items": [],
+      "announcement_count": 3
+    }
+  },
+  "changes": [],
+  "issues": [
+    {
+      "stock_code": "688246",
+      "source_id": "1225540076",
+      "reason": "other_fields_unchanged_conflict",
+      "field": "question_deadline_date",
+      "event_id": "688246:1225526162"
+    }
+  ],
+  "event_count": 4,
+  "trace": [
+    {
+      "action": "query_company",
+      "id": "600887",
+      "status": "complete",
+      "notice_ids": [
+        "1225615375"
+      ]
+    },
+    {
+      "action": "query_company",
+      "id": "688246",
+      "status": "complete",
+      "notice_ids": [
+        "1225526162",
+        "1225540076",
+        "1225639820"
+      ]
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225481292",
+      "status": "accepted",
+      "model": "Qwen/Qwen3.8-27B",
+      "validation_failures": []
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225526162",
+      "status": "accepted",
+      "model": "Qwen/Qwen3.8-27B",
+      "validation_failures": []
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225540076",
+      "status": "accepted",
+      "model": "Qwen/Qwen3.8-27B",
+      "validation_failures": []
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225615375",
+      "status": "accepted",
+      "model": "Qwen/Qwen3.8-27B",
+      "validation_failures": []
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225639820",
+      "status": "accepted",
+      "model": "Qwen/Qwen3.8-27B",
+      "validation_failures": []
+    }
+  ],
+  "output_html": "[local lesson]/03-source/disclosure-agent/runtime/live/runs/20261030T082057-af8ccacf/calendar.html"
+}

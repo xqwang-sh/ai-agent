@@ -1,0 +1,33 @@
+{
+  "companies": [
+    {
+      "code": "600887",
+      "name": "伊利股份"
+    },
+    {
+      "code": "688246",
+      "name": "嘉和美康"
+    }
+  ],
+  "timezone": "Asia/Shanghai",
+  "models": [
+    "Qwen/Qwen3.8-27B"
+  ],
+  "strategy": "adaptive",
+  "lookback_days": 90,
+  "overlap_days": 7,
+  "max_model_calls": 20,
+  "max_planner_steps": 12,
+  "planner_model": "Qwen/Qwen3.5-9B",
+  "report_period": "2026-Q3",
+  "schedule_weekdays": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "schedule_time": "08:30"
+}

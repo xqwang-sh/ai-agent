@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "headings": [
+    "## 第0步：从需求出发，确定第一小步",
+    "## 第1步：让Agent从巨潮自己取回公告",
+    "## 第2步：把PDF转成逐页文字，先检查读到了什么",
+    "## 第3步：用4B提取，再逐条对照原文",
+    "## 第4步：加入独立标准，再决定怎样换模型",
+    "## 第5步：在两家公司上跑完整条数据流程",
+    "## 第6步：把两家公司扩到全A股的两个月，再检查一次",
+    "## 第7步：用已核验数据制作日历产品",
+    "## 第8步：接上系统定时任务，等它真的启动",
+    "## 第9步：按产品和实际运行验收自己的Agent"
+  ],
+  "product_after_expansion": true,
+  "showcase_images_after_data_checks": true,
+  "first_data_reference": "two-company-data.json",
+  "basis": "User-confirmed tutorial build order, not a rewrite of historical runtime evidence.",
+  "navigation_and_preparation": "Pass after removing former product-first intro slot; 4 preparation items retain existing template style.",
+  "showcase_visibility": "Two red-to-green renderer tests enforce 3 images inside step7 and reject unhandled subsection names."
+}

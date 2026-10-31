@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "task_space": 44,
+  "classroom_materials": [
+    {
+      "text": "起步包",
+      "href": "lesson3-starter.zip"
+    },
+    {
+      "text": "首次核验包",
+      "href": "lesson3-initial-check.zip"
+    },
+    {
+      "text": "扩围核验包",
+      "href": "lesson3-expanded-check.zip"
+    }
+  ],
+  "material_rows": 3,
+  "readiness_checks_preserved": 4,
+  "legacy_download_links": 0,
+  "downloads": [
+    {
+      "stage": "initial",
+      "filename": "lesson3-initial-check.zip",
+      "sha256": "a34f956386ef5ce528f9aa19b27571c25104f9d2ac9233eb170d783cec878cb8",
+      "bytes": 262223
+    },
+    {
+      "stage": "expanded",
+      "filename": "lesson3-expanded-check.zip",
+      "sha256": "5a35ce1764456ccbbaef7540b2e2ea7c727fe72ad5c1fb5b6bfe0dc225d8b47d",
+      "bytes": 3021097
+    }
+  ],
+  "mobile_overflow": false,
+  "basis": "Two actual final stage downloads matched bytes; independent default-all grading, desktop/narrow layout and preserved four readiness checks."
+}

@@ -1,0 +1,42 @@
+{
+  "status": "pass",
+  "unique_sources": 25,
+  "physical_pages": 55,
+  "independent_packages": {
+    "initial": {
+      "records": 2,
+      "physical_pages": 6,
+      "filename": "lesson3-initial-check.zip",
+      "archive_sha256": "a34f956386ef5ce528f9aa19b27571c25104f9d2ac9233eb170d783cec878cb8"
+    },
+    "expanded": {
+      "records": 23,
+      "physical_pages": 49,
+      "filename": "lesson3-expanded-check.zip",
+      "archive_sha256": "5a35ce1764456ccbbaef7540b2e2ea7c727fe72ad5c1fb5b6bfe0dc225d8b47d"
+    }
+  },
+  "original_pdfs_inputs_and_gold_unchanged": true,
+  "scores_of_retained_accepted_records": {
+    "initial": {
+      "records": 2,
+      "passed": 2,
+      "exit_code": 0,
+      "status": "pass"
+    },
+    "expanded": {
+      "records": 23,
+      "passed": 23,
+      "exit_code": 0,
+      "status": "pass"
+    }
+  },
+  "rejected_missing_edge_case": true,
+  "rejected_wrong_time": true,
+  "rejected_wrong_page": true,
+  "rejected_modified_gold": true,
+  "rejected_wrong_stage": true,
+  "new_model_calls": 0,
+  "new_cninfo_requests": 0,
+  "basis": "Default all grades each independent stage. Retained accepted extraction records with bound old receipts regraded, no new inference/blind accuracy. Original 18 and 7 posthoc histories remain unchanged."
+}

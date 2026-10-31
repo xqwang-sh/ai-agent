@@ -1,0 +1,131 @@
+{
+  "run_id": "20261030T091136-ec2fa73c",
+  "status": "complete",
+  "mode": "live",
+  "strategy": "fixed",
+  "trigger": "scheduler",
+  "schedule_claim_id": "test:2026-10-30T17:10:37.959918+08:00",
+  "as_of": "2026-10-30T17:11:36.301583+08:00",
+  "started_at": "2026-10-30T09:11:36.299412+00:00",
+  "finished_at": "2026-10-30T09:11:37.555427+00:00",
+  "elapsed_seconds": 1.256,
+  "program_sha256": "64a1eafb95474e059fb0050b3f1246cda059fe60b6daf9e4c146325d241d13bc",
+  "prompt_sha256": "0e4d3e030489b49dfacac361024cd071f48057bdb53368f9a61f4e0b510bd5bd",
+  "model_calls": 0,
+  "planner_calls": 0,
+  "cached_notice_ids": [
+    "1225481292",
+    "1225526162",
+    "1225540076",
+    "1225615375",
+    "1225639820"
+  ],
+  "usage": {
+    "known_total_tokens": 0,
+    "calls_with_unknown_usage": 0
+  },
+  "coverage": {
+    "600887": {
+      "status": "complete",
+      "query_complete": true,
+      "processing_complete": true,
+      "query": {
+        "start_date": "2026-10-23",
+        "end_date": "2026-10-30",
+        "keyword": "业绩说明会",
+        "pages": [
+          {
+            "page": 1,
+            "count": 1,
+            "has_more": false,
+            "total": 1
+          }
+        ]
+      },
+      "error": null,
+      "failed_items": [],
+      "announcement_count": 1
+    },
+    "688246": {
+      "status": "complete",
+      "query_complete": true,
+      "processing_complete": true,
+      "query": {
+        "start_date": "2026-08-01",
+        "end_date": "2026-10-30",
+        "keyword": "业绩说明会",
+        "pages": [
+          {
+            "page": 1,
+            "count": 3,
+            "has_more": false,
+            "total": 3
+          }
+        ]
+      },
+      "error": null,
+      "failed_items": [],
+      "announcement_count": 3
+    }
+  },
+  "changes": [],
+  "issues": [],
+  "event_count": 2,
+  "trace": [
+    {
+      "action": "query_company",
+      "id": "600887",
+      "status": "complete",
+      "notice_ids": [
+        "1225615375"
+      ]
+    },
+    {
+      "action": "query_company",
+      "id": "688246",
+      "status": "complete",
+      "notice_ids": [
+        "1225526162",
+        "1225540076",
+        "1225639820"
+      ]
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225481292",
+      "status": "cached_revalidated"
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225526162",
+      "status": "cached_revalidated"
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225540076",
+      "status": "cached_revalidated"
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225615375",
+      "status": "cached_revalidated"
+    },
+    {
+      "action": "extract_notice",
+      "id": "1225639820",
+      "status": "cached_revalidated"
+    }
+  ],
+  "output_html": "[local lesson]/03-source/disclosure-agent/runtime/live/runs/20261030T091136-ec2fa73c/calendar.html",
+  "scope_projection": {
+    "original_status": "needs_review",
+    "original_event_count": 4,
+    "basis": "Read-only projection of the verified historical run into the confirmed Q3 scope; not a new live run."
+  },
+  "scope": {
+    "report_period": "2026-Q3",
+    "meeting_start": "2026-10-01",
+    "meeting_end": "2026-11-30",
+    "basis": "User-confirmed Q3 briefings only; full A-share expansion is checked before scheduling."
+  }
+}

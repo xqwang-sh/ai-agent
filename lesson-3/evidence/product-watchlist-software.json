@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "program_sha256": "6471b0c3f53321cef3cfcdb4d69748957e368108b55477a765da549df2af7efb",
+  "python": {
+    "command": "python3 -m pytest -q",
+    "passed": 375,
+    "failed": 0
+  },
+  "javascript": {
+    "command": "node --test tests/test_watchlist.js",
+    "passed": 7,
+    "failed": 0
+  },
+  "basis": "Results captured from successful tool executions in this feature run. Python count includes 364 pre-existing checks and 11 question-range/directory checks; Node has 7 watchlist checks. No new model benchmark."
+}

@@ -55,11 +55,11 @@ def render(source, *, asset_prefix="assets/", back="../index.html", prerequisite
     nav, body = [], []
     if is_lesson:
         subtitle = paragraphs.pop(0)
-        body.append('<header id="top"><p class="eyebrow">第三讲 · 从巨潮公告到事件日历</p><h1>' + escape(title) + '</h1><p class="subtitle">' + escape(subtitle) + '</p>' + md("\n\n".join(paragraphs)) + '<div class="downloads"><a href="' + back + '">← 讲座主页</a><a href="example/index.html">查看公告事件智能体成品 ↗</a><a class="primary" href="lesson3-starter.zip" download>下载起步材料包</a><a href="#step-0">从第0步开始 ↘</a><a href="PROMPTS.md" download>短需求与反馈</a><a href="lesson.md" download>Markdown讲义</a></div><p class="small">从自己的新目录开始。原公告由Agent取得，验证材料与教师参考按进度另行使用。</p></header>')
+        body.append('<header id="top"><p class="eyebrow">第三讲 · 从巨潮公告到事件日历</p><h1>' + escape(title) + '</h1><p class="subtitle">' + escape(subtitle) + '</p>' + md("\n\n".join(paragraphs)) + '<div class="downloads"><a href="' + back + '">← 讲座主页</a><a class="primary" href="#product-showcase">先看产品演示 ↘</a><a href="lesson3-starter.zip" download>下载起步材料包</a><a href="#step-0">从第0步开始 ↘</a><a href="PROMPTS.md" download>短需求与反馈</a><a href="lesson.md" download>Markdown讲义</a></div><p class="small">先看参考成品，再在自己的新目录搭建。原公告由Agent取得，验证材料与教师参考按进度另行使用。</p></header>')
     else:
         body.append('<header id="top"><p class="eyebrow">第三讲 · 教师备课参考</p><h1>' + escape(title) + '</h1>' + md(intro) + '<div class="downloads"><a href="' + back + '">← 返回讲义</a></div></header>')
 
-    intro_ids = ["readiness", "workflow-map", "start"]
+    intro_ids = ["product-showcase", "readiness", "workflow-map", "start"]
     for index, (heading, content) in enumerate(sections):
         step = re.match(r"第(\d+)步[：:]\s*(.+)", heading)
         if step:
@@ -68,18 +68,17 @@ def render(source, *, asset_prefix="assets/", back="../index.html", prerequisite
             nav.append('<a href="#' + identity + '"><span>' + number + '</span>' + escape(step_title) + '</a>')
             goal, blocks = split_sections(content, 3)
             parts = dict(blocks)
-            supported = {"现在怎么做", "发给你的Agent", "应该看到", "确认后再继续", "最终验收", "本步产物", "卡住时", "这一阶段要交付的日历产品"}
+            supported = {"现在怎么做", "发给你的Agent", "应该看到", "确认后再继续", "最终验收", "本步产物", "卡住时"}
             unknown = set(parts) - supported
             if unknown:
                 raise ValueError("未处理的步骤小节：" + "、".join(sorted(unknown)))
-            showcase = parts.get("这一阶段要交付的日历产品", "")
-            body.append('<section class="step" id="' + identity + '"><div class="step-title"><span class="step-number">' + number + '</span><div><span class="eyebrow">搭建步骤 ' + number + '</span><h2>' + escape(step_title) + '</h2></div></div><div class="goal">' + md(goal) + '</div><div class="actions"><h3>现在怎么做</h3>' + md(parts.get("现在怎么做", "")) + '</div>' + prompts(parts.get("发给你的Agent", ""), "需求") + ('<div class="showcase"><h3>这一阶段要交付的日历产品</h3>' + md(showcase) + '</div>' if showcase else '') + '<div class="checkpoint"><div><h3>应该看到</h3>' + md(parts.get("应该看到", "")) + '</div><div><h3>确认后再继续</h3>' + md(parts.get("确认后再继续", "")) + '</div></div>')
+            body.append('<section class="step" id="' + identity + '"><div class="step-title"><span class="step-number">' + number + '</span><div><span class="eyebrow">搭建步骤 ' + number + '</span><h2>' + escape(step_title) + '</h2></div></div><div class="goal">' + md(goal) + '</div><div class="actions"><h3>现在怎么做</h3>' + md(parts.get("现在怎么做", "")) + '</div>' + prompts(parts.get("发给你的Agent", ""), "需求") + '<div class="checkpoint"><div><h3>应该看到</h3>' + md(parts.get("应该看到", "")) + '</div><div><h3>确认后再继续</h3>' + md(parts.get("确认后再继续", "")) + '</div></div>')
             if parts.get("最终验收"):
                 body.append('<div class="acceptance"><h3>最终验收</h3>' + md(parts["最终验收"]) + '</div>')
             body.append('<div class="files"><span>本步产物</span>' + md(parts.get("本步产物", "")) + '</div><details class="repair"><summary>本步没做好？看反馈例子</summary>' + prompts(parts.get("卡住时", ""), "反馈") + '</details><label class="completion"><input type="checkbox" data-complete="' + identity + '">我已打开结果并核对这一步</label></section>')
         elif is_lesson and index < len(intro_ids):
             identity = intro_ids[index]
-            nav_label = {"readiness": "开始前，确认准备", "workflow-map": "整体步骤", "start": "本讲项目与材料"}[identity]
+            nav_label = {"product-showcase": "先看产品演示", "readiness": "开始前，确认准备", "workflow-map": "整体步骤", "start": "本讲项目与材料"}[identity]
             nav.append('<a href="#' + identity + '">' + nav_label + '</a>')
             if identity != "start":
                 content_html = md(content)

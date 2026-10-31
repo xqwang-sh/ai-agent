@@ -37,11 +37,9 @@
     .nav { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--paper); text-decoration: none; font-weight: 700; letter-spacing: .02em; }
     .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; color: var(--paper); background: var(--green); border-radius: 50%; font-family: var(--serif); font-size: 18px; }
-    .nav-links { display: flex; gap: 22px; align-items: center; color: #d8d9cd; font-size: 14px; }
-    .nav-links a { text-decoration: none; }
-    .nav-links a:hover, .nav-links a:focus-visible { color: var(--paper); }
-    .nav-cta { padding: 9px 15px; color: var(--paper) !important; background: var(--blue); border-radius: 99px; }
-    .nav-cta:hover, .nav-cta:focus-visible { background: #6689b5; }
+    .handout-picker { display: flex; align-items: center; gap: 10px; color: var(--paper); font-size: 14px; }
+    .handout-picker select { width: 210px; max-width: 100%; padding: 9px 12px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 9px; font: inherit; cursor: pointer; }
+    .handout-picker select:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
     .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
     .hero { position: relative; overflow: hidden; padding: 110px 0 88px; color: var(--paper); background: radial-gradient(circle at 88% 20%, rgba(187,91,78,.28), transparent 25%), var(--screen); border-bottom: 1px solid rgba(216, 217, 205, .25); }
     .hero::after { content: ""; position: absolute; width: 390px; height: 390px; right: -110px; bottom: -190px; border: 1px solid rgba(120, 153, 196, .36); border-radius: 50%; box-shadow: 0 0 0 28px rgba(120,153,196,.08), 0 0 0 56px rgba(120,153,196,.045); pointer-events: none; }
@@ -139,9 +137,10 @@
       .closing .button { margin-top: 25px; }
     }
     @media (max-width: 640px) {
-      .nav { padding: 14px 18px; }
+      .nav { padding: 14px 18px; flex-wrap: wrap; gap: 12px; }
       .wrap { padding: 0 18px; }
-      .nav-links a:not(.nav-cta) { display: none; }
+      .handout-picker { flex: 1 1 100%; }
+      .handout-picker select { flex: 1; width: auto; min-width: 0; }
       .brand { font-size: 14px; }
       .hero { padding: 68px 0 60px; }
       .hero-lead { font-size: 17px; }
@@ -159,16 +158,17 @@
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav" aria-label="主导航">
-      <a class="brand" href="#top"><span class="brand-mark">AI</span><span>AI 金融智能体讲座</span></a>
-      <div class="nav-links">
-        <a href="start-here/">零基础必看入门</a>
-        <a href="#lecture">第一讲</a>
-        <a href="#lecture-2">第二讲</a>
-        <a href="#lesson-3">第三讲</a>
-        <a href="#path">系列路径</a>
-        <a class="nav-cta" href="lesson-2/earnings-review/">第二讲成品</a>
-      </div>
+    <nav class="nav" aria-label="讲义导航">
+      <div class="brand"><span class="brand-mark">AI</span><span>AI 金融智能体讲座</span></div>
+      <label class="handout-picker" for="handout-select"><span>讲义</span>
+        <select id="handout-select" aria-label="选择并打开讲义">
+          <option value="" selected disabled>选择讲义</option>
+          <option value="start-here/">零基础必看入门</option>
+          <option value="handout.html">第一讲：从 Chat 到 Agent</option>
+          <option value="lesson-2/">第二讲：Earnings Review</option>
+          <option value="lesson-3/">第三讲：公告事件智能体</option>
+        </select>
+      </label>
     </nav>
   </header>
 
@@ -292,11 +292,11 @@
         <article class="lecture-panel">
           <div class="lecture-main">
             <div class="status-row"><span class="status">实作已验证</span><span class="date">真人计时试讲待完成</span></div>
-            <h3>先做出第一小步，再检查和迭代</h3>
-            <p class="lecture-copy">学员从短业务请求和空目录开始。起步材料只给需求与来源，独立验证材料和教师参考另行提供。</p>
+            <h3>先在日历里看清参会安排</h3>
+            <p class="lecture-copy">先看日期、公司摘要、参与方式、原公告和提醒，认识本讲要做出的产品。看清目标后，再从短业务请求和空目录逐步搭建。</p>
             <div class="lecture-links">
-              <a class="resource-card" href="lesson-3/"><span><strong>打开第三讲实操讲义</strong><span>需求对话 · 实际错误 · 模型比较 · 验收</span></span><span class="arrow" aria-hidden="true">↗</span></a>
-              <a class="resource-card" href="lesson-3/example/"><span><strong>查看公告事件智能体产品</strong><span>事件月历 · 日期公司详情 · 摘要与原文 · 日历提醒</span></span><span class="arrow" aria-hidden="true">↗</span></a>
+              <a class="resource-card" href="lesson-3/example/"><span><strong>先看公告事件智能体产品</strong><span>事件月历 · 日期公司详情 · 摘要与原文 · 日历提醒</span></span><span class="arrow" aria-hidden="true">↗</span></a>
+              <a class="resource-card" href="lesson-3/"><span><strong>再打开第三讲实操讲义</strong><span>需求对话 · 实际错误 · 模型比较 · 验收</span></span><span class="arrow" aria-hidden="true">↗</span></a>
             </div>
           </div>
           <aside class="lecture-side">
@@ -340,6 +340,7 @@
               <li>第一讲从现场演示和入门讲义开始。</li>
               <li>第二讲先看 Earnings Review 成品，再打开实操讲义，逐步复制 Prompt 到自己的 OpenCode。</li>
               <li>第二讲材料包包含六份原始报告与任务文件，按讲义完成每步检查后再继续。</li>
+              <li>第三讲先看公告事件智能体，再从空目录搭建，依次核验数据、制作产品和接入定时。</li>
             </ul>
           </article>
         </div>
@@ -349,11 +350,11 @@
     <section class="closing">
       <div class="wrap closing-grid">
         <div>
-          <p class="eyebrow">第二讲现在可以开始</p>
-          <h2>打开 Earnings Review，再一步步把它做出来。</h2>
-          <p>先看真实示例中的流程与核验，再用讲义中的 Prompt，让自己的 Agent 完成本地应用。</p>
+          <p class="eyebrow">第三讲现在可以开始</p>
+          <h2>先看公告事件智能体，再一步步把它做出来。</h2>
+          <p>先在日历中选日期、看公司和原公告，了解这次要做的产品，再跟着讲义从空目录搭建。</p>
         </div>
-        <a class="button button-secondary" href="lesson-2/">进入第二讲实操讲义 <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href="lesson-3/">进入第三讲实操讲义 <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
@@ -386,5 +387,12 @@
       <p><a href="https://github.com/xqwang-sh/ai-agent">GitHub 仓库</a> · <a href="PUBLIC_DATA_GUIDE.md">数据与安全指南</a> · 2026</p>
     </div>
   </footer>
+  <script>
+    const handoutSelect = document.getElementById('handout-select');
+    handoutSelect.addEventListener('change', () => {
+      if (handoutSelect.value) window.location.assign(handoutSelect.value);
+    });
+    window.addEventListener('pageshow', () => { handoutSelect.value = ''; });
+  </script>
 </body>
 </html>

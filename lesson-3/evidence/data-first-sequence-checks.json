@@ -16,5 +16,6 @@
   "showcase_images_after_data_checks": true,
   "first_data_reference": "two-company-data.json",
   "basis": "User-confirmed tutorial build order, not a rewrite of historical runtime evidence.",
-  "navigation_and_preparation": "Pass after removing former product-first intro slot; 4 preparation items retain existing template style."
+  "navigation_and_preparation": "Pass after removing former product-first intro slot; 4 preparation items retain existing template style.",
+  "showcase_visibility": "Two red-to-green renderer tests enforce 3 images inside step7 and reject unhandled subsection names."
 }

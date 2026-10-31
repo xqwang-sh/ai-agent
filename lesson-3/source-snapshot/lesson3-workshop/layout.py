@@ -68,7 +68,12 @@ def render(source, *, asset_prefix="assets/", back="../index.html"):
             nav.append('<a href="#' + identity + '"><span>' + number + '</span>' + escape(step_title) + '</a>')
             goal, blocks = split_sections(content, 3)
             parts = dict(blocks)
-            body.append('<section class="step" id="' + identity + '"><div class="step-title"><span class="step-number">' + number + '</span><div><span class="eyebrow">搭建步骤 ' + number + '</span><h2>' + escape(step_title) + '</h2></div></div><div class="goal">' + md(goal) + '</div><div class="actions"><h3>现在怎么做</h3>' + md(parts.get("现在怎么做", "")) + '</div>' + prompts(parts.get("发给你的Agent", ""), "需求") + '<div class="checkpoint"><div><h3>应该看到</h3>' + md(parts.get("应该看到", "")) + '</div><div><h3>确认后再继续</h3>' + md(parts.get("确认后再继续", "")) + '</div></div>')
+            supported = {"现在怎么做", "发给你的Agent", "应该看到", "确认后再继续", "最终验收", "本步产物", "卡住时", "这一阶段要交付的日历产品"}
+            unknown = set(parts) - supported
+            if unknown:
+                raise ValueError("未处理的步骤小节：" + "、".join(sorted(unknown)))
+            showcase = parts.get("这一阶段要交付的日历产品", "")
+            body.append('<section class="step" id="' + identity + '"><div class="step-title"><span class="step-number">' + number + '</span><div><span class="eyebrow">搭建步骤 ' + number + '</span><h2>' + escape(step_title) + '</h2></div></div><div class="goal">' + md(goal) + '</div><div class="actions"><h3>现在怎么做</h3>' + md(parts.get("现在怎么做", "")) + '</div>' + prompts(parts.get("发给你的Agent", ""), "需求") + ('<div class="showcase"><h3>这一阶段要交付的日历产品</h3>' + md(showcase) + '</div>' if showcase else '') + '<div class="checkpoint"><div><h3>应该看到</h3>' + md(parts.get("应该看到", "")) + '</div><div><h3>确认后再继续</h3>' + md(parts.get("确认后再继续", "")) + '</div></div>')
             if parts.get("最终验收"):
                 body.append('<div class="acceptance"><h3>最终验收</h3>' + md(parts["最终验收"]) + '</div>')
             body.append('<div class="files"><span>本步产物</span>' + md(parts.get("本步产物", "")) + '</div><details class="repair"><summary>本步没做好？看反馈例子</summary>' + prompts(parts.get("卡住时", ""), "反馈") + '</details><label class="completion"><input type="checkbox" data-complete="' + identity + '">我已打开结果并核对这一步</label></section>')

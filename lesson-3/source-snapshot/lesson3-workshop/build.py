@@ -296,7 +296,7 @@ def main():
         target = snapshot / "disclosure-agent" / source.relative_to(APP)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
-    workshop_sources = [file for file in ROOT.rglob("*") if file.is_file() and "__pycache__" not in file.parts]
+    workshop_sources = [file for file in ROOT.rglob("*") if file.is_file() and not any(part in {"__pycache__", ".pytest_cache"} for part in file.relative_to(ROOT).parts)]
     for source in workshop_sources:
         target = snapshot / "lesson3-workshop" / source.relative_to(ROOT)
         target.parent.mkdir(parents=True, exist_ok=True)

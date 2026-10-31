@@ -6,9 +6,9 @@
   "screenshots": [
     {
       "file": "assets/product-preview.png",
-      "sha256": "f7092b3456991b89f609a07c608fd9814de0a0e08c6a5a0c1ea038b0d9f3c3b8",
+      "sha256": "c59a2c7efe3959c7cf3e8435626fe72905e89491e0e641f39c66c7e97fc83d8d",
       "width": 1440,
-      "height": 1100
+      "height": 1422
     },
     {
       "file": "assets/event-detail-preview.png",
@@ -42,9 +42,9 @@
     },
     {
       "file": "assets/watchlist-preview.png",
-      "sha256": "eae9cd84e7daa59665afe30f3c1ca143e77d1e33a9c7c358961b377660045b9f",
+      "sha256": "8d61868a167ebbb48519bdf1667954b4f877e9ed266de6640b1a1bfb90594351",
       "width": 1440,
-      "height": 1100
+      "height": 1422
     }
   ],
   "all_events": {
@@ -87,7 +87,7 @@
     "reference": "two-company-data.json",
     "overflow": false
   },
-  "browser": "ego-browser TaskSpace39, desktop and narrow Chromium viewport; not a physical phone test",
+  "browser": "ego-browser TaskSpace39 product and initial tutorial; TaskSpace42 corrective step7 showcase acceptance. Narrow Chromium viewport, not a physical phone test.",
   "source_recovery": "Verified separately by recovery-verification.json; these screenshots use the accepted frozen v13 data with current v18 renderer.",
   "lecture_navigation": {
     "status": "pass",
@@ -155,6 +155,39 @@
     ],
     "preparationItems": 4,
     "images": true,
+    "overflow": false
+  },
+  "lecture_showcase": {
+    "status": "pass",
+    "taskSpace": 42,
+    "images": [
+      {
+        "src": "assets/product-preview.png",
+        "loaded": true,
+        "displayed": true,
+        "inFoldedRepair": false
+      },
+      {
+        "src": "assets/event-detail-preview.png",
+        "loaded": true,
+        "displayed": true,
+        "inFoldedRepair": false
+      },
+      {
+        "src": "assets/watchlist-preview.png",
+        "loaded": true,
+        "displayed": true,
+        "inFoldedRepair": false
+      }
+    ],
+    "linkedScreenshots": [
+      "assets/participation-preview.png",
+      "assets/mobile-calendar-preview.png",
+      "assets/mobile-event-detail-preview.png",
+      "assets/mobile-participation-preview.png"
+    ],
+    "copy": true,
+    "stageOrder": true,
     "overflow": false
   }
 }

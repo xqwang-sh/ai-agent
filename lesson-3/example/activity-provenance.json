@@ -13,6 +13,6 @@
   "schedule_verification_sha256": "076c790bdd54032972447a608cb5675e7ae639fe42b4c32c0103208a52dab725",
   "basis": "Immutable actual OS-run projection; source queries have the documented keyword and overlap boundaries.",
   "render_program_sha256": "3ddc520eb7bc032a4bc8aa2cc4638a4177e5d7b6c2ee711d3fbfcdfdb8c6ac76",
-  "browser_checks_sha256": "6ec5ed8f66cab6f151a9a26890800a95cc24f579874b07d7448e7199dd2536ee",
+  "browser_checks_sha256": "916498325bb28e650faa227aed4a0190636f8d1705c98a06dd6aad6b1dae8c40",
   "presentation_revision_basis": "v18 preserves accepted immutable v13 source data, adds source-bound question periods independently of registration, and supports rendering verified saved data without new source/model calls. Teaching order is data first; live source recovery v16 is recorded separately."
 }

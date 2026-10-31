@@ -1,11 +1,12 @@
 # 产教融合背景下AI金融智能体赋能教师教学能力提升计划
 
-系列讲座主页、第一讲公开材料与第二讲 Earnings Review。
+系列讲座主页、零基础课前入门、第一讲公开材料与第二讲 Earnings Review。
 
 主讲：汪小圈｜上海对外经贸大学 金融管理学院
 
 - 线上主页：[suibe-ai-agent.netlify.app](https://suibe-ai-agent.netlify.app)
 - 主页源码：`index.html`
+- 课前必读：`start-here/`，面向没有编程经验的教师，不附练习包
 - 第一讲现场演示：`demo.html`
 - 第一讲学习讲义：`handout.html`
 - 第二讲成品示例：`lesson-2/earnings-review/`
